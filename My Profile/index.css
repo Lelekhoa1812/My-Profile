@@ -1,0 +1,56 @@
+body {
+    background-color: #022520;
+    color: white;
+    font-family: 'Times New Roman', serif;
+}
+.navbar {
+    display: flex;
+    padding: 22px 0;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+.navbar .logo {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+.navbar .logo img {
+    width: 100px;
+    border-radius: 50%;
+}
+.navbar .links {
+    display: flex;
+    gap: 35px;
+    list-style: none;
+    align-items: center;
+}
+.navbar .links a {
+    color: rgb(144, 100, 18);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.1s ease;
+}
+.navbar .links a:hover {
+    color: rgb(18, 129, 144);
+}
+.header {
+    text-align: center;
+    margin-top: 20px;
+}
+h1, h2 {
+    color: rgb(144, 100, 18);
+}
+.section {
+    margin: 20px;
+}
+.project-name {
+    color: #b03bd1;
+    text-decoration: none;
+}
+.project-name:hover {
+    color: #ff33cc;
+}
