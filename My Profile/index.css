@@ -54,3 +54,15 @@ h1, h2 {
 .project-name:hover {
     color: #ff33cc;
 }
+@media (max-width: 760px) {
+    h1 {
+        font-size: 15px;
+    }
+    .navbar .links a {
+        color: rgb(144, 100, 18);
+        font-size: 0.7rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: 0.1s ease;
+    }
+}
