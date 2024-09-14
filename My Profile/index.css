@@ -90,11 +90,11 @@ h1, h2 {
 }
 @media (max-width: 760px) {
     h1 {
-        font-size: 15px;
+        font-size: 10px;
     }
     .navbar .links a {
         color: rgb(144, 100, 18);
-        font-size: 0.7rem;
+        font-size: 0.5rem;
         font-weight: 500;
         text-decoration: none;
         transition: 0.1s ease;
