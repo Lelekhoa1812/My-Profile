@@ -19,7 +19,7 @@ body {
 }
 .navbar .logo img {
     width: 100px;
-    border-radius: 50%;
+    border-radius: 50% 10% 50% 10% / 10% 50% 10% 50%;
 }
 .navbar .links {
     display: flex;
@@ -53,6 +53,40 @@ h1, h2 {
 }
 .project-name:hover {
     color: #ff33cc;
+}
+.proexp_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+.proexp_company_name,
+.proexp_company_loc,
+.proexp_name,
+.proexp_date {
+    margin: 0;
+    padding: 0;
+}
+.proexp_company_name,
+.proexp_name {
+    color: rgb(204, 203, 203);
+}
+.proexp_company_name:hover {
+    color: #ff33cc;
+}
+.proexp_name:hover {
+    color: rgb(17, 96, 120);
+}
+.proexp_company_loc,
+.proexp_date {
+    font-style: italic;
+    color: rgb(204, 203, 203);
+}
+.proexp_name {
+    margin-top: 5px;
+}
+.proexp_date {
+    margin-top: 5px;
 }
 @media (max-width: 760px) {
     h1 {
