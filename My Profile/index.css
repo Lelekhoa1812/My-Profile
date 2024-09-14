@@ -92,6 +92,12 @@ h1, h2 {
     h1 {
         font-size: 10px;
     }
+    .navbar .links {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    align-items: center;
+    }
     .navbar .links a {
         color: rgb(144, 100, 18);
         font-size: 0.5rem;
