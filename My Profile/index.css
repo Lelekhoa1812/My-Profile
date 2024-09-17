@@ -3,6 +3,7 @@ body {
     color: white;
     font-family: 'Times New Roman', serif;
 }
+/* nav bar */
 .navbar {
     display: flex;
     padding: 22px 0;
@@ -88,28 +89,10 @@ h1, h2 {
 .proexp_date {
     margin-top: 5px;
 }
-@media (max-width: 760px) {
-    h1 {
-        font-size: 10px;
-    }
-    .navbar .links {
-    display: flex;
-    gap: 15px;
-    list-style: none;
-    align-items: center;
-    }
-    .navbar .links a {
-        color: rgb(144, 100, 18);
-        font-size: 0.5rem;
-        font-weight: 500;
-        text-decoration: none;
-        transition: 0.1s ease;
-    }
-}
 /* skill bar */
 .skill {
     margin: 20px;
-    width: 400px;
+    width: 500px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 10px 10px 10px rgba(0, 0, 0, 0.20);
 }
 h4 {
@@ -230,4 +213,31 @@ h4 {
         width: 50%;
     }
     
+}
+
+/* adapt phone size */
+@media (max-width: 760px) {
+    h1 {
+        font-size: 10px;
+    }
+    /* nav bar */
+    .navbar .links {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    align-items: center;
+    }
+    .navbar .links a {
+        color: rgb(144, 100, 18);
+        font-size: 0.5rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: 0.1s ease;
+    }
+    /* skill bar */
+    .skill {
+        margin: 20px;
+        width: 300px;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 10px 10px 10px rgba(0, 0, 0, 0.20);
+    }
 }
