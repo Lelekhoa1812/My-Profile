@@ -92,7 +92,7 @@ h1, h2 {
 /* skill bar */
 .skill {
     margin: 20px;
-    width: 500px;
+    width: 550px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 10px 10px 10px rgba(0, 0, 0, 0.20);
 }
 h4 {
@@ -237,7 +237,7 @@ h4 {
     /* skill bar */
     .skill {
         margin: 20px;
-        width: 300px;
+        width: 400px;
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 10px 10px 10px rgba(0, 0, 0, 0.20);
     }
     .bar {
