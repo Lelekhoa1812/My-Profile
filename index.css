@@ -18,6 +18,7 @@ body {
 }
 h3 {
     color: var(--primary-color);
+    font-size: medium;
 }
 h1, h2 {
     color: rgb(144, 100, 18);
