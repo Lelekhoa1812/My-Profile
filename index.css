@@ -1,0 +1,265 @@
+body {
+    background-color: #022520;
+    color: white;
+    font-family: 'Times New Roman', serif;
+}
+:root {
+    --primary-color: #00bfa5;
+    --accent-color: #b03bd1;
+    --text-color: #e0f2f1;
+    --background-color: #001f1c;
+    --hover-color: #26c6da;
+  }  
+/* Navbar section */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+h3 {
+    color: var(--primary-color);
+}
+h1, h2 {
+    color: rgb(144, 100, 18);
+}
+h2 {
+    margin-top: 40px; margin-bottom: 20px;
+    text-align: center;
+}
+.navbar {
+    display: flex;
+    padding: 22px 0;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+.navbar .logo {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+.navbar .logo img {
+    width: 100px;
+    border-radius: 50% 10% 50% 10% / 10% 50% 10% 50%;
+}
+.navbar .links {
+    display: flex;
+    gap: 35px;
+    list-style: none;
+    align-items: center;
+}
+.navbar .links a {
+    color: rgb(144, 100, 18);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.1s ease;
+}
+.navbar .links a:hover {
+    color: rgb(18, 129, 144);
+}
+.header {
+    position: sticky;
+    text-align: center;
+    margin-top: 20px;
+}
+/* Project section */
+.project-name {
+    color: #b03bd1;
+    text-decoration: none;
+}
+.project-name:hover {
+    color: #ff33cc;
+}
+.projects, .academics{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:var(--sp);
+}
+.card{
+  background:#112229;
+  border-radius:var(--rad);
+  padding:var(--sp);
+  transition:transform .25s;
+}
+.card:hover{transform:translateY(-4px);}
+/* Experience section */
+.proexp_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+.proexp_company_name,
+.proexp_company_loc,
+.proexp_name,
+.proexp_date {
+    margin: 0;
+    padding: 0;
+}
+.proexp_company_name,
+.proexp_name {
+    color: rgb(204, 203, 203);
+}
+.proexp_company_name:hover {
+    color: #ff33cc;
+}
+.proexp_name:hover {
+    color: rgb(17, 96, 120);
+}
+.proexp_company_loc,
+.proexp_date {
+    font-style: italic;
+    color: rgb(204, 203, 203);
+}
+.proexp_name {
+    margin-top: 5px;
+}
+.proexp_date {
+    margin-top: 5px;
+}
+@media (max-width: 760px) {
+    h1 {
+        font-size: 15px;
+    }
+    .navbar .links a {
+        color: rgb(144, 100, 18);
+        font-size: 0.7rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: 0.1s ease;
+    }
+}
+/* skill bar */
+.section {
+    max-width: 800px;        /* Optional: limits the width for readability */
+    margin: 0 auto;          /* Center horizontally */
+    padding: 0 20px;         /* Left and right inner spacing */
+    box-sizing: border-box; /* Ensures padding doesn't exceed max-width */
+}
+.skill {
+    margin: 20px;
+    width: 400px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 10px 10px 10px rgba(0, 0, 0, 0.20);
+}
+h4 {
+    color: rgb(204, 203, 203);
+    font-size: 10px;
+}
+.bar {
+    background-color: #353b48;
+    display: block;
+    height: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.20);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+.bar:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.20);
+}
+.bar span {
+    height: 20px;
+    float: left;
+    background: linear-gradient(135deg, rgba(236, 0, 140, 1)0%, rgba(252, 103, 103, 1)100% );
+}
+.Python3 {
+    width: 80%;
+    animation: Python3 3s;
+}
+.HTML5 {
+    width: 90%;
+    animation: HTML5 3s;
+}
+.CSS3 {
+    width: 90%;
+    animation: HTML5 3s;
+}
+.JavaScript {
+    width: 80%;
+    animation: Python3 3s;
+}
+.Java {
+    width: 70%;
+    animation: Java 3s;
+}
+.CS {
+    width: 90%;
+    animation: HTML5 3s;
+}
+.Kotlin {
+    width: 90%;
+    animation: HTML5 3s;
+}
+.SQL {
+    width: 80%;
+    animation: Python3 3s;
+}
+.CPP {
+    width: 60%;
+    animation: CPP 3s;
+}
+.PHP {
+    width: 60%;
+    animation: CPP 3s;
+}
+.TypeScript {
+    width: 70%;
+    animation: Java 3s;
+}
+.Ruby {
+    width: 50%;
+    animation: Ruby 3s;
+}
+.MATLAB {
+    width: 50%;
+    animation: Ruby 3s;
+}
+@keyframes Python3 {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 80%;
+    }
+    
+}
+@keyframes HTML5 {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 90%;
+    }
+    
+}
+@keyframes Java {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 70%;
+    }
+    
+}
+@keyframes CPP {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 60%;
+    }
+    
+}
+@keyframes Ruby {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 50%;
+    }
+    
+}
