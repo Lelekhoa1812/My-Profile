@@ -290,9 +290,9 @@ h4 {
     .navbar .logo h1 {
         font-size: 0.9rem; /* Smaller text */
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 120px; /* Limit width */
+/*         overflow: hidden; */
+/*         text-overflow: ellipsis; */
+/*         max-width: 120px; /* Limit width */ */
     }
     
     /* Links adjustments */
