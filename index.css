@@ -264,3 +264,47 @@ h4 {
     }
     
 }
+/* Mobile Dynamic Handler */
+/* Add this to your CSS */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+@media (max-width: 760px) {
+    /* Hide regular links on mobile */
+    .navbar .links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100px;
+        left: 0;
+        width: 100%;
+        background: var(--background-color);
+        padding: 20px 0;
+        gap: 15px;
+    }
+    
+    /* Show mobile toggle button */
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    /* Show links when mobile menu is active */
+    .navbar .links.active {
+        display: flex;
+    }
+    
+    /* Adjust logo text */
+    .navbar .logo h1 {
+        font-size: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+    }
+}
