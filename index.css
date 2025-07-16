@@ -321,3 +321,20 @@ h4 {
     }
 }
 
+/* Navbar avoid overflow */
+.navbar .logo h1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Small mobile */
+@media (max-width: 400px) {
+    .navbar .logo h1 {
+        max-width: 80px;
+    }
+    .navbar .links a {
+        font-size: 0.6rem;
+    }
+}
