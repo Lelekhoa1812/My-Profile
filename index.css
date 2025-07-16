@@ -276,35 +276,48 @@ h4 {
 }
 
 @media (max-width: 760px) {
-    /* Hide regular links on mobile */
-    .navbar .links {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 100px;
-        left: 0;
-        width: 100%;
-        background: var(--background-color);
-        padding: 20px 0;
-        gap: 15px;
+    /* Navbar adjustments */
+    .navbar {
+        flex-wrap: wrap; /* Allow items to wrap */
+        padding: 10px 0; /* Reduce padding */
     }
     
-    /* Show mobile toggle button */
-    .mobile-menu-toggle {
-        display: block;
+    /* Logo adjustments */
+    .navbar .logo img {
+        width: 60px; /* Smaller logo */
     }
     
-    /* Show links when mobile menu is active */
-    .navbar .links.active {
-        display: flex;
-    }
-    
-    /* Adjust logo text */
     .navbar .logo h1 {
-        font-size: 1rem;
+        font-size: 0.9rem; /* Smaller text */
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 150px;
+        max-width: 120px; /* Limit width */
+    }
+    
+    /* Links adjustments */
+    .navbar .links {
+        gap: 10px; /* Reduce gap between links */
+        flex-wrap: wrap; /* Allow links to wrap */
+        justify-content: center; /* Center links */
+        width: 100%; /* Take full width */
+        margin-top: 10px; /* Add some spacing */
+    }
+    
+    .navbar .links a {
+        font-size: 0.7rem;
+        padding: 2px 5px; /* Add some padding */
+    }
+    
+    /* Other mobile adjustments */
+    h1 {
+        font-size: 1.2rem; /* Slightly larger than your current 15px */
+    }
+    
+    /* Skill bars adjustments */
+    .skill {
+        width: 100%; /* Full width on mobile */
+        margin: 10px 0; /* Adjust margins */
     }
 }
+
