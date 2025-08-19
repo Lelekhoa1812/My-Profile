@@ -71,6 +71,10 @@ h2 {
     color: #b03bd1;
     text-decoration: none;
 }
+.highlight {
+    color: var(--hover-color);
+    text-decoration: none;
+}
 .project-name:hover {
     color: #ff33cc;
 }
