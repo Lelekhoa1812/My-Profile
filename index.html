@@ -6,18 +6,19 @@
     <title>My Profile</title>
     <link rel="stylesheet" href="index.css">
     <link rel="website icon" type="png" href="img/icon.png" >
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <a href="#" class="logo">
+            <a href="https://github.com/Lelekhoa1812" class="logo">
                 <img src="img/me.jpg" alt="logo">
                 <h1>Dang Khoa Le - Software Engineer</h1>
             </a>
             <ul class="links">
                 <li><a href="#">Profile</a></li>
-                <li><a href="index2.html">Academic</a></li>
-                <li><a href="index3.html">Experience</a></li>
+                <li><a href="academic.html">Academic</a></li>
+                <li><a href="experience.html">Experience</a></li>
                 <li><a href="https://www.linkedin.com/in/dang-khoa-le-96a6332a8">LinkedIn</a></li>
                 <li><a href="https://huggingface.co/BinKhoaLe1812">HuggingFace</a></li>
             </ul>
@@ -26,19 +27,20 @@
 
     <section id="about" class="section">
         <h2>Personal</h2>
-        <p>I am Dang Khoa Le, currently pursuing a Bachelor of Software Engineering at Swinburne University, Melbourne. Graduating at the end of 2025, I have developed a passion for website and mobile app development, software engineering, and AI/ML. My experience spans various programming languages, tools, and design technologies. I’m committed to building efficient, innovative, and user-centric software solutions.</p>
+        <p>I am Dang Khoa Le, currently pursuing a Bachelor of Software Engineering at Swinburne University, Melbourne. Graduating at the end of 2025, I have developed a passion for website and mobile app development, software engineering, and AI/ML. My experience spans various programming languages, tools, and design technologies. I'm committed to building efficient, innovative, and user-centric software solutions.</p>
 
-        <h2>Skills</h3>
+        <h2>Skills</h2>
         <p><b>Programming Languages:</b> Python, Java, Kotlin, SQL, C++, C#, JavaScript, TypeScript.</p>
         <p><b>Frameworks:</b> FastAPI, Flask, Node.js, SpringBoot, Vue, React, Angular, Next.js.</p>
-        <p><b>AI</b>TensorFlow, PyTorch, YOLO, ResNet, CNN, LLM, VLM, NLP, RAG architectures, Knowledge Distillation, CV, ASR, Machine Learning, Deep Learning, Synthesis, Data Analytics.</p>
-        <p><b>Tools</b>Docker, Kubernetes, MongoDB, MySQL, AWS, Azure, Google Cloud Console, Oracle, Jenkin, Jira, Git, Firebase.</p>
+        <p><b>AI:</b> TensorFlow, PyTorch, YOLO, ResNet, CNN, LLM, VLM, NLP, RAG architectures, Knowledge Distillation, CV, ASR, Machine Learning, Deep Learning, Synthesis, Data Analytics.</p>
+        <p><b>Tools:</b> Docker, Kubernetes, MongoDB, MySQL, AWS, Azure, Google Cloud Console, Oracle, Jenkin, Jira, Git, Firebase.</p>
         <p><b>Multimedia:</b> Figma, Windsurf, Cursor, Adobe Illustrator, Microsoft Powerpoint.</p>
-        <p><b>Communication Languages</b> English, Vietnamese, Mandarin</p>
+        <p><b>Communication Languages:</b> English, Vietnamese, Mandarin</p>
     </section>
 
     <!-- Skill bar animation -->
     <section id="skills" class="section">
+        <h2>Technical Skills</h2>
         <h4>Python</h4>
         <span class="bar"><span class="Python"></span></span>
         <h4>HTML5</h4>
@@ -65,102 +67,401 @@
         <span class="bar"><span class="Ruby"></span></span>
     </section>
 
+    <!-- Navigation Placeholders -->
+    <section class="section">
+        <h2>Quick Navigation</h2>
+        <div class="nav-placeholders">
+            <div class="nav-placeholder" onclick="window.location.href='academic.html'">
+                <img src="img/academic.jpg" alt="Academic">
+                <h3>Academic Resources</h3>
+                <p>Explore my academic projects and coursework</p>
+            </div>
+            <div class="nav-placeholder" onclick="window.location.href='experience.html'">
+                <img src="img/experience.jpeg" alt="Experience">
+                <h3>Professional Experience</h3>
+                <p>View my work history and achievements</p>
+            </div>
+            <div class="nav-placeholder" onclick="window.open('https://www.linkedin.com/in/dang-khoa-le-96a6332a8', '_blank')">
+                <img src="img/linkedin.avif" alt="LinkedIn">
+                <h3>LinkedIn Profile</h3>
+                <p>Connect with me professionally</p>
+            </div>
+            <div class="nav-placeholder" onclick="window.open('https://huggingface.co/BinKhoaLe1812', '_blank')">
+                <img src="img/huggingface.jpeg" alt="HuggingFace">
+                <h3>HuggingFace</h3>
+                <p>Check out my AI/ML projects</p>
+            </div>
+        </div>
+    </section>
+
     <section id="projects" class="section">
         <h2>Projects</h2>
-        <h3><a href="#" class="project-name">Clara</a></h3>
-        <p>Contributed to Clara, Vietnam nationally recognized medical LLM+VLM assistant trained on 400k+ doctor-annotated cases, including 210k+ X-rays, and synthesis. Led development of an agentic RAG module using EMR to improve diagnosis accuracy and medication safety. Also supported model training, benchmarking, and built intelligent chat memory retrieval for contextual continuity.</p>
-        
-        <h3><a href="#" class="project-name">URFF</a></h3>
-        <p>Building local assistant that fuse LLM, NLP, OCR on the solution to turn all unstructured PDF documents into direct industrial AI-assistance that can provide guidance for businesses. Our partnered businesses including Nvidia, HPA, IBM, Juniper, and CISCO Vietnam.</p>
+        <div class="projects-grid">
+            <!-- Clara -->
+            <div class="project-card">
+                <div class="project-image">Clara</div>
+                <div class="project-content">
+                    <a href="#" class="project-title">Clara</a>
+                    <p class="project-description">Contributed to Clara, nationally recognized medical LLM+VLM MedAI agent.</p>
+                    <span class="see-more" onclick="openModal('Clara', 'Contributed to Clara, Vietnam nationally recognized medical LLM+VLM assistant trained on 400k+ doctor-annotated cases, including 210k+ X-rays, and synthesis. Led development of an agentic RAG module using EMR to improve diagnosis accuracy and medication safety. Also supported model training, benchmarking, and built intelligent chat memory retrieval for contextual continuity.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://github.com/Lelekhoa1812/SQL-LLM-CoT" class="project-name">SQL-LLM-CoT</a></h3>
-        <p>Leading a team of 6 to build a Vietnamese-language AI assistant, converts business questions into SQL queries across MySQL and Oracle, fusing multi-modal self-QA for Reinforcement Learning over failures and successes. Built with FastAPI, Gemini & Qwen3, MongoDB vectorbase, leveraging Chain-of-Thought and Agentic RAG for autonomous analytics in sales, supply chain, and marketing. The system reduces manual workforces by up to 80%, delivers instant, explainable insights, a unique plugin solution enables direct database-to-decision workflows without human intervention.</p>
-        
-        <h3><a href="https://medical-chatbot-henna.vercel.app" class="project-name">Medical Chatbot</a></h3>
-        <p>Developed an optimized AI medical chatbot with Gemini Pro 2.5, FAISS (with GridFS), NodeRAG over diagnosis & treatment medical dataset, real-time query. Data storage on MongoDB, leverage dynamic STM/LTM history caching. Incorporating model fine-tuning and quantization for efficiency. Deployed FastAPI backend with NLPs for multi-language support and NodeJS frontend, via RestAPI.</p>
+            <!-- URFF -->
+            <div class="project-card">
+                <div class="project-image">URFF</div>
+                <div class="project-content">
+                    <a href="#" class="project-title">URFF</a>
+                    <p class="project-description">Local assistant, LLM, NLP, OCR, turning PDF documents into industrial assistance.</p>
+                    <span class="see-more" onclick="openModal('URFF', 'Building a local AI assistant that fuse LLM, NLP, OCR on the solution to turn all unstructured PDF documents into direct industrial AI-assistance that can provide guidance for businesses. Our partnered businesses including Nvidia, HPA, IBM, Juniper, and CISCO Vietnam.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://lelekhoa1812.github.io/The-Auburn-Coffee/" class="project-name">The Auburn Coffee</a></h3>
-        <p>Developed the official website for a local commuter café at Auburn Station. Features include interactive menu, real-time pre-ordering, loyalty program with personalize QR code, and staff dashboard for order management, rating and feedback, sale analysis. Built with VueJS, Node.js (Vercel), database storage on MongoDB, and Firebase. Revolutionizing the business with digitalisation procedure, skyrocketing sale on an instance by 30%.</p>
+            <!-- SQL-LLM-CoT -->
+            <div class="project-card">
+                <div class="project-image">SQL-LLM-CoT</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/SQL-LLM-CoT" class="project-title">SQL-LLM-CoT</a>
+                    <p class="project-description">Vietnamese SQL AI assistant, business questions into SQL queries and insights.</p>
+                    <span class="see-more" onclick="openModal('SQL-LLM-CoT', 'Leading a team of 6 to build a Vietnamese-language AI assistant, converts business questions into SQL queries across MySQL and Oracle, fusing multi-modal self-QA for Reinforcement Learning over failures and successes. Built with FastAPI, Gemini & Qwen3, MongoDB vectorbase, leveraging Chain-of-Thought and Agentic RAG for autonomous analytics in sales, supply chain, and marketing. The system reduces manual workforces by up to 80%, delivers instant, explainable insights, a unique plugin solution enables direct database-to-decision workflows without human intervention.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://github.com/Lelekhoa1812/AI-Tutor" class="project-name">AI Tutoring</a></h3>
-        <p>AI tutoring web-app, integrating LLM with RAG, knowledge-base and level-base teaching, marking and instruction. Personalised user experience with customised roadmap session and week by each, virtual teach-student session, unstructured document understandability and dynamic context retrieval. Integrating web-crawling and deep-research to support study materials from online sources.</p>
-        <p>Frontend: Next.js, TypeScript, Tailwind CSS, Lucide React, React Hooks</p>
-        <p>Backend: Next.js API, Prisma ORM, MongoDB Atlas, NextAuth.js, OAuth2, bcryptjs</p>
-        <p>System: Gemini, Qwen, FastAPI, SlowAPI, FlaskAPI Qdrant, LangChain, VertexAI, LTM/STM Retrieval, Semantic Search, BeautifulSoup, Sentence-Transformer, GoogleBookAPI, SerpAPI, BraveAPI.</p>
-        
-        <h3><a href="https://github.com/Lelekhoa1812/Triage-LLM-Based/tree/main" class="project-name">Triage Response: LLM-Driven Solution and Drone Medication Delivery</a></h3>
-        <p>Developed and deployed an LLM-powered emergency triage system integrating React Native (mobile), React (web portal), FastAPI (backend), Whisper-v3, Gemini 2.5, Qwen-VL, FAISS, and MongoDB with MIMIC-IV triage-response data to enable real-time voice-triggered alerts, clinical decision support, and secured-fast drone (Great Shark 330 PRO VTOL) medication delivery.</p>
+            <!-- Medical Chatbot -->
+            <div class="project-card">
+                <div class="project-image">Medical Chatbot</div>
+                <div class="project-content">
+                    <a href="https://medical-chatbot-henna.vercel.app" class="project-title">Medical Chatbot</a>
+                    <p class="project-description">Medical multimodal LLM, Agentic RAG, real-time query and context continuity.</p>
+                    <span class="see-more" onclick="openModal('Medical Chatbot', 'Developed an optimized AI medical chatbot with Gemini Pro 2.5, FAISS (with GridFS), NodeRAG over diagnosis & treatment medical dataset, real-time query. Data storage on MongoDB, leverage dynamic STM/LTM history caching. Incorporating model fine-tuning and quantization for efficiency. Deployed FastAPI backend with NLPs for multi-language support and NodeJS frontend, via RestAPI.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://github.com/benty691/EAT40005/tree/main" class="project-name">Capstone Project: Predictive Maintenance, Automation Pipeline</a></h3>
-        <p>Led team of 4 software to design and prototype an AI-powered predictive maintenance system for Sky Ledge’s fleet operations. Oversaw the full development lifecycle including external dataset collection, Python-based data pipelines, and model training using XGBoost, RandomForrest and LSTM. Coordinated frontend and backend development to deliver a functional dashboard for real-time vehicle health monitoring using OBD-II data. Managed task planning, research direction, and client engagement preparation.</p>
+            <!-- The Auburn Coffee -->
+            <div class="project-card">
+                <div class="project-image">The Auburn Coffee</div>
+                <div class="project-content">
+                    <a href="https://lelekhoa1812.github.io/The-Auburn-Coffee/" class="project-title">The Auburn Coffee</a>
+                    <p class="project-description">Official website. Featuring menu, pre-order, loyalty programs, staff dashboard.</p>
+                    <span class="see-more" onclick="openModal('The Auburn Coffee', 'Developed the official website for a local commuter café at Auburn Station. Features include interactive menu, real-time pre-ordering, loyalty program with personalize QR code, and staff dashboard for order management, rating and feedback, sale analysis. Built with VueJS, Node.js (Vercel), database storage on MongoDB, and Firebase. Revolutionizing the business with digitalisation procedure, skyrocketing sale on an instance by 30%.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="#" class="project-name">ElecBot</a></h3>
-        <p>Led a 4-member team to architect and build a scalable electricity forecasting and control application from IoT device. Integrated ML/DL (TFT, XGBoost), Reinforcement Learning (DQN), and LLM- driven advisory to predict billing, optimize device usage, and automate energy-saving decisions. Enabled multimodal interaction via ASR, text, and voice synthesis for a fully interactive MCP experience.</p>
+            <!-- AI Tutoring -->
+            <div class="project-card">
+                <div class="project-image">AI Tutoring</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/AI-Tutor" class="project-title">AI Tutoring</a>
+                    <p class="project-description">AI tutoring, LLM with RAG, knowledge-base and level-base teaching, assignment.</p>
+                    <span class="see-more" onclick="openModal('AI Tutoring', 'AI tutoring web-app, integrating LLM with RAG, knowledge-base and level-base teaching, marking and instruction. Personalised user experience with customised roadmap session and week by each, virtual teach-student session, unstructured document understandability and dynamic context retrieval. Integrating web-crawling and deep-research to support study materials from online sources. Frontend: Next.js, TypeScript, Tailwind CSS, Lucide React, React Hooks. Backend: Next.js API, Prisma ORM, MongoDB Atlas, NextAuth.js, OAuth2, bcryptjs. System: Gemini, Qwen, FastAPI, SlowAPI, FlaskAPI Qdrant, LangChain, VertexAI, LTM/STM Retrieval, Semantic Search, BeautifulSoup, Sentence-Transformer, GoogleBookAPI, SerpAPI, BraveAPI.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://ielts-writing-boost.vercel.app" class="project-name">IELTS Enhancer</a></h3>
-        <p>IELTS Enhancer is your personal, AI-powered writing coach designed to help you reach your dream band score. Whether you're aiming for a 6.0 or striving for a perfect 9.0, this app gives you the tools, feedback, and motivation to get there.</p>
+            <!-- Triage Response -->
+            <div class="project-card">
+                <div class="project-image">Triage Response</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/Triage-LLM-Based/tree/main" class="project-title">Clinical Triage Response - Drone Medication Delivery</a>
+                    <p class="project-description">AI-powered triage system, mobile/web app, clinical responsives, voice alerts, drone.</p>
+                    <span class="see-more" onclick="openModal('Triage Response: LLM-Driven Solution and Drone Medication Delivery', 'Developed and deployed an LLM-powered emergency triage system integrating React Native (mobile), React (web portal), FastAPI (backend), Whisper-v3, Gemini 2.5, Qwen-VL, FAISS, and MongoDB with MIMIC-IV triage-response data to enable real-time voice-triggered alerts, clinical decision support, and secured-fast drone (Great Shark 330 PRO VTOL) medication delivery.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://student-management-one-psi.vercel.app" class="project-name">Student Management</a></h3>
-        <p>A comprehensive web-based student management platform designed for language schools to handle student enrollment, class management, placement testing, and administrative tasks. The system supports both Vietnamese and English interfaces and serves multiple user roles including students, staff, and administrators.</p>
-        <p>Frontend: Next.js, TypeScript, Tailwind CSS, Lucide React, React Hooks</p>
-        <p>Backend: Next.js API, Prisma ORM, MongoDB Atlas, NextAuth.js, OAuth2, bcryptjs</p>
+            <!-- Capstone Project -->
+            <div class="project-card">
+                <div class="project-image">Capstone Project</div>
+                <div class="project-content">
+                    <a href="https://github.com/benty691/EAT40005/tree/main" class="project-title">Predictive Maintenance - Automation System</a>
+                    <p class="project-description">AI-powered predictive maintenance system for Sky Ledge's fleet operations.</p>
+                    <span class="see-more" onclick="openModal('Capstone Project: Predictive Maintenance, Automation Pipeline', 'Led team of 4 software to design and prototype an AI-powered predictive maintenance system for Sky Ledge fleet operations. Oversaw the full development lifecycle including external dataset collection, Python-based data pipelines, and model training using XGBoost, RandomForrest and LSTM. Coordinated frontend and backend development to deliver a functional dashboard for real-time vehicle health monitoring using OBD-II data. Managed task planning, research direction, and client engagement preparation.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a class="project-name">TicTacToe (Gomoku) AI Game Player</a></h3>
-        <p>Virtual GUI Game with PvP (2-3 members) and PvC modes. Leveraging AI and comprehensive scoring, sorting algorithms. Methodical Attacking/Defensive strategies.</p>
-        <p><a href="https://github.com/Lelekhoa1812/COS30018-Intelligent-Systems/tree/main/JavaW3/mcp" class="highlight">JAVA Version</a>  with JADE Multi-agent framework</p>
-        <p><a href="https://github.com/Lelekhoa1812/TicTacToe-Game-by-C-Sharp" class="project-name">C# Version</a> with SplashKitSDK GUI</p>
-        
-        <h3><a href="https://github.com/Lelekhoa1812/Water-Meter-Scanner" class="project-name">Water Meter Scanner</a></h3>
-        <p>Scanning Water Meter on real-time, deploying UI by Next.js with Node.js backbone and Flask API. Training model by YOLOv5xu for field detection and VietOCR transformer_vgg for text recognition. Currently host Frontend on Vercel and Backend on Jetson Nano server. Product of VietDan JSC.</p>
+            <!-- ElecBot -->
+            <div class="project-card">
+                <div class="project-image">ElecBot</div>
+                <div class="project-content">
+                    <a href="#" class="project-title">ElecBot</a>
+                    <p class="project-description">Scalable electricity forecasting, ML/DL,LLM, IoT device.</p>
+                    <span class="see-more" onclick="openModal('ElecBot', 'Led a 4-member team to architect and build a scalable electricity forecasting and control application from IoT device. Integrated ML/DL (TFT, XGBoost), Reinforcement Learning (DQN), and LLM- driven advisory to predict billing, optimize device usage, and automate energy-saving decisions. Enabled multimodal interaction via ASR, text, and voice synthesis for a fully interactive MCP experience.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://github.com/Lelekhoa1812/Sentiment-Analysis-with-Obsei" class="project-name">Obsei: Sentiment Analysis on Real-time Newspaper</a></h3>
-        <p>Analysing data on articles from various platforms and languages for Sentiment Analysis and Business Overview with LLM models. Leverage Obsei framework and Transformers for sentiment analysis, NER, fact-checking, summarization, deliver actionable business insights. Internship product for iNet Solution.</p>
+            <!-- IELTS Enhancer -->
+            <div class="project-card">
+                <div class="project-image">IELTS Enhancer</div>
+                <div class="project-content">
+                    <a href="https://ielts-writing-boost.vercel.app" class="project-title">IELTS Enhancer</a>
+                    <p class="project-description">AI-powered IELTS writing coach with instructional adviosry.</p>
+                    <span class="see-more" onclick="openModal('IELTS Enhancer', 'IELTS Enhancer is your personal, AI-powered writing coach designed to help you reach your dream band score. Whether you are aiming for a 6.0 or striving for a perfect 9.0, this app gives you the tools, feedback, and motivation to get there.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://github.com/Lelekhoa1812/Linguaphile" class="project-name">Linguaphile</a></h3>
-        <p>Android app (Kotlin) for vocabulary learning features mini-games; progress tracking and achievement; keep note on new vocabularies with synonyms, anonyms, sample sentences; with real-time multi-language translation using Google ML Kit.</p>
+            <!-- Student Management -->
+            <div class="project-card">
+                <div class="project-image">Student Management</div>
+                <div class="project-content">
+                    <a href="https://student-management-one-psi.vercel.app" class="project-title">Student Management</a>
+                    <p class="project-description">Platform for enrollment, class management, testing, administratives.</p>
+                    <span class="see-more" onclick="openModal('Student Management', 'A comprehensive web-based student management platform designed for language schools to handle student enrollment, class management, placement testing, and administrative tasks. The system supports both Vietnamese and English interfaces and serves multiple user roles including students, staff, and administrators. Frontend: Next.js, TypeScript, Tailwind CSS, Lucide React, React Hooks. Backend: Next.js API, Prisma ORM, MongoDB Atlas, NextAuth.js, OAuth2, bcryptjs.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://github.com/Lelekhoa1812/Vietnamese-Passport-OCR-Project-with-VietOCR" class="project-name">Vietnamese Passport Scanner</a></h3>
-        <p>Using VietOCR and YOLO to scan and convert image to text (JSON), generate synthetic passport with different variants to enable sufficient volume training, simulating real-life imperfect external impacts and artefacts.</p>
+            <!-- TicTacToe -->
+            <div class="project-card">
+                <div class="project-image">TicTacToe</div>
+                <div class="project-content">
+                    <a class="project-title">TicTacToe (Gomoku) AI Player</a>
+                    <p class="project-description">Virtual GUI TicTacToe Game with AI in Java and C# versions.</p>
+                    <span class="see-more" onclick="openModal('TicTacToe (Gomoku) AI Game Player', 'Virtual GUI Game with PvP (2-3 members) and PvC modes. Leveraging AI and comprehensive scoring, sorting algorithms. Methodical Attacking/Defensive strategies. JAVA Version with JADE Multi-agent framework. C# Version with SplashKitSDK GUI.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://github.com/Lelekhoa1812/Sall-e" class="project-name">Sall-e: Autonomous Robot for Oceanic Garbage Collection</a></h3>
-        <p>Led team of 6 engineers on software development and AI integration for Autonomous Robot combining computer vision, robotic techs, and navigation system. Directed cross-disciplinary R&D to deliver a scalable, AI-driven solution for ocean waste detection and collection. Data mining and self-train CNN and Transformer model, real-time access.</p>
-        
-        <h3><a href="https://github.com/Lelekhoa1812/S-P500_Prediction_Model" class="project-name">S&P500 Stock Prediction</a></h3>
-        <p>Fusing multimodel over long/short term stock prediction over S&P500 company candidates.</p>
+            <!-- Water Meter Scanner -->
+            <div class="project-card">
+                <div class="project-image">Water Meter Scanner</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/Water-Meter-Scanner" class="project-title">Water Meter Scanner</a>
+                    <p class="project-description">Backend system, OCR, CV, AI, and IoT for water meter scanning.</p>
+                    <span class="see-more" onclick="openModal('Water Meter Scanner', 'Scanning Water Meter on real-time, deploying UI by Next.js with Node.js backbone and Flask API. Training model by YOLOv5xu for field detection and VietOCR transformer_vgg for text recognition. Currently host Frontend on Vercel and Backend on Jetson Nano server. Product of VietDan JSC.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://github.com/Lelekhoa1812/Golf-Scorecard-Scanner" class="project-name">Golf Scorecard Scanner</a></h3>
-        <p>Scanning and detecting golf scorecard (Vietnamese template), which can be handwritten with uncertainties and different template might be applied simultaneously. This solution uses YOLOv8 and YOLOv11 for field detection, VietOCR for text recognition, MNIST with CRNN model trained with CTC loss for hand-written number, back up verification using Qwen2.5-VL OCR specialised model, and LabelMe for annotation.</p>
+            <!-- Obsei -->
+            <div class="project-card">
+                <div class="project-image">Obsei</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/Sentiment-Analysis-with-Obsei" class="project-title">Obsei: Sentiment Analysis on Real-time Newspaper</a>
+                    <p class="project-description">Sentiment analysis, business insights, LLM, NLP, web-crawler with Obsei.</p>
+                    <span class="see-more" onclick="openModal('Obsei: Sentiment Analysis on Real-time Newspaper', 'Analysing data on articles from various platforms and languages for Sentiment Analysis and Business Overview with LLM models. Leverage Obsei framework and Transformers for sentiment analysis, NER, fact-checking, summarization, deliver actionable business insights. Internship product for iNet Solution.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://lelekhoa1812.github.io/Weather-Forecast-Website/Weather%20App%20Web/index.html" class="project-name">Weather Forecast Website</a></h3>
-        <p>A platform providing real-time weather data with a comprehensive lookup system for cities worldwide.</p>
+            <!-- Linguaphile -->
+            <div class="project-card">
+                <div class="project-image">Linguaphile</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/Linguaphile" class="project-title">Linguaphile</a>
+                    <p class="project-description">Android app vocabulary learning, mini-games, progress tracking and achievement.</p>
+                    <span class="see-more" onclick="openModal('Linguaphile', 'Android app (Kotlin) for vocabulary learning features mini-games; progress tracking and achievement; keep note on new vocabularies with synonyms, anonyms, sample sentences; with real-time multi-language translation using Google ML Kit.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://github.com/Lelekhoa1812/RosterManagement" class="project-name">Roster Management System</a></h3>
-        <p>Android application to streamline staff rostering and payroll for businesses, built using Kotlin and Node.js for backend services.</p>
+            <!-- Vietnamese Passport Scanner -->
+            <div class="project-card">
+                <div class="project-image">Passport Scanner</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/Vietnamese-Passport-OCR-Project-with-VietOCR" class="project-title">Vietnamese Passport Scanner</a>
+                    <p class="project-description">VietOCR and YOLO, synthesis and training with VLM integration.</p>
+                    <span class="see-more" onclick="openModal('Vietnamese Passport Scanner', 'Using VietOCR and YOLO to scan and convert image to text (JSON), generate synthetic passport with different variants to enable sufficient volume training, simulating real-life imperfect external impacts and artefacts.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://lelekhoa1812.github.io/Knowledge-Test/Knowledge%20Testing%20Website/Credential.html" class="project-name">Education Website</a></h3>
-        <p>A virtual learning platform designed for interactive quizzes and classroom features, helping students engage with educational material.</p>
+            <!-- Sall-e -->
+            <div class="project-card">
+                <div class="project-image">Sall-e</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/Sall-e" class="project-title">Sall-e: Autonomous Robot for Oceanic Garbage Collection</a>
+                    <p class="project-description">Autonomous river-cleaning robot, CV, robotics, navigation, renewable electricity.</p>
+                    <span class="see-more" onclick="openModal('Sall-e: Autonomous Robot for Oceanic Garbage Collection', 'Led team of 6 engineers on software development and AI integration for Autonomous Robot combining computer vision, robotic techs, and navigation system. Directed cross-disciplinary R&D to deliver a scalable, AI-driven solution for ocean waste detection and collection. Data mining and self-train CNN and Transformer model, real-time access.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://lelekhoa1812.github.io/Fretboard/" class="project-name">Fretboard</a></h3>
-        <p>An educational site dedicated to learning string instruments such as guitars and ukuleles, offering scale, chord, and note lookups.</p>
+            <!-- S&P500 Stock Prediction -->
+            <div class="project-card">
+                <div class="project-image">S&P500 Prediction</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/S-P500_Prediction_Model" class="project-title">S&P500 Stock Prediction</a>
+                    <p class="project-description">Multimodel long/short term stock prediction of S&P500 companies.</p>
+                    <span class="see-more" onclick="openModal('S&P500 Stock Prediction', 'Fusing multimodel ML/DL over long/short term stock prediction over S&P500 company candidates.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://github.com/Lelekhoa1812/Monopoly-Game" class="project-name">Monopoly Game</a></h3>
-        <p>A digital version of the Monopoly board game built in C# with multiplayer functionality for up to four players.</p>
+            <!-- Golf Scorecard Scanner -->
+            <div class="project-card">
+                <div class="project-image">Golf Scanner</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/Golf-Scorecard-Scanner" class="project-title">Golf Scorecard Scanner</a>
+                    <p class="project-description">Scanning golf scorecard, with handwritten uncertainties and different templates.</p>
+                    <span class="see-more" onclick="openModal('Golf Scorecard Scanner', 'Scanning and detecting golf scorecard (Vietnamese template), which can be handwritten with uncertainties and different template might be applied simultaneously. This solution uses YOLOv8 and YOLOv11 for field detection, VietOCR for text recognition, MNIST with CRNN model trained with CTC loss for hand-written number, back up verification using Qwen2.5-VL OCR specialised model, and LabelMe for annotation.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://lelekhoa1812.github.io/Message-Encryption/" class="project-name">Message Encryption</a></h3>
-        <p>Website demonstrating basic encryption and decryption techniques using JavaScript, allowing users to secure their messages.</p>
+            <!-- Weather Forecast Website -->
+            <div class="project-card">
+                <div class="project-image">Weather App</div>
+                <div class="project-content">
+                    <a href="https://lelekhoa1812.github.io/Weather-Forecast-Website/Weather%20App%20Web/index.html" class="project-title">Weather Forecast Website</a>
+                    <p class="project-description">Website for real-time weather data with a comprehensive lookup system for cities worldwide.</p>
+                    <span class="see-more" onclick="openModal('Weather Forecast Website', 'A platform providing real-time weather data with a comprehensive lookup system for cities worldwide.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://lelekhoa1812.github.io/Rock-Paper-Scissor-AI-Game-Ver2/RPS%20AI%20Learning%20Model/RPS_AI_Model.html" class="project-name">AI Rock Paper Scissor Game</a></h3>
-        <p>An AI-based game that learns the user’s patterns over short/long-term strategy, fusing Tensorflow/ReLu + KNN + MinMax algorithms, and competes against them in rock-paper-scissors, improving its strategy over time.</p>
+            <!-- Roster Management System -->
+            <div class="project-card">
+                <div class="project-image">Roster Management</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/RosterManagement" class="project-title">Roster Management System</a>
+                    <p class="project-description">Android application to streamline staff rostering and payroll.</p>
+                    <span class="see-more" onclick="openModal('Roster Management System', 'Android application to streamline staff rostering and payroll for businesses, built using Kotlin and Node.js for backend services.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://lelekhoa1812.github.io/Virtual-Instrument-Keyboard/VirtualInstrument.html" class="project-name">Virtual Instrument Keyboard</a></h3>
-        <p>A fun and interactive virtual keyboard that allows users to play music using their computer keyboard.</p>
+            <!-- Education Website -->
+            <div class="project-card">
+                <div class="project-image">Education Platform</div>
+                <div class="project-content">
+                    <a href="https://lelekhoa1812.github.io/Knowledge-Test/Knowledge%20Testing%20Website/Credential.html" class="project-title">Education Website</a>
+                    <p class="project-description">Interactive quizzes and classroom features, educational material.</p>
+                    <span class="see-more" onclick="openModal('Education Website', 'A virtual learning platform designed for interactive quizzes and classroom features, helping students engage with educational material.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://github.com/Lelekhoa1812/Chess-Game" class="project-name">Chess Game</a></h3>
-        <p>A classic chess game for two players, built using Python, offering a sleek user interface and basic move validation.</p>
+            <!-- Fretboard -->
+            <div class="project-card">
+                <div class="project-image">Fretboard</div>
+                <div class="project-content">
+                    <a href="https://lelekhoa1812.github.io/Fretboard/" class="project-title">Fretboard</a>
+                    <p class="project-description">Educational site to learning string instruments, scale, chord, and note lookups.</p>
+                    <span class="see-more" onclick="openModal('Fretboard', 'An educational site dedicated to learning string instruments such as guitars and ukuleles, offering scale, chord, and note lookups.')">... See more</span>
+                </div>
+            </div>
 
-        <h3><a href="https://lelekhoa1812.github.io/QR-Code-Generator/QRCodeGenerator" class="project-name">QR Code Generator</a></h3>
-        <p>A simple web-based tool for generating QR codes using JavaScript and TypeScript.</p>
+            <!-- Monopoly Game -->
+            <div class="project-card">
+                <div class="project-image">Monopoly Game</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/Monopoly-Game" class="project-title">Monopoly Game</a>
+                    <p class="project-description">Digital version Monopoly board game built in C# for 3-4 players.</p>
+                    <span class="see-more" onclick="openModal('Monopoly Game', 'A digital version of the Monopoly board game built in C# with multiplayer functionality for up to four players.')">... See more</span>
+                </div>
+            </div>
+
+            <!-- Message Encryption -->
+            <div class="project-card">
+                <div class="project-image">Message Encryption</div>
+                <div class="project-content">
+                    <a href="https://lelekhoa1812.github.io/Message-Encryption/" class="project-title">Message Encryption</a>
+                    <p class="project-description">Basic encryption and decryption techniques, hashing, for educational purposes.</p>
+                    <span class="see-more" onclick="openModal('Message Encryption', 'Website demonstrating basic encryption and decryption techniques using JavaScript, allowing users to secure their messages.')">... See more</span>
+                </div>
+            </div>
+
+            <!-- AI Rock Paper Scissor Game -->
+            <div class="project-card">
+                <div class="project-image">AI RPS Game</div>
+                <div class="project-content">
+                    <a href="https://lelekhoa1812.github.io/Rock-Paper-Scissor-AI-Game-Ver2/RPS%20AI%20Learning%20Model/RPS_AI_Model.html" class="project-title">AI Rock Paper Scissor Game</a>
+                    <p class="project-description">Learns user historical patterns fusing Tensorflow/ReLu + KNN + MiniMax.</p>
+                    <span class="see-more" onclick="openModal('AI Rock Paper Scissor Game', 'An AI-based game that learns the user patterns over short/long-term strategy, fusing Tensorflow/ReLu + KNN + MinMax algorithms, and competes against them in rock-paper-scissors, improving its strategy over time.')">... See more</span>
+                </div>
+            </div>
+
+            <!-- Virtual Instrument Keyboard -->
+            <div class="project-card">
+                <div class="project-image">Virtual Keyboard</div>
+                <div class="project-content">
+                    <a href="https://lelekhoa1812.github.io/Virtual-Instrument-Keyboard/VirtualInstrument.html" class="project-title">Virtual Instrument Keyboard</a>
+                    <p class="project-description">Interactive multi-instrument app allows playing music on computer keyboard.</p>
+                    <span class="see-more" onclick="openModal('Virtual Instrument Keyboard', 'A fun and interactive virtual keyboard that allows users to play music using their computer keyboard.')">... See more</span>
+                </div>
+            </div>
+
+            <!-- Chess Game -->
+            <div class="project-card">
+                <div class="project-image">Chess Game</div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/Chess-Game" class="project-title">Chess Game</a>
+                    <p class="project-description">Classic chess game for two players, in Python.</p>
+                    <span class="see-more" onclick="openModal('Chess Game', 'A classic chess game for two players, built using Python, offering a sleek user interface and basic move validation.')">... See more</span>
+                </div>
+            </div>
+
+            <!-- QR Code Generator -->
+            <div class="project-card">
+                <div class="project-image">QR Generator</div>
+                <div class="project-content">
+                    <a href="https://lelekhoa1812.github.io/QR-Code-Generator/QRCodeGenerator" class="project-title">QR Code Generator</a>
+                    <p class="project-description">Website generating QR codes with JavaScript and TypeScript.</p>
+                    <span class="see-more" onclick="openModal('QR Code Generator', 'A simple web-based tool for generating QR codes using JavaScript and TypeScript.')">... See more</span>
+                </div>
+            </div>
+        </div>
     </section>
-<script></script>
+
+    <!-- Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <div class="modal-image" id="modalImage"></div>
+                <h3 class="modal-title" id="modalTitle"></h3>
+            </div>
+            <p class="modal-description" id="modalDescription"></p>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        function openModal(title, description) {
+            const modal = document.getElementById('projectModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const modalImage = document.getElementById('modalImage');
+            
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+            modalImage.textContent = title.split(' ')[0]; // Use first word as image placeholder
+            
+            modal.style.display = 'block';
+            
+            // Add animation class
+            modal.classList.add('fade-in');
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            modal.style.display = 'none';
+            modal.classList.remove('fade-in');
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('projectModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+        // Add animation classes to elements when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all project cards and nav placeholders
+        document.addEventListener('DOMContentLoaded', function() {
+            const projectCards = document.querySelectorAll('.project-card');
+            const navPlaceholders = document.querySelectorAll('.nav-placeholder');
+            
+            projectCards.forEach(card => observer.observe(card));
+            navPlaceholders.forEach(placeholder => observer.observe(placeholder));
+        });
+    </script>
 </body>
 </html>
