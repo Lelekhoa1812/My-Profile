@@ -184,14 +184,323 @@ h3 {
     border: 1px solid rgba(0, 191, 165, 0.1);
 }
 
-#about p {
-    font-size: 1.1rem;
-    margin: 1rem 0;
+.about-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.about-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    border: 1px solid rgba(0, 191, 165, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.about-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    opacity: 0;
+    transition: var(--transition);
+    z-index: -1;
+}
+
+.about-card:hover::before {
+    opacity: 0.05;
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-color);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 191, 165, 0.2);
+}
+
+.card-icon {
+    font-size: 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.card-title {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-content {
     color: var(--text-color);
-    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.personal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.personal-content p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.focus-areas {
+    background: rgba(0, 191, 165, 0.05);
+    padding: 1.2rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-color);
+    margin: 0.5rem 0;
+}
+
+.focus-areas h4 {
+    color: var(--accent-color);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+}
+
+.focus-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.focus-list li {
+    margin: 0.8rem 0;
+    padding: 0.5rem 0;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(0, 191, 165, 0.1);
+    transition: var(--transition);
+}
+
+.focus-list li:last-child {
+    border-bottom: none;
+}
+
+.focus-list li:hover {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.personal-text {
     text-align: justify;
     text-justify: inter-word;
-    line-height: 1.8;
+}
+
+.skills-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.skill-category {
+    background: rgba(0, 191, 165, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-color);
+    transition: var(--transition);
+}
+
+.skill-category:hover {
+    background: rgba(0, 191, 165, 0.1);
+    transform: translateX(5px);
+}
+
+.skill-title {
+    color: var(--accent-color);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-items {
+    color: var(--text-color);
+    opacity: 0.9;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Stunning Text Animation Effects */
+.animated-text {
+    position: relative;
+    overflow: hidden;
+}
+
+.animated-text::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Scrambling Animation */
+.scrambling {
+    animation: scramble 0.1s infinite;
+}
+
+@keyframes scramble {
+    0% { filter: blur(0px); }
+    50% { filter: blur(1px); }
+    100% { filter: blur(0px); }
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+    animation: glitch 0.3s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    animation: glitch-1 0.3s infinite;
+    color: #ff0000;
+    z-index: -1;
+}
+
+.glitch::after {
+    animation: glitch-2 0.3s infinite;
+    color: #00ff00;
+    z-index: -2;
+}
+
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-1 {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(2px, -2px); }
+    40% { transform: translate(-2px, 2px); }
+    60% { transform: translate(-2px, -2px); }
+    80% { transform: translate(2px, 2px); }
+}
+
+@keyframes glitch-2 {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, -2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(-2px, 2px); }
+}
+
+/* Typewriter Effect */
+.typewriter {
+    overflow: hidden;
+    border-right: 2px solid var(--primary-color);
+    white-space: nowrap;
+    animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--primary-color); }
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+    position: relative;
+    overflow: hidden;
+}
+
+.matrix-rain::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(transparent 50%, rgba(0, 191, 165, 0.1) 50%);
+    background-size: 100% 4px;
+    animation: matrix-rain 2s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes matrix-rain {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .about-card {
+        padding: 1.5rem;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .skills-grid {
+        gap: 1rem;
+    }
 }
 
 /* Skills Section */

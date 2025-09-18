@@ -16,7 +16,7 @@
                 <h1>Dang Khoa Le - Software Engineer</h1>
             </a>
             <ul class="links">
-                <li><a href="#">Profile</a></li>
+                <li><a href="#">Project</a></li>
                 <li><a href="academic.html">Academic</a></li>
                 <li><a href="experience.html">Experience</a></li>
                 <li><a href="https://www.linkedin.com/in/dang-khoa-le-96a6332a8">LinkedIn</a></li>
@@ -26,16 +26,68 @@
     </header>
 
     <section id="about" class="section">
-        <h2>Personal</h2>
-        <p>I am Dang Khoa Le, currently pursuing a Bachelor of Software Engineering at Swinburne University, Melbourne. Graduating at the end of 2025, I have developed a passion for website and mobile app development, software engineering, and AI/ML. My experience spans various programming languages, tools, and design technologies. I'm committed to building efficient, innovative, and user-centric software solutions.</p>
-
-        <h2>Skills</h2>
-        <p><b>Programming Languages:</b> Python, Java, Kotlin, SQL, C++, C#, JavaScript, TypeScript.</p>
-        <p><b>Frameworks:</b> FastAPI, Flask, Node.js, SpringBoot, Vue, React, Angular, Next.js.</p>
-        <p><b>AI:</b> TensorFlow, PyTorch, YOLO, ResNet, CNN, LLM, VLM, NLP, RAG architectures, Knowledge Distillation, CV, ASR, Machine Learning, Deep Learning, Synthesis, Data Analytics.</p>
-        <p><b>Tools:</b> Docker, Kubernetes, MongoDB, MySQL, AWS, Azure, Google Cloud Console, Oracle, Jenkin, Jira, Git, Firebase.</p>
-        <p><b>Multimedia:</b> Figma, Windsurf, Cursor, Adobe Illustrator, Microsoft Powerpoint.</p>
-        <p><b>Communication Languages:</b> English, Vietnamese, Mandarin</p>
+        <h2>Profile</h2>
+        <div class="about-container">
+            <div class="about-card personal-card">
+                <div class="card-header">
+                    <div class="card-icon">🧬</div>
+                    <h3 class="card-title" data-text="Expertise"></h3>
+                </div>
+                <div class="card-content">
+                    <div class="personal-content">
+                        <p class="animated-text personal-text" data-text="I am Dang Khoa Le (you could call me Liam), a Software Engineering student at Swinburne University, Melbourne, graduating in 2025."></p>
+                        
+                        <p class="animated-text personal-text" data-text="My passion lies in developing AI solutions that genuinely improve people's lives through practical, real-world applications. I believe technology should serve humanity rationally and efficiently, not as a showcase of complexity."></p>
+                        
+                        <div class="focus-areas">
+                            <h4 class="animated-text personal-text" data-text="My work focuses on three key areas:"></h4>
+                            <ul class="focus-list">
+                                <li class="animated-text personal-text" data-text="• Medical AI Systems - Building multi-agent diagnostic systems and clinical decision support tools"></li>
+                                <li class="animated-text personal-text" data-text="• Educational Platforms - Creating AI tutoring systems that adapt to individual learning needs"></li>
+                                <li class="animated-text personal-text" data-text="• Business Automation - Developing solutions that streamline operations and enhance productivity"></li>
+                            </ul>
+                        </div>
+                        
+                        <p class="animated-text personal-text" data-text="I prioritize solutions that enhance human capabilities rather than replace them. My approach combines rigorous technical implementation with thoughtful consideration of real-world impact, ensuring that every line of code serves a meaningful purpose in making people's lives easier and more efficient."></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-card skills-card">
+                <div class="card-header">
+                    <div class="card-icon">⚡</div>
+                    <h3 class="card-title" data-text="Skills"></h3>
+                </div>
+                <div class="card-content">
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h4 class="skill-title" data-text="Programming Languages">Programming Languages</h4>
+                            <p class="skill-items animated-text" data-text="Python, Java, Kotlin, SQL, C++, C#, JavaScript, TypeScript"></p>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-title" data-text="Frameworks">Frameworks</h4>
+                            <p class="skill-items animated-text" data-text="FastAPI, Flask, Node.js, SpringBoot, Vue, React, Angular, Next.js"></p>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-title" data-text="AI Domains">AI Domains</h4>
+                            <p class="skill-items animated-text" data-text="Transformers, TensorFlow, PyTorch, YOLO, ResNet, CNN, LLM, VLM, NLP, RAG architectures, Knowledge Distillation, CV, ASR, Machine Learning, Deep Learning, Synthesis, Data Analytics"></p>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-title" data-text="Tools & Cloud">Tools & Cloud</h4>
+                            <p class="skill-items animated-text" data-text="Docker, Kubernetes, MongoDB, MySQL, AWS, Azure, GCC, Oracle, Jenkin, Git, Firebase"></p>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-title" data-text="Multimedia">Multimedia</h4>
+                            <p class="skill-items animated-text" data-text="Figma, Cursor, Jira, Adobe Illustrator, Microsoft Powerpoint, Stable Diffusion"></p>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-title" data-text="Languages">Languages</h4>
+                            <p class="skill-items animated-text" data-text="English, Vietnamese, Mandarin"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Skill bar animation -->
@@ -606,7 +658,177 @@
         document.addEventListener('DOMContentLoaded', function() {
             const scrollElements = document.querySelectorAll('.scroll-animate');
             scrollElements.forEach(element => observer.observe(element));
+            
+            // Initialize text animations
+            initializeTextAnimations();
         });
+        
+        // Stunning Text Animation Functions
+        function initializeTextAnimations() {
+            const animatedTexts = document.querySelectorAll('.animated-text');
+            const cardTitles = document.querySelectorAll('.card-title');
+            const skillTitles = document.querySelectorAll('.skill-title');
+            
+            // Animate card titles with different effects
+            cardTitles.forEach((title, index) => {
+                setTimeout(() => {
+                    animateTitle(title, index);
+                }, index * 200);
+            });
+            
+            // Animate text content with scrambling effect
+            animatedTexts.forEach((text, index) => {
+                setTimeout(() => {
+                    animateText(text, index);
+                }, 1000 + (index * 300));
+            });
+            
+            // Animate skill titles with typewriter effect
+            skillTitles.forEach((title, index) => {
+                setTimeout(() => {
+                    animateSkillTitle(title, index);
+                }, 2000 + (index * 150));
+            });
+        }
+        
+        function animateTitle(element, index) {
+            const text = element.getAttribute('data-text');
+            const effects = ['glitch', 'typewriter', 'matrix-rain'];
+            const effect = effects[index % effects.length];
+            
+            element.classList.add(effect);
+            element.textContent = '';
+            
+            if (effect === 'typewriter') {
+                typewriterEffect(element, text, 50);
+            } else if (effect === 'glitch') {
+                glitchEffect(element, text);
+            } else {
+                matrixEffect(element, text);
+            }
+        }
+        
+        function animateText(element, index) {
+            const text = element.getAttribute('data-text');
+            element.textContent = '';
+            
+            // Check if it's personal text for faster animation
+            const isPersonalText = element.classList.contains('personal-text');
+            
+            // Start with scrambling effect
+            element.classList.add('scrambling');
+            
+            setTimeout(() => {
+                element.classList.remove('scrambling');
+                scrambleText(element, text, 0, isPersonalText);
+            }, isPersonalText ? 500 : 1000);
+        }
+        
+        function animateSkillTitle(element, index) {
+            const text = element.getAttribute('data-text');
+            element.textContent = '';
+            
+            // Random effect selection
+            const effects = ['typewriter', 'glitch', 'matrix-rain'];
+            const effect = effects[Math.floor(Math.random() * effects.length)];
+            
+            element.classList.add(effect);
+            
+            if (effect === 'typewriter') {
+                typewriterEffect(element, text, 30);
+            } else if (effect === 'glitch') {
+                glitchEffect(element, text);
+            } else {
+                matrixEffect(element, text);
+            }
+        }
+        
+        function typewriterEffect(element, text, speed) {
+            let i = 0;
+            const timer = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(timer);
+                    element.classList.remove('typewriter');
+                }
+            }, speed);
+        }
+        
+        function glitchEffect(element, text) {
+            const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+            let iterations = 0;
+            const maxIterations = 20;
+            
+            const interval = setInterval(() => {
+                element.textContent = text
+                    .split('')
+                    .map((char, index) => {
+                        if (index < iterations) {
+                            return text[index];
+                        }
+                        return glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                    })
+                    .join('');
+                
+                if (iterations >= text.length) {
+                    clearInterval(interval);
+                    element.classList.remove('glitch');
+                }
+                
+                iterations += 1 / 3;
+            }, 50);
+        }
+        
+        function matrixEffect(element, text) {
+            const matrixChars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            let iterations = 0;
+            const maxIterations = 30;
+            
+            const interval = setInterval(() => {
+                element.textContent = text
+                    .split('')
+                    .map((char, index) => {
+                        if (index < iterations) {
+                            return text[index];
+                        }
+                        return matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    })
+                    .join('');
+                
+                if (iterations >= text.length) {
+                    clearInterval(interval);
+                    element.classList.remove('matrix-rain');
+                }
+                
+                iterations += 1 / 2;
+            }, 80);
+        }
+        
+        function scrambleText(element, text, index, isPersonalText = false) {
+            if (index < text.length) {
+                const chineseChars = '人工智能机器学习深度学习神经网络自然语言处理计算机视觉数据科学算法模型训练优化性能效率创新技术解决方案实用应用医疗教育商业自动化智能化数字化转型云计算大数据物联网区块链软件';
+                const scrambled = text
+                    .split('')
+                    .map((char, i) => {
+                        if (i < index) return char;
+                        return chineseChars[Math.floor(Math.random() * chineseChars.length)];
+                    })
+                    .join('');
+                
+                element.textContent = scrambled;
+                
+                // Faster animation for personal text
+                const delay = isPersonalText ? 25 : 50;
+                
+                setTimeout(() => {
+                    scrambleText(element, text, index + 1, isPersonalText);
+                }, delay);
+            } else {
+                element.textContent = text;
+            }
+        }
     </script>
 </body>
 </html>
