@@ -455,14 +455,42 @@ h3 {
 .modal-content {
     background: var(--card-bg);
     margin: 5% auto;
-    padding: 2rem;
+    padding: 0;
     border-radius: var(--border-radius);
     width: 90%;
     max-width: 800px;
     max-height: 80vh;
-    overflow-y: auto;
+    overflow: hidden;
     position: relative;
     border: 2px solid var(--primary-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-scrollable {
+    padding: 2rem;
+    overflow-y: auto;
+    flex: 1;
+    max-height: calc(80vh - 4rem);
+}
+
+/* Custom scrollbar for modal */
+.modal-scrollable::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-scrollable::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.modal-scrollable::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: 4px;
+}
+
+.modal-scrollable::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
 }
 
 .close {
@@ -822,7 +850,7 @@ h3 {
 }
 
 @keyframes slideInLeft {
-    from { opacity: 0; transform: translateX(-30px); }
+    from { opacity: 0; transform: translateX(-50px); }
     to { opacity: 1; transform: translateX(0); }
 }
 
@@ -831,12 +859,28 @@ h3 {
 }
 
 @keyframes slideInRight {
-    from { opacity: 0; transform: translateX(30px); }
+    from { opacity: 0; transform: translateX(50px); }
     to { opacity: 1; transform: translateX(0); }
 }
 
-/* Skill Bar Animations */
+/* Initial state for scroll animations */
+.scroll-animate {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s ease-out;
 }
+
+.scroll-animate.from-right {
+    transform: translateX(50px);
+}
+
+.scroll-animate.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Skill Bar Animations */
+
 .skill {
     margin: 20px;
     width: 400px;

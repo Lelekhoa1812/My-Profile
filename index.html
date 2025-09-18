@@ -71,22 +71,22 @@
     <section class="section">
         <h2>Quick Navigation</h2>
         <div class="nav-placeholders">
-            <div class="nav-placeholder" onclick="window.location.href='academic.html'">
+            <div class="nav-placeholder scroll-animate" onclick="window.location.href='academic.html'">
                 <img src="img/academic.jpg" alt="Academic">
                 <h3>Academic Resources</h3>
                 <p>Explore my academic projects and coursework</p>
             </div>
-            <div class="nav-placeholder" onclick="window.location.href='experience.html'">
+            <div class="nav-placeholder scroll-animate from-right" onclick="window.location.href='experience.html'">
                 <img src="img/experience.jpeg" alt="Experience">
                 <h3>Professional Experience</h3>
                 <p>View my work history and achievements</p>
             </div>
-            <div class="nav-placeholder" onclick="window.open('https://www.linkedin.com/in/dang-khoa-le-96a6332a8', '_blank')">
+            <div class="nav-placeholder scroll-animate" onclick="window.open('https://www.linkedin.com/in/dang-khoa-le-96a6332a8', '_blank')">
                 <img src="img/linkedin.avif" alt="LinkedIn">
                 <h3>LinkedIn Profile</h3>
                 <p>Connect with me professionally</p>
             </div>
-            <div class="nav-placeholder" onclick="window.open('https://huggingface.co/BinKhoaLe1812', '_blank')">
+            <div class="nav-placeholder scroll-animate from-right" onclick="window.open('https://huggingface.co/BinKhoaLe1812', '_blank')">
                 <img src="img/huggingface.jpeg" alt="HuggingFace">
                 <h3>HuggingFace</h3>
                 <p>Check out my AI/ML projects</p>
@@ -98,42 +98,42 @@
         <h2>Projects</h2>
         <div class="projects-grid">
             <!-- MedAI-Swin-Research -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
-                    <img src="img/png" alt="MedAI-Swin-Research" class="project-img">
+                    <img src="img/medswin.png" alt="MedAI-Swin-Research" class="project-img">
                 </div>
                 <div class="project-content">
-                    <a href="https://huggingface.co/MedAI-COS30018" class="project-title">MedAI Swin Research</a>
+                    <a href="https://huggingface.co/spaces/MedAI-COS30018/Introduction" class="project-title">MedAI Swin Research</a>
                     <p class="project-description">Swinburne research team, agentic orchestrator MCP with multigen medical specialists</p>
-                    <span class="see-more" onclick="openModal('MedAI Swin Research', 'Led research team of 5, funded by Swinburne to build a multi-agent system with domain-specialist agents (diagnostics, pharmacology, triage) coordinated by a reasoning agentic orchestrator MCP:\n • Boosted diagnostic accuracy & safety by fine-tuning LLMs on 500k+ curated & synthetic cases, using Knowledge Distillation, LoRA/QLoRA (GRPO reasoning), and augmentation (QAC) paraphrasing/chunking, self-consistency, counterfactuals, backtranslation).\n • Built Agentic RAG (Node & Graph RAG) over EMR/EHR + PubMed with retrieval safety rails, real-time update, and citations to mitigate hallucination.\n • Established strict evaluation: MedMCQA / PubMedQA benchmarking, semantic similarity audits with biomedical embeddings, early-stopping LR scheduling; trained reproducibly on HPC.', 'img/medswin.jpeg')">... See more</span>
+                    <span class="see-more" onclick="openModal('MedAI Swin Research', 'Led research team of 5, funded by Swinburne to build a multi-agent system with domain-specialist agents (diagnostics, pharmacology, triage) coordinated by a reasoning agentic orchestrator MCP:\n • Boosted diagnostic accuracy & safety by fine-tuning LLMs on 500k+ curated & synthetic cases, using Knowledge Distillation, LoRA/QLoRA (GRPO reasoning), and augmentation (QAC) paraphrasing/chunking, self-consistency, counterfactuals, backtranslation.\n • Built Agentic RAG (Node & Graph RAG) over EMR/EHR + PubMed with retrieval safety rails, real-time update, and citations to mitigate hallucination.\n • Established strict evaluation: MedMCQA / PubMedQA benchmarking, semantic similarity audits with biomedical embeddings, early-stopping LR scheduling; trained reproducibly on HPC.', 'img/medswin.png')">... See more</span>
                 </div>
             </div>
             <!-- Clara -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/clara.jpeg" alt="Clara" class="project-img">
                 </div>
                 <div class="project-content">
                     <a href="#" class="project-title">Clara</a>
                     <p class="project-description">Contributed to Clara, nationally recognized medical LLM+VLM MedAI agent.</p>
-                    <span class="see-more" onclick="openModal('Clara', 'Contributed to Clara, Vietnam nationally recognized medical LLM+VLM assistant trained on 400k+ doctor-annotated cases, including 210k+ X-rays, and synthesis. Led development of an agentic RAG module using EMR to improve diagnosis accuracy and medication safety. Also supported model training, benchmarking, and built intelligent chat memory retrieval for contextual continuity.', 'img/clara.jpeg')">... See more</span>
+                    <span class="see-more" onclick="openModal('Clara', 'Contributed to Clara, Vietnam\'s nationally recognized medical LLM+VLM assistant with advanced clinical capabilities:\n• **Massive Training Dataset**: 400k+ doctor-annotated medical cases including 210k+ X-ray images with comprehensive synthesis\n• **Multi-Modal Architecture**: Integrated LLM and Vision-Language Model (VLM) for text and medical imaging analysis\n• **Agentic RAG Development**: Led development of intelligent retrieval system using Electronic Medical Records (EMR)\n• **Diagnostic Accuracy Enhancement**: Advanced reasoning capabilities for improved diagnosis accuracy and clinical decision support\n• **Medication Safety Systems**: Built safety rails and drug interaction checking for enhanced patient safety\n• **Model Training & Fine-tuning**: Contributed to model training pipeline with medical domain-specific optimizations\n• **Comprehensive Benchmarking**: Extensive evaluation on medical QA datasets and clinical performance metrics\n• **Intelligent Memory System**: Built contextual chat memory retrieval for maintaining conversation continuity\n• **Clinical Integration**: Designed for real-world clinical workflows with healthcare professional validation\n• **Multi-Language Support**: Vietnamese and English language capabilities for diverse patient populations', 'img/clara.jpeg')">... See more</span>
                 </div>
             </div>
 
             <!-- StudyBuddy -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/sb.png" alt="StudyBuddy" class="project-img">
                 </div>
                 <div class="project-content">
                     <a href="https://binkhoale1812-edsummariser.hf.space" class="project-title">StudyBuddy</a>
                     <p class="project-description">End-to-end RAG app for learning experience from your own documents.</p>
-                    <span class="see-more" onclick="openModal('StudyBuddy', 'StudyBuddy is an end-to-end Retrieval-Augmented Generation (RAG) app for learning from your own documents. Upload PDF/DOCX files; the app extracts text and images, captions images, chunks content into semantic “cards,” embeds them in MongoDB, and serves a chat endpoint that answers strictly from your uploaded materials. It includes a lightweight chat-memory feature, cost-aware model routing, NVIDIA/Gemini integration, and robust key rotation/retries.', 'img/sb.png')">... See more</span>
+                    <span class="see-more" onclick="openModal('StudyBuddy', 'StudyBuddy is an advanced end-to-end Retrieval-Augmented Generation (RAG) application for personalized learning from documents:\n• **Document Processing Pipeline**: Multi-format support (PDF/DOCX) with OCR, image captioning using VLM models, and intelligent text extraction\n• **TreeRAG Architecture**: Implements hierarchical document structure with parent-child relationships for enhanced context understanding\n• **Advanced Retrieval System**: Recursive retriever with semantic similarity search, hybrid search combining dense and sparse vectors\n• **Extensive Summarization Engine**: Multi-level summarization with extractive and abstractive techniques, chunk-level and document-level summaries\n• **Intelligent Chunking**: Semantic-aware content segmentation into *learning cards* with overlap optimization and context preservation\n• **Vector Database Integration**: MongoDB Atlas with FAISS indexing for efficient similarity search and retrieval\n• **Cost-Aware Model Routing**: Dynamic model selection based on query complexity and cost optimization\n• **Memory Management**: Lightweight STM/LTM chat memory with context-aware retrieval and conversation continuity\n• **Multi-Model Support**: NVIDIA GPU acceleration, Gemini Pro integration, and robust API key rotation/retry mechanisms', 'img/sb.png')">... See more</span>
                 </div>
             </div>
             
             <!-- SQL-LLM-CoT -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/sqlcot.png" alt="SQL-LLM-CoT" class="project-img">
                 </div>
@@ -145,19 +145,19 @@
             </div>
 
             <!-- Medical Chatbot -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/medbot.png" alt="Medical Chatbot" class="project-img">
                 </div>
                 <div class="project-content">
                     <a href="https://medical-chatbot-henna.vercel.app" class="project-title">Medical Chatbot</a>
                     <p class="project-description">Medical multimodal LLM, Agentic RAG, real-time query and context continuity.</p>
-                    <span class="see-more" onclick="openModal('Medical Chatbot', 'Developed an optimized AI medical chatbot with Gemini Pro 2.5, FAISS (with GridFS), NodeRAG over diagnosis & treatment medical dataset, real-time query. Data storage on MongoDB, leverage dynamic STM/LTM history caching. Incorporating model fine-tuning and quantization for efficiency. Deployed FastAPI backend with NLPs for multi-language support and NodeJS frontend, via RestAPI.', 'img/medbot.png')">... See more</span>
+                    <span class="see-more" onclick="openModal('Medical Chatbot', 'Developed an advanced AI medical chatbot with comprehensive clinical capabilities:\n• **Advanced LLM Integration**: Gemini Pro 2.5 with medical domain fine-tuning and optimization\n• **Vector Database Architecture**: FAISS with GridFS for efficient medical knowledge retrieval and storage\n• **NodeRAG Implementation**: Sophisticated retrieval-augmented generation over diagnosis & treatment datasets\n• **Real-Time Query Processing**: Low-latency response system for immediate clinical decision support\n• **MongoDB Data Management**: Robust data storage with medical record indexing and retrieval\n• **Dynamic Memory Systems**: STM/LTM history caching with context-aware conversation management\n• **Model Optimization**: Fine-tuning and quantization techniques for improved efficiency and performance\n• **Multi-Language NLP**: FastAPI backend with advanced natural language processing for global accessibility\n• **RESTful API Architecture**: Clean API design with NodeJS frontend integration\n• **Clinical Safety Features**: Built-in safety rails and medical accuracy validation\n• **Scalable Deployment**: Production-ready system with monitoring and error handling', 'img/medbot.png')">... See more</span>
                 </div>
             </div>
 
             <!-- URFF -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/urff.png" alt="URFF" class="project-img">
                 </div>
@@ -169,55 +169,55 @@
             </div>
 
             <!-- The Auburn Coffee -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/auburn.png" alt="Auburn Coffee" class="project-img">
                 </div>
                 <div class="project-content">
                     <a href="https://lelekhoa1812.github.io/The-Auburn-Coffee/" class="project-title">The Auburn Coffee</a>
                     <p class="project-description">Official website. Featuring menu, pre-order, loyalty programs, staff dashboard.</p>
-                    <span class="see-more" onclick="openModal('The Auburn Coffee', 'Developed the official website for a local commuter café at Auburn Station. Features include interactive menu, real-time pre-ordering, loyalty program with personalize QR code, and staff dashboard for order management, rating and feedback, sale analysis. Built with VueJS, Node.js (Vercel), database storage on MongoDB, and Firebase. Revolutionizing the business with digitalisation procedure, skyrocketing sale on an instance by 30%.', 'img/auburn.png')">... See more</span>
+                    <span class="see-more" onclick="openModal('The Auburn Coffee', 'Developed a comprehensive digital transformation solution for Auburn Station\'s commuter café:\n• **Interactive Menu System**: Dynamic menu with real-time pricing, availability tracking, and dietary information\n• **Real-Time Pre-Ordering Platform**: Advanced order management with queue optimization and pickup scheduling\n• **Personalized Loyalty Program**: QR code-based customer identification with points tracking and rewards\n• **Staff Dashboard Analytics**: Comprehensive order management, customer rating analysis, and sales performance metrics\n• **Technology Stack**: VueJS frontend, Node.js backend (Vercel deployment), MongoDB database, Firebase integration\n• **Business Intelligence**: Advanced analytics dashboard for sales trends, customer behavior, and inventory management\n• **Mobile-First Design**: Responsive interface optimized for commuter mobile usage patterns\n• **Payment Integration**: Secure payment processing with multiple payment method support\n• **Inventory Management**: Real-time stock tracking and automated low-stock alerts\n• **Customer Feedback System**: Integrated rating and feedback collection with sentiment analysis\n• **Performance Impact**: 30% increase in sales through digitalization and improved customer experience\n• **Scalable Architecture**: Cloud-based solution designed for future expansion and feature additions', 'img/auburn.png')">... See more</span>
                 </div>
             </div>
 
             <!-- AI Tutoring -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/aitut.webp" alt="AI Tutoring" class="project-img">
                 </div>
                 <div class="project-content">
                     <a href="https://github.com/Lelekhoa1812/AI-Tutor" class="project-title">AI Tutoring</a>
                     <p class="project-description">AI tutoring, LLM with RAG, knowledge-base and level-base teaching, assignment.</p>
-                    <span class="see-more" onclick="openModal('AI Tutoring', 'AI tutoring web-app, integrating LLM with RAG, knowledge-base and level-base teaching, marking and instruction. Personalised user experience with customised roadmap session and week by each, virtual teach-student session, unstructured document understandability and dynamic context retrieval. Integrating web-crawling and deep-research to support study materials from online sources. Frontend: Next.js, TypeScript, Tailwind CSS, Lucide React, React Hooks. Backend: Next.js API, Prisma ORM, MongoDB Atlas, NextAuth.js, OAuth2, bcryptjs. System: Gemini, Qwen, FastAPI, SlowAPI, FlaskAPI Qdrant, LangChain, VertexAI, LTM/STM Retrieval, Semantic Search, BeautifulSoup, Sentence-Transformer, GoogleBookAPI, SerpAPI, BraveAPI.', 'img/aitut.webp')">... See more</span>
+                    <span class="see-more" onclick="openModal('AI Tutoring', 'Advanced AI-powered tutoring platform with comprehensive educational capabilities:\n• **Intelligent RAG System**: Advanced retrieval-augmented generation with knowledge-base integration and level-based teaching\n• **Personalized Learning Paths**: Customized roadmap generation with adaptive session planning and weekly progress tracking\n• **Virtual Teaching Sessions**: AI-powered student-teacher interactions with real-time feedback and instruction\n• **Document Intelligence**: Unstructured document processing with dynamic context retrieval and content understanding\n• **Web Research Integration**: Automated web-crawling and deep-research capabilities for comprehensive study material sourcing\n• **Multi-Model AI Integration**: Gemini, Qwen, and FastAPI backend with advanced language model orchestration\n• **Advanced Search Systems**: Qdrant vector database, LangChain framework, and semantic search capabilities\n• **Memory Management**: LTM/STM retrieval systems for contextual learning continuity and progress tracking\n• **Frontend Technology**: Next.js, TypeScript, Tailwind CSS, Lucide React with modern UI/UX design\n• **Backend Architecture**: Next.js API, Prisma ORM, MongoDB Atlas with robust data management\n• **Authentication & Security**: NextAuth.js, OAuth2, bcryptjs for secure user management\n• **API Integrations**: GoogleBookAPI, SerpAPI, BraveAPI for comprehensive educational resource access\n• **Performance Optimization**: SlowAPI rate limiting, FlaskAPI microservices, and efficient data processing', 'img/aitut.webp')">... See more</span>
                 </div>
             </div>
 
             <!-- Triage Response -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/triage.jpeg" alt="Triage Response" class="project-img">
                 </div>
                 <div class="project-content">
                     <a href="https://github.com/Lelekhoa1812/Triage-LLM-Based/tree/main" class="project-title">Clinical Triage Response - Drone Medication Delivery</a>
                     <p class="project-description">AI-powered triage system, mobile/web app, clinical responsives, voice alerts, drone.</p>
-                    <span class="see-more" onclick="openModal('Triage Response: LLM-Driven Solution and Drone Medication Delivery', 'Developed and deployed an LLM-powered emergency triage system integrating React Native (mobile), React (web portal), FastAPI (backend), Whisper-v3, Gemini 2.5, Qwen-VL, FAISS, and MongoDB with MIMIC-IV triage-response data to enable real-time voice-triggered alerts, clinical decision support, and secured-fast drone (Great Shark 330 PRO VTOL) medication delivery.', 'img/triage.jpeg')">... See more</span>
+                    <span class="see-more" onclick="openModal('Triage Response: LLM-Driven Solution and Drone Medication Delivery', 'Revolutionary emergency triage system with AI-powered clinical decision support and automated medication delivery:\n• **Multi-Modal AI Integration**: Whisper-v3 for speech recognition, Gemini 2.5 for clinical reasoning, Qwen-VL for visual analysis\n• **Real-Time Voice Processing**: Advanced speech-to-text with medical terminology recognition and emergency context understanding\n• **Clinical Decision Support**: LLM-powered triage assessment with MIMIC-IV dataset integration for accurate emergency classification\n• **Cross-Platform Development**: React Native mobile app and React web portal for comprehensive accessibility\n• **Backend Architecture**: FastAPI with high-performance processing and real-time data streaming\n• **Vector Database System**: FAISS integration with MongoDB for efficient medical knowledge retrieval and patient data management\n• **Drone Delivery System**: Great Shark 330 PRO VTOL integration for secure, fast medication delivery in emergency scenarios\n• **Emergency Alert System**: Real-time voice-triggered alerts with GPS tracking and emergency response coordination\n• **Medical Data Integration**: MIMIC-IV triage-response data for evidence-based clinical decision making\n• **Security & Compliance**: HIPAA-compliant data handling with encrypted communication and secure drone operations\n• **Scalable Infrastructure**: Cloud-based deployment with load balancing and disaster recovery capabilities\n• **Performance Optimization**: Sub-second response times for critical emergency situations', 'img/triage.jpeg')">... See more</span>
                 </div>
             </div>
 
             <!-- Capstone Project -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/skyledge.png" alt="Capstone" class="project-img">
                 </div>
                 <div class="project-content">
                     <a href="https://github.com/benty691/EAT40005/tree/main" class="project-title">Predictive Maintenance - Automation System</a>
                     <p class="project-description">AI-powered predictive maintenance system for Sky Ledge's fleet operations.</p>
-                    <span class="see-more" onclick="openModal('Capstone Project: Predictive Maintenance, Automation Pipeline', 'Led team of 4 software to design and prototype an AI-powered predictive maintenance system for Sky Ledge fleet operations. Oversaw the full development lifecycle including external dataset collection, Python-based data pipelines, and model training using XGBoost, RandomForrest and LSTM. Coordinated frontend and backend development to deliver a functional dashboard for real-time vehicle health monitoring using OBD-II data. Managed task planning, research direction, and client engagement preparation.', 'img/skyledge.png')">... See more</span>
+                    <span class="see-more" onclick="openModal('Capstone Project: Predictive Maintenance, Automation Pipeline', 'Led comprehensive AI-powered predictive maintenance system development for Sky Ledge fleet operations:\n• **Team Leadership**: Managed 4-member software development team with agile methodology and project coordination\n• **Data Pipeline Architecture**: Python-based ETL pipelines for external dataset collection and real-time OBD-II data processing\n• **Advanced ML Models**: XGBoost, Random Forest, and LSTM neural networks for multi-algorithm predictive analysis\n• **Real-Time Monitoring Dashboard**: Interactive frontend for vehicle health monitoring with live data visualization\n• **OBD-II Integration**: Direct vehicle data collection and processing for comprehensive fleet health assessment\n• **Predictive Analytics**: Machine learning models for maintenance scheduling, failure prediction, and cost optimization\n• **Full-Stack Development**: Coordinated frontend and backend development with modern web technologies\n• **Client Engagement**: Managed stakeholder communication, requirement gathering, and project presentation\n• **Research & Development**: Conducted extensive research on predictive maintenance methodologies and industry best practices\n• **Quality Assurance**: Implemented testing frameworks and validation processes for model accuracy and system reliability\n• **Documentation & Deployment**: Comprehensive technical documentation and production-ready system deployment\n• **Performance Metrics**: Achieved significant reduction in unplanned maintenance and operational costs', 'img/skyledge.png')">... See more</span>
                 </div>
             </div>
 
             <!-- ElecBot -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/elecbot.jpeg" alt="ElecBot" class="project-img">
                 </div>
@@ -229,7 +229,7 @@
             </div>
 
             <!-- CVA -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/cva.png" alt="CVA" class="project-img">
                 </div>
@@ -241,7 +241,7 @@
             </div>
 
             <!-- IELTS Enhancer -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/ielts.png" alt="IELTS" class="project-img">
                 </div>
@@ -253,7 +253,7 @@
             </div>
 
             <!-- Student Management -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/stuma.png" alt="Student Management" class="project-img">
                 </div>
@@ -265,7 +265,7 @@
             </div>
 
             <!-- TicTacToe -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/ttt.png" alt="TTT" class="project-img">
                 </div>
@@ -277,7 +277,7 @@
             </div>
 
             <!-- Water Meter Scanner -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/watmet.png" alt="Water Scanner" class="project-img">
                 </div>
@@ -289,7 +289,7 @@
             </div>
 
             <!-- Obsei -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/obsei.png" alt="Obsei" class="project-img">
                 </div>
@@ -301,7 +301,7 @@
             </div>
 
             <!-- Linguaphile -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/linguaphile.jpeg" alt="Linguaphile" class="project-img">
                 </div>
@@ -313,7 +313,7 @@
             </div>
 
             <!-- Vietnamese Passport Scanner -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/passport.png" alt="Passport" class="project-img">
                 </div>
@@ -325,7 +325,7 @@
             </div>
 
             <!-- Sall-e -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/salle.png" alt="Sall-e" class="project-img">
                 </div>
@@ -337,7 +337,7 @@
             </div>
 
             <!-- S&P500 Stock Prediction -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/stock.jpeg" alt="Stock" class="project-img">
                 </div>
@@ -349,7 +349,7 @@
             </div>
 
             <!-- Golf Scorecard Scanner -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/golf.png" alt="Golf" class="project-img">
                 </div>
@@ -361,7 +361,7 @@
             </div>
 
             <!-- Weather Forecast Website -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/weather.png" alt="Weather" class="project-img">
                 </div>
@@ -373,7 +373,7 @@
             </div>
 
             <!-- Roster Management System -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/roster.jpg" alt="Roster" class="project-img">
                 </div>
@@ -385,7 +385,7 @@
             </div>
 
             <!-- Education Website -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/edweb.png" alt="Education Website" class="project-img">
                 </div>
@@ -397,7 +397,7 @@
             </div>
 
             <!-- Fretboard -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/fretboard.png" alt="Fretboard" class="project-img">
                 </div>
@@ -409,7 +409,7 @@
             </div>
 
             <!-- Monopoly Game -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/monopoly.jpeg" alt="Monopoly" class="project-img">
                 </div>
@@ -421,7 +421,7 @@
             </div>
 
             <!-- Message Encryption -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/encryption.png" alt="Encryption" class="project-img">
                 </div>
@@ -433,7 +433,7 @@
             </div>
 
             <!-- AI Rock Paper Scissor Game -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/rps.png" alt="RPS" class="project-img">
                 </div>
@@ -445,7 +445,7 @@
             </div>
 
             <!-- Virtual Instrument Keyboard -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/virkey.png" alt="Virtual Keyboard" class="project-img">
                 </div>
@@ -457,7 +457,7 @@
             </div>
 
             <!-- Chess Game -->
-            <div class="project-card">
+            <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/chess.webp" alt="Chess" class="project-img">
                 </div>
@@ -469,7 +469,7 @@
             </div>
 
             <!-- QR Code Generator -->
-            <div class="project-card">
+            <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/qr.png" alt="QR" class="project-img">
                 </div>
@@ -486,11 +486,13 @@
     <div id="projectModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <div class="modal-header">
-                <div class="modal-image" id="modalImage"></div>
-                <h3 class="modal-title" id="modalTitle"></h3>
+            <div class="modal-scrollable">
+                <div class="modal-header">
+                    <div class="modal-image" id="modalImage"></div>
+                    <h3 class="modal-title" id="modalTitle"></h3>
+                </div>
+                <p class="modal-description" id="modalDescription"></p>
             </div>
-            <p class="modal-description" id="modalDescription"></p>
         </div>
     </div>
 
@@ -503,7 +505,13 @@
             const modalImage = document.getElementById('modalImage');
             
             modalTitle.textContent = title;
-            modalDescription.textContent = description;
+            
+            // Convert markdown formatting to HTML
+            const formattedDescription = description
+                .replace(/\\n/g, '<br>')
+                .replace(/•/g, '<br>•')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // **bold** to <strong>
+                .replace(/\*(.*?)\*/g, '<em>$1</em>');  // *italic* to <em>
             
             // Clear previous content
             modalImage.innerHTML = '';
@@ -524,12 +532,45 @@
             
             // Add animation class
             modal.classList.add('fade-in');
+            
+            // Start typing animation
+            typeText(modalDescription, formattedDescription);
+        }
+        
+        // Typing animation function
+        function typeText(element, text, speed = 10) {
+            element.innerHTML = '';
+            let i = 0;
+            const timer = setInterval(() => {
+                if (i < text.length) {
+                    // Handle HTML tags properly
+                    if (text[i] === '<') {
+                        const tagEnd = text.indexOf('>', i);
+                        if (tagEnd !== -1) {
+                            element.innerHTML += text.substring(i, tagEnd + 1);
+                            i = tagEnd + 1;
+                        } else {
+                            element.innerHTML += text[i];
+                            i++;
+                        }
+                    } else {
+                        element.innerHTML += text[i];
+                        i++;
+                    }
+                } else {
+                    clearInterval(timer);
+                }
+            }, speed);
         }
         
         function closeModal() {
             const modal = document.getElementById('projectModal');
             modal.style.display = 'none';
             modal.classList.remove('fade-in');
+            
+            // Clear any ongoing typing animation
+            const modalDescription = document.getElementById('modalDescription');
+            modalDescription.innerHTML = '';
         }
         
         // Close modal when clicking outside
@@ -556,18 +597,15 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
+                    entry.target.classList.add('animate');
                 }
             });
         }, observerOptions);
         
-        // Observe all project cards and nav placeholders
+        // Observe all scroll-animate elements
         document.addEventListener('DOMContentLoaded', function() {
-            const projectCards = document.querySelectorAll('.project-card');
-            const navPlaceholders = document.querySelectorAll('.nav-placeholder');
-            
-            projectCards.forEach(card => observer.observe(card));
-            navPlaceholders.forEach(placeholder => observer.observe(placeholder));
+            const scrollElements = document.querySelectorAll('.scroll-animate');
+            scrollElements.forEach(element => observer.observe(element));
         });
     </script>
 </body>
