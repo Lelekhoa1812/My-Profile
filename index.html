@@ -48,7 +48,7 @@
                             </ul>
                         </div>
                         
-                        <p class="animated-text personal-text" data-text="I prioritize solutions that enhance human capabilities rather than replace them. My approach combines rigorous technical implementation with thoughtful consideration of real-world impact, ensuring that every line of code serves a meaningful purpose in making people's lives easier and more efficient."></p>
+                        <p class="animated-text personal-text" data-text="I prioritize solutions that enhance human capabilities. My approach combines rigorous technical implementation with thoughtful consideration of real-world impact, ensuring that every line of code serves a meaningful purpose in making people's lives easier and more efficient."></p>
                     </div>
                 </div>
             </div>
@@ -806,26 +806,166 @@
             }, 80);
         }
         
+        // Professional English to Chinese translation mapping
+        const translationMap = {
+            // Personal Introduction
+            'Great to see you here': '很高兴见到你',
+            'Khoa Le': '黎科华',
+            'Liam': '利亚姆',
+            'Software Engineering': '软件工程',
+            'Swinburne University': '斯威本大学',
+            'Melbourne': '墨尔本',
+            'graduating in 2025': '2025年毕业',
+            'passion': '热情',
+            'developing AI solutions': '开发人工智能解决方案',
+            'improve people\'s lives': '改善人们的生活',
+            'practical': '实用的',
+            'real-world applications': '实际应用',
+            'technology should serve humanity': '技术应该为人类服务',
+            'rationally and efficiently': '理性和高效地',
+            'showcase of complexity': '复杂性的展示',
+            'work focuses on': '工作重点',
+            'three key areas': '三个关键领域',
+            'Medical AI Systems': '医疗人工智能系统',
+            'multi-agent diagnostic systems': '多智能体诊断系统',
+            'clinical decision support tools': '临床决策支持工具',
+            'Educational Platforms': '教育平台',
+            'AI tutoring systems': '人工智能辅导系统',
+            'adapt to individual learning needs': '适应个人学习需求',
+            'Business Automation': '商业自动化',
+            'streamline operations': '简化运营',
+            'enhance productivity': '提高生产力',
+            'prioritize solutions': '优先考虑解决方案',
+            'enhance human capabilities': '增强人类能力',
+            'rigorous technical implementation': '严格的技术实施',
+            'thoughtful consideration': '深思熟虑',
+            'real-world impact': '实际影响',
+            'meaningful purpose': '有意义的目的',
+            'making people\'s lives easier': '让人们的生活更轻松',
+            'more efficient': '更高效',
+            
+            // Programming Languages
+            'Python': 'Python',
+            'Java': 'Java',
+            'Kotlin': 'Kotlin',
+            'SQL': 'SQL',
+            'C++': 'C++',
+            'C#': 'C#',
+            'JavaScript': 'JavaScript',
+            'TypeScript': 'TypeScript',
+            
+            // Frameworks
+            'FastAPI': 'FastAPI',
+            'Flask': 'Flask',
+            'Node.js': 'Node.js',
+            'SpringBoot': 'SpringBoot',
+            'Vue': 'Vue',
+            'React': 'React',
+            'Angular': 'Angular',
+            'Next.js': 'Next.js',
+            
+            // AI/ML Technologies
+            'Transformers': 'Transformer',
+            'TensorFlow': 'TensorFlow',
+            'PyTorch': 'PyTorch',
+            'YOLO': 'YOLO',
+            'ResNet': 'ResNet',
+            'CNN': '卷积神经网络',
+            'LLM': '大语言模型',
+            'VLM': '视觉语言模型',
+            'NLP': '自然语言处理',
+            'RAG architectures': 'RAG架构',
+            'Knowledge Distillation': '知识蒸馏',
+            'CV': '计算机视觉',
+            'ASR': '自动语音识别',
+            'Machine Learning': '机器学习',
+            'Deep Learning': '深度学习',
+            'Synthesis': '合成',
+            'Data Analytics': '数据分析',
+            
+            // Tools
+            'Docker': 'Docker',
+            'Kubernetes': 'Kubernetes',
+            'MongoDB': 'MongoDB',
+            'MySQL': 'MySQL',
+            'AWS': 'AWS',
+            'Azure': 'Azure',
+            'GCC': 'GCC',
+            'Oracle': 'Oracle',
+            'Jenkin': 'Jenkins',
+            'Git': 'Git',
+            'Firebase': 'Firebase',
+            
+            // Design Tools
+            'Figma': 'Figma',
+            'Cursor': 'Cursor',
+            'Jira': 'Jira',
+            'Adobe Illustrator': 'Adobe Illustrator',
+            'Microsoft Powerpoint': 'Microsoft PowerPoint',
+            'Stable Diffusion': 'Stable Diffusion',
+            
+            // Languages
+            'English': '英语',
+            'Vietnamese': '越南语',
+            'Mandarin': '普通话'
+        };
+
         function scrambleText(element, text, index, isPersonalText = false) {
-            if (index < text.length) {
-                const chineseChars = '人工智能机器学习深度学习神经网络自然语言处理计算机视觉数据科学算法模型训练优化性能效率创新技术解决方案实用应用医疗教育商业自动化智能化数字化转型云计算大数据物联网区块链软件';
-                const scrambled = text
-                    .split('')
-                    .map((char, i) => {
-                        if (i < index) return char;
-                        return chineseChars[Math.floor(Math.random() * chineseChars.length)];
-                    })
-                    .join('');
+            // First, convert the entire text to Chinese
+            const words = text.split(/(\s+|[.,!?;:])/);
+            const chineseText = words.map((word) => {
+                const cleanWord = word.trim();
+                if (cleanWord && translationMap[cleanWord]) {
+                    return translationMap[cleanWord];
+                } else if (cleanWord.length > 1 && /[a-zA-Z]/.test(cleanWord)) {
+                    // For unknown words, use relevant Chinese characters
+                    const chineseChars = '人工智能机器学习深度学习神经网络自然语言处理计算机视觉数据科学算法模型训练优化性能效率创新技术解决方案实用应用医疗教育商业自动化智能化数字化转型云计算大数据物联网区块链软件工程开发编程代码数据库系统架构设计前端后端全栈移动应用网页开发用户体验界面设计项目管理团队协作敏捷开发持续集成部署运维监控测试质量保证安全防护性能优化可扩展性维护性可靠性稳定性';
+                    return chineseChars[Math.floor(Math.random() * chineseChars.length)];
+                }
+                return word; // Keep punctuation and spaces
+            }).join('');
+            
+            if (index === 0) {
+                // Start with Chinese text
+                element.textContent = chineseText;
+                setTimeout(() => {
+                    scrambleText(element, text, 1, isPersonalText);
+                }, isPersonalText ? 1000 : 1500);
+            } else if (index <= words.length) {
+                // Gradually convert back to English word by word
+                const convertedWords = words.map((word, wordIndex) => {
+                    const cleanWord = word.trim();
+                    if (wordIndex < index - 1) {
+                        // Already converted to English
+                        return word;
+                    } else if (wordIndex === index - 1 && cleanWord && translationMap[cleanWord]) {
+                        // Convert this word from Chinese to English
+                        return word;
+                    } else if (wordIndex === index - 1 && cleanWord.length > 1 && /[a-zA-Z]/.test(cleanWord)) {
+                        // Convert unknown word back to English
+                        return word;
+                    } else if (wordIndex >= index) {
+                        // Still in Chinese
+                        if (cleanWord && translationMap[cleanWord]) {
+                            return translationMap[cleanWord];
+                        } else if (cleanWord.length > 1 && /[a-zA-Z]/.test(cleanWord)) {
+                            const chineseChars = '人工智能机器学习深度学习神经网络自然语言处理计算机视觉数据科学算法模型训练优化性能效率创新技术解决方案实用应用医疗教育商业自动化智能化数字化转型云计算大数据物联网区块链软件工程开发编程代码数据库系统架构设计前端后端全栈移动应用网页开发用户体验界面设计项目管理团队协作敏捷开发持续集成部署运维监控测试质量保证安全防护性能优化可扩展性维护性可靠性稳定性';
+                            return chineseChars[Math.floor(Math.random() * chineseChars.length)];
+                        }
+                    }
+                    return word; // Keep punctuation and spaces
+                }).join('');
                 
-                element.textContent = scrambled;
+                element.textContent = convertedWords;
                 
                 // Faster animation for personal text
-                const delay = isPersonalText ? 25 : 50;
+                const delay = isPersonalText ? 100 : 150;
                 
                 setTimeout(() => {
                     scrambleText(element, text, index + 1, isPersonalText);
                 }, delay);
             } else {
+                // Animation complete, show final English text
                 element.textContent = text;
             }
         }
