@@ -1929,3 +1929,278 @@ h2::after {
         scroll-behavior: auto !important;
     }
 }
+
+/* Root Cause vs Logic: the first redesign used oversized editorial typography and warm metallic accents, which made technical content feel theatrical. This final polish restores professional scale, left alignment, and quieter contrast for better scanability. */
+:root {
+    --primary-color: #5cc8be;
+    --accent-color: #8fa3b8;
+    --text-color: #eef3f7;
+    --background-color: #111418;
+    --hover-color: #9ee6dd;
+    --link-color: rgba(238, 243, 247, 0.78);
+    --card-bg: #171b21;
+    --surface-border: rgba(174, 188, 204, 0.16);
+    --surface-border-strong: rgba(92, 200, 190, 0.34);
+    --muted-text: rgba(238, 243, 247, 0.68);
+    --border-radius: 8px;
+    --shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+    --shadow-hover: 0 18px 42px rgba(0, 0, 0, 0.28);
+}
+
+body {
+    background:
+        linear-gradient(180deg, rgba(92, 200, 190, 0.045), transparent 260px),
+        linear-gradient(180deg, #111418 0%, #151a20 100%);
+    color: var(--text-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.card-title,
+.skill-title,
+.project-title,
+.academic-title,
+.company-name,
+.modal-title,
+.role-title {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    letter-spacing: 0;
+}
+
+h1 {
+    font-size: 2.9rem;
+    line-height: 1.04;
+    font-weight: 750;
+}
+
+h2,
+.section-title {
+    font-size: 2.05rem;
+    line-height: 1.15;
+    font-weight: 760;
+}
+
+h3,
+.card-title {
+    font-size: 1.45rem;
+    line-height: 1.25;
+    font-weight: 720;
+}
+
+h4,
+.skill-title {
+    font-size: 0.98rem;
+    line-height: 1.35;
+    font-weight: 700;
+}
+
+.navbar {
+    background: rgba(17, 20, 24, 0.88);
+}
+
+.section {
+    max-width: 1180px;
+    padding: 3.25rem 2rem;
+}
+
+.section-head {
+    max-width: 720px;
+    margin: 0 0 1.75rem;
+    gap: 0.55rem;
+    text-align: left;
+}
+
+.section-kicker,
+.eyebrow,
+.profile-label,
+.metric-label,
+.info-label {
+    color: #9fb2c4;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+}
+
+.section-title {
+    padding-bottom: 0;
+    text-align: left;
+}
+
+.section-title::after {
+    display: none;
+}
+
+.section-description {
+    max-width: 670px;
+    margin: 0;
+    color: rgba(238, 243, 247, 0.64);
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.about-container {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.95fr);
+    gap: 1rem;
+}
+
+.about-card,
+.nav-placeholder,
+.project-card,
+.academic-card,
+.experience-card,
+.metric-card,
+.info-card,
+.hero-copy,
+.hero-visual {
+    border-radius: 8px;
+    background: var(--card-bg);
+    border-color: var(--surface-border);
+    box-shadow: var(--shadow);
+}
+
+.about-card {
+    padding: 1.45rem;
+}
+
+.about-card:hover,
+.nav-placeholder:hover,
+.project-card:hover,
+.academic-card:hover,
+.experience-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--surface-border-strong);
+}
+
+.card-header {
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.9rem;
+}
+
+.card-icon {
+    min-width: 2.05rem;
+    min-height: 2.05rem;
+    font-size: 0.78rem;
+    color: #62d4c9;
+    background: rgba(92, 200, 190, 0.12);
+}
+
+.personal-content {
+    gap: 1rem;
+}
+
+.personal-content p,
+.focus-list li,
+.skill-items {
+    color: rgba(238, 243, 247, 0.72);
+    font-size: 0.96rem;
+    line-height: 1.62;
+}
+
+.personal-text {
+    text-align: left;
+}
+
+.focus-areas,
+.skill-category,
+.achievements {
+    background: rgba(255, 255, 255, 0.025);
+    border-left: 2px solid rgba(92, 200, 190, 0.58);
+    border-radius: 8px;
+}
+
+.focus-areas {
+    padding: 1rem;
+}
+
+.focus-areas h4 {
+    color: #e8eef4;
+    margin-bottom: 0.7rem;
+}
+
+.skills-grid {
+    gap: 0.8rem;
+}
+
+.skill-category {
+    padding: 0.9rem 1rem;
+}
+
+.skill-category:hover {
+    transform: none;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.chip-list {
+    gap: 0.45rem;
+}
+
+.chip {
+    min-height: 30px;
+    padding: 0.32rem 0.65rem;
+    border-radius: 7px;
+    background: rgba(238, 243, 247, 0.055);
+    border-color: rgba(174, 188, 204, 0.14);
+    color: rgba(238, 243, 247, 0.86);
+    font-size: 0.83rem;
+    font-weight: 620;
+}
+
+.project-title,
+.academic-title,
+.company-name,
+.see-more {
+    color: #77ddd4;
+}
+
+.see-more:hover,
+.project-title:hover,
+.academic-title:hover {
+    color: #a3eee7;
+}
+
+.project-card,
+.nav-placeholder,
+.academic-card,
+.experience-card {
+    background: #171b21;
+}
+
+.nav-placeholder img {
+    border-color: rgba(92, 200, 190, 0.38);
+}
+
+.academic-semester,
+.role-date {
+    background: rgba(92, 200, 190, 0.1);
+    color: rgba(238, 243, 247, 0.82);
+    border-color: rgba(92, 200, 190, 0.18);
+}
+
+@media (max-width: 980px) {
+    .about-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.25rem;
+    }
+
+    h2,
+    .section-title {
+        font-size: 1.65rem;
+    }
+
+    .section {
+        padding: 2.5rem 1rem;
+    }
+
+    .about-card {
+        padding: 1.2rem;
+    }
+}
