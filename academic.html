@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="index.css">
     <link rel="website icon" type="png" href="img/icon.png" >
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -16,8 +17,8 @@
                 <h1>Dang Khoa Le - Software Engineer</h1>
             </a>
             <ul class="links">
-                <li><a href="index.html">Project</a></li>
-                <li><a href="academic.html">Academic</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="academic.html" aria-current="page">Academic</a></li>
                 <li><a href="experience.html">Experience</a></li>
                 <li><a href="https://www.linkedin.com/in/dang-khoa-le-96a6332a8">LinkedIn</a></li>
                 <li><a href="https://huggingface.co/BinKhoaLe1812">HuggingFace</a></li>
@@ -25,16 +26,20 @@
         </nav>
     </header>
 
+    <main>
     <div class="section">
-        <h2>Academic Resources</h2>
-        <p class="section-description">Explore my academic journey, coursework, and educational projects from Swinburne University and other learning experiences.</p>
+        <div class="section-head">
+            <span class="section-kicker">Academic</span>
+            <h2 class="section-title">Academic Resources</h2>
+            <p class="section-description">Explore my academic journey, coursework, and educational projects from Swinburne University and other learning experiences.</p>
+        </div>
         
         <!-- Navigation Placeholders -->
         <div class="nav-placeholders">
-            <div class="nav-placeholder" onclick="window.location.href='index.html'">
+            <div class="nav-placeholder" onclick="window.location.href='index.html#projects'">
                 <img src="img/project.webp" alt="Profile">
-                <h3>Project</h3>
-                <p>Find more about my individual project</p>
+                <h3>Projects</h3>
+                <p>Find more about my individual projects</p>
             </div>
             <div class="nav-placeholder" onclick="window.location.href='experience.html'">
                 <img src="img/experience.jpeg" alt="Experience">
@@ -248,6 +253,7 @@
             </div>
         </div>
     </div>
+    </main>
 
     <script>
         // Add animation classes to elements when they come into view

@@ -7,6 +7,7 @@
     <title>Professional Experience - Dang Khoa Le</title>
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -16,25 +17,29 @@
                 <h1>Dang Khoa Le - Software Engineer</h1>
             </a>
             <ul class="links">
-                <li><a href="index.html">Project</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
                 <li><a href="academic.html">Academic</a></li>
-                <li><a href="experience.html">Experience</a></li>
+                <li><a href="experience.html" aria-current="page">Experience</a></li>
                 <li><a href="https://www.linkedin.com/in/dang-khoa-le-96a6332a8">LinkedIn</a></li>
                 <li><a href="https://huggingface.co/BinKhoaLe1812">HuggingFace</a></li>
             </ul>
         </nav>
     </header>
 
+    <main>
     <div class="section">
-        <h2>Professional Experience</h2>
-        <p class="section-description">My professional journey across various companies, roles, and projects in software engineering, AI/ML, and technology innovation.</p>
+        <div class="section-head">
+            <span class="section-kicker">Experience</span>
+            <h2 class="section-title">Professional Experience</h2>
+            <p class="section-description">My professional journey across various companies, roles, and projects in software engineering, AI/ML, and technology innovation.</p>
+        </div>
         
         <!-- Navigation Placeholders -->
         <div class="nav-placeholders">
-            <div class="nav-placeholder" onclick="window.location.href='index.html'">
+            <div class="nav-placeholder" onclick="window.location.href='index.html#projects'">
                 <img src="img/project.webp" alt="Profile">
-                <h3>Project</h3>
-                <p>Find more about my individual project</p>
+                <h3>Projects</h3>
+                <p>Find more about my individual projects</p>
             </div>
             <div class="nav-placeholder" onclick="window.location.href='academic.html'">
                 <img src="img/academic.jpg" alt="Academic">
@@ -55,6 +60,33 @@
 
         <!-- Experience Timeline -->
         <div class="experience-timeline">
+
+            <!-- Harry the Hire - AI -->
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="company-info">
+                        <h3 class="company-name">Harry the Hirer</h3>
+                        <span class="company-location">Melbourne, Victoria, Australia</span>
+                    </div>
+                    <div class="role-info">
+                        <h4 class="role-title">Senior AI Engineer</h4>
+                        <span class="role-date">December 2025 - Present</span>
+                    </div>
+                </div>
+                <div class="experience-content">
+                    <p>Spearheaded the AI transformation for Australia’s biggest event enterprise, architecting a robust ecosystem, converting manual inventory, logistics, and planning workflows into high-fidelity, grounded automated systems.</p>
+                    <div class="achievements">
+                        <ul>
+                            <li>Multi-Agent RAG Orchestration: Architected a production-grade multi-agent RAG platform on Azure. Orchestrating  Planner, Retriever, and Verifier agents to manage tasks with HIL workflows and progressive semantic learning. This system automates document generation and evidence-backed decision, support for high-impact event planning.</li>
+                            <li>Performance Engineering: Optimise latency and token spend via context pruning, sliding-window memory, and Redis-KV caching. Developed a dynamic multi-LLM routing layer via Azure AI Foundry, utilise regex-driven patternization and async replanning to route queries to the most cost-effective models without compromising quality.</li>
+                            <li>Advanced Retrieval: Built a hybrid retrieval pipeline combining agentic chunking with HNSW indexing and metadata filtering. Implemented a proprietary verifier-based grounding mechanism to cross-reference LLM outputs against internal knowledge bases, eliminating hallucinations and ensuring 100% auditability.</li>
+                            <li>Intelligent Document Processing (IDP): Designed an end-to-end OCR + LLM pipeline on GPU infrastructure to automate ingestion of unstructured data. Utilised agentic templating to map complex attributes to structured categories, reducing manual entry overhead and accelerating inventory onboarding.</li>
+                            <li>MCP & ERP Integration: Pioneered a protocol-compliant MCP layer to bridge AIs with core ERP systems. Enabled real-time access to stock and planning data for Claude to C#, supporting complex multi-step planning for fluctuating logistical demands.</li>
+                            <li>Enterprise Infrastructure: Engineered modular Python microservices defined by Pydantic contracts and a centralised tool registry. Deployed via Docker on Azure with retry logics and MSAL authentication, maintaining 99.9% uptime across operations.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             
             <!-- Swinburne -->
             <div class="experience-card">
@@ -64,7 +96,7 @@
                         <span class="company-location">Hawthorn, Australia</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">Researcher</h4>
+                        <h4 class="role-title">Lab Leader - Medical AI Research</h4>
                         <span class="role-date">August 2025 - February 2026</span>
                     </div>
                 </div>
@@ -90,25 +122,33 @@
                         <span class="company-location">Perth, WA, Australia</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">AI Engineer</h4>
-                        <span class="role-date">November 2025 - March 2026</span>
+                        <h4 class="role-title">Team Lead - AI Engineer</h4>
+                        <span class="role-date">November 2025 - July 2026</span>
                     </div>
                 </div>
                 <div class="experience-content">
-                    <p>Led a self-sourced team (contracted via Teqar) to build a client–server, plugin-style multi-agent assistant that ingests PDFs/DOCX/XLSX, normalizes to Markdown and JSON objects, performs semantic chunking + RAG, and auto-completes technical outcome docs with grounded, auditable facts.</p>
+                    <p>Spearheaded the end-to-end architecture and production delivery of an enterprise AI platform, turning manual workflows into deterministic, auditable systems aligned with business-critical compliance demands and governed industrial artifacts.</p>
                     <div class="achievements">
-                        <h5>Key Deliveries:</h5>
+                        <h5>Leadership & Strategies:</h5>
                         <ul>
-                            <li>Cut manual document assembly from ~80 hours to minutes, while maintaining source traceability, accuracy and customisability.</li>
-                            <li>Architected a privacy-first stack: Llama-3.1 (orchestrator), olmOCR (parsing), EmbeddingGemma (embeddings), FAISS/HNSW (vector search) in multi-layered tree, FastAPI on private on-prem runtime.</li>
-                            <li>Delivered agentic tooling to CRUD documents on staff request (update tables, fill cells, rewrite sections) and incremental re-ingest on file changes; achieved ≥90% autofill coverage with <2% error in audits.</li>
+                            <li>Guided the full development lifecycle, translating complex RFQ requirements into a pragmatic "Trust-First AI" operating model that prioritized deployment accountability and resilience.</li>
+                            <li>Engineered a controllable platform that behaves like industrial software—observable, governable, and resilient—reducing operational overhead in compliance-sensitive environments.</li>
+                            <li>Bridged deep-tech R&amp;D and executive stakeholders, ensuring outputs met stringent SLAs, confidence gates, and governance expectations.</li>
+                        </ul>
+                        <h5>AI R&D:</h5>
+                        <ul>
+                            <li>Architected dual-path reasoning chains (candidate-centric inference vs. high-context multi-agent choreography) using ReAct prompting and constrained JSON to deliver grounded, hallucination-resistant outputs.</li>
+                            <li>Engineered a FastAPI-based agent orchestration layer and Next.js operations cockpit for concurrency-aware tool execution, real-time telemetry, and semantic sanitization across high-throughput workloads.</li>
+                            <li>Developed automated self-correction loops and multi-stage backfill/recovery with probabilistic confidence gates to surface uncertainty states and trigger HITL overrides when necessary.</li>
+                            <li>Optimized stateful memory and retrieval-attention, ensuring persistent context over complex RFQ corpora (PDF/DOCX/XLSX) for deterministic output consistency.</li>
+                            <li>Delivered resilient agentic inference, enabling governed industrial artifacts from unstructured data while maintaining transparency across the vectorized pipeline.</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <!-- SuperEdTech -->
-            <div class="experience-card">
+            <!-- <div class="experience-card">
                 <div class="experience-header">
                     <div class="company-info">
                         <h3 class="company-name">SuperEdTech</h3>
@@ -132,6 +172,39 @@
                         </ul>
                     </div>
                 </div>
+            </div> -->
+
+            <!-- Harry the Hirer - DS -->
+            <div class="experience-card">
+                <div class="experience-header">
+                    <div class="company-info">
+                        <h3 class="company-name">Harry the Hirer</h3>
+                        <span class="company-location">Melbourne, Victoria, Australia</span>
+                    </div>
+                    <div class="role-info">
+                        <h4 class="role-title">Senior Data Scientist</h4>
+                        <span class="role-date">March 2025 - Present</span>
+                    </div>
+                </div>
+                <div class="experience-content">
+                    <p>Built on the legacy pedigree platform of the world-champion thoroughbred, Black Caviar.</p>
+                    <div class="achievements">
+                        <p>Reimagined horse pedigree intelligence by architecting an AI-first recommendation engine that transforms massive historical bloodline data into actionable breeding insights. I developed a Hybrid Ensemble Framework that integrates ten distinct algorithmic signals to solve the bipartite ranking task of mate selection, balancing genetic merit against inbreeding risks.</p>
+                        <h5>Contributions:</h5>
+                        <ul>
+                            <li>Multi-Signal Recommendation Engine: Engineered a weighted ensemble scoring system comprising Matrix Factorization (Collaborative Filtering) for pair interactions, Gradient Boosting (GBM) for temporal ranking, and Variational Autoencoders (VAE) for latent "genetic fingerprint" compatibility.</li>
+                            <li>Advanced Pedigree Analytics: Implemented a Shared Ancestor Compatibility Kernel that weights common ancestors by inverse generational depth and performance quality, providing a more granular relatedness metric than standard inbreeding coefficients.</li>
+                            <li>Graph-Aware Embeddings: Developed a Graph Attention (GAT) inspired similarity module to encode higher-order pedigree topology into 64-dimensional embeddings, enabling efficient retrieval of phenotypically and structurally similar candidates.</li>
+                            <li>Probabilistic & Domain Modeling: Built a Bayesian Nicking system for sire/dam line interactions and modernized Dosage Theory using depth-decayed ancestral contributions and sex-aware cross-line affinity terms.</li>
+                            <li>Explainable AI (XAI): Integrated LLM-powered reasoning to provide natural language justifications for ensemble outputs, ensuring the "black-box" model remains interpretable for breeders.</li>
+                        </ul>
+                        <h5>Impacts:</h5>
+                        <ul>
+                            </li>Optimized BFS-based graph traversal for real-time network expansion and hierarchical pedigree rendering.</li>
+                            <li>Rigor: Established a strict temporal training split to prevent data leakage in progeny performance prediction.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             <!-- AITC -->
@@ -142,7 +215,7 @@
                         <span class="company-location">HCM City, Vietnam</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">AI/ML, Data Engineer | Team Leader</h4>
+                        <h4 class="role-title">Team Leader - AI Engineer</h4>
                         <span class="role-date">June 2025 – November 2025</span>
                     </div>
                 </div>
@@ -159,7 +232,7 @@
                         <span class="company-location">HCM City, Vietnam</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">LLM Engineer | Senior Engineer</h4>
+                        <h4 class="role-title">Senior AI Engineer</h4>
                         <span class="role-date">June 2025 – August 2025</span>
                     </div>
                 </div>
@@ -183,7 +256,7 @@
                         <span class="company-location">Swinburne, Victoria, Australia</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">AI/ML, Data Engineer | Team Leader</h4>
+                        <h4 class="role-title">Team Leader - Data Science</h4>
                         <span class="role-date">January 2025 – November 2025</span>
                     </div>
                 </div>
@@ -200,7 +273,7 @@
                         <span class="company-location">Binh Duong, Vietnam</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">Full-stack - Cloud Engineer | Freelance</h4>
+                        <h4 class="role-title">Full-stack Engineer</h4>
                         <span class="role-date">July 2025 – September 2025</span>
                     </div>
                 </div>
@@ -217,7 +290,7 @@
                         <span class="company-location">HCM City, Vietnam</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">AI/ML, Data Engineer | Contracted</h4>
+                        <h4 class="role-title">Senior AI Engineer</h4>
                         <span class="role-date">June 2025 – September 2025</span>
                     </div>
                 </div>
@@ -234,7 +307,7 @@
                         <span class="company-location">HCM City, Vietnam</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">ML/DL Engineer | Team Leader</h4>
+                        <h4 class="role-title">Senior ML Engineer</h4>
                         <span class="role-date">June 2025 – August 2025</span>
                     </div>
                 </div>
@@ -251,7 +324,7 @@
                         <span class="company-location">HCM City, Vietnam</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">Software Engineer - Data Science | Intern</h4>
+                        <h4 class="role-title">Data/AI Engineer - Internship</h4>
                         <span class="role-date">December 2024 – February 2025</span>
                     </div>
                 </div>
@@ -276,7 +349,7 @@
                         <span class="company-location">HCM City, Vietnam</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">Software Engineering - Data Science | Intern</h4>
+                        <h4 class="role-title">Data/AI Engineer - Internship</h4>
                         <span class="role-date">January 2025 – February 2025</span>
                     </div>
                 </div>
@@ -293,7 +366,7 @@
                         <span class="company-location">Hawthorn East, Victoria, Australia</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">Barista, Website Developer | Part-time</h4>
+                        <h4 class="role-title">Barista, Website Developer</h4>
                         <span class="role-date">May 2023 - November 2025</span>
                     </div>
                 </div>
@@ -310,7 +383,7 @@
                         <span class="company-location">Laverton North, Victoria, Australia</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">Android Developer | Freelance</h4>
+                        <h4 class="role-title">Android Developer</h4>
                         <span class="role-date">June 2024 – January 2025</span>
                     </div>
                 </div>
@@ -327,7 +400,7 @@
                         <span class="company-location">HCM City, Vietnam</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">Software/IoT Engineering - Applied AI | Contracted</h4>
+                        <h4 class="role-title">IoT/AI Engineer</h4>
                         <span class="role-date">December 2024 – February 2025</span>
                     </div>
                 </div>
@@ -344,7 +417,7 @@
                         <span class="company-location">HCM City, Vietnam</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">Software/DevOps Engineer | Intern</h4>
+                        <h4 class="role-title">DevOps Engineer - Internship</h4>
                         <span class="role-date">December 2022 – February 2023</span>
                     </div>
                 </div>
@@ -361,7 +434,7 @@
                         <span class="company-location">HCM City, Vietnam</span>
                     </div>
                     <div class="role-info">
-                        <h4 class="role-title">Hardware Technician | Part-time</h4>
+                        <h4 class="role-title">Hardware Technician</h4>
                         <span class="role-date">September 2019 – December 2019</span>
                     </div>
                 </div>
@@ -371,6 +444,7 @@
             </div>
         </div>
     </div>
+    </main>
 
     <script>
         // Add animation classes to elements when they come into view

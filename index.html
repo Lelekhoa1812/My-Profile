@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="index.css">
     <link rel="website icon" type="png" href="img/icon.png" >
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -16,7 +17,7 @@
                 <h1>Dang Khoa Le - Software Engineer</h1>
             </a>
             <ul class="links">
-                <li><a href="#">Project</a></li>
+                <li><a href="#projects" aria-current="page">Projects</a></li>
                 <li><a href="academic.html">Academic</a></li>
                 <li><a href="experience.html">Experience</a></li>
                 <li><a href="https://www.linkedin.com/in/dang-khoa-le-96a6332a8">LinkedIn</a></li>
@@ -25,129 +26,212 @@
         </nav>
     </header>
 
-    <section id="about" class="section">
-        <h2>Profile</h2>
-        <div class="about-container">
-            <div class="about-card personal-card">
-                <div class="card-header">
-                    <div class="card-icon">🧬</div>
-                    <h3 class="card-title" data-text="Expertise"></h3>
-                </div>
-                <div class="card-content">
-                    <div class="personal-content">
-                        <p class="animated-text personal-text" data-text="Great to see you here, it's Khoa Le (or Liam), a Software Engineering student at Swinburne University, Melbourne, graduating in 2025."></p>
-                        
-                        <p class="animated-text personal-text" data-text="My passion lies in developing AI solutions that genuinely improve people's lives through practical, real-world applications. I believe technology should serve humanity rationally and efficiently, not as a showcase of complexity."></p>
-                        
-                        <div class="focus-areas">
-                            <h4 class="animated-text personal-text" data-text="My work focuses on three key areas:"></h4>
-                            <ul class="focus-list">
-                                <li class="animated-text personal-text" data-text="• Medical AI Systems - Building multi-agent diagnostic systems and clinical decision support tools"></li>
-                                <li class="animated-text personal-text" data-text="• Educational Platforms - Creating AI tutoring systems that adapt to individual learning needs"></li>
-                                <li class="animated-text personal-text" data-text="• Business Automation - Developing solutions that streamline operations and enhance productivity"></li>
-                            </ul>
+    <main>
+        <!-- Motivation vs Logic: the homepage now front-loads the narrative and proof points so the site reads like a curated portfolio instead of a dense catalog. -->
+        <section class="hero section">
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">Software Engineer · AI Systems · Melbourne</p>
+                    <h1 class="hero-title">Designing calm, credible AI products for healthcare, education, and operations.</h1>
+                    <p class="hero-summary">I build systems that turn dense workflows into clear, reliable interfaces. The goal is always the same: make sophisticated work feel effortless to use.</p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#projects">View Featured Work</a>
+                        <a class="button button-secondary" href="experience.html">Explore Experience</a>
+                    </div>
+                    <div class="hero-metrics">
+                        <div class="metric-card">
+                            <span class="metric-label">Focus</span>
+                            <strong class="metric-value">AI + product systems</strong>
+                            <span class="metric-note">Grounded, useful, low-noise interfaces</span>
                         </div>
-                        
-                        <p class="animated-text personal-text" data-text="I prioritize solutions that enhance human capabilities. My approach combines rigorous technical implementation with thoughtful consideration of real-world impact, ensuring that every line of code serves a meaningful purpose in making people's lives easier and more efficient."></p>
+                        <div class="metric-card">
+                            <span class="metric-label">Domains</span>
+                            <strong class="metric-value">Healthcare, learning, operations</strong>
+                            <span class="metric-note">Where reliability matters most</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Approach</span>
+                            <strong class="metric-value">Research-led execution</strong>
+                            <span class="metric-note">Strong logic, clear storytelling</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="about-card skills-card">
-                <div class="card-header">
-                    <div class="card-icon">⚡</div>
-                    <h3 class="card-title" data-text="Skills"></h3>
-                </div>
-                <div class="card-content">
-                    <div class="skills-grid">
-                        <div class="skill-category">
-                            <h4 class="skill-title" data-text="Programming Languages">Programming Languages</h4>
-                            <p class="skill-items animated-text" data-text="Python, Java, Kotlin, SQL, C++, C#, JavaScript, TypeScript"></p>
+                <div class="hero-visual">
+                    <div class="profile-card">
+                        <img src="img/me.jpg" alt="Portrait of Dang Khoa Le" class="profile-avatar">
+                        <div class="profile-card-copy">
+                            <p class="profile-label">Profile snapshot</p>
+                            <h2>Dang Khoa Le</h2>
+                            <p>Software engineer building grounded AI tools, research-informed products, and enterprise workflows that feel composed rather than flashy.</p>
                         </div>
-                        <div class="skill-category">
-                            <h4 class="skill-title" data-text="Frameworks & Libraries">Frameworks & Libraries</h4>
-                            <p class="skill-items animated-text" data-text="FastAPI, Flask, Node.js, SpringBoot, Vue, React, Angular, Next.js"></p>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <span class="info-label">Current lens</span>
+                            <strong class="info-value">Impact-first engineering</strong>
                         </div>
-                        <div class="skill-category">
-                            <h4 class="skill-title" data-text="AI Domains">AI Domains</h4>
-                            <p class="skill-items animated-text" data-text="Transformers, TensorFlow, PyTorch, YOLO, ResNet, CNN, LLM, VLM, NLP, RAG architectures, Knowledge Distillation, CV, ASR, Machine Learning, Deep Learning, Synthesis, Data Analytics"></p>
+                        <div class="info-card">
+                            <span class="info-label">Best work</span>
+                            <strong class="info-value">Medical AI + automation</strong>
                         </div>
-                        <div class="skill-category">
-                            <h4 class="skill-title" data-text="Tools & Cloud">Tools & Cloud</h4>
-                            <p class="skill-items animated-text" data-text="Docker, Kubernetes, MongoDB, MySQL, AWS, Azure, GCC, Oracle, Jenkin, Git, Firebase"></p>
-                        </div>
-                        <div class="skill-category">
-                            <h4 class="skill-title" data-text="Multimedia & Design">Multimedia & Design</h4>
-                            <p class="skill-items animated-text" data-text="Figma, Cursor, Jira, Adobe Illustrator, Microsoft Powerpoint, Stable Diffusion"></p>
-                        </div>
-                        <div class="skill-category">
-                            <h4 class="skill-title" data-text="Languages">Proficient Languages</h4>
-                            <p class="skill-items animated-text" data-text="English, Vietnamese, Mandarin"></p>
+                        <div class="info-card">
+                            <span class="info-label">Working style</span>
+                            <strong class="info-value">Clear, structured, pragmatic</strong>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Skill bar animation -->
-    <section id="skills" class="section">
-        <h2>Technical Skills</h2>
-        <h4>Python</h4>
-        <span class="bar"><span class="Python"></span></span>
-        <h4>HTML5</h4>
-        <span class="bar"><span class="HTML5"></span></span>
-        <h4>CSS3</h4>
-        <span class="bar"><span class="CSS3"></span></span>
-        <h4>JavaScript</h4>
-        <span class="bar"><span class="JavaScript"></span></span>
-        <h4>Java</h4>
-        <span class="bar"><span class="Java"></span></span>
-        <h4>C#</h4>
-        <span class="bar"><span class="CS"></span></span>
-        <h4>Kotlin</h4>
-        <span class="bar"><span class="Kotlin"></span></span>
-        <h4>SQL</h4>
-        <span class="bar"><span class="SQL"></span></span>
-        <h4>C++</h4>
-        <span class="bar"><span class="CPP"></span></span>
-        <h4>TypeScript</h4>
-        <span class="bar"><span class="TypeScript"></span></span>
-        <h4>PHP</h4>
-        <span class="bar"><span class="PHP"></span></span>
-        <h4>Ruby</h4>
-        <span class="bar"><span class="Ruby"></span></span>
-    </section>
+        <section id="about" class="section">
+            <div class="section-head">
+                <span class="section-kicker">Profile</span>
+                <h2 class="section-title">High-signal introduction</h2>
+                <p class="section-description">A concise view of what I build, where I focus, and how I like to ship: elegant interfaces, grounded AI systems, and measurable outcomes.</p>
+            </div>
+            <div class="about-container">
+                <article class="about-card personal-card">
+                    <div class="card-header">
+                        <div class="card-icon">01</div>
+                        <h3 class="card-title">Positioning</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="personal-content">
+                            <p>Great to meet you here. I’m Khoa Le, also known as Liam, a Software Engineering student at Swinburne University in Melbourne, graduating in 2025.</p>
+                            <p>My work sits at the intersection of AI product design, trustworthy automation, and real-world problem solving. I like systems that are technically strong, visually calm, and easy to understand quickly.</p>
+                            <div class="focus-areas">
+                                <h4>Where I focus</h4>
+                                <ul class="focus-list">
+                                    <li>Medical AI systems for diagnosis, triage, and clinical support</li>
+                                    <li>Educational platforms that adapt to each learner</li>
+                                    <li>Business automation that removes repetitive manual work</li>
+                                </ul>
+                            </div>
+                            <p>I prefer solutions that enhance human capability without adding unnecessary complexity. That means clear interfaces, deliberate architecture, and output that feels dependable.</p>
+                        </div>
+                    </div>
+                </article>
 
-    <!-- Navigation Placeholders -->
-    <section class="section">
-        <h2>Quick Navigation</h2>
-        <div class="nav-placeholders">
-            <div class="nav-placeholder scroll-animate" onclick="window.location.href='academic.html'">
-                <img src="img/academic.jpg" alt="Academic">
-                <h3>Academic Resources</h3>
-                <p>Explore my academic projects and coursework</p>
+                <article class="about-card skills-card">
+                    <div class="card-header">
+                        <div class="card-icon">02</div>
+                        <h3 class="card-title">Capabilities</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="skills-grid">
+                            <div class="skill-category">
+                                <h4 class="skill-title">Core languages</h4>
+                                <div class="chip-list">
+                                    <span class="chip">Python</span>
+                                    <span class="chip">Java</span>
+                                    <span class="chip">TypeScript</span>
+                                    <span class="chip">SQL</span>
+                                    <span class="chip">C#</span>
+                                </div>
+                            </div>
+                            <div class="skill-category">
+                                <h4 class="skill-title">Frameworks</h4>
+                                <div class="chip-list">
+                                    <span class="chip">FastAPI</span>
+                                    <span class="chip">React</span>
+                                    <span class="chip">Next.js</span>
+                                    <span class="chip">Node.js</span>
+                                    <span class="chip">Spring Boot</span>
+                                </div>
+                            </div>
+                            <div class="skill-category">
+                                <h4 class="skill-title">AI / ML</h4>
+                                <div class="chip-list">
+                                    <span class="chip">LLM</span>
+                                    <span class="chip">RAG</span>
+                                    <span class="chip">NLP</span>
+                                    <span class="chip">CV</span>
+                                    <span class="chip">PyTorch</span>
+                                </div>
+                            </div>
+                            <div class="skill-category">
+                                <h4 class="skill-title">Tools & cloud</h4>
+                                <div class="chip-list">
+                                    <span class="chip">Docker</span>
+                                    <span class="chip">Kubernetes</span>
+                                    <span class="chip">AWS</span>
+                                    <span class="chip">Azure</span>
+                                    <span class="chip">MongoDB</span>
+                                </div>
+                            </div>
+                            <div class="skill-category">
+                                <h4 class="skill-title">Languages</h4>
+                                <div class="chip-list">
+                                    <span class="chip">English</span>
+                                    <span class="chip">Vietnamese</span>
+                                    <span class="chip">Mandarin</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
             </div>
-            <div class="nav-placeholder scroll-animate from-right" onclick="window.location.href='experience.html'">
-                <img src="img/experience.jpeg" alt="Experience">
-                <h3>Professional Experience</h3>
-                <p>View my work history and achievements</p>
-            </div>
-            <div class="nav-placeholder scroll-animate" onclick="window.open('https://www.linkedin.com/in/dang-khoa-le-96a6332a8', '_blank')">
-                <img src="img/linkedin.avif" alt="LinkedIn">
-                <h3>LinkedIn Profile</h3>
-                <p>Connect with me professionally</p>
-            </div>
-            <div class="nav-placeholder scroll-animate from-right" onclick="window.open('https://huggingface.co/BinKhoaLe1812', '_blank')">
-                <img src="img/huggingface.jpeg" alt="HuggingFace">
-                <h3>HuggingFace</h3>
-                <p>Check out my AI/ML projects</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="projects" class="section">
-        <h2>Projects</h2>
+        <!-- Motivation vs Logic: the old skill bars duplicated the same story twice; chips keep the signal high and reduce visual noise. -->
+        <section id="skills" class="section">
+            <div class="section-head">
+                <span class="section-kicker">Stack</span>
+                <h2 class="section-title">Selected technology surface</h2>
+                <p class="section-description">A compact summary of the systems I reach for most often when building product, research, or automation work.</p>
+            </div>
+            <div class="chip-cloud">
+                <span class="chip chip-lg">Python</span>
+                <span class="chip chip-lg">TypeScript</span>
+                <span class="chip chip-lg">FastAPI</span>
+                <span class="chip chip-lg">React</span>
+                <span class="chip chip-lg">Next.js</span>
+                <span class="chip chip-lg">LLM Systems</span>
+                <span class="chip chip-lg">RAG</span>
+                <span class="chip chip-lg">CV</span>
+                <span class="chip chip-lg">Docker</span>
+                <span class="chip chip-lg">Azure</span>
+                <span class="chip chip-lg">AWS</span>
+                <span class="chip chip-lg">MongoDB</span>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-head">
+                <span class="section-kicker">Navigation</span>
+                <h2 class="section-title">Quick links</h2>
+                <p class="section-description">A faster way to jump into the parts of the portfolio that matter most.</p>
+            </div>
+            <div class="nav-placeholders">
+                <div class="nav-placeholder scroll-animate" onclick="window.location.href='academic.html'">
+                    <img src="img/academic.jpg" alt="Academic">
+                    <h3>Academic Resources</h3>
+                    <p>Coursework, research direction, and formal study</p>
+                </div>
+                <div class="nav-placeholder scroll-animate" onclick="window.location.href='experience.html'">
+                    <img src="img/experience.jpeg" alt="Experience">
+                    <h3>Professional Experience</h3>
+                    <p>Work history and leadership across product and AI</p>
+                </div>
+                <div class="nav-placeholder scroll-animate" onclick="window.open('https://www.linkedin.com/in/dang-khoa-le-96a6332a8', '_blank')">
+                    <img src="img/linkedin.avif" alt="LinkedIn">
+                    <h3>LinkedIn Profile</h3>
+                    <p>Connect with me professionally</p>
+                </div>
+                <div class="nav-placeholder scroll-animate" onclick="window.open('https://huggingface.co/BinKhoaLe1812', '_blank')">
+                    <img src="img/huggingface.jpeg" alt="HuggingFace">
+                    <h3>HuggingFace</h3>
+                    <p>Selected AI and ML project work</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="section-head">
+                <span class="section-kicker">Work</span>
+                <h2 class="section-title">Projects</h2>
+                <p class="section-description">A broad portfolio of research, product, and automation work. The cards below keep the details accessible while the experience remains readable at a glance.</p>
+            </div>
         <div class="projects-grid">
             <!-- MedAI-Swin-Research -->
             <div class="project-card scroll-animate">
@@ -543,7 +627,8 @@
                 </div>
             </div>
         </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Modal -->
     <div id="projectModal" class="modal">
@@ -559,7 +644,7 @@
         </div>
     </div>
 
-    <script>
+    <!--
         // Modal functionality
         function openModal(title, description, imageSrc = null) {
             const modal = document.getElementById('projectModal');
@@ -980,6 +1065,75 @@
                 element.textContent = text;
             }
         }
+    -->
+
+    <script>
+        /* Root Cause vs Logic: the previous text-scramble system animated readable copy itself, which delayed legibility and made the page feel noisy on load; the new logic only animates container reveal and keeps content stable. */
+        function openModal(title, description, imageSrc = null) {
+            const modal = document.getElementById('projectModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const modalImage = document.getElementById('modalImage');
+
+            modalTitle.textContent = title;
+            modalImage.innerHTML = '';
+
+            const formattedDescription = description
+                .replace(/\\n/g, '<br>')
+                .replace(/•/g, '<br>•')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+            if (imageSrc) {
+                const img = document.createElement('img');
+                img.src = imageSrc;
+                img.alt = title;
+                img.className = 'modal-project-img';
+                modalImage.appendChild(img);
+            } else {
+                modalImage.textContent = title.split(' ')[0];
+            }
+
+            modalDescription.innerHTML = formattedDescription;
+            modal.style.display = 'block';
+            modal.classList.add('fade-in');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            modal.style.display = 'none';
+            modal.classList.remove('fade-in');
+            document.getElementById('modalDescription').innerHTML = '';
+        }
+
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('projectModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -80px 0px'
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.scroll-animate, .about-card, .metric-card, .info-card').forEach(element => observer.observe(element));
+        });
     </script>
 </body>
 </html>
