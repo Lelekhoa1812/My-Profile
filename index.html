@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile</title>
+    <title>Dang Khoa Le | Profile</title>
     <link rel="stylesheet" href="index.css">
     <link rel="website icon" type="png" href="img/icon.png" >
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav class="navbar">
             <a href="https://github.com/Lelekhoa1812" class="logo">
                 <img src="img/me.jpeg" alt="logo">
-                <h1>Dang Khoa Le - Software Engineer</h1>
+                <div class="brand-copy">
+                    <p class="brand-kicker">Profile</p>
+                    <h1>Dang Khoa Le - Software Engineer</h1>
+                </div>
             </a>
             <ul class="links">
-                <li><a href="#projects" aria-current="page">Projects</a></li>
-                <li><a href="academic.html">Academic</a></li>
-                <li><a href="experience.html">Experience</a></li>
+                <li><a href="#projects" aria-current="page">Story Arcs</a></li>
+                <li><a href="academic.html">Academic Chapter</a></li>
+                <li><a href="experience.html">Experience Chapter</a></li>
                 <li><a href="https://www.linkedin.com/in/dang-khoa-le-96a6332a8">LinkedIn</a></li>
                 <li><a href="https://huggingface.co/BinKhoaLe1812">HuggingFace</a></li>
             </ul>
@@ -26,42 +29,46 @@
     </header>
 
     <main>
-        <!-- Motivation vs Logic: the homepage now front-loads the narrative and proof points so the site reads like a curated portfolio instead of a dense catalog. -->
-        <section class="hero section">
+        <!-- Motivation vs Logic: the homepage is now framed as a visual-novel opening so the profile reads like a story with scenes, dialogue, and chapter beats instead of isolated cards. -->
+        <section class="hero section vn-cover">
             <div class="hero-grid">
                 <div class="hero-copy">
-                    <p class="eyebrow">Software Engineer · AI Systems · Melbourne</p>
-                    <h1 class="hero-title">Designing calm, credible AI products for healthcare, education, and operations.</h1>
-                    <p class="hero-summary">I build systems that turn dense workflows into clear, reliable interfaces. The goal is always the same: make sophisticated work feel effortless to use.</p>
+                    <p class="eyebrow">Prologue · Melbourne · AI Systems</p>
+                    <h1 class="hero-title">Orchestrating multi-agent AI & trustworthy automation.</h1>
+                    <p class="hero-summary">I guide enterprise AI transformation, lead Swinburne’s medical AI research, and co-create scaled AI initiatives—each delivery mixing grounded RAG, explainable retrieval, and scripted automation so huge workflows stay dependable yet human-centric.</p>
+                    <div class="dialogue-box">
+                        <p class="dialogue-label">Narration</p>
+                        <p>Liam is the kind of engineer who treats every project as a scene: balancing multi-agent logic with UX cadence, translating compliance requirements into resilient microservices, and keeping the story moving with measurable impact.</p>
+                    </div>
                     <div class="hero-actions">
-                        <a class="button button-primary" href="#projects">View Featured Work</a>
-                        <a class="button button-secondary" href="experience.html">Explore Experience</a>
+                        <a class="button button-primary" href="#projects">Start the Story</a>
+                        <a class="button button-secondary" href="experience.html">Open Experience Chapter</a>
                     </div>
                     <div class="hero-metrics">
                         <div class="metric-card">
-                            <span class="metric-label">Focus</span>
+                            <span class="metric-label">Role</span>
                             <strong class="metric-value">AI + product systems</strong>
                             <span class="metric-note">Grounded, useful, low-noise interfaces</span>
                         </div>
                         <div class="metric-card">
-                            <span class="metric-label">Domains</span>
+                            <span class="metric-label">Setting</span>
                             <strong class="metric-value">Healthcare, learning, operations</strong>
                             <span class="metric-note">Where reliability matters most</span>
                         </div>
                         <div class="metric-card">
-                            <span class="metric-label">Approach</span>
+                            <span class="metric-label">Tone</span>
                             <strong class="metric-value">Research-led execution</strong>
                             <span class="metric-note">Strong logic, clear storytelling</span>
                         </div>
                     </div>
                 </div>
                 <div class="hero-visual">
-                    <div class="profile-card">
+                    <div class="profile-card portrait-card">
                         <img src="img/me.jpeg" alt="Portrait of Dang Khoa Le" class="profile-avatar">
                         <div class="profile-card-copy">
-                            <p class="profile-label">Profile snapshot</p>
+                            <p class="profile-label">Character sheet</p>
                             <h2>Dang Khoa Le</h2>
-                            <p>Software engineer building grounded AI tools, research-informed products, and enterprise workflows that feel composed rather than flashy.</p>
+                            <p>An engineer that builds grounded AI tools, research-informed products, and enterprise workflows that feel composed rather than flashy. The kind of protagonist who prefers reliable systems over dramatic noise.</p>
                         </div>
                     </div>
                     <div class="info-grid">
@@ -84,22 +91,22 @@
 
         <section id="about" class="section">
             <div class="section-head">
-                <span class="section-kicker">Profile</span>
-                <h2 class="section-title">High-signal introduction</h2>
-                <p class="section-description">A concise view of what I build, where I focus, and how I like to ship: elegant interfaces, grounded AI systems, and measurable outcomes.</p>
+                <span class="section-kicker">Chapter I</span>
+                <h2 class="section-title">Character sheet</h2>
+                <p class="section-description">A concise introduction to the person behind the portfolio: what drives the work, which themes repeat, and why the projects lean toward systems that feel like good storytelling.</p>
             </div>
             <div class="about-container">
                 <article class="about-card personal-card">
                     <div class="card-header">
                         <div class="card-icon">01</div>
-                        <h3 class="card-title">Positioning</h3>
+                        <h3 class="card-title">Origin story</h3>
                     </div>
                     <div class="card-content">
                         <div class="personal-content">
                             <p>Great to meet you here. I’m Khoa Le, also known as Liam, a Software Engineering student at Swinburne University in Melbourne, graduating in 2025.</p>
                             <p>My work sits at the intersection of AI product design, trustworthy automation, and real-world problem solving. I like systems that are technically strong, visually calm, and easy to understand quickly.</p>
                             <div class="focus-areas">
-                                <h4>Where I focus</h4>
+                                <h4>Story motifs</h4>
                                 <ul class="focus-list">
                                     <li>Medical AI systems for diagnosis, triage, and clinical support</li>
                                     <li>Educational platforms that adapt to each learner</li>
@@ -114,7 +121,7 @@
                 <article class="about-card skills-card">
                     <div class="card-header">
                         <div class="card-icon">02</div>
-                        <h3 class="card-title">Capabilities</h3>
+                        <h3 class="card-title">Craft notes</h3>
                     </div>
                     <div class="card-content">
                         <div class="skills-grid">
@@ -197,29 +204,29 @@
 
         <section class="section">
             <div class="section-head">
-                <span class="section-kicker">Navigation</span>
-                <h2 class="section-title">Quick links</h2>
-                <p class="section-description">A faster way to jump into the parts of the portfolio that matter most.</p>
+                <span class="section-kicker">Chapter Select</span>
+                <h2 class="section-title">Quick routes</h2>
+                <p class="section-description">Choose the next scene: the academic route, the experience route, or a couple of outside worlds where the story continues.</p>
             </div>
             <div class="nav-placeholders">
                 <div class="nav-placeholder scroll-animate" onclick="window.location.href='academic.html'">
                     <img src="img/academic.jpg" alt="Academic">
-                    <h3>Academic Resources</h3>
+                    <h3>Academic Chapter</h3>
                     <p>Coursework, research direction, and formal study</p>
                 </div>
                 <div class="nav-placeholder scroll-animate" onclick="window.location.href='experience.html'">
                     <img src="img/experience.jpeg" alt="Experience">
-                    <h3>Professional Experience</h3>
+                    <h3>Experience Chapter</h3>
                     <p>Work history and leadership across product and AI</p>
                 </div>
                 <div class="nav-placeholder scroll-animate" onclick="window.open('https://www.linkedin.com/in/dang-khoa-le-96a6332a8', '_blank')">
                     <img src="img/linkedin.avif" alt="LinkedIn">
-                    <h3>LinkedIn Profile</h3>
+                    <h3>LinkedIn Route</h3>
                     <p>Connect with me professionally</p>
                 </div>
                 <div class="nav-placeholder scroll-animate" onclick="window.open('https://huggingface.co/BinKhoaLe1812', '_blank')">
                     <img src="img/huggingface.jpeg" alt="HuggingFace">
-                    <h3>HuggingFace</h3>
+                    <h3>HuggingFace Route</h3>
                     <p>Selected AI and ML project work</p>
                 </div>
             </div>
@@ -227,9 +234,9 @@
 
         <section id="projects" class="section">
             <div class="section-head">
-                <span class="section-kicker">Work</span>
-                <h2 class="section-title">Projects</h2>
-                <p class="section-description">A broad portfolio of research, product, and automation work. The cards below keep the details accessible while the experience remains readable at a glance.</p>
+                <span class="section-kicker">Chapter II</span>
+                <h2 class="section-title">Story arcs</h2>
+                <p class="section-description">A broad portfolio of research, product, and automation work. Each card is treated like a scene card so the timeline feels like a narrative rather than a list.</p>
             </div>
         <div class="projects-grid">
             <!-- MedAI-Swin-Research -->
