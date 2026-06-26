@@ -3,470 +3,633 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="website icon" type="png" href="img/icon.png" >
+    <meta name="description" content="Professional experience of Dang Khoa Le across AI engineering, multi-agent systems, agentic RAG, software engineering, cloud, fintech, healthcare, education, industrial automation and data science.">
+    <link rel="website icon" type="image/png" href="img/icon.png">
     <title>Professional Experience - Dang Khoa Le</title>
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <nav class="navbar">
-            <a href="https://github.com/Lelekhoa1812" class="logo">
-                <img src="img/me.jpeg" alt="logo">
-                <h1>Dang Khoa Le - Software Engineer</h1>
+        <nav class="navbar" aria-label="Primary navigation">
+            <a href="https://github.com/Lelekhoa1812" class="logo" target="_blank" rel="noopener noreferrer">
+                <img src="img/me.jpeg" alt="Dang Khoa Le profile photo">
+                <h1>Dang Khoa Le - Senior AI Engineer</h1>
             </a>
             <ul class="links">
                 <li><a href="index.html#projects">Projects</a></li>
                 <li><a href="academic.html">Academic</a></li>
                 <li><a href="experience.html" aria-current="page">Experience</a></li>
-                <li><a href="https://www.linkedin.com/in/dang-khoa-le-96a6332a8">LinkedIn</a></li>
-                <li><a href="https://huggingface.co/liamkhoale">HuggingFace</a></li>
+                <li><a href="https://www.linkedin.com/in/dang-khoa-le-96a6332a8" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a href="https://huggingface.co/liamkhoale" target="_blank" rel="noopener noreferrer">HuggingFace</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-    <div class="section">
-        <div class="section-head">
-            <span class="section-kicker">Experience</span>
-            <h2 class="section-title">Professional Experience</h2>
-            <p class="section-description">My professional journey across various companies, roles, and projects in software engineering, AI/ML, and technology innovation.</p>
-        </div>
-        
-        <!-- Navigation Placeholders -->
-        <div class="nav-placeholders">
-            <div class="nav-placeholder" onclick="window.location.href='index.html#projects'">
-                <img src="img/project.webp" alt="Profile">
-                <h3>Projects</h3>
-                <p>Find more about my individual projects</p>
-            </div>
-            <div class="nav-placeholder" onclick="window.location.href='academic.html'">
-                <img src="img/academic.jpg" alt="Academic">
-                <h3>Academic</h3>
-                <p>Explore my academic projects and coursework</p>
-            </div>
-            <div class="nav-placeholder" onclick="window.open('https://www.linkedin.com/in/dang-khoa-le-96a6332a8', '_blank')">
-                <img src="img/linkedin.avif" alt="LinkedIn">
-                <h3>LinkedIn</h3>
-                <p>Connect with me professionally</p>
-            </div>
-            <div class="nav-placeholder" onclick="window.open('https://huggingface.co/BinKhoaLe1812', '_blank')">
-                <img src="img/huggingface.jpeg" alt="HuggingFace">
-                <h3>HuggingFace</h3>
-                <p>Check out my AI/ML projects</p>
-            </div>
-        </div>
-
-        <!-- Experience Timeline -->
-        <div class="experience-timeline">
-
-            <!-- Harry the Hire - AI -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">Harry the Hirer</h3>
-                        <span class="company-location">Melbourne, Victoria, Australia</span>
-                    </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Senior AI Engineer</h4>
-                        <span class="role-date">December 2025 - Present</span>
-                    </div>
-                </div>
-                <div class="experience-content">
-                    <p>Spearheaded the AI transformation for Australia’s biggest event enterprise, architecting a robust ecosystem, converting manual inventory, logistics, and planning workflows into high-fidelity, grounded automated systems.</p>
-                    <div class="achievements">
-                        <ul>
-                            <li>Multi-Agent RAG Orchestration: Architected a production-grade multi-agent RAG platform on Azure. Orchestrating  Planner, Retriever, and Verifier agents to manage tasks with HIL workflows and progressive semantic learning. This system automates document generation and evidence-backed decision, support for high-impact event planning.</li>
-                            <li>Performance Engineering: Optimise latency and token spend via context pruning, sliding-window memory, and Redis-KV caching. Developed a dynamic multi-LLM routing layer via Azure AI Foundry, utilise regex-driven patternization and async replanning to route queries to the most cost-effective models without compromising quality.</li>
-                            <li>Advanced Retrieval: Built a hybrid retrieval pipeline combining agentic chunking with HNSW indexing and metadata filtering. Implemented a proprietary verifier-based grounding mechanism to cross-reference LLM outputs against internal knowledge bases, eliminating hallucinations and ensuring 100% auditability.</li>
-                            <li>Intelligent Document Processing (IDP): Designed an end-to-end OCR + LLM pipeline on GPU infrastructure to automate ingestion of unstructured data. Utilised agentic templating to map complex attributes to structured categories, reducing manual entry overhead and accelerating inventory onboarding.</li>
-                            <li>MCP & ERP Integration: Pioneered a protocol-compliant MCP layer to bridge AIs with core ERP systems. Enabled real-time access to stock and planning data for Claude to C#, supporting complex multi-step planning for fluctuating logistical demands.</li>
-                            <li>Enterprise Infrastructure: Engineered modular Python microservices defined by Pydantic contracts and a centralised tool registry. Deployed via Docker on Azure with retry logics and MSAL authentication, maintaining 99.9% uptime across operations.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Swinburne -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">Swinburne University of Technology</h3>
-                        <span class="company-location">Hawthorn, Australia</span>
-                    </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Lab Leader - Medical AI Research</h4>
-                        <span class="role-date">August 2025 - February 2026</span>
-                    </div>
-                </div>
-                <div class="experience-content">
-                    <p>Led research team of 5, funded by Swinburne to build a multi-agent system with domain-specialist agents (diagnostics, pharmacology, triage) coordinated by a reasoning agentic orchestrator MCP:</p>
-                    <div class="achievements">
-                        <h5>Key Deliveries:</h5>
-                        <ul>
-                            <li>Boosted diagnostic accuracy & safety for LLM agents on 500k+ curated SFT & synthetic cases, using Knowledge Distillation, LoRA/QLoRA (GRPO reasoning), SLERP merging technique, and augmentation (QAC paraphrasing/chunking, self-consistency, counterfactuals, backtranslation).</li>
-                            <li>Built agentic RAG (Tree + HNSW + FAISS) over EMR/EHR + PubMed with retrieval safety rails, real-time update, and citations to mitigate hallucination. Finetuned 300M embedding and reranking model on over 5M curated.</li>
-                            <li>Trained biomedical reranker model on 8M selective medical corpus. Integrated in MAC (multi-agent conversation) architecture to boost IR rate.</li>
-                            <li>Established strict evaluation: MedMCQA / PubMedQA / MedQuAD (86% BertScore) benchmarking, semantic similarity audits with biomedical embeddings, early-stopping LR scheduling; trained reproducibly on HPC.</li>
-                        </ul>
-                    </div>
-                </div>
+        <section class="section" aria-labelledby="experience-title">
+            <div class="section-head">
+                <span class="section-kicker">Experience</span>
+                <h2 class="section-title" id="experience-title">Professional Experience</h2>
+                <p class="section-description">
+                    A cross-functional engineering journey across enterprise AI, multi-agent systems, agentic RAG, OCR/IDP automation,
+                    LLMOps, production ML, fintech platforms, healthcare AI, cloud-native services and data-driven business automation.
+                </p>
             </div>
 
-            <!-- Mizco - Teqar -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">Mizco</h3>
-                        <span class="company-location">Perth, WA, Australia</span>
-                    </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Team Lead - AI Engineer</h4>
-                        <span class="role-date">November 2025 - July 2026</span>
-                    </div>
-                </div>
-                <div class="experience-content">
-                    <p>Spearheaded the end-to-end architecture and production delivery of an enterprise AI platform, turning manual workflows into deterministic, auditable systems aligned with business-critical compliance demands and governed industrial artifacts.</p>
-                    <div class="achievements">
-                        <h5>Leadership & Strategies:</h5>
-                        <ul>
-                            <li>Guided the full development lifecycle, translating complex RFQ requirements into a pragmatic "Trust-First AI" operating model that prioritized deployment accountability and resilience.</li>
-                            <li>Engineered a controllable platform that behaves like industrial software—observable, governable, and resilient—reducing operational overhead in compliance-sensitive environments.</li>
-                            <li>Bridged deep-tech R&amp;D and executive stakeholders, ensuring outputs met stringent SLAs, confidence gates, and governance expectations.</li>
-                        </ul>
-                        <h5>AI R&D:</h5>
-                        <ul>
-                            <li>Architected dual-path reasoning chains (candidate-centric inference vs. high-context multi-agent choreography) using ReAct prompting and constrained JSON to deliver grounded, hallucination-resistant outputs.</li>
-                            <li>Engineered a FastAPI-based agent orchestration layer and Next.js operations cockpit for concurrency-aware tool execution, real-time telemetry, and semantic sanitization across high-throughput workloads.</li>
-                            <li>Developed automated self-correction loops and multi-stage backfill/recovery with probabilistic confidence gates to surface uncertainty states and trigger HITL overrides when necessary.</li>
-                            <li>Optimized stateful memory and retrieval-attention, ensuring persistent context over complex RFQ corpora (PDF/DOCX/XLSX) for deterministic output consistency.</li>
-                            <li>Delivered resilient agentic inference, enabling governed industrial artifacts from unstructured data while maintaining transparency across the vectorized pipeline.</li>
-                        </ul>
-                    </div>
-                </div>
+            <!-- Navigation Cards -->
+            <div class="nav-placeholders" aria-label="Related profile links">
+                <a class="nav-placeholder" href="index.html#projects">
+                    <img src="img/project.webp" alt="Projects preview">
+                    <h3>Projects</h3>
+                    <p>Explore individual AI, software, cloud and data science projects.</p>
+                </a>
+                <a class="nav-placeholder" href="academic.html">
+                    <img src="img/academic.jpg" alt="Academic work preview">
+                    <h3>Academic</h3>
+                    <p>Review academic research, coursework and university projects.</p>
+                </a>
+                <a class="nav-placeholder" href="https://www.linkedin.com/in/dang-khoa-le-96a6332a8" target="_blank" rel="noopener noreferrer">
+                    <img src="img/linkedin.avif" alt="LinkedIn logo">
+                    <h3>LinkedIn</h3>
+                    <p>Connect with me professionally and view my latest profile.</p>
+                </a>
+                <a class="nav-placeholder" href="https://huggingface.co/liamkhoale" target="_blank" rel="noopener noreferrer">
+                    <img src="img/huggingface.jpeg" alt="Hugging Face logo">
+                    <h3>HuggingFace</h3>
+                    <p>View selected open-source AI models, datasets and research artifacts.</p>
+                </a>
             </div>
 
-            <!-- SuperEdTech -->
-            <!-- <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">SuperEdTech</h3>
-                        <span class="company-location">Melbourne, Victoria, Australia</span>
-                    </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Cofounder | CTO</h4>
-                        <span class="role-date">June 2025 - Present</span>
-                    </div>
-                </div>
-                <div class="experience-content">
-                    <p>Our team of 4 believing in domain-specific, reliable and affordable education, we support university students and graduates in both their studies and career, leveraged by AI and technology capability.</p>
-                    <div class="achievements">
-                        <h5>Key Solutions:</h5>
-                        <ul>
-                            <li>AI Tutor: Developed a dynamic, curriculum-aligned tutoring web app that creates personalized learning roadmaps and automates assignment, grading using a multi-agent RAG and MCP tools integrations.</li>
-                            <li>StudyBuddy: End-to-end hierarchal TreeRAG, HNSW, and FAISS application with LLM and OCR technologies allows students to chat with their uploaded documents (PDF/DOCX) for precise, source-based learning.</li>
-                            <li>IELTS Enhancer: AI writing coach that provides personalized feedback, correctness, and guidelines to help users achieve their target IELTS band. Developed with CoT multi NLP, SLM/LLM hybrid architecture.</li>
-                            <li>CVA: Engineered career coaching AI, semantic provisional, crafts job-specific resumes and cover letters to maximize applicant success, leverage RAG.</li>
-                            <li>Fretboard: Interactive string instruments tutor app with AI assistants for chord, scale, vibe analyser and instructional feedbacks on progress.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div> -->
+            <!-- Experience Timeline -->
+            <div class="experience-timeline">
 
-            <!-- Harry the Hirer - DS -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">Harry the Hirer</h3>
-                        <span class="company-location">Melbourne, Victoria, Australia</span>
+                <!-- Harry the Hirer - Senior AI Engineer -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">Harry the Hirer</h3>
+                            <span class="company-location">Melbourne, Victoria, Australia</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">Senior AI Engineer</h4>
+                            <span class="role-date">December 2025 - Present</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Senior Data Scientist</h4>
-                        <span class="role-date">March 2025 - Present</span>
+                    <div class="experience-content">
+                        <p>
+                            Spearheaded AI transformation for Australia’s largest event enterprise, converting manual inventory,
+                            logistics and planning workflows into high-fidelity, grounded automation for event planning, document
+                            generation and evidence-backed decision support.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li><strong>Enterprise multi-agent RAG:</strong> Architected an Azure-based platform orchestrating Planner, Retriever and Verifier agents with HITL review, progressive semantic learning, HNSW retrieval, metadata filtering and verifier-grounded cross-checking.</li>
+                                <li><strong>LLMOps and performance engineering:</strong> Optimized latency and token spend through context pruning, sliding-window memory, KV caching, regex patternization, async replanning and dynamic multi-LLM routing via Azure AI Foundry.</li>
+                                <li><strong>Advanced retrieval and grounding:</strong> Built hybrid retrieval over internal knowledge sources with metadata-aware filtering, evidence matching and output verification to support auditable, hallucination-resistant responses.</li>
+                                <li><strong>OCR and intelligent document processing:</strong> Developed GPU-assisted OCR + LLM ingestion pipelines, agentic templating and structured extraction workflows to convert unstructured operational documents into governed data assets.</li>
+                                <li><strong>MCP and ERP integration:</strong> Designed protocol-compliant MCP/ERP integrations so AI agents could safely access stock, inventory and planning data across complex multi-step operational workflows.</li>
+                                <li><strong>Production architecture:</strong> Engineered modular FastAPI/Pydantic microservices with Docker deployment, MSAL authentication, retries, logging and tool registry patterns, supporting 99.9% operational uptime.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Built on the legacy pedigree platform of the world-champion thoroughbred, Black Caviar.</p>
-                    <div class="achievements">
-                        <p>Reimagined horse pedigree intelligence by architecting an AI-first recommendation engine that transforms massive historical bloodline data into actionable breeding insights. I developed a Hybrid Ensemble Framework that integrates ten distinct algorithmic signals to solve the bipartite ranking task of mate selection, balancing genetic merit against inbreeding risks.</p>
-                        <h5>Contributions:</h5>
-                        <ul>
-                            <li>Multi-Signal Recommendation Engine: Engineered a weighted ensemble scoring system comprising Matrix Factorization (Collaborative Filtering) for pair interactions, Gradient Boosting (GBM) for temporal ranking, and Variational Autoencoders (VAE) for latent "genetic fingerprint" compatibility.</li>
-                            <li>Advanced Pedigree Analytics: Implemented a Shared Ancestor Compatibility Kernel that weights common ancestors by inverse generational depth and performance quality, providing a more granular relatedness metric than standard inbreeding coefficients.</li>
-                            <li>Graph-Aware Embeddings: Developed a Graph Attention (GAT) inspired similarity module to encode higher-order pedigree topology into 64-dimensional embeddings, enabling efficient retrieval of phenotypically and structurally similar candidates.</li>
-                            <li>Probabilistic & Domain Modeling: Built a Bayesian Nicking system for sire/dam line interactions and modernized Dosage Theory using depth-decayed ancestral contributions and sex-aware cross-line affinity terms.</li>
-                            <li>Explainable AI (XAI): Integrated LLM-powered reasoning to provide natural language justifications for ensemble outputs, ensuring the "black-box" model remains interpretable for breeders.</li>
-                        </ul>
-                        <h5>Impacts:</h5>
-                        <ul>
-                            </li>Optimized BFS-based graph traversal for real-time network expansion and hierarchical pedigree rendering.</li>
-                            <li>Rigor: Established a strict temporal training split to prevent data leakage in progeny performance prediction.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                </article>
 
-            <!-- AITC -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">AITC</h3>
-                        <span class="company-location">HCM City, Vietnam</span>
+                <!-- Mizco -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">Mizco</h3>
+                            <span class="company-location">Perth, Western Australia, Australia</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">AI Engineer | Team Leader</h4>
+                            <span class="role-date">November 2025 - June 2026</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Team Leader - AI Engineer</h4>
-                        <span class="role-date">June 2025 – November 2025</span>
+                    <div class="experience-content">
+                        <p>
+                            Led end-to-end architecture and production delivery of a Trust-First AI platform that converted
+                            unstructured RFQ corpora into governed industrial artifacts for compliance-sensitive and SLA-driven workflows.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Translated complex RFQ requirements into a pragmatic AI operating model focused on traceability, confidence gates, deployment accountability and resilient fallback behaviour.</li>
+                                <li>Built dual-path agentic inference using ReAct prompting, constrained JSON outputs, FastAPI orchestration and a Next.js operations cockpit for real-time telemetry and concurrency-aware tool execution.</li>
+                                <li>Implemented IDP/ETL standardization, long-context RAG memory, semantic sanitization, self-correction loops and multi-stage backfill/recovery to prevent false completeness.</li>
+                                <li>Designed probabilistic confidence gates and HITL escalation flows to surface uncertainty, support review workflows and maintain governance expectations in industrial environments.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Senior MCP architecturer, building local assistant that fuse LLM, NLP, OCR on the solution to turn all unstructured PDF documents into direct industrial AI-assistance that can provide guidance for businesses. Our partnered businesses including Nvidia, HPA, IBM, Juniper, and CISCO Vietnam.</p>
-                </div>
-            </div>
-            
-            <!-- Pythera -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">Pythera</h3>
-                        <span class="company-location">HCM City, Vietnam</span>
-                    </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Senior AI Engineer</h4>
-                        <span class="role-date">June 2025 – August 2025</span>
-                    </div>
-                </div>
-                <div class="experience-content">
-                    <p>Contributor of CLARA, Vietnamese nationally recognized medical AI assistant (LLM and VLM), trained on 400k+ doctor-annotated cases, including 210k+ X-rays, MRI scans, and synthesis / distillations.</p>
-                    <div class="achievements">
-                        <h5>Key Achievements:</h5>
-                        <ul>
-                            <li>Agentic RAG Development: Led the creation of an EMR-integrated RAG module to boost diagnostic accuracy and medication safety.</li>
-                            <li>Model Excellence: Engineered systems for a model achieving top-tier benchmarks, including >95% Recall and >92% Precision on labelled dataset.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                </article>
 
-            <!-- Capstone -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">SkyLedge - Capstone Project</h3>
-                        <span class="company-location">Swinburne, Victoria, Australia</span>
+                <!-- Teqar -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">Teqar</h3>
+                            <span class="company-location">Perth, Western Australia, Australia</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">AI Development Consultant</h4>
+                            <span class="role-date">May 2025 - Present</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Team Leader - Data Science</h4>
-                        <span class="role-date">January 2025 – November 2025</span>
+                    <div class="experience-content">
+                        <p>
+                            Advise B2B clients on AI transformation by auditing operating models, mapping workflows and converting
+                            technical gap analyses into actionable AI roadmaps across ETL/IDP, cognitive CRM, chatbots, virtual call
+                            centers, forecasting and automation architecture.
+                        </p>
+                        <div class="achievements">
+                            <h5>Consulting Scope:</h5>
+                            <ul>
+                                <li>Scoped predictive analytics, computer vision quality assurance, AI workflow automation and data-pipeline modernization initiatives for client-facing operational use cases.</li>
+                                <li>Converted business requirements into implementation-ready solution architectures with measurable productivity targets, technical trade-offs and staged delivery plans.</li>
+                                <li>Helped bridge executive stakeholders, engineering constraints and AI adoption strategy so proposed systems could move from concept to defensible delivery.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Led team of 4 software to design and prototype an AI-powered predictive maintenance system for Sky Ledge fleet operations. Oversaw the full development lifecycle including external dataset collection, Python-based data pipelines, and model training using XGBoost, RandomForrest and LSTM. Coordinated frontend and backend development to deliver a functional dashboard for real-time vehicle health monitoring using OBD-II data. Managed task planning, research direction, and client engagement preparation.</p>
-                </div>
-            </div>
+                </article>
 
-            <!-- Hai Au Academy -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">Hai Au Academy</h3>
-                        <span class="company-location">Binh Duong, Vietnam</span>
+                <!-- Swinburne University -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">Swinburne University of Technology</h3>
+                            <span class="company-location">Melbourne, Victoria, Australia</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">Researcher | Lab Leader</h4>
+                            <span class="role-date">August 2025 - Present</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Full-stack Engineer</h4>
-                        <span class="role-date">July 2025 – September 2025</span>
+                    <div class="experience-content">
+                        <p>
+                            Led a 5-person clinical AI lab building specialist medical agents across diagnostics, pharmacology and triage,
+                            coordinated by a reasoning orchestrator for grounded, citation-aware medical decision support.
+                        </p>
+                        <div class="achievements">
+                            <h5>Research Deliveries:</h5>
+                            <ul>
+                                <li>Fine-tuned medical LLMs on 500K+ curated and synthetic cases using knowledge distillation, LoRA/QLoRA, GRPO-style reasoning adaptation and structured augmentation.</li>
+                                <li>Built agentic RAG over EMR/EHR and PubMed with retrieval guardrails, source grounding, citation support and safety validation to reduce hallucination risk in clinical workflows.</li>
+                                <li>Trained an 8M-document biomedical reranker and integrated it into a multi-agent conversation architecture to improve retrieval precision and answer grounding.</li>
+                                <li>Established reproducible evaluation across MedMCQA, PubMedQA and MedQuAD with semantic similarity audits, biomedical embeddings, early stopping and HPC-backed training pipelines, achieving 86% BERTScore.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Develop a comprehensive web-based student management platform designed for language schools to handle student enrollment, class management, placement testing, and administrative tasks. The system supports both Vietnamese and English interfaces and serves multiple user roles including students, staff, and administrators.</p>
-                </div>
-            </div>
+                </article>
 
-            <!-- CPG Seedcom -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">CPG Seedcom</h3>
-                        <span class="company-location">HCM City, Vietnam</span>
+                <!-- Harry the Hirer - ML & Data Science -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">Harry the Hirer</h3>
+                            <span class="company-location">Melbourne, Victoria, Australia</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">ML &amp; Data Science</h4>
+                            <span class="role-date">March 2026 - May 2026</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Senior AI Engineer</h4>
-                        <span class="role-date">June 2025 – September 2025</span>
+                    <div class="experience-content">
+                        <p>
+                            Built on the legacy pedigree platform behind world-champion Black Caviar, reimagining thoroughbred pedigree
+                            intelligence as an AI-first mate-selection engine that balances genetic merit, compatibility and inbreeding risk.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li><strong>Hybrid recommendation engine:</strong> Engineered a 10-signal ensemble for bipartite mate ranking across matrix factorization, GBM temporal ranking, VAE genetic fingerprints, Bayesian nicking, Dosage Theory and compatibility kernels.</li>
+                                <li><strong>Pedigree graph intelligence:</strong> Implemented a Shared Ancestor Compatibility Kernel with inverse generational depth, performance weighting and sex-aware cross-line affinity terms.</li>
+                                <li><strong>Graph-aware embeddings:</strong> Developed GAT-inspired 64-dimensional pedigree embeddings and BFS graph expansion for scalable candidate retrieval and hierarchical pedigree rendering.</li>
+                                <li><strong>Model governance:</strong> Applied strict temporal training splits to prevent leakage in progeny-performance prediction and integrated LLM-powered XAI explanations for breeder-facing recommendations.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Leading a team of 6 to build a Vietnamese-language AI assistant, converts business questions into SQL queries across MySQL and Oracle, fusing multi-modal self-QA for Reinforcement Learning over failures and successes. Built with FastAPI, Gemini & Qwen3, MongoDB vectorbase, leveraging Chain-of-Thought and Agentic RAG for autonomous analytics in sales, supply chain, and marketing. The system reduces manual workforces by up to 80%, delivers instant, explainable insights, a unique plugin solution enables direct database-to-decision workflows without human intervention.</p>
-                </div>
-            </div>
+                </article>
 
-            <!-- PopTech -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">PopTech</h3>
-                        <span class="company-location">HCM City, Vietnam</span>
+                <!-- AITC -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">AITC</h3>
+                            <span class="company-location">Vietnam / Remote</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">Senior AI Engineer</h4>
+                            <span class="role-date">June 2025 - November 2025</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Senior ML Engineer</h4>
-                        <span class="role-date">June 2025 – August 2025</span>
+                    <div class="experience-content">
+                        <p>
+                            Architected and led an industrial AI assistant combining LLMs, NLP and OCR/IDP to transform unstructured PDFs
+                            into actionable operational guidance, document intelligence and business-ready knowledge workflows.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Owned document ingestion, preprocessing, retrieval, deployment and optimization for enterprise knowledge workflows over complex industrial documents.</li>
+                                <li>Mentored data engineers and scaled production AI capability for strategic partner environments including Nvidia, HPA, IBM, Juniper and Cisco Vietnam.</li>
+                                <li>Designed MCP-style assistant workflows that connected local document intelligence, business rules and tool-based automation into controllable AI assistance.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Led a 4-member team to architect and build a scalable electricity forecasting and control application from IoT device. Integrated data cleaning pipeline, including KNNImputer for data backfiller and abnormalities detection, with LinearRegression imputer for timestamp fallbacks. Integrated ML/DL (TFT, XGBoost), Reinforcement Learning (DQN), and LLM-driven advisory to predict billing, optimize device usage, and automate energy-saving decisions. Enabled multimodal interaction via ASR, text, and voice synthesis for a fully interactive LLMOps experience. Partnered with EVN Vietnam</p>
-                </div>
-            </div>
+                </article>
 
-            <!-- Nam A Bank -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">Nam Á Bank</h3>
-                        <span class="company-location">HCM City, Vietnam</span>
+                <!-- Hai Au Academy -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">Hai Au Academy</h3>
+                            <span class="company-location">Binh Duong, Vietnam</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">AI Software Engineer</h4>
+                            <span class="role-date">August 2025 - October 2025</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Data/AI Engineer - Internship</h4>
-                        <span class="role-date">December 2024 – February 2025</span>
+                    <div class="experience-content">
+                        <p>
+                            Delivered a bilingual student-management platform for language-school operations, covering enrollment,
+                            scheduling, placement testing, attendance, dashboards and role-based administration.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Built bilingual Vietnamese/English workflows for students, staff and administrators, reducing fragmented manual administration across school operations.</li>
+                                <li>Integrated MCP-enabled chatbot workflows and NLP helpers for staff-approved automation, translation support, homework assistance and routine administrative tasks.</li>
+                                <li>Designed the system around RBAC, operational dashboards and structured student lifecycle data so the platform could support multi-role and multi-campus expansion.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Participate in fintech digitalization projects with full-stack development (Vert.x Backend, Java Android) and AI integration (CV, ML, OCR, LLM).</p>
-                    <div class="achievements">
-                        <h5>Strategic Enhancements:</h5>
-                        <ul>
-                            <li>Explore the high potential of remittance services targeting 5M+ overseas Vietnamese. Taking role in participation at Australian market, research for deployment.</li>
-                            <li>Redesign mobile app concept for a faster access, shifting complex tasks to web-services, deliver a user-friendly UI for accessibility-focused users.</li>
-                            <li>Implement passport OCR to enable foreign customer onboarding with banking programs, overcome traditional limitation for identification with domestic ID. Implement synthetic data generation.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                </article>
 
-            <!-- iNet Solution -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">iNet Solution</h3>
-                        <span class="company-location">HCM City, Vietnam</span>
+                <!-- Pythera -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">Pythera</h3>
+                            <span class="company-location">Melbourne, Australia</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">AI Engineer</h4>
+                            <span class="role-date">January 2025 - September 2025</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Data/AI Engineer - Internship</h4>
-                        <span class="role-date">January 2025 – February 2025</span>
+                    <div class="experience-content">
+                        <p>
+                            Built Clara, a Vietnamese medical LLM/VLM assistant trained on 400K+ doctor-annotated cases and 210K+
+                            X-ray/MRI samples, combining clinical dialogue, imaging context and distilled/synthetic supervision for safer
+                            local-language healthcare AI.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Achievements:</h5>
+                            <ul>
+                                <li>Led EMR-integrated agentic RAG for patient-context grounding, medication-safety checks and auditable clinical support.</li>
+                                <li>Designed retrieval validation and benchmark pipelines reaching &gt;95% recall and &gt;92% precision on labelled medical datasets.</li>
+                                <li>Helped strengthen clinician trust by grounding outputs in patient records, retrieval evidence and structured evaluation workflows.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Analysing data, document, article for Sentiment Analysis and Business Overview with LLM models, integration with cloud computing architecture. Leading current team to leverage Obsei framework and Transformers for sentiment analysis, fact-checking, summarization, deliver actionable business insights for the clients.</p>
-                </div>
-            </div>
+                </article>
 
-            <!-- The Auburn Coffee -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">The Auburn Coffee</h3>
-                        <span class="company-location">Hawthorn East, Victoria, Australia</span>
+                <!-- CPG Seedcom -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">CPG Seedcom</h3>
+                            <span class="company-location">Vietnam / Remote</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">Data Scientist | Team Leader</h4>
+                            <span class="role-date">June 2025 - August 2025</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Barista, Website Developer</h4>
-                        <span class="role-date">May 2023 - November 2025</span>
+                    <div class="experience-content">
+                        <p>
+                            Led a 6-member team building a Vietnamese natural-language-to-SQL analytics assistant across MySQL and
+                            Oracle for sales, supply-chain and marketing teams.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Built the analytics platform using FastAPI, Gemini, Qwen3, MongoDB vector search, schema-aware retrieval and agentic RAG.</li>
+                                <li>Implemented SQL reasoning, validation, self-QA and outcome-based reinforcement loops to turn business questions into trusted database insights.</li>
+                                <li>Reduced manual analysis effort by up to 80% by enabling explainable database-to-decision workflows across business units.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Developed the official website for a local commuter café at Auburn Station. Features include interactive menu, real-time pre-ordering, loyalty program with personalize QR code, and staff dashboard for order management, rating and feedback, sale analysis. Built with VueJS, Node.js (Vercel), database storage on MongoDB, and Firebase. Revolutionizing the business with digitalisation procedure, skyrocketing sale on an instance by 30%. Find more <a href="https://lelekhoa1812.github.io/The-Auburn-Coffee/" class="highlight">here</a>.</p>
-                </div>
-            </div>
+                </article>
 
-            <!-- MJ Industrial -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">MJ Industrial</h3>
-                        <span class="company-location">Laverton North, Victoria, Australia</span>
+                <!-- PopTech -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">PopTech</h3>
+                            <span class="company-location">Melbourne, Australia</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">ML Engineer | Team Leader</h4>
+                            <span class="role-date">May 2025 - July 2025</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Android Developer</h4>
-                        <span class="role-date">June 2024 – January 2025</span>
+                    <div class="experience-content">
+                        <p>
+                            Led a 4-member team delivering an IoT electricity forecasting and control platform for predictive billing,
+                            energy optimization and LLM-assisted operational recommendations.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Built ingestion and data-quality pipelines with KNN and LinearRegression imputation, anomaly detection and timestamp fallback handling for IoT device streams.</li>
+                                <li>Integrated Temporal Fusion Transformers, XGBoost and DQN-based reinforcement learning to forecast electricity usage and optimize device-control decisions.</li>
+                                <li>Enabled multimodal user interaction through ASR, text interfaces and voice synthesis, creating an interactive LLMOps layer for energy advisory workflows.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Android solution streamlining staff rostering and payment management with Kotlin, Node.js, and MariaDB.</p>
-                </div>
-            </div>
+                </article>
 
-            <!-- Vietdan JSC -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">Vietdan JSC</h3>
-                        <span class="company-location">HCM City, Vietnam</span>
+                <!-- The Auburn Coffee -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">The Auburn Coffee</h3>
+                            <span class="company-location">Hawthorn East, Victoria, Australia</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">Fullstack Developer</h4>
+                            <span class="role-date">April 2024 - September 2025</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">IoT/AI Engineer</h4>
-                        <span class="role-date">December 2024 – February 2025</span>
+                    <div class="experience-content">
+                        <p>
+                            Developed the official commuter-café platform with Vue.js, Node.js, AWS and MS SQL, delivering an interactive
+                            menu, pre-ordering, QR loyalty, staff dashboard, customer feedback and sales analytics.
+                        </p>
+                        <div class="achievements">
+                            <h5>Impact:</h5>
+                            <ul>
+                                <li>Digitized ordering, loyalty and staff operations for a local café at Auburn Station, supporting faster service and clearer sales visibility.</li>
+                                <li>Supported a ~30% sales uplift through digitalization and improved customer workflow design.</li>
+                                <li>View the live project <a href="https://lelekhoa1812.github.io/The-Auburn-Coffee/" class="highlight" target="_blank" rel="noopener noreferrer">here</a>.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Develop Water Meter OCR, a real-time water meter scanning solution using Next.js, Node.js, and Flask API, for government client. Self-mining and annotation of data, employs YOLOv5xu for detection and CV+OCR for text, hosting on Jetson Nano and AWS EC2. Production met the planned KPI to reduce manual labour by approximately 35%.</p>
-                </div>
-            </div>
+                </article>
 
-            <!-- Alta Media -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">Alta Media</h3>
-                        <span class="company-location">HCM City, Vietnam</span>
+                <!-- Nam A Bank - AI/Data -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">Nam Á Bank</h3>
+                            <span class="company-location">Ho Chi Minh City, Vietnam</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">AI/Data Engineer</h4>
+                            <span class="role-date">December 2024 - May 2025</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">DevOps Engineer - Internship</h4>
-                        <span class="role-date">December 2022 – February 2023</span>
+                    <div class="experience-content">
+                        <p>
+                            Built fintech AI/data capabilities across OCR, computer vision, LLM/chatbot workflows and data-driven product
+                            research for digital banking, onboarding and remittance expansion.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Implemented passport OCR and synthetic data generation to accelerate foreign-customer onboarding and support banking services for non-domestic identification scenarios.</li>
+                                <li>Explored remittance-service opportunities targeting overseas Vietnamese markets and contributed product research for potential Australian-market expansion.</li>
+                                <li>Helped redesign mobile-app concepts by shifting complex workflows to web services and improving accessibility for user-friendly digital banking experiences.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Dev-Ops Engineer, deploying software architecture using Docker. Deploying basic backend infrastructure with Docker and JavaScript.</p>
-                </div>
-            </div>
+                </article>
 
-            <!-- Vietdan JSC Hardware -->
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-info">
-                        <h3 class="company-name">Vietdan JSC</h3>
-                        <span class="company-location">HCM City, Vietnam</span>
+                <!-- Nam A Bank - Software Engineer -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">Nam Á Bank</h3>
+                            <span class="company-location">Vietnam / Remote</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">Software Engineer</h4>
+                            <span class="role-date">April 2023 - June 2024</span>
+                        </div>
                     </div>
-                    <div class="role-info">
-                        <h4 class="role-title">Hardware Technician</h4>
-                        <span class="role-date">September 2019 – December 2019</span>
+                    <div class="experience-content">
+                        <p>
+                            Engineered banking software components across Vert.x backend services and Java Android modules, improving
+                            secure API integration, mobile service access, customer onboarding flows and digital banking feature delivery.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Developed backend service components and Android modules supporting customer-facing banking workflows.</li>
+                                <li>Improved API integration reliability between mobile experiences and service-layer banking operations.</li>
+                                <li>Collaborated across product and engineering requirements to deliver maintainable fintech functionality in a regulated environment.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="experience-content">
-                    <p>Hardware technician specializing in motherboard replacement and repair services. Have an in-hand experience with routers motherboard.</p>
-                </div>
+                </article>
+
+                <!-- iNet Solution -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">iNet Solution</h3>
+                            <span class="company-location">Ho Chi Minh City, Vietnam</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">Software / Data Scientist</h4>
+                            <span class="role-date">April 2024 - March 2025</span>
+                        </div>
+                    </div>
+                    <div class="experience-content">
+                        <p>
+                            Led an LLM-powered analytics pipeline for sentiment analysis, fact-checking and summarization over large
+                            document and article collections.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Used Obsei, Transformers and cloud architecture to extract actionable business insights from unstructured text sources.</li>
+                                <li>Designed analysis workflows for sentiment detection, document summarization and evidence-aware business overviews.</li>
+                                <li>Supported clients by transforming article/document noise into structured, reviewable intelligence outputs.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- VietDan JSC - ML Engineer -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">VietDan JSC</h3>
+                            <span class="company-location">Vietnam / Remote</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">ML Engineer</h4>
+                            <span class="role-date">December 2024 - February 2025</span>
+                        </div>
+                    </div>
+                    <div class="experience-content">
+                        <p>
+                            Developed and productionized a real-time water-meter OCR system for government-facing utility workflows,
+                            converting field images into structured, reviewable meter readings.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Built the application with Next.js, Node.js, Flask, YOLOv5x/OCR and 10,000+ annotated samples for detection and reading extraction.</li>
+                                <li>Optimized deployment across Jetson Nano and AWS EC2 to support edge-friendly inference and cloud-backed processing.</li>
+                                <li>Reduced manual processing workload by approximately 35% through automated image capture, detection and OCR workflows.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- MJ Industrial -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">MJ Industrial</h3>
+                            <span class="company-location">Laverton North, Victoria, Australia</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">Android Developer</h4>
+                            <span class="role-date">June 2024 - January 2025</span>
+                        </div>
+                    </div>
+                    <div class="experience-content">
+                        <p>
+                            Developed and deployed a Kotlin Android workforce and payroll application with Node.js backend and MariaDB
+                            database to streamline staff rostering, shift tracking, payment processing and warehouse administration.
+                        </p>
+                        <div class="achievements">
+                            <h5>Impact:</h5>
+                            <ul>
+                                <li>Reduced manual data entry and accounting workload by centralizing rostering, payroll and shift records in a mobile-first workflow.</li>
+                                <li>Delivered practical backend integrations for workforce operations in an Australian industrial environment.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- VietDan JSC - Cloud Software Engineer -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">VietDan JSC</h3>
+                            <span class="company-location">Vietnam / Remote</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">Cloud Software Engineer</h4>
+                            <span class="role-date">June 2022 - March 2023</span>
+                        </div>
+                    </div>
+                    <div class="experience-content">
+                        <p>
+                            Built AWS-hosted cloud services for IoT and ML-enabled applications, supporting production clients with
+                            scalable APIs, telemetry ingestion and deployment automation.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Supported API gateways, load-balanced backend services, MLOps integration points and cloud deployment workflows.</li>
+                                <li>Implemented monitoring, telemetry and drift-monitoring hooks to improve observability of IoT/data workloads.</li>
+                                <li>Helped containerize and operate backend services for production-facing software delivery.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Alta Media -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">Alta Media</h3>
+                            <span class="company-location">Vietnam / Remote</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">DevOps Cloud Engineer</h4>
+                            <span class="role-date">May 2022 - January 2023</span>
+                        </div>
+                    </div>
+                    <div class="experience-content">
+                        <p>
+                            Supported AWS/Azure deployment engineering across Dockerized services, Kubernetes workloads, CI/CD automation,
+                            environment hardening, monitoring and release workflows.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Improved release repeatability by standardizing Docker-based deployment workflows and environment configuration.</li>
+                                <li>Assisted with Kubernetes workloads, CI/CD pipelines and monitoring practices for cloud-hosted products.</li>
+                                <li>Contributed to infrastructure reliability, deployment documentation and backend service operations.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Tien Thanh Co -->
+                <article class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <h3 class="company-name">Tien Thanh Co</h3>
+                            <span class="company-location">Ho Chi Minh City, Vietnam</span>
+                        </div>
+                        <div class="role-info">
+                            <h4 class="role-title">IoT and Software Engineer</h4>
+                            <span class="role-date">January 2020 - August 2020</span>
+                        </div>
+                    </div>
+                    <div class="experience-content">
+                        <p>
+                            Engineered cloud-ready IoT and software services across AWS and Azure, containerizing APIs and device-data
+                            workloads with Docker and Kubernetes while supporting production deployment, monitoring and scalable service delivery.
+                        </p>
+                        <div class="achievements">
+                            <h5>Key Contributions:</h5>
+                            <ul>
+                                <li>Built early-stage IoT service components for device data collection, backend processing and operational monitoring.</li>
+                                <li>Supported containerized deployment workflows using Docker and Kubernetes for cloud-ready application delivery.</li>
+                                <li>Worked across hardware-adjacent software, cloud services and production operations, forming a practical foundation in IoT engineering.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+
             </div>
-        </div>
-    </div>
+        </section>
     </main>
 
     <script>
-        // Add animation classes to elements when they come into view
+        // Add animation classes to elements when they come into view.
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
-        
+
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+            entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
-        
-        // Observe all experience cards and nav placeholders
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', () => {
             const experienceCards = document.querySelectorAll('.experience-card');
             const navPlaceholders = document.querySelectorAll('.nav-placeholder');
-            
-            experienceCards.forEach(card => observer.observe(card));
-            navPlaceholders.forEach(placeholder => observer.observe(placeholder));
+
+            experienceCards.forEach((card) => observer.observe(card));
+            navPlaceholders.forEach((placeholder) => observer.observe(placeholder));
         });
     </script>
 </body>
