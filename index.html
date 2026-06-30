@@ -239,6 +239,7 @@
                 <p class="section-description">A broad portfolio of research, product, and automation work.</p>
             </div>
         <div class="projects-grid">
+            
             <!-- Codoptic -->
             <div class="project-card scroll-animate">
                 <div class="project-image">
@@ -250,6 +251,7 @@
                     <span class="see-more" onclick="openModal('MedSwin', 'Codoptic is an open-source workspace that turns any repository into live architecture diagrams, an agentic code planner, and a reviewable coding agent — without leaving your machine. Drop it inside the repo you want to understand, point it at the AI provider you trust, and ship faster with full visibility into every step the agent takes.', 'img/codoptic.jpeg')">... See more</span>
                 </div>
             </div>
+            
             <!-- MedSwin-Research -->
             <div class="project-card scroll-animate">
                 <div class="project-image">
@@ -261,7 +263,8 @@
                     <span class="see-more" onclick="openModal('MedSwin', 'Led research team of 5, funded by Swinburne to build a multi-agent system with domain-specialist agents (diagnostics, pharmacology, triage) coordinated by a reasoning agentic orchestrator MCP:\n • Boosted diagnostic accuracy & safety by fine-tuning LLMs on 500k+ curated & synthetic cases, using Knowledge Distillation, LoRA/QLoRA (GRPO reasoning), and augmentation (QAC) paraphrasing/chunking, self-consistency, counterfactuals, backtranslation.\n • Built agentic RAG (Tree + HNSW + FAISS) over EMR/EHR + PubMed with retrieval safety rails, real-time update, and citations to mitigate hallucination. Finetuned 300M embedding and reranking model on over 5M curated.\n • Trained biomedical reranker model on 8M selective medical corpus. Integrated in MAC (multi-agent conversation) architecture to boost IR rate..\n • Established strict evaluation: MedMCQA / PubMedQA benchmarking, semantic similarity audits with biomedical embeddings, early-stopping LR scheduling; trained reproducibly on HPC.', 'img/medswin.png')">... See more</span>
                 </div>
             </div>
-            <!-- MedAI-Swin-Research -->
+            
+            <!-- MedViet-AI -->
             <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/medvietai.png" alt="MedVietAI" class="project-img">
@@ -272,6 +275,7 @@
                     <span class="see-more" onclick="openModal('MedViệtAI', 'MedViệtAI is a strategic national initiative, non-profit organisation sponsored by Vietnam's National Data Association (NDA), to assert the nation's sovereignty in the age of Artificial Intelligence. The program delivers foundational, Vietnam-owned LLM/SLM, purpose-built for the Vietnamese language and context. This core technology will power a novel agentic AI architecture designed to tackle critical national challenges, beginning with a transformative focus on healthcare. By leveraging a secure, national-scale data acquisition strategy, MedViệtAI will enable advanced analysis of Electronic Medical Records (EMRs) for proactive health monitoring and personalized medical insights, placing Vietnam at the forefront of AI-driven healthcare innovation.', 'img/medvietai.png')">... See more</span>
                 </div>
             </div>
+            
             <!-- Clara -->
             <div class="project-card scroll-animate from-right">
                 <div class="project-image">
@@ -285,7 +289,7 @@
             </div>
 
             <!-- StudyBuddy -->
-            <div class="project-card scroll-animate">
+            <!-- <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/sb.png" alt="StudyBuddy" class="project-img">
                 </div>
@@ -294,10 +298,10 @@
                     <p class="project-description">End-to-end RAG app for learning experience from your own documents.</p>
                     <span class="see-more" onclick="openModal('StudyBuddy', 'StudyBuddy is an advanced end-to-end Retrieval-Augmented Generation (RAG) application for personalized learning from documents:\n• **Document Processing Pipeline**: Multi-format support (PDF/DOCX) with OCR, image captioning using VLM models, and intelligent text extraction\n• **TreeRAG Architecture**: Implements hierarchical document structure with parent-child relationships for enhanced context understanding\n• **Advanced Retrieval System**: Recursive retriever with semantic similarity search, hybrid search combining dense and sparse vectors\n• **Extensive Summarization Engine**: Multi-level summarization with extractive and abstractive techniques, chunk-level and document-level summaries\n• **Intelligent Chunking**: Semantic-aware content segmentation into *learning cards* with overlap optimization and context preservation\n• **Vector Database Integration**: MongoDB Atlas with FAISS indexing for efficient similarity search and retrieval\n• **Cost-Aware Model Routing**: Dynamic model selection based on query complexity and cost optimization\n• **Memory Management**: Lightweight STM/LTM chat memory with context-aware retrieval and conversation continuity\n• **Multi-Model Support**: NVIDIA GPU acceleration, Gemini Pro integration, and robust API key rotation/retry mechanisms', 'img/sb.png')">... See more</span>
                 </div>
-            </div>
+            </div> -->
             
             <!-- SQL-LLM-CoT -->
-            <div class="project-card scroll-animate from-right">
+            <!-- <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/sqlcot.png" alt="SQL-LLM-CoT" class="project-img">
                 </div>
@@ -306,22 +310,10 @@
                     <p class="project-description">Vietnamese SQL AI assistant, business questions into SQL queries and insights.</p>
                     <span class="see-more" onclick="openModal('SQL LLM CoT', 'Leading a team of 6 to build a Vietnamese-language AI assistant, converts business questions into SQL queries across MySQL and Oracle, fusing multi-modal self-QA for Reinforcement Learning over failures and successes. Built with FastAPI, Gemini & Qwen3, MongoDB vectorbase, leveraging Chain-of-Thought and Agentic RAG for autonomous analytics in sales, supply chain, and marketing. The system reduces manual workforces by up to 80%, delivers instant, explainable insights, a unique plugin solution enables direct database-to-decision workflows without human intervention.', 'img/sqlcot.png')">... See more</span>
                 </div>
-            </div>
-
-            <!-- Medical Chatbot -->
-            <div class="project-card scroll-animate">
-                <div class="project-image">
-                    <img src="img/medbot.png" alt="Medical Chatbot" class="project-img">
-                </div>
-                <div class="project-content">
-                    <a href="https://medical-chatbot-henna.vercel.app" class="project-title">Medical Chatbot</a>
-                    <p class="project-description">Medical multimodal LLM, Agentic RAG, real-time query and context continuity.</p>
-                    <span class="see-more" onclick="openModal('Medical Chatbot', 'Developed an advanced AI medical chatbot with comprehensive clinical capabilities:\n• **Advanced LLM Integration**: Gemini Pro 2.5 with medical domain fine-tuning and optimization\n• **Vector Database Architecture**: FAISS with GridFS for efficient medical knowledge retrieval and storage\n• **NodeRAG Implementation**: Sophisticated retrieval-augmented generation over diagnosis & treatment datasets\n• **Real-Time Query Processing**: Low-latency response system for immediate clinical decision support\n• **MongoDB Data Management**: Robust data storage with medical record indexing and retrieval\n• **Dynamic Memory Systems**: STM/LTM history caching with context-aware conversation management\n• **Model Optimization**: Fine-tuning and quantization techniques for improved efficiency and performance\n• **Multi-Language NLP**: FastAPI backend with advanced natural language processing for global accessibility\n• **RESTful API Architecture**: Clean API design with NodeJS frontend integration\n• **Clinical Safety Features**: Built-in safety rails and medical accuracy validation\n• **Scalable Deployment**: Production-ready system with monitoring and error handling', 'img/medbot.png')">... See more</span>
-                </div>
-            </div>
+            </div> -->
 
             <!-- URFF -->
-            <div class="project-card scroll-animate from-right">
+            <!-- <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/urff.png" alt="URFF" class="project-img">
                 </div>
@@ -330,7 +322,7 @@
                     <p class="project-description">Local assistant, LLM, NLP, OCR, turning PDF documents into industrial assistance.</p>
                     <span class="see-more" onclick="openModal('URFF', 'Building a local AI assistant that fuse LLM, NLP, OCR on the solution to turn all unstructured PDF documents into direct industrial AI-assistance that can provide guidance for businesses. Our partnered businesses including Nvidia, HPA, IBM, Juniper, and CISCO Vietnam.', 'img/urff.png')">... See more</span>
                 </div>
-            </div>
+            </div> -->
 
             <!-- The Auburn Coffee -->
             <div class="project-card scroll-animate">
@@ -345,7 +337,7 @@
             </div>
 
             <!-- AI Tutoring -->
-            <div class="project-card scroll-animate from-right">
+            <!-- <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/aitut.webp" alt="AI Tutoring" class="project-img">
                 </div>
@@ -354,7 +346,7 @@
                     <p class="project-description">AI tutoring, LLM with RAG, knowledge-base and level-base teaching, assignment.</p>
                     <span class="see-more" onclick="openModal('AI Tutoring', 'Advanced AI-powered tutoring platform with comprehensive educational capabilities:\n• **Intelligent RAG System**: Advanced retrieval-augmented generation with knowledge-base integration and level-based teaching\n• **Personalized Learning Paths**: Customized roadmap generation with adaptive session planning and weekly progress tracking\n• **Virtual Teaching Sessions**: AI-powered student-teacher interactions with real-time feedback and instruction\n• **Document Intelligence**: Unstructured document processing with dynamic context retrieval and content understanding\n• **Web Research Integration**: Automated web-crawling and deep-research capabilities for comprehensive study material sourcing\n• **Multi-Model AI Integration**: Gemini, Qwen, and FastAPI backend with advanced language model orchestration\n• **Advanced Search Systems**: Qdrant vector database, LangChain framework, and semantic search capabilities\n• **Memory Management**: LTM/STM retrieval systems for contextual learning continuity and progress tracking\n• **Frontend Technology**: Next.js, TypeScript, Tailwind CSS, Lucide React with modern UI/UX design\n• **Backend Architecture**: Next.js API, Prisma ORM, MongoDB Atlas with robust data management\n• **Authentication & Security**: NextAuth.js, OAuth2, bcryptjs for secure user management\n• **API Integrations**: GoogleBookAPI, SerpAPI, BraveAPI for comprehensive educational resource access\n• **Performance Optimization**: SlowAPI rate limiting, FlaskAPI microservices, and efficient data processing', 'img/aitut.webp')">... See more</span>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Triage Response -->
             <div class="project-card scroll-animate">
@@ -381,7 +373,7 @@
             </div>
 
             <!-- ElecBot -->
-            <div class="project-card scroll-animate">
+            <!-- <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/elecbot.jpeg" alt="ElecBot" class="project-img">
                 </div>
@@ -390,7 +382,7 @@
                     <p class="project-description">Scalable electricity forecasting, ML/DL,LLM, IoT device.</p>
                     <span class="see-more" onclick="openModal('ElecBot', 'Led a 4-member team to architect and build a scalable electricity forecasting and control application from IoT device. Integrated ML/DL (TFT, XGBoost), Reinforcement Learning (DQN), and LLM- driven advisory to predict billing, optimize device usage, and automate energy-saving decisions. Enabled multimodal interaction via ASR, text, and voice synthesis for a fully interactive MCP experience.', 'img/elecbot.jpeg')">... See more</span>
                 </div>
-            </div>
+            </div> -->
 
             <!-- CVA -->
             <div class="project-card scroll-animate from-right">
@@ -404,20 +396,20 @@
                 </div>
             </div>
 
-            <!-- IELTS Enhancer -->
+            <!-- Writing Journey -->
             <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/ielts.png" alt="IELTS" class="project-img">
                 </div>
                 <div class="project-content">
-                    <a href="https://ielts-writing-boost.vercel.app" class="project-title">IELTS Enhancer</a>
+                    <a href="https://ielts-writing-boost.vercel.app" class="project-title">Writing Journey</a>
                     <p class="project-description">AI-powered IELTS writing coach with instructional adviosry.</p>
                     <span class="see-more" onclick="openModal('IELTS Enhancer', 'IELTS Enhancer is your personal, AI-powered writing coach designed to help you reach your dream band score. Whether you are aiming for a 6.0 or striving for a perfect 9.0, this app gives you the tools, feedback, and motivation to get there.', 'img/ielts.png')">... See more</span>
                 </div>
             </div>
 
             <!-- Student Management -->
-            <div class="project-card scroll-animate from-right">
+            <!-- <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/stuma.png" alt="Student Management" class="project-img">
                 </div>
@@ -426,10 +418,10 @@
                     <p class="project-description">Platform for enrollment, class management, testing, administratives.</p>
                     <span class="see-more" onclick="openModal('Student Management', 'A comprehensive web-based student management platform designed for language schools to handle student enrollment, class management, placement testing, and administrative tasks. The system supports both Vietnamese and English interfaces and serves multiple user roles including students, staff, and administrators. Frontend: Next.js, TypeScript, Tailwind CSS, Lucide React, React Hooks. Backend: Next.js API, Prisma ORM, MongoDB Atlas, NextAuth.js, OAuth2, bcryptjs.', 'img/stuma.png')">... See more</span>
                 </div>
-            </div>
+            </div> -->
 
             <!-- TicTacToe -->
-            <div class="project-card scroll-animate">
+            <!-- <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/ttt.png" alt="TTT" class="project-img">
                 </div>
@@ -438,10 +430,10 @@
                     <p class="project-description">Virtual GUI TicTacToe Game with AI in Java and C# versions.</p>
                     <span class="see-more" onclick="openModal('TicTacToe (Gomoku) AI Game Player', 'Virtual GUI Game with PvP (2-3 members) and PvC modes. Leveraging AI and comprehensive scoring, sorting algorithms. Methodical Attacking/Defensive strategies. JAVA Version with JADE Multi-agent framework. C# Version with SplashKitSDK GUI.', 'img/ttt.png')">... See more</span>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Water Meter Scanner -->
-            <div class="project-card scroll-animate from-right">
+            <!-- <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/watmet.png" alt="Water Scanner" class="project-img">
                 </div>
@@ -450,7 +442,7 @@
                     <p class="project-description">Backend system, OCR, CV, AI, and IoT for water meter scanning.</p>
                     <span class="see-more" onclick="openModal('Water Meter Scanner', 'Scanning Water Meter on real-time, deploying UI by Next.js with Node.js backbone and Flask API. Training model by YOLOv5xu for field detection and VietOCR transformer_vgg for text recognition. Currently host Frontend on Vercel and Backend on Jetson Nano server. Product of VietDan JSC.', 'img/watmet.png')">... See more</span>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Obsei -->
             <div class="project-card scroll-animate">
@@ -464,15 +456,51 @@
                 </div>
             </div>
 
-            <!-- Linguaphile -->
-            <div class="project-card scroll-animate from-right">
+            <!-- Ericsson 5G Digital Twin -->
+            <div class="project-card scroll-animate">
                 <div class="project-image">
-                    <img src="img/linguaphile.jpeg" alt="Linguaphile" class="project-img">
+                    <img src="img/5g.jpg" alt="Stock" class="project-img">
                 </div>
                 <div class="project-content">
-                    <a href="https://github.com/Lelekhoa1812/Linguaphile" class="project-title">Linguaphile</a>
-                    <p class="project-description">Android app vocabulary learning, mini-games, progress tracking and achievement.</p>
-                    <span class="see-more" onclick="openModal('Linguaphile', 'Android app (Kotlin) for vocabulary learning features mini-games; progress tracking and achievement; keep note on new vocabularies with synonyms, anonyms, sample sentences; with real-time multi-language translation using Google ML Kit.', 'img/linguaphile.png')">... See more</span>
+                    <a href="#" class="project-title">Ericsson Vietnam and Swinburne-funded 5G Predictive Maintenance Platform</a>
+                    <p class="project-description">TFT/GNN Forecasting, FinBERT Sentiment and DRL Portfolio Optimization.</p>
+                    <span class="see-more" onclick="openModal('Ericsson 5G Digital Twin', 'Engineered a production-grade 5G digital twin using C# .NET Core, MySQL and ONNX Runtime to process industrial tower telemetry, forecast bandwidth pressure and detect degradation across diverse Vietnamese regional network conditions. Built multithreaded ETL, indexed time-series schemas, ST-GCN/', 'img/5g.jpg')">... See more</span>
+                </div>
+            </div>
+
+            <!-- S&P500 Stock Prediction -->
+            <div class="project-card scroll-animate">
+                <div class="project-image">
+                    <img src="img/stock.jpeg" alt="Stock" class="project-img">
+                </div>
+                <div class="project-content">
+                    <a href="#" class="project-title">S&P500 Stock Prediction</a>
+                    <p class="project-description">TFT/GNN Forecasting, FinBERT Sentiment and DRL Portfolio Optimization.</p>
+                    <span class="see-more" onclick="openModal('S&P500 Stock Prediction', 'Developed a multi-horizon quantitative system using Temporal Fusion Transformers, Graph Neural Networks, FinBERT news/SEC-filing sentiment and Deep Reinforcement Learning agents for dynamic portfolio execution and alpha generation. Built leakage-resistant infrastructure with fractional differentiation, Combinatorial Purged and Embargoed CV, Apache Kafka streaming and concept-drift detection to preserve market memory and trigger retraining during regime shifts..', 'img/stock.jpeg')">... See more</span>
+                </div>
+            </div>
+
+            <!-- EstateFolio -->
+            <div class="project-card scroll-animate">
+                <div class="project-image">
+                    <img src="img/estate.jpeg" alt="Stock" class="project-img">
+                </div>
+                <div class="project-content">
+                    <a href="#" class="project-title">EstateFolio</a>
+                    <p class="project-description">Spatio-Temporal Real Estate Forecasting for HCMC and Hanoi.</p>
+                    <span class="see-more" onclick="openModal('EstateFolio', 'Built an ST-GNN forecasting system for volatile residential prices across Ho Chi Minh City and Hanoi, capturing district dependencies, infrastructure effects, growth-pole dynamics and neighborhood ripple patterns. Integrated Transformer NLP over listings, bond updates and regulatory signals with fractional differentiation, purged/embargoed CPCV, macro-credit features and drift detection to identify the 2024-2025 Hanoi/HCMC market divergence.', 'img/estate.jpeg')">... See more</span>
+                </div>
+            </div>
+
+            <!-- Medbot -->
+            <div class="project-card scroll-animate">
+                <div class="project-image">
+                    <img src="img/medbot.png" alt="Medical Chatbot" class="project-img">
+                </div>
+                <div class="project-content">
+                    <a href="https://medical-chatbot-henna.vercel.app" class="project-title">Medbot</a>
+                    <p class="project-description">Medical multimodal LLM, Agentic RAG, web-crawling citation.</p>
+                    <span class="see-more" onclick="openModal('Medical Chatbot', 'Developed an advanced AI medical chatbot with comprehensive clinical capabilities:\n• **Advanced LLM Integration**: Gemini Pro 2.5 with medical domain fine-tuning and optimization\n• **Vector Database Architecture**: FAISS with GridFS for efficient medical knowledge retrieval and storage\n• **NodeRAG Implementation**: Sophisticated retrieval-augmented generation over diagnosis & treatment datasets\n• **Real-Time Query Processing**: Low-latency response system for immediate clinical decision support\n• **MongoDB Data Management**: Robust data storage with medical record indexing and retrieval\n• **Dynamic Memory Systems**: STM/LTM history caching with context-aware conversation management\n• **Model Optimization**: Fine-tuning and quantization techniques for improved efficiency and performance\n• **Multi-Language NLP**: FastAPI backend with advanced natural language processing for global accessibility\n• **RESTful API Architecture**: Clean API design with NodeJS frontend integration\n• **Clinical Safety Features**: Built-in safety rails and medical accuracy validation\n• **Scalable Deployment**: Production-ready system with monitoring and error handling', 'img/medbot.png')">... See more</span>
                 </div>
             </div>
 
@@ -500,18 +528,6 @@
                 </div>
             </div>
 
-            <!-- S&P500 Stock Prediction -->
-            <div class="project-card scroll-animate">
-                <div class="project-image">
-                    <img src="img/stock.jpeg" alt="Stock" class="project-img">
-                </div>
-                <div class="project-content">
-                    <a href="https://github.com/Lelekhoa1812/S-P500_Prediction_Model" class="project-title">S&P500 Stock Prediction</a>
-                    <p class="project-description">Multimodel long/short term stock prediction of S&P500 companies.</p>
-                    <span class="see-more" onclick="openModal('S&P500 Stock Prediction', 'Fusing multimodel ML/DL over long/short term stock prediction over S&P500 company candidates.', 'img/stock.jpeg')">... See more</span>
-                </div>
-            </div>
-
             <!-- Golf Scorecard Scanner -->
             <div class="project-card scroll-animate from-right">
                 <div class="project-image">
@@ -525,7 +541,7 @@
             </div>
 
             <!-- Weather Forecast Website -->
-            <div class="project-card scroll-animate">
+            <!-- <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/weather.png" alt="Weather" class="project-img">
                 </div>
@@ -534,22 +550,35 @@
                     <p class="project-description">Website for real-time weather data with a comprehensive lookup system for cities worldwide.</p>
                     <span class="see-more" onclick="openModal('Weather Forecast Website', 'A platform providing real-time weather data with a comprehensive lookup system for cities worldwide.', 'img/weather.png')">... See more</span>
                 </div>
-            </div>
+            </div> -->
 
+            
             <!-- Roster Management System -->
             <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/roster.jpg" alt="Roster" class="project-img">
                 </div>
                 <div class="project-content">
-                    <a href="https://github.com/Lelekhoa1812/RosterManagement" class="project-title">Roster Management System</a>
+                    <a href="https://github.com/Lelekhoa1812/RosterManagement" class="project-title">Roster Manager</a>
                     <p class="project-description">Android application to streamline staff rostering and payroll.</p>
                     <span class="see-more" onclick="openModal('Roster Management System', 'Android application to streamline staff rostering and payroll for businesses, built using Kotlin and Node.js for backend services.', 'img/roster.jpg')">... See more</span>
                 </div>
             </div>
 
+            <!-- Linguaphile -->
+            <div class="project-card scroll-animate from-right">
+                <div class="project-image">
+                    <img src="img/linguaphile.jpeg" alt="Linguaphile" class="project-img">
+                </div>
+                <div class="project-content">
+                    <a href="https://github.com/Lelekhoa1812/Linguaphile" class="project-title">Linguaphile</a>
+                    <p class="project-description">Android app vocabulary learning, mini-games, progress tracking and achievement.</p>
+                    <span class="see-more" onclick="openModal('Linguaphile', 'Android app (Kotlin) for vocabulary learning features mini-games; progress tracking and achievement; keep note on new vocabularies with synonyms, anonyms, sample sentences; with real-time multi-language translation using Google ML Kit.', 'img/linguaphile.png')">... See more</span>
+                </div>
+            </div>
+
             <!-- Education Website -->
-            <div class="project-card scroll-animate">
+            <!-- <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/edweb.png" alt="Education Website" class="project-img">
                 </div>
@@ -558,7 +587,7 @@
                     <p class="project-description">Interactive quizzes and classroom features, educational material.</p>
                     <span class="see-more" onclick="openModal('Education Website', 'A virtual learning platform designed for interactive quizzes and classroom features, helping students engage with educational material.', 'img/edweb.png')">... See more</span>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Fretboard -->
             <div class="project-card scroll-animate from-right">
@@ -566,8 +595,7 @@
                     <img src="img/fretboard.png" alt="Fretboard" class="project-img">
                 </div>
                 <div class="project-content">
-                    <a href="https://lelekhoa1812.github.io/Fretboard/" class="project-title">Fretboard</a>
-                    <p class="project-description">Educational site to learning string instruments, scale, chord, and note lookups.</p>
+                    <p class="project-description">AI-powered educational site to learning string instruments, scale, chord, and note lookups.</p>
                     <span class="see-more" onclick="openModal('Fretboard', 'An educational site dedicated to learning string instruments such as guitars and ukuleles, offering scale, chord, and note lookups.', 'img/fretboard.png')">... See more</span>
                 </div>
             </div>
@@ -585,7 +613,7 @@
             </div>
 
             <!-- Message Encryption -->
-            <div class="project-card scroll-animate from-right">
+            <!-- <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/encryption.png" alt="Encryption" class="project-img">
                 </div>
@@ -594,7 +622,7 @@
                     <p class="project-description">Basic encryption and decryption techniques, hashing, for educational purposes.</p>
                     <span class="see-more" onclick="openModal('Message Encryption', 'Website demonstrating basic encryption and decryption techniques using JavaScript, allowing users to secure their messages.', 'img/encryption.png')">... See more</span>
                 </div>
-            </div>
+            </div> -->
 
             <!-- AI Rock Paper Scissor Game -->
             <div class="project-card scroll-animate">
@@ -609,7 +637,7 @@
             </div>
 
             <!-- Virtual Instrument Keyboard -->
-            <div class="project-card scroll-animate from-right">
+            <!-- <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/virkey.png" alt="Virtual Keyboard" class="project-img">
                 </div>
@@ -618,10 +646,10 @@
                     <p class="project-description">Interactive multi-instrument app allows playing music on computer keyboard.</p>
                     <span class="see-more" onclick="openModal('Virtual Instrument Keyboard', 'A fun and interactive virtual keyboard that allows users to play music using their computer keyboard.', 'img/virkey.png')">... See more</span>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Chess Game -->
-            <div class="project-card scroll-animate">
+            <!-- <div class="project-card scroll-animate">
                 <div class="project-image">
                     <img src="img/chess.webp" alt="Chess" class="project-img">
                 </div>
@@ -630,10 +658,10 @@
                     <p class="project-description">Classic chess game for two players, in Python.</p>
                     <span class="see-more" onclick="openModal('Chess Game', 'A classic chess game for two players, built using Python, offering a sleek user interface and basic move validation.', 'img/chess.webp')">... See more</span>
                 </div>
-            </div>
+            </div> -->
 
             <!-- QR Code Generator -->
-            <div class="project-card scroll-animate from-right">
+            <!-- <div class="project-card scroll-animate from-right">
                 <div class="project-image">
                     <img src="img/qr.png" alt="QR" class="project-img">
                 </div>
@@ -642,7 +670,7 @@
                     <p class="project-description">Website generating QR codes with JavaScript and TypeScript.</p>
                     <span class="see-more" onclick="openModal('QR Code Generator', 'A simple web-based tool for generating QR codes using JavaScript and TypeScript.', 'img/qr.png')">... See more</span>
                 </div>
-            </div>
+            </div> -->
         </div>
         </section>
     </main>
