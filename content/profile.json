@@ -200,7 +200,7 @@
       "heading": "CVA",
       "sourceType": "project",
       "aliases": ["career agent"],
-      "text": "CVA. Career application agent. Repository: Lelekhoa1812/CVA. Live app: cva-mauve.vercel.app."
+      "text": "CVA. A career application agent. It plans an application and drafts a CV and a cover letter. A reviewer agent critiques the draft, and a person approves it. Repository: Lelekhoa1812/CVA. Live app: cva-mauve.vercel.app."
     },
     {
       "sectionId": "project-writing",

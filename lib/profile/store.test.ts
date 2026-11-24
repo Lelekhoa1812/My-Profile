@@ -67,6 +67,12 @@ describe("profile store", () => {
     if (result.found) expect(result.sections.some((section) => section.sectionId === "project-medvietai")).toBe(true);
   });
 
+  it("keeps a person in control of a CVA draft", () => {
+    const result = readSection(profile.sections, "CVA");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.text).toContain("a person approves it");
+  });
+
   it("keeps the SkyLedge cost figure as an estimate", () => {
     const result = searchSections(profile.sections, "SkyLedge capstone team");
     expect(result.found).toBe(true);
