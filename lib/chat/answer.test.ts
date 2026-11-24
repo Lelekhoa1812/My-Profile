@@ -3905,6 +3905,17 @@ describe("displayAnswer", () => {
       "What is Clara?",
     );
     expect(claraIs).not.toContain("sole author");
+    const claraDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Clara do?") }],
+      "",
+      "What does Clara do?",
+    );
+    expect(claraDoes).toContain("medical language");
+    expect(claraDoes).toContain("175 Hospital");
+    expect(claraDoes).toContain("400,000");
+    expect(claraDoes).toContain("95 percent");
+    expect(claraDoes).toContain("92 percent");
+    expect(claraDoes).not.toContain("sole author");
     const managerIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is HA Manager?") }],
       "",
