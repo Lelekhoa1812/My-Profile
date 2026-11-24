@@ -128,6 +128,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(drift);
     }
   }
+  if (/\brecipes\b/i.test(question) && !/\b(draft|export|email)\b/i.test(question)) {
+    const recipes = sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bthe recipes are\b/i.test(sentence));
+    if (recipes) {
+      chosen.length = 0;
+      cap = 2;
+      push(recipes);
+    }
+  }
   if (/\bcapital-markets\b/i.test(question) || /\bcapital markets\b/i.test(question)) {
     cap = 3;
     const phrase = blockSentences.find((sentence) => /\bcapital-markets automation\b/i.test(sentence));
@@ -1269,7 +1277,8 @@ function withIdentity(question: string, proof: string, blockSentences: readonly 
   if (!opening || !proof.trim()) return proof;
   if (/^Public repositories\.?$/i.test(opening) && !/\b(archive|repositor|public)\b/i.test(question)) return proof;
   const chronological = /\b(before|after)\b/i.test(question);
-  if (!chronological && opening.split(/\s+/).length > 2) return proof;
+  const sale = /\b(sell|sold|buyer|buy|purchas|acquir|bought)\b/i.test(question);
+  if (!chronological && opening.split(/\s+/).length > (sale ? 4 : 2)) return proof;
   if (/\bpreview\b/i.test(proof) && /\bapprov/i.test(proof)) return proof;
   const token = opening.split(",")[0].replace(/[.]+$/, "").trim();
   if (token.length < 4 || proof.toLowerCase().includes(token.toLowerCase())) return proof;

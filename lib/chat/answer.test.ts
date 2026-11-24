@@ -979,7 +979,16 @@ describe("displayAnswer", () => {
       "What was sold to VHandicap?",
     );
     expect(vhandicapSale).toContain("VHandicap");
+    expect(vhandicapSale).toContain("Golf scorecard scanner");
     expect(vhandicapSale).not.toContain("HA Manager");
+    const axisRecipes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What recipes does Axis use?") }],
+      "",
+      "What recipes does Axis use?",
+    );
+    expect(axisRecipes).toContain("startup scouting");
+    expect(axisRecipes).toContain("investor scouting");
+    expect(axisRecipes).toContain("portfolio reporting");
     const mjSale = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What was sold to MJ Industrial?") }],
       "",
@@ -3267,7 +3276,8 @@ describe("displayAnswer", () => {
       "What did the golf app sell to?",
     );
     expect(golfText).toContain("VHandicap");
-    expect(golfText.split(/(?<=[.!])\s+/)[0]).toMatch(/sold/i);
+    expect(golfText).toContain("Golf scorecard scanner");
+    expect(golfText).toMatch(/sold to vhandicap/i);
     const axion = profile.sections.find((item) => item.sectionId === "role-axion");
     const mixed = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: axion?.text ?? "" }, { text: harry?.text ?? "" }] } }],
