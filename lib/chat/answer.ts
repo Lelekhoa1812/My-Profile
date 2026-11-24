@@ -449,6 +449,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\b(poptech|electricity)\b/i.test(question) && /\btft\b/i.test(sentence)) return true;
   if (/\bstack\b/i.test(question) && isToolList(sentence)) return true;
   if (/\bci\b/i.test(question) && /\bci\/cd\b/i.test(sentence)) return true;
+  if (/\bdigits?\b/i.test(question) && /\bmnist\b/i.test(sentence)) return true;
   if (/\b(use|used|operate|operates)\b/i.test(question) && (/\bthe stack is\b/i.test(sentence) || isToolList(sentence))) return true;
   if (/\brepositor(?:y|ies)\b/i.test(question) && /\brepositor(?:y|ies)\b/i.test(sentence)) return true;
   if (/\btraces?\b/i.test(question) && /\btraces?\b/i.test(sentence)) return true;

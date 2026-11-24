@@ -851,6 +851,12 @@ describe("displayAnswer", () => {
       "What does Sall-e plan after detection?",
     );
     expect(routePlan).toContain("route planning");
+    const digits = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the golf scanner use for digits?") }],
+      "",
+      "What does the golf scanner use for digits?",
+    );
+    expect(digits).toContain("MNIST");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(
