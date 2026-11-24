@@ -1714,11 +1714,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       sentences.find((sentence) => /\b35 percent\b/i.test(sentence) && /\bmeter\b/i.test(sentence)),
       sentences.find((sentence) => /\bjetson\b/i.test(sentence) && /\baws\b/i.test(sentence)),
       sentences.find((sentence) => /only named live app/i.test(sentence)),
-      sentences.find((sentence) => /person approves/i.test(sentence)),
     ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
     if (lines.length > 1) {
       chosen.length = 0;
-      cap = 4;
+      cap = 3;
       for (const sentence of lines) chosen.push(sentence);
     }
   }

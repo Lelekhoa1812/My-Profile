@@ -5016,7 +5016,7 @@ describe("displayAnswer", () => {
     expect(measured).toContain("10,000");
     expect(measured).toContain("Jetson");
     expect(measured).toContain("only named live app");
-    expect(measured).toContain("person approves");
+    expect(measured).not.toContain("person approves");
     expect(measured).not.toContain("December 2024");
     const afterHarry = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do after Harry the Hirer?") }],
