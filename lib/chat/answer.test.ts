@@ -2356,6 +2356,13 @@ describe("displayAnswer", () => {
     );
     expect(ingestion).toContain("owned ingestion");
     expect(ingestion).toContain("mentored data engineers");
+    const claraScores = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What scores did Clara reach?") }],
+      "",
+      "What scores did Clara reach?",
+    );
+    expect(claraScores).toContain("95");
+    expect(claraScores).toContain("92");
     const promptMe = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does prompt-me refine?") }],
       "",
