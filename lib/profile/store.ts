@@ -190,8 +190,19 @@ function adjacentRoleIds(text: string) {
   return ids.length > 0 ? ids : undefined;
 }
 
+function statesDataset(body: string): boolean {
+  const kept = body.split(/(?<=[.!])\s+/).filter((sentence) => !/\bthe record does not\b|\bdoes not include\b/.test(sentence));
+  return /\bdatasets?\b/.test(kept.join(" "));
+}
+
+function statedDatasetSections<T extends { section: ProfileSection; title: string; body: string }>(pool: readonly T[], asked: string, terms: readonly string[]): T[] | undefined {
+  if (!/\bdatasets?\b/.test(asked) || /\blab\b/.test(asked)) return undefined;
+  const content = terms.filter((term) => !/^datasets?$/.test(term));
+  const hits = pool.filter((hit) => statesDataset(hit.body) && content.every((term) => covers(hit.title, term) || covers(hit.body, term)));
+  return hits.length > 0 ? hits : undefined;
+}
+
 function askedProductSectionIds(text: string): string[] | undefined {
-  if (/\bdataset\b/.test(text) && /\b(golf|scorecard)\b/.test(text)) return ["project-hf-models"];
   const named: Array<[RegExp, string]> = [
     [/\bestatefolio\b/, "project-estatefolio"],
     [/\bcva\b/, "project-cva"],
@@ -768,6 +779,19 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   if (/\bpapers\b/.test(asked)) return { found: false as const };
   if (/\b(do|does|did) it present\b/.test(asked)) return { found: false as const };
   if (/\bpublish/.test(asked) && /\b(he|him|his|written|article|journal)\b/.test(asked) && !/\b(quotient|statement|recording)\b/.test(asked)) return { found: false as const };
+  const datasetHits = statedDatasetSections(visible, asked, terms);
+  if (datasetHits) {
+    return {
+      found: true as const,
+      sections: datasetHits.slice(0, 3).map((hit) => ({
+        sectionId: hit.section.sectionId,
+        heading: hit.section.heading,
+        sourceType: hit.section.sourceType,
+        text: hit.section.text,
+        match: "keyword" as const,
+      })),
+    };
+  }
   const pinned = pinnedSections(visible, query);
   if (pinned) return pinned;
   if (terms.length === 0) return broadSections(visible.filter((item) => !sourceType || item.section.sourceType === sourceType));

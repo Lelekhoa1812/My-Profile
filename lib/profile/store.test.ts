@@ -165,6 +165,26 @@ describe("profile store", () => {
     }
   });
 
+  it("answers a dataset question from the section that states the datasets", () => {
+    const questions = [
+      ["What is the golf scorecard dataset?", "vietnamese golf scorecard set"],
+      ["What is the synthetic passport dataset?", "synthetic passport set"],
+      ["What is the passport dataset?", "synthetic passport set"],
+      ["What is the garbage classification dataset?", "garbage-classification set"],
+      ["What public datasets are on the same account?", "medical question sets"],
+    ];
+    for (const [question, proof] of questions) {
+      const result = searchSections(profile.sections, question);
+      expect(result.found, question).toBe(true);
+      if (!result.found) continue;
+      expect(result.sections[0]?.sectionId, question).toBe("project-hf-models");
+      expect(result.sections[0]?.text.toLowerCase(), question).toContain(proof);
+    }
+    const lab = searchSections(profile.sections, "What datasets did the lab use?");
+    expect(lab.found).toBe(true);
+    if (lab.found) expect(lab.sections.some((section) => section.sectionId === "project-medswin" || section.sectionId === "role-swinburne-research")).toBe(true);
+  });
+
   it("answers a golf scorecard dataset question from the Hugging Face datasets", () => {
     const result = searchSections(profile.sections, "What is the golf scorecard dataset?");
     expect(result.found).toBe(true);

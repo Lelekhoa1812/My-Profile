@@ -5244,6 +5244,32 @@ describe("displayAnswer", () => {
     expect(ericsson).toContain("not a named live customer app");
   });
 
+  it("answers a dataset question from the public dataset sentence", () => {
+    const questions = [
+      ["What is the golf scorecard dataset?", "Vietnamese golf scorecard set", "VHandicap"],
+      ["What is the synthetic passport dataset?", "synthetic passport set", "VietOCR"],
+      ["What is the passport dataset?", "synthetic passport set", "VietOCR"],
+      ["What is the garbage classification dataset?", "garbage-classification set", "oceanic"],
+      ["What public datasets are on the same account?", "medical question sets", "download count"],
+    ];
+    for (const [question, proof, avoid] of questions) {
+      const answer = displayAnswer(
+        [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, question) }],
+        "",
+        question,
+      );
+      expect(answer, question).toContain(proof);
+      expect(answer, question).not.toContain(avoid);
+    }
+    const medswin = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What datasets did MedSwin use?") }],
+      "",
+      "What datasets did MedSwin use?",
+    );
+    expect(medswin).toContain("MedQuAD");
+    expect(medswin).not.toContain("synthetic passport set");
+  });
+
   it("keeps the model sentence when a tool found a section", () => {
     const text = displayAnswer(
       [{ type: "tool-read_section", state: "output-available", output: { found: true, sectionId: "role-axion", text: "Axion Solutions. AI Software Engineer." } }],
