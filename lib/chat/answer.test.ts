@@ -2276,6 +2276,13 @@ describe("displayAnswer", () => {
     );
     expect(medswinGuard).toContain("safety guardrails");
     expect(medswinGuard.startsWith("Fine-tuning")).toBe(false);
+    const harrySize = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How big is Harry the Hirer?") }],
+      "",
+      "How big is Harry the Hirer?",
+    );
+    expect(harrySize).toContain("largest event enterprise");
+    expect(harrySize).toContain("December 2025");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],

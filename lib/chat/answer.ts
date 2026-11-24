@@ -544,6 +544,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (platform && !chosen.includes(platform)) push(platform);
     push(recipes);
   }
+  if (/\bharry\b/i.test(question) && /\b(big|size|largest|enterprise)\b/i.test(question)) {
+    cap = 2;
+    const size = blockSentences.find((sentence) => /\blargest event enterprise\b/i.test(sentence));
+    if (size) {
+      chosen.length = 0;
+      push(size);
+    }
+  }
   if (/\bharry\b/i.test(question) && /\b(authenticat\w*|msal)\b/i.test(question)) {
     cap = 2;
     const auth = blockSentences.find((sentence) => /\bmsal\b/i.test(sentence));
