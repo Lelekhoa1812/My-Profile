@@ -1,5 +1,6 @@
 export const SILENCE = "The record does not include that.";
 export const UNREAD = "The record could not be read.";
+export const MISSED = "The record did not answer this time.";
 
 type AnswerPart = { type: string; state?: string; output?: unknown };
 
@@ -9,10 +10,11 @@ export function turnToStore(aborted: boolean, outputs: readonly unknown[], model
 }
 
 export function keptSentence(outputs: readonly unknown[], modelText: string): string {
-  return displayAnswer(
+  const text = displayAnswer(
     outputs.map((output) => ({ type: "tool-output", state: "output-available", output })),
     modelText,
   );
+  return text.trim() ? text : MISSED;
 }
 
 export function displayAnswer(parts: readonly AnswerPart[], modelText: string): string {

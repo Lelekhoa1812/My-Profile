@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { displayAnswer, dropSourceTail, keptSentence, SILENCE, turnToStore, UNREAD } from "./answer";
+import { displayAnswer, dropSourceTail, keptSentence, MISSED, SILENCE, turnToStore, UNREAD } from "./answer";
 
 describe("displayAnswer", () => {
   it("replaces a boast when every tool missed", () => {
@@ -20,6 +20,10 @@ describe("displayAnswer", () => {
 
   it("stores nothing when the visitor stops the answer", () => {
     expect(turnToStore(true, [{ found: true }], "Liam works at Axion Solutions.")).toBeNull();
+  });
+
+  it("stores a plain sentence when the model finishes with no words", () => {
+    expect(keptSentence([{ found: true, heading: "Skills" }], "   ")).toBe(MISSED);
   });
 
   it("keeps the silence sentence for the session when every tool missed", () => {
