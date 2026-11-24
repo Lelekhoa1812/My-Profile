@@ -1894,6 +1894,13 @@ describe("displayAnswer", () => {
       "Tell me about his work",
     );
     expect(hisWork).toMatch(/Axion Solutions\. He owns the AI vision/);
+    const estateError = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What error does EstateFolio report?") }],
+      "",
+      "What error does EstateFolio report?",
+    );
+    expect(estateError).toContain("Drift detection is part of the pipeline");
+    expect(estateError).not.toContain("does not include an error rate");
     expect(cameFirst).toContain("April 2023");
     expect(cameFirst).toContain("December 2024");
     const pedigreeBefore = displayAnswer(

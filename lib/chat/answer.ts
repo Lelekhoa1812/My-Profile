@@ -111,6 +111,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\btransformer reads\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bst-gnn\b/i.test(sentence)));
   }
+  if (/\bestatefolio\b/i.test(question) && /\berror\b/i.test(question)) {
+    cap = 2;
+    const drift = blockSentences.find((sentence) => /\bdrift detection\b/i.test(sentence));
+    if (drift) {
+      chosen.length = 0;
+      push(drift);
+    }
+  }
   if (/\b500[,.]?000\b/i.test(question) && /\b5\s+million\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\b500,000 curated cases\b/i.test(sentence)));
@@ -1056,6 +1064,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\binet\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && /\bobsei\b/i.test(sentence)) return true;
   if (/\bteqar\b/i.test(question) && /\b(use|uses|used|scope)\b/i.test(question) && /\bscope includes\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bestatefolio\b/i.test(question) && /\bprice forecast\b/i.test(sentence)) return true;
+  if (/\bestatefolio\b/i.test(question) && /\berror\b/i.test(question) && /\bdrift detection\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bsall-?e\b/i.test(question) && /\boceanic garbage\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bgolf\b/i.test(question) && /\bsold to vhandicap\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\broster\b/i.test(question) && /\bsold to mj industrial\b/i.test(sentence)) return true;
