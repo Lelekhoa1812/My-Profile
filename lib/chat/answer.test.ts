@@ -1068,6 +1068,13 @@ describe("displayAnswer", () => {
       "What is his title?",
     );
     expect(title).toBe("AI Software Engineer");
+    const harryCity = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where did he live at Harry?") }],
+      "",
+      "Where did he live at Harry?",
+    );
+    expect(harryCity.startsWith("Melbourne")).toBe(true);
+    expect(harryCity).not.toContain("mate-selection");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",

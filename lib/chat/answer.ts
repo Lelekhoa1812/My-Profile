@@ -312,12 +312,13 @@ function bothWorkAnswer(question: string, outputs: readonly Record<string, unkno
 }
 
 function placeAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\bwhere\b/i.test(question) || !/\b(based|located)\b/i.test(question)) return "";
+  if (!/\bwhere\b/i.test(question) || !/\b(based|located|live|lives|living)\b/i.test(question) || /\b(app|production|release)\b/i.test(question)) return "";
   if (!/\b(project|product|role)\b/i.test(question) && !namedEmployer(question)) return "";
   const sentences = sectionBlocks(outputs).flatMap((block) => plainSentences(block));
   const city = sentences.find((sentence) => /\b(melbourne|perth|binh duong|ho chi minh)\b/i.test(sentence));
   const work = sentences.find((sentence) => /\bpedigree\b/i.test(question) && /\b(mate-selection|black caviar)\b/i.test(sentence))
-    ?? sentences.find((sentence) => /\b(engine|platform|led|owns|built)\b/i.test(sentence));
+    ?? sentences.find((sentence) => /\bled\b/i.test(sentence))
+    ?? sentences.find((sentence) => /\b(engine|platform|owns|built)\b/i.test(sentence));
   return [city, work].filter((sentence): sentence is string => Boolean(sentence)).join(" ");
 }
 
