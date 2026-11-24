@@ -179,6 +179,19 @@ describe("withMemory", () => {
     expect(groundedQuestion([pedigree, answer, follow], 2)).toContain("pedigree");
   });
 
+  it("keeps an approve follow-up on the subject that records approval", () => {
+    const cva = { id: "u1", role: "user", parts: [{ type: "text", text: "What is CVA?" }] } as UIMessage;
+    const harry = { id: "u2", role: "user", parts: [{ type: "text", text: "What did he do at Harry the Hirer?" }] } as UIMessage;
+    const axion = { id: "u3", role: "user", parts: [{ type: "text", text: "What did he do at Axion?" }] } as UIMessage;
+    const golf = { id: "u4", role: "user", parts: [{ type: "text", text: "What is the golf scanner?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "Recorded." }] } as UIMessage;
+    const approve = { id: "u5", role: "user", parts: [{ type: "text", text: "What does it approve?" }] } as UIMessage;
+    expect(groundedQuestion([cva, answer, approve], 2)).toContain("cva");
+    expect(groundedQuestion([harry, answer, approve], 2)).toContain("harry");
+    expect(groundedQuestion([axion, answer, approve], 2)).toContain("axion");
+    expect(groundedQuestion([golf, answer, approve], 2)).toBe("What does it approve?");
+  });
+
   it("keeps a write follow-up on CVA", () => {
     const cva = { id: "u1", role: "user", parts: [{ type: "text", text: "What is CVA?" }] } as UIMessage;
     const golf = { id: "u2", role: "user", parts: [{ type: "text", text: "What is the golf scanner?" }] } as UIMessage;
