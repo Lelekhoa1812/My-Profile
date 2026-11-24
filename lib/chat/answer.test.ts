@@ -183,6 +183,14 @@ describe("displayAnswer", () => {
       "The record shows a 35 percent reduction across more than ten thousand samples.",
     );
     expect(narrated).toBe("About 35 percent less manual meter processing, on more than 10,000 samples.");
+    const withApproval = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [
+        { text: "The resume records about 35 percent less manual meter processing, on more than 10,000 samples." },
+        { text: "A reviewer agent critiques the draft, and a person approves it." },
+      ] } }],
+      "The record shows a reduction.",
+    );
+    expect(withApproval).toBe("About 35 percent less manual meter processing, on more than 10,000 samples. A reviewer agent critiques the draft, and a person approves it.");
   });
 
   it("drops a modifier that only exists inside a longer record word", () => {

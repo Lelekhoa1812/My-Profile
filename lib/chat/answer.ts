@@ -51,10 +51,14 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
 }
 
 function recordedOutcome(outputs: readonly Record<string, unknown>[]): string {
-  const sentences = sectionSentences(outputs);
-  const measured = sentences.find((sentence) => /percent/i.test(sentence) && !exposesGap(sentence));
-  if (!measured) return "";
-  const plain = measured.replace(/^The resume (?:records|says) (?:that )?/i, "").trim();
+  const sentences = sectionSentences(outputs).filter((sentence) => !exposesGap(sentence));
+  const measured = sentences.find((sentence) => /percent/i.test(sentence));
+  const approval = sentences.find((sentence) => /person (?:to )?approv/i.test(sentence) && sentence !== measured);
+  return [measured, approval].filter((sentence): sentence is string => Boolean(sentence)).map(plainSentence).join(" ");
+}
+
+function plainSentence(sentence: string): string {
+  const plain = sentence.replace(/^The resume (?:records|says) (?:that )?/i, "").trim();
   return plain ? plain[0].toUpperCase() + plain.slice(1) : "";
 }
 
