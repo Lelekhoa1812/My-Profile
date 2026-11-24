@@ -973,6 +973,20 @@ describe("displayAnswer", () => {
       "Who leads the Alta work?",
     );
     expect(altaLead).toContain("Kubernetes");
+    const vhandicapSale = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What was sold to VHandicap?") }],
+      "",
+      "What was sold to VHandicap?",
+    );
+    expect(vhandicapSale).toContain("VHandicap");
+    expect(vhandicapSale).not.toContain("HA Manager");
+    const mjSale = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What was sold to MJ Industrial?") }],
+      "",
+      "What was sold to MJ Industrial?",
+    );
+    expect(mjSale).toContain("MJ Industrial");
+    expect(mjSale).not.toContain("VHandicap");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],

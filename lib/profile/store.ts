@@ -456,6 +456,13 @@ function saleIds(text: string): string[] {
   const product = askedProductSectionIds(text);
   if (product) return product;
   if (/\bhai[\s-]?au\b/.test(text) && /\b(student|platform|manager|enrollment)\b/.test(text)) return ["role-hai-au"];
+  const buyers: Array<[RegExp, string]> = [
+    [/\bvhandicap\b/, "project-golf"],
+    [/\bmj industrial\b/, "project-roster"],
+    [/\bhai[\s-]?au\b/, "project-writing"],
+  ];
+  const buyer = buyers.find(([test]) => test.test(text));
+  if (buyer) return [buyer[1]];
   return ["project-shipped", "project-skyledge", "project-writing", "project-roster", "project-golf"];
 }
 
