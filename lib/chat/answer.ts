@@ -1338,6 +1338,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\b(speak|speech)\b/i.test(question) && !/\b(use|uses|used|for|whisper|he|him|his|language)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/Speech uses Whisper|speech input/i, 2);
   }
+  if (/\btriage\b/i.test(question) && /\b(language|speak|speech)\b/i.test(question) && !/\b(dataset|data|he|him)\b/i.test(question)) {
+    keepSentences(/Speech uses Whisper/i, 1);
+  }
   if (/\btransform/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question) && !/\b(estatefolio|ericsson|poptech|s&p|teqar)\b/i.test(question)) {
     keepSentences(/AI transformation|temporal fusion transformer|transformer reads/i, 4);
   }

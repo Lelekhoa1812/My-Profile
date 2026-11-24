@@ -3480,6 +3480,14 @@ describe("displayAnswer", () => {
     );
     expect(triageDataIs.startsWith("The triage data is MIMIC-IV")).toBe(true);
     expect(triageDataIs).not.toContain("Whisper");
+    const triageSpeech = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What language does the triage model speak?") }],
+      "",
+      "What language does the triage model speak?",
+    );
+    expect(triageSpeech).toContain("Speech uses Whisper");
+    expect(triageSpeech).not.toContain("MIMIC-IV");
+    expect(triageSpeech).not.toContain("Mandarin");
     const evaluationUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for evaluation?") }],
       "",
