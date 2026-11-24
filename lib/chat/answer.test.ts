@@ -1058,6 +1058,26 @@ describe("displayAnswer", () => {
     );
     expect(namWork).toContain("VietOCR");
     expect(namWork).toContain("REST");
+    const triageWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do on the clinical triage response?") }],
+      "",
+      "What did he do on the clinical triage response?",
+    );
+    expect(triageWork).toContain("Whisper");
+    expect(triageWork).toContain("Gemini");
+    const golfWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at the golf scanner?") }],
+      "",
+      "What did he do at the golf scanner?",
+    );
+    expect(golfWork).toContain("VHandicap");
+    expect(golfWork).toContain("YOLO");
+    const ericssonAbout = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Tell me about the Ericsson 5G digital twin.") }],
+      "",
+      "Tell me about the Ericsson 5G digital twin.",
+    );
+    expect(ericssonAbout).toContain("tower telemetry");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");

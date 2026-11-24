@@ -95,7 +95,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (!named || chosen.includes(named) || chosen.length >= 2) return;
     if (/the resume also uses the phrase/i.test(named) && !/\bphrase\b/i.test(question)) return;
     const shortFact = named.split(/\s+/).length >= 3 && /\b(use|uses|run|runs|led|cut)\b/.test(named) && words.some((word) => word.length >= 4 && mentions(named, word));
-    if (named.split(/\s+/).length < 4 && !isDecision(question, named) && !shortFact) return;
+    const shortUse = /\b(do|did)\b/i.test(question) && named.split(/\s+/).length >= 3 && (/\buses\b/i.test(named) || /\b(sold|acquired)\b/i.test(named));
+    if (named.split(/\s+/).length < 4 && !isDecision(question, named) && !shortFact && !shortUse) return;
     chosen.push(named);
   };
   if (orgLine && /\bwhat is\b/i.test(question) && !/\borg\b/i.test(question)) {
@@ -126,7 +127,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (!picked && unique && words.every((word) => !mentions(item.sentence, word) || mentions(unique, word))) continue;
     push(item.sentence);
   }
-  if (/\bwhat is\b/i.test(question) && chosen.length > 0 && !chosen.some((sentence) => isDecision(question, sentence)) && chosen.every((sentence) => !/\b(is|are|led|uses|use|used|reads|covers|owns|built|turns|takes|trains|advises)\b/i.test(sentence))) {
+  if (/\b(what is|tell me about)\b/i.test(question) && chosen.length > 0 && !chosen.some((sentence) => isDecision(question, sentence)) && chosen.every((sentence) => !/\b(is|are|led|uses|use|used|reads|covers|owns|built|turns|takes|trains|advises)\b/i.test(sentence))) {
     chosen.length = 0;
     const asked = blockSentences.find((sentence) => askWords(question).some((word) => word.length >= 5 && mentions(sentence, word)) && /\b(is|are|led|uses|use|used|reads|covers|owns|answers|turns|takes|refines|trains)\b/i.test(sentence));
     push(asked ?? workSentence(blockSentences));
@@ -138,6 +139,16 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       }
     }
     if (chosen.length < 2) push(blockSentences.find((sentence) => /\bpercent\b/i.test(sentence)));
+  }
+  const thinWork = chosen.length > 0 && chosen.every((sentence) => (/\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 6) || /\bpercent\b/i.test(sentence));
+  if (thinWork && /\b(do|did)\b/i.test(question) && !/\b(percent|measure|cut|pilot)\b/i.test(question) && !chosen.some((sentence) => isDecision(question, sentence))) {
+    const sold = blockSentences.find((sentence) => /\b(sold|acquired)\b/i.test(sentence) && sentence.split(/\s+/).length <= 8);
+    const uses = blockSentences.filter((sentence) => /\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 10);
+    if (uses.length >= 2 || (sold && uses.length >= 1)) {
+      chosen.length = 0;
+      if (sold) push(sold);
+      for (const sentence of uses) push(sentence);
+    }
   }
   const body = chosen.length > 0
     ? chosen
@@ -377,7 +388,8 @@ function workSentence(sentences: readonly string[]): string | undefined {
   return content.find((sentence) => /\b(led|trains|built|covers|owns)\b/i.test(sentence))
     ?? content.find((sentence) => /^[A-Za-z0-9][\w.-]* is an?\b/.test(sentence))
     ?? content.find((sentence) => /\breads\b/i.test(sentence) && /\b(telemetry|meter|bandwidth|photos)\b/i.test(sentence))
-    ?? content.find((sentence) => /\b(uses|use|used|percent|ocr)\b/i.test(sentence))
+    ?? content.find((sentence) => /\b(uses|use|used|ocr)\b/i.test(sentence))
+    ?? content.find((sentence) => /\bpercent\b/i.test(sentence))
     ?? content[0];
 }
 
