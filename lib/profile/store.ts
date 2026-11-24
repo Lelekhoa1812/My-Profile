@@ -351,6 +351,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("axis") && (text.includes("write") || text.includes("preview") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: /\bs&p\b/.test(text), ids: ["project-sp500"] },
     { when: /\bqueue\b/.test(text) && !/\b(axion|axis)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text) && !/\bwater[\s-]?meter\b/.test(text), ids: ["project-sp500"] },
+    { when: /\bhai[\s-]?au group\b/.test(text), ids: ["project-writing"] },
     { when: /\bhai[\s-]?au\b/.test(text) && !/\b(sold|sell|writing|coach|ielts)\b/.test(text), ids: ["role-hai-au"] },
     { when: /\bha manager\b/.test(text), ids: ["role-hai-au"] },
     { when: /\b5g\b/.test(text), ids: ["project-ericsson"] },

@@ -680,6 +680,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(period);
     }
   }
+  if (/\bhai[\s-]?au group\b/i.test(question)) {
+    const sold = blockSentences.find((sentence) => /\bversion 1\.5\.0\b/i.test(sentence));
+    if (sold) {
+      chosen.length = 0;
+      cap = 3;
+      push(sold);
+      push(blockSentences.find((sentence) => /\bwriting coach\b/i.test(sentence)));
+    }
+  }
   if (/\bauthenticat/i.test(question)) {
     const auth = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\b(authentication|msal)\b/i.test(sentence));
     chosen.length = 0;

@@ -1028,6 +1028,13 @@ describe("displayAnswer", () => {
     );
     expect(openAuth).toContain("MSAL");
     expect(openAuth).toContain("customer data path");
+    const haiAuGroup = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
+      "",
+      "What is Hai Au Group?",
+    );
+    expect(haiAuGroup).toContain("WritingJourney");
+    expect(haiAuGroup).toContain("1.5.0");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
