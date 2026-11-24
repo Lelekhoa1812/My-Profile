@@ -1409,6 +1409,56 @@ describe("displayAnswer", () => {
     );
     expect(distillIt).toContain("distillation");
     expect(distillIt).toContain("LoRA");
+    const purchaseIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it purchase?") }],
+      "",
+      "What does it purchase?",
+    );
+    expect(purchaseIt).toContain("purchasing");
+    expect(purchaseIt).not.toContain("not for a release");
+    const purchaser = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who is the purchaser of the golf app?") }],
+      "",
+      "Who is the purchaser of the golf app?",
+    );
+    expect(purchaser).toContain("VHandicap");
+    expect(purchaser).not.toContain("YOLOv8");
+    const deployIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it deploy?") }],
+      "",
+      "What does it deploy?",
+    );
+    expect(deployIt).toContain("Jetson");
+    expect(deployIt).not.toContain("not for a release");
+    const monitorIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it monitor?") }],
+      "",
+      "What does it monitor?",
+    );
+    expect(monitorIt).toContain("population stability index");
+    expect(monitorIt).not.toContain("vision");
+    const draftIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it draft?") }],
+      "",
+      "What does it draft?",
+    );
+    expect(draftIt).toContain("message drafting");
+    expect(draftIt).toContain("drafts a CV");
+    expect(draftIt).toContain("does not send email");
+    const scheduleIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it schedule?") }],
+      "",
+      "What does it schedule?",
+    );
+    expect(scheduleIt).toContain("delivery scheduling");
+    expect(scheduleIt).toContain("attendance");
+    const enrollIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it enroll?") }],
+      "",
+      "What does it enroll?",
+    );
+    expect(enrollIt).toContain("enrollment");
+    expect(enrollIt).toContain("attendance");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",

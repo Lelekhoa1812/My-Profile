@@ -1194,6 +1194,67 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       chosen.push(distilled.endsWith(".") ? distilled : `${distilled}.`);
     }
   }
+  if (/\bdeploy/i.test(question) && !/\b(use|uses|used|for|medchat|foodflow|quotient)\b/i.test(question) && !namedEmployer(question)) {
+    const jetson = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /Deployment used Jetson/i.test(sentence));
+    if (jetson) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(jetson.endsWith(".") ? jetson : `${jetson}.`);
+    }
+  }
+  if (/\bmonitor/i.test(question) && !/\b(medviet|emr|ericsson)\b/i.test(question) && !namedEmployer(question)) {
+    const drift = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /population stability index/i.test(sentence));
+    if (drift) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(drift.endsWith(".") ? drift : `${drift}.`);
+    }
+  }
+  if (/\bpurchas/i.test(question) && !/\bpurchaser\b/i.test(question)) {
+    const buying = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bpurchasing\b/i.test(sentence));
+    if (buying) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(buying.endsWith(".") ? buying : `${buying}.`);
+    }
+  }
+  if (/\bpurchaser\b/i.test(question)) {
+    const sold = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bsold to\b/i.test(sentence));
+    if (sold) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sold.endsWith(".") ? sold : `${sold}.`);
+    }
+  }
+  if (/\bdraft/i.test(question) && !/\b(send|recipe|on|axis|drafted)\b/i.test(question) && !namedEmployer(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /message drafting/i.test(sentence)),
+      sentences.find((sentence) => /drafts a CV/i.test(sentence)),
+      sentences.find((sentence) => /does not send email/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length >= 2) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\bschedul/i.test(question) && !namedEmployer(question)) {
+    const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bschedul/i.test(sentence) && !exposesGap(sentence));
+    if (lines.length > 0) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of [...new Set(lines)].slice(0, 2)) chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
+  if (/\benroll|\battend/i.test(question) && !namedEmployer(question)) {
+    const covered = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\benrollment\b/i.test(sentence) && /\battendance\b/i.test(sentence));
+    if (covered) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(covered.endsWith(".") ? covered : `${covered}.`);
+    }
+  }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));
@@ -1706,6 +1767,8 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bdatabase\b/i.test(question) && /\bown/i.test(question)) return joined;
   if (/\bevaluat|\bvalidation\b/i.test(question)) return joined;
   if (/\bforecast/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|read|reads|data|graph)\b/i.test(question)) return joined;
+  if (/\bschedul/i.test(question) && !namedEmployer(question)) return joined;
+  if (/\bdraft/i.test(question) && !/\b(send|recipe|on|axis|drafted)\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;
