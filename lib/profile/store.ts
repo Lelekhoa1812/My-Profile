@@ -330,6 +330,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: (/\bcloud\b/.test(text) || /\bllms?\b/.test(text) || /\b(cut|percent)\b/.test(text) || /\bvectors?\b/.test(text)) && Boolean(askedProductSectionIds(text)?.length), ids: askedProductSectionIds(text) ?? [] },
     { when: /\b(programming|coding)\b/.test(text) && /\blanguages?\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["skills"] },
     { when: /\bvietdan\b/.test(text) && /\bcloud\b/.test(text) && !/\b(platform|platforms|kafka|meter)\b/.test(text), ids: ["role-vietdan-cloud"] },
+    { when: /\bvietdan\b/.test(text) && /\bbefore\b/.test(text) && /\b(meter|water)\b/.test(text), ids: ["role-vietdan-cloud"] },
     { when: (/\bcloud\b/.test(text) || /\bvectors?\b/.test(text) || /\bqueue\b/.test(text) || /\bpercent\b/.test(text) || /\b(founder|founded|partners?)\b/.test(text)) && employerRoles.length > 0 && !askedProductSectionIds(text) && !/\bwater[\s-]?meter\b/.test(text), ids: employerRoles },
     { when: /\bqueue\b/.test(text) && Boolean(askedProductSectionIds(text)?.length), ids: askedProductSectionIds(text) ?? [] },
     { when: /\borchestrat/.test(text) && !namedEmployer(text), ids: ["project-medswin", "role-swinburne-research"] },
