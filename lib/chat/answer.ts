@@ -442,6 +442,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\barchive\b/i.test(question) && /\bprompt-me\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\blab\b/i.test(question) && /\brecord/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
+  if (/\bmodels were\b/i.test(question) && /\bdownloaded\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence)) {
     const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 5 && !["cases", "people", "using", "about"].includes(word));
@@ -731,7 +732,8 @@ function exposesGap(sentence: string): boolean {
     || /not in the record/i.test(sentence)
     || /\bunnamed\b/i.test(sentence)
     || /does not specify/i.test(sentence)
-    || /does not list/i.test(sentence);
+    || /does not list/i.test(sentence)
+    || /was not re-counted/i.test(sentence);
 }
 
 export function dropGapSentences(text: string): string {

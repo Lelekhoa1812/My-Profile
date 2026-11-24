@@ -870,6 +870,13 @@ describe("displayAnswer", () => {
     );
     expect(bothCases).toContain("500,000");
     expect(bothCases).toContain("5 million");
+    const downloads = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the resume say the MedSwin models were?") }],
+      "",
+      "What does the resume say the MedSwin models were?",
+    );
+    expect(downloads).toContain("downloaded");
+    expect(downloads).not.toContain("re-counted");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(
