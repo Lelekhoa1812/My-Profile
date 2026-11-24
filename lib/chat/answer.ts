@@ -739,6 +739,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(blockSentences.find((sentence) => /\bwriting coach\b/i.test(sentence)));
     }
   }
+  if (/\bexecut/i.test(question) && !/\bexecutor\b/i.test(question)) {
+    const executed = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bexecution\b/i.test(sentence));
+    if (executed.length > 0) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of executed.slice(0, 2)) push(sentence);
+    }
+  }
   if (/\bauthenticat/i.test(question)) {
     const auth = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\b(authentication|msal)\b/i.test(sentence));
     chosen.length = 0;

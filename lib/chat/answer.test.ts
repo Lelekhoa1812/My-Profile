@@ -1312,6 +1312,20 @@ describe("displayAnswer", () => {
     );
     expect(openAuth).toContain("MSAL");
     expect(openAuth).toContain("customer data path");
+    const authenticate = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it authenticate?") }],
+      "",
+      "What does it authenticate?",
+    );
+    expect(authenticate).toContain("MSAL");
+    expect(authenticate).toContain("customer data path");
+    const execute = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it execute?") }],
+      "",
+      "What does it execute?",
+    );
+    expect(execute).toContain("govern execution");
+    expect(execute).toContain("portfolio execution");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",
