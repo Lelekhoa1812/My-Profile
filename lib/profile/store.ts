@@ -256,6 +256,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: cityRoles.length > 0, ids: cityRoles },
     { when: /\bnam\b/.test(text) && /\b(two|difference)\b/.test(text) && /\broles?\b/.test(text), ids: ["role-nam-a-ai", "role-nam-a-software"] },
     { when: /\bnam\b/.test(text) && /\b(first|earlier)\b/.test(text), ids: ["role-nam-a-software", "role-nam-a-ai"] },
+    { when: /\bhis first role\b/.test(text) || /\bwhat did he do first\b/.test(text), ids: ["role-alta"] },
     { when: Boolean(percentIds?.length), ids: percentIds ?? [] },
     { when: Boolean(adjacent?.length), ids: adjacent ?? [] },
     { when: text.includes("axion") && /\brole\b/.test(text) && /\b(start|started|begin|began|when)\b/.test(text), ids: ["role-axion"] },
@@ -543,13 +544,13 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       title: `${section.heading} ${(section.aliases ?? []).join(" ")}`.toLowerCase(),
       body: section.text.toLowerCase(),
     }));
-  if (terms.length === 0) return broadSections(visible.filter((item) => !sourceType || item.section.sourceType === sourceType));
   if (asksForPlace(query)) return { found: false as const };
   const asked = query.toLowerCase();
   if (/\bcity\b/.test(asked) && /\b(it|that)\b/.test(asked) && !namedEmployer(asked)) return { found: false as const };
   if (/\b(papers|publish(?:ed)?)\b/.test(asked) && !/\b(quotient|statement|recording)\b/.test(asked)) return { found: false as const };
   const pinned = pinnedSections(visible, query);
   if (pinned) return pinned;
+  if (terms.length === 0) return broadSections(visible.filter((item) => !sourceType || item.section.sourceType === sourceType));
   const pool = visible.filter((item) => !sourceType || item.section.sourceType === sourceType);
   if (terms.every((term) => FACT_ONLY_TERMS.has(term))) return { found: false as const };
   const weight = new Map(terms.map((term) => {

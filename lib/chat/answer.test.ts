@@ -1844,6 +1844,21 @@ describe("displayAnswer", () => {
       "Which role came first, Nam A software or Nam A AI?",
     );
     expect(cameFirst).toContain("software came first");
+    const earliestRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What was his first role?") }],
+      "",
+      "What was his first role?",
+    );
+    expect(earliestRole).toContain("Alta");
+    expect(earliestRole).toContain("May 2022");
+    expect(earliestRole).not.toContain("Axion");
+    const didFirst = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do first?") }],
+      "",
+      "What did he do first?",
+    );
+    expect(didFirst).toContain("May 2022");
+    expect(didFirst).not.toContain("July 2026");
     expect(cameFirst).toContain("April 2023");
     expect(cameFirst).toContain("December 2024");
     const pedigreeBefore = displayAnswer(

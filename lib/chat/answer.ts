@@ -506,10 +506,12 @@ function rolePeriods(outputs: readonly Record<string, unknown>[]): { heading: st
 }
 
 function firstRoleAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\bcame first\b/i.test(question) && !(/\bwhich role\b/i.test(question) && /\bfirst\b/i.test(question))) return "";
+  const earliest = /\bhis first role\b/i.test(question) || /\bwhat did he do first\b/i.test(question);
+  if (!/\bcame first\b/i.test(question) && !(/\bwhich role\b/i.test(question) && /\bfirst\b/i.test(question)) && !earliest) return "";
   const rows = rolePeriods(outputs).sort((left, right) => left.start - right.start);
   const [first, second] = rows;
-  if (!first || !second) return "";
+  if (!first) return "";
+  if (!second || earliest) return `${first.heading}. ${first.period}`;
   return `${first.heading} came first. ${first.period} ${second.heading}. ${second.period}`;
 }
 
