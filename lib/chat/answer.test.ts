@@ -2331,6 +2331,14 @@ describe("displayAnswer", () => {
       "What does Alta ship through CI?",
     );
     expect(altaCi).toContain("CI/CD");
+    const cicdUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for CI/CD?") }],
+      "",
+      "What does he use for CI/CD?",
+    );
+    expect(cicdUse).toContain("CI/CD");
+    expect(cicdUse).toContain("Kubernetes");
+    expect(cicdUse).not.toContain("LangChain");
     const routePlan = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e plan after detection?") }],
       "",
