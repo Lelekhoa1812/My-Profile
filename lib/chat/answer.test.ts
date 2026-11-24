@@ -3335,6 +3335,12 @@ describe("displayAnswer", () => {
     expect(draft.split(/(?<=[.!])\s+/)[0]).toContain("does not send email");
     expect(hardware).toContain("Raspberry");
     expect(signals).toContain("10-signal");
+    const engineSignals = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many signals does the pedigree engine use?") }],
+      "",
+      "How many signals does the pedigree engine use?",
+    );
+    expect(engineSignals.split(/(?<=[.!])\s+/)[0]).toContain("10-signal");
     const embeddings = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the mate-selection engine use for embeddings?") }],
       "",

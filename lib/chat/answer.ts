@@ -1160,11 +1160,12 @@ function longestAsked(sentence: string, words: readonly string[]): number {
 
 function countedSentence(question: string, sentences: readonly string[], words: readonly string[]): string | undefined {
   if (!/\bhow many\b/i.test(question)) return undefined;
+  const noun = question.match(/\bhow many\s+([a-z0-9-]+)/i)?.[1]?.toLowerCase();
   const ranked = sentences
     .filter((sentence) => /\b\d/.test(sentence))
     .map((sentence) => ({ sentence, hits: words.filter((word) => mentions(sentence, word)).length }))
     .filter((item) => item.hits > 0)
-    .sort((left, right) => right.hits - left.hits || longestAsked(right.sentence, words) - longestAsked(left.sentence, words));
+    .sort((left, right) => Number(Boolean(noun && mentions(right.sentence, noun))) - Number(Boolean(noun && mentions(left.sentence, noun))) || right.hits - left.hits || longestAsked(right.sentence, words) - longestAsked(left.sentence, words));
   return ranked[0]?.sentence;
 }
 
