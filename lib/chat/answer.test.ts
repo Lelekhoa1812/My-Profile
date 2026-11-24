@@ -3341,6 +3341,20 @@ describe("displayAnswer", () => {
       "How many signals does the pedigree engine use?",
     );
     expect(engineSignals.split(/(?<=[.!])\s+/)[0]).toContain("10-signal");
+    const meterReads = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the water meter read?") }],
+      "",
+      "What does the water meter read?",
+    );
+    expect(meterReads).toContain("It reads meter photos");
+    expect(meterReads).not.toContain("not a named public app");
+    const meterWhere = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where was the water meter deployed?") }],
+      "",
+      "Where was the water meter deployed?",
+    );
+    expect(meterWhere).toContain("Deployment used Jetson and AWS");
+    expect(meterWhere).not.toContain("not a named public app");
     const embeddings = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the mate-selection engine use for embeddings?") }],
       "",

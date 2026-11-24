@@ -750,6 +750,17 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(limit);
     }
   }
+  if (/\bwater[\s-]?meter\b/i.test(question)) {
+    const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const read = /\bread/i.test(question) ? lines.find((sentence) => /\breads meter photos\b/i.test(sentence)) : undefined;
+    const deployed = /\bdeployed\b/i.test(question) ? lines.find((sentence) => /\bjetson\b/i.test(sentence)) : undefined;
+    const picked = read ?? deployed;
+    if (picked) {
+      chosen.length = 0;
+      cap = 2;
+      push(picked);
+    }
+  }
   if (/\bdata\b/i.test(question) && /\btriage\b/i.test(question)) {
     const data = blockSentences.find((sentence) => /\btriage data is\b/i.test(sentence));
     if (data) {
