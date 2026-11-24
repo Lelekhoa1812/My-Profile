@@ -2165,6 +2165,27 @@ describe("displayAnswer", () => {
     expect(besidesCva).toContain("HA Manager was sold");
     expect(besidesCva).toContain("SkyLedge was acquired");
     expect(besidesCva).not.toContain("The record does not say");
+    const harryJobTitle = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is his title at Harry the Hirer?") }],
+      "",
+      "What is his title at Harry the Hirer?",
+    );
+    expect(harryJobTitle.startsWith("Harry the Hirer, Senior AI Engineer")).toBe(true);
+    expect(harryJobTitle).toContain("December 2025");
+    const axionJobTitle = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What was his title at Axion?") }],
+      "",
+      "What was his title at Axion?",
+    );
+    expect(axionJobTitle).toContain("AI Software Engineer");
+    expect(axionJobTitle.startsWith("He owns")).toBe(false);
+    const medswinJobTitle = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is his title at MedSwin?") }],
+      "",
+      "What is his title at MedSwin?",
+    );
+    expect(medswinJobTitle.startsWith("MedSwin.")).toBe(true);
+    expect(medswinJobTitle).toContain("Researcher at Swinburne");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
