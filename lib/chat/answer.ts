@@ -96,7 +96,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(focusClause(question, sentence), blockSentences) : "";
     if (!named || chosen.includes(named) || chosen.length >= cap || otherRepo(question, named)) return;
-    if (/the resume also uses the phrase/i.test(named) && !/\b(phrase|automation|capital-markets)\b/i.test(question) && !/\bcapital markets\b/i.test(question)) return;
+    if (/the resume also uses the phrase/i.test(named) && !/\b(phrase|automation|automate|capital-markets)\b/i.test(question) && !/\bcapital markets\b/i.test(question)) return;
     const shortFact = named.split(/\s+/).length >= 3 && /\b(use|uses|run|runs|led|cut)\b/.test(named) && words.some((word) => word.length >= 4 && mentions(named, word));
     const shortUse = /\b(do|did)\b/i.test(question) && named.split(/\s+/).length >= 3 && (/\buses\b/i.test(named) || /\b(sold|acquired)\b/i.test(named));
     if (named.split(/\s+/).length < 4 && !isDecision(question, named) && !shortFact && !shortUse) return;
@@ -809,7 +809,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(scores);
     }
   }
-  if (/\b(ingestion|preprocessing|optimisation|optimization|mentored)\b/i.test(question)) {
+  if (/\b(ingestion|preprocessing|optimisation|optimization|optimise|optimize|mentored)\b/i.test(question)) {
     const owned = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bowned ingestion\b/i.test(sentence));
     if (owned) {
       chosen.length = 0;
@@ -865,7 +865,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(maps);
     }
   }
-  if (/\bautomation\b/i.test(question)) {
+  if (/\bautomat/i.test(question)) {
     const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const phrase = lines.find((sentence) => /\bcapital-markets automation\b/i.test(sentence));
     if (phrase) {
@@ -907,7 +907,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(graph);
     }
   }
-  if (/\b(vae|gbm|matrix factorization|bayesian nicking|dosage theory|shared ancestor|genetic fingerprints?)\b/i.test(question)) {
+  if (/\b(vae|gbm|matrix factorization|bayesian nicking|dosage theory|shared ancestor|genetic fingerprints?)\b/i.test(question) || /\bfactoriz/i.test(question)) {
     const ensemble = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\b10-signal\b/i.test(sentence));
     if (ensemble) {
       chosen.length = 0;
@@ -931,7 +931,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(loop);
     }
   }
-  if (/\b(bm25|hnsw|chunking|query decomposition|cross-encoder)\b/i.test(question)) {
+  if (/\b(bm25|hnsw|chunking|query decomposition|cross-encoder)\b/i.test(question) || /\bdecompos/i.test(question)) {
     const retrieval = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bbm25\b/i.test(sentence) && /\bhnsw\b/i.test(sentence));
     if (retrieval) {
       chosen.length = 0;

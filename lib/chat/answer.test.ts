@@ -1326,6 +1326,30 @@ describe("displayAnswer", () => {
     );
     expect(execute).toContain("govern execution");
     expect(execute).toContain("portfolio execution");
+    const decompose = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it decompose?") }],
+      "",
+      "What does it decompose?",
+    );
+    expect(decompose).toContain("query decomposition");
+    const factorize = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it factorize?") }],
+      "",
+      "What does it factorize?",
+    );
+    expect(factorize).toContain("matrix factorization");
+    const automate = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it automate?") }],
+      "",
+      "What does it automate?",
+    );
+    expect(automate).toContain("capital-markets automation");
+    const optimise = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it optimise?") }],
+      "",
+      "What does it optimise?",
+    );
+    expect(optimise).toContain("optimisation");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",
