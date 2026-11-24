@@ -582,6 +582,18 @@ describe("displayAnswer", () => {
       "What did the golf scanner detect on the card?",
     );
     expect(surveeRepo).toContain("Lelekhoa1812/survee");
+    const opencv = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did OpenCV do at Nam A Bank?") }],
+      "",
+      "What did OpenCV do at Nam A Bank?",
+    );
+    const altaWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Alta Media?") }],
+      "",
+      "What did he do at Alta Media?",
+    );
+    expect(opencv).toContain("OpenCV");
+    expect(altaWork).toContain("Kubernetes");
     expect(golfDetect).toContain("YOLOv8");
     expect(inet).toContain("Obsei");
     expect(traces).toContain("LangSmith");

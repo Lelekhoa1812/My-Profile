@@ -76,6 +76,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     .filter((item) => item.score > 0)
     .sort((left, right) => right.score - left.score);
   const decision = blockSentences.find((sentence) => isDecision(question, sentence));
+  const unique = blockSentences.find((sentence) => words.some((word) => word.length >= 5 && mentions(sentence, word) && blockSentences.filter((item) => mentions(item, word)).length === 1));
   const chosen: string[] = [];
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(sentence, blockSentences) : "";
@@ -83,7 +84,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (named.split(/\s+/).length < 4 && !isDecision(question, named)) return;
     chosen.push(named);
   };
+  push(unique);
   push(decision);
+  if (/\b(do|did|work|role)\b/i.test(question)) push(blockSentences.find((sentence) => isToolList(sentence)));
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   for (const item of ranked) push(item.sentence);
   const body = chosen.length > 0
@@ -183,7 +186,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\b(poptech|electricity)\b/i.test(question) && /\btft\b/i.test(sentence)) return true;
-  if (/\b(use|used|stack|operate|operates)\b/i.test(question) && (/\bthe stack is\b/i.test(sentence) || isToolList(sentence))) return true;
+  if (/\b(use|used|operate|operates)\b/i.test(question) && (/\bthe stack is\b/i.test(sentence) || isToolList(sentence))) return true;
   if (/\brepositor(?:y|ies)\b/i.test(question) && /\brepositor(?:y|ies)\b/i.test(sentence)) return true;
   if (/\btraces?\b/i.test(question) && /\btraces?\b/i.test(sentence)) return true;
   if (/\b(reduce|reduced|reduction|less)\b/i.test(question) && /\bpercent\b/i.test(sentence)) return true;
@@ -260,7 +263,7 @@ function isLabel(sentence: string): boolean {
 
 function isToolList(sentence: string): boolean {
   const parts = sentence.split(",").map((part) => part.trim()).filter(Boolean);
-  return parts.length >= 3 && parts.every((part) => /^(?:and\s+)?[A-Z0-9]/.test(part));
+  return parts.length >= 3 && parts.every((part) => /^(?:and\s+)?[A-Z0-9][A-Za-z0-9.+#/-]{1,24}$/.test(part.replace(/\.$/, "")));
 }
 
 function dateOnly(sentence: string): boolean {
