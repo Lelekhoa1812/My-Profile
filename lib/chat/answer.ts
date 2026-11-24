@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || productStackAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || scoreAnswer(question, outputs) || draftedAnswer(question, outputs) || reviewedAnswer(question, outputs) || exportedAnswer(question, outputs) || forecastedAnswer(question, outputs) || monitoredAnswer(question, outputs) || detectedAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || productStackAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || scoreAnswer(question, outputs) || draftedAnswer(question, outputs) || reviewedAnswer(question, outputs) || exportedAnswer(question, outputs) || forecastedAnswer(question, outputs) || monitoredAnswer(question, outputs) || detectedAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolDutyAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -361,6 +361,18 @@ function sameTimeAnswer(question: string, outputs: readonly Record<string, unkno
     }
   }
   return lines.slice(0, 4).join(" ");
+}
+
+const SKILL_ALIASES = new Set(["python", "kubernetes", "langgraph", "nim", "kafka", "agentforce", "mlflow", "pgvector"]);
+
+function toolDutyAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  const raw = question.match(/\bwhat does ([a-z0-9.+#-]{2,}) do\b/i)?.[1];
+  const name = raw?.toLowerCase();
+  if (!raw || !name || !SKILL_ALIASES.has(name)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => new RegExp(`\\b${name}\\b`, "i").test(sentence) && !/named tools include/i.test(sentence) && sentence.split(/\s+/).length <= 24));
+  if (lines.length > 0) return [...new Set(lines)].slice(0, 2).join(" ");
+  const listed = sectionBlocks(outputs).some((block) => /named tools include/i.test(block) && new RegExp(`\\b${name}\\b`, "i").test(block));
+  return listed ? `Named tools include ${raw}.` : "";
 }
 
 function toolUseAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {

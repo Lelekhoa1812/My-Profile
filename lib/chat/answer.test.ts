@@ -796,6 +796,20 @@ describe("displayAnswer", () => {
     expect(rerankerDuty.startsWith("An 8-million-document")).toBe(true);
     expect(rerankerDuty).not.toContain("Swinburne research");
     expect(rerankerDuty).not.toContain("five people");
+    const langGraphDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does LangGraph do?") }],
+      "",
+      "What does LangGraph do?",
+    );
+    expect(langGraphDuty).toContain("FastAPI");
+    expect(langGraphDuty).not.toContain("Named tools include");
+    const pgvectorDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does pgvector do?") }],
+      "",
+      "What does pgvector do?",
+    );
+    expect(pgvectorDuty).toContain("pgvector");
+    expect(pgvectorDuty).not.toContain("TypeScript");
     const namVision = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Nam A use for vision?") }],
       "",

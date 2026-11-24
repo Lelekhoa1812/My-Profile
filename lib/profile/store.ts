@@ -577,6 +577,12 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   const complete = hits.filter((hit) => terms.every((term) => hit.title.includes(term)));
   const namedProfile = hits.filter((hit) => !hit.section.sectionId.startsWith("archive-") && terms.some((term) => hit.section.heading.toLowerCase().includes(term)));
   const poolHits = complete.length > 0 ? [...complete] : [...hits];
+  if (poolHits.every((hit) => hit.section.sectionId === "skills")) {
+    for (const hit of hits) {
+      if (hit.section.sectionId === "skills" || poolHits.some((item) => item.section.sectionId === hit.section.sectionId)) continue;
+      if (terms.some((term) => covers(hit.body, term))) poolHits.push(hit);
+    }
+  }
   for (const hit of namedProfile) {
     if (!poolHits.some((item) => item.section.sectionId === hit.section.sectionId)) poolHits.push(hit);
   }
