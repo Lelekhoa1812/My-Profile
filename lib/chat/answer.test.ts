@@ -3518,6 +3518,15 @@ describe("displayAnswer", () => {
     expect(medvietIs).toContain("MedSwin");
     expect(medvietIs).toContain("National Data Association");
     expect(medvietIs).toContain("EMR-based monitoring");
+    const medvietDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does MedViet do?") }],
+      "",
+      "What does MedViet do?",
+    );
+    expect(medvietDoes).toContain("sovereign Vietnamese");
+    expect(medvietDoes).toContain("MedSwin");
+    expect(medvietDoes).toContain("National Data Association");
+    expect(medvietDoes).toContain("EMR-based monitoring");
     const compareRoles = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Compare Harry and Mizco") }],
       "",
