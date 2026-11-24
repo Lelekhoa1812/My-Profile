@@ -1,5 +1,6 @@
 import profile from "../../content/profile.json";
 import { getDb, markMongoDown, mongoIsQuiet } from "../db/client";
+import { withArchive } from "./archive";
 import { needsRefresh, profileHash, seedProfile } from "./seed";
 import type { ProfileFact, ProfileSection } from "./store";
 
@@ -21,7 +22,7 @@ export async function loadProfile(): Promise<ProfileRecord> {
       facts = await db.collection<ProfileFact>("profile_facts").find({ visibility: "public" }).toArray();
       sections = await db.collection<ProfileSection>("chunks").find({ visibility: "public" }).toArray();
     }
-    if (facts.length > 0 && sections.length > 0) return { facts, sections, source: "database" };
+    if (facts.length > 0 && sections.length > 0) return { facts, sections: withArchive(sections), source: "database" };
   } catch (error) {
     const name = error instanceof Error ? error.name : "Error";
     console.error(`Profile database unavailable: ${name}`);
@@ -31,5 +32,5 @@ export async function loadProfile(): Promise<ProfileRecord> {
 }
 
 function fileRecord(): ProfileRecord {
-  return { facts: profile.facts, sections: profile.sections, source: "file" };
+  return { facts: profile.facts, sections: withArchive(profile.sections), source: "file" };
 }
