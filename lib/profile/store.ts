@@ -161,7 +161,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("measure") && text.includes("live"), ids: ["project-meter", "project-cva", "project-shipped"] },
     { when: text.includes("person") && (text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-cva", "project-writing"] },
     { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },
-    { when: text.includes("work") && text.includes("now"), ids: ["role-axion", "project-cva"] },
+    { when: /\b(work|job)\b/.test(text) && text.includes("now"), ids: ["role-axion", "project-cva"] },
     { when: /\b(study|university|bachelor|degree)\b/.test(text) && !/\bresearch\b/.test(text), ids: ["education-swinburne"] },
     { when: /\b(acquir\w*|sold|sell|sale|bought|buyer|purchase\w*)\b/.test(text), ids: saleIds(text) },
   ];
@@ -281,6 +281,10 @@ export function asksForSpokenLanguages(query: string): boolean {
   const text = query.toLowerCase();
   if (/\b(python|java|typescript|stack|programming|code|codes)\b/.test(text)) return false;
   return /\b(speak|speaks|spoken|fluent|mandarin)\b/.test(text);
+}
+
+export function asksForGraduation(query: string): boolean {
+  return /\bgraduat(?:e|ed|ion|ing)\b/.test(query.toLowerCase());
 }
 
 export function asksForName(query: string): "full_name" | "also_known_as" | undefined {

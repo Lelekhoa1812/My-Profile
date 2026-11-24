@@ -35,6 +35,9 @@ describe("profile tools", () => {
     const called = await search.execute({ query: "What is he also called?" });
     expect(called.found).toBe(true);
     expect(called.facts?.[0]?.value).toContain("Liam");
+    const graduated = await search.execute({ query: "When did he graduate?" });
+    expect(graduated.found).toBe(true);
+    expect(graduated.facts?.[0]?.value).toContain("Bachelor");
     const workflow = await search.execute({ query: "Does the workflow send email?" });
     expect(workflow.found).toBe(true);
     expect(workflow.sections?.some((section) => section.sectionId === "project-axion-workflows")).toBe(true);
