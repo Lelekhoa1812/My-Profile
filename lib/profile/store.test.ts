@@ -51,6 +51,15 @@ describe("profile store", () => {
     }
   });
 
+  it("does not invent a metric for a live model", () => {
+    const result = searchSections(profile.sections, "What does he measure after a model is live?");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections[0]?.sectionId).toBe("skills");
+      expect(result.sections[0]?.text).toContain("does not name one metric");
+    }
+  });
+
   it("answers a ship-to-production question from the shipped-work section", () => {
     const result = searchSections(profile.sections, "What does he ship to production?");
     expect(result.found).toBe(true);
