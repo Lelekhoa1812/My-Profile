@@ -1357,6 +1357,13 @@ describe("displayAnswer", () => {
     );
     expect(poptechBuild).toContain("TFT");
     expect(poptechBuild).toContain("XGBoost");
+    const golfEfficiency = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What efficiency did the golf scanner record?") }],
+      "",
+      "What efficiency did the golf scanner record?",
+    );
+    expect(golfEfficiency).toContain("15 percent");
+    expect(golfEfficiency).toContain("efficiency");
     const labBuild = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
       "",

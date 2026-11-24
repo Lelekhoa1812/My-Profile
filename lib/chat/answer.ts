@@ -160,7 +160,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (chosen.length < 2) push(blockSentences.find((sentence) => /\bpercent\b/i.test(sentence)));
   }
   const thinWork = chosen.length > 0 && chosen.every((sentence) => (/\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 6) || /\bpercent\b/i.test(sentence));
-  if (thinWork && /\b(do|did)\b/i.test(question) && !/\b(percent|measure|cut|pilot)\b/i.test(question) && !chosen.some((sentence) => isDecision(question, sentence))) {
+  if (thinWork && /\b(do|did)\b/i.test(question) && !/\b(percent|measure|cut|pilot|efficiency)\b/i.test(question) && !chosen.some((sentence) => isDecision(question, sentence))) {
     const sold = blockSentences.find((sentence) => /\b(sold|acquired)\b/i.test(sentence) && sentence.split(/\s+/).length <= 8);
     const uses = blockSentences.filter((sentence) => /\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 10);
     if (uses.length >= 2 || (sold && uses.length >= 1)) {
@@ -651,6 +651,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bship\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
   if (/\btext\b/i.test(question) && /\bfinbert\b/i.test(sentence)) return true;
   if (/\bmeasure\b/i.test(question) && /\b(drift|impute|quality)\b/i.test(sentence)) return true;
+  if (/\befficiency\b/i.test(question) && /\befficiency\b/i.test(sentence)) return true;
   if (/\b(good at|strengths)\b/i.test(question) && /\bgroups the stack\b/i.test(sentence)) return true;
   if (/\binclude/i.test(question) && /\b(ensemble|dosage)\b/i.test(sentence)) return true;
   if (/\bdosage\b/i.test(question) && /\bdosage\b/i.test(sentence)) return true;
