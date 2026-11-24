@@ -1553,6 +1553,20 @@ describe("displayAnswer", () => {
     );
     expect(guardIt).toContain("safety guardrails");
     expect(guardIt).not.toContain("LoRA");
+    const pedigreeGuards = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the pedigree guard against?") }],
+      "",
+      "What does the pedigree guard against?",
+    );
+    expect(pedigreeGuards).toContain("leakage");
+    expect(pedigreeGuards).not.toContain("safety guardrails");
+    const mizcoRoutes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Mizco route?") }],
+      "",
+      "What does Mizco route?",
+    );
+    expect(mizcoRoutes).toContain("agent routing");
+    expect(mizcoRoutes).toContain("vLLM");
     const embedIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it embed?") }],
       "",

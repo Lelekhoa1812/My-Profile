@@ -106,6 +106,15 @@ describe("profile store", () => {
     }
   });
 
+  it("answers a pedigree leakage question from the pedigree role", () => {
+    const result = searchSections(profile.sections, "What does the pedigree guard against?");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections[0]?.sectionId).toBe("role-harry-pedigree");
+      expect(result.sections[0]?.text).toContain("leakage");
+    }
+  });
+
   it("answers a Free Router share question from the gateway", () => {
     const result = searchSections(profile.sections, "What does Free Router share?");
     expect(result.found).toBe(true);

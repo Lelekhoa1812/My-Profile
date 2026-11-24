@@ -1417,7 +1417,23 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
-  if (/\bguard/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+  if (/\bpedigree\b/i.test(question) && /\b(guard|leakage)\b/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bleakage\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
+  if (/\bmizco\b/i.test(question) && /\broute/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bagent routing\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
+  if (/\bguard/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question) && !/\bpedigree\b/i.test(question)) {
     keepSentences(/safety guardrails/i, 1);
   }
   if (/\bembed/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
