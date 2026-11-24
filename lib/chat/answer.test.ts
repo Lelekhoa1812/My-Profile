@@ -1070,6 +1070,35 @@ describe("displayAnswer", () => {
     );
     expect(forecastUse).toContain("tower telemetry");
     expect(forecastUse).toContain("TimesFM");
+    const retrievalUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for retrieval?") }],
+      "",
+      "What does he use for retrieval?",
+    );
+    expect(retrievalUse).toContain("BM25");
+    expect(retrievalUse).toContain("clinical records");
+    const detectionUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for detection?") }],
+      "",
+      "What does he use for detection?",
+    );
+    expect(detectionUse).toContain("autoencoder");
+    expect(detectionUse).toContain("YOLOv8");
+    expect(detectionUse).toContain("retrain");
+    const documentUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for documents?") }],
+      "",
+      "What does he use for documents?",
+    );
+    expect(documentUse).toContain("Pydantic");
+    expect(documentUse).toContain("passport");
+    const traceUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for traces?") }],
+      "",
+      "What does he use for traces?",
+    );
+    expect(traceUse).toContain("LangSmith");
+    expect(traceUse).toContain("confidence gates");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
