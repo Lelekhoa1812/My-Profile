@@ -991,6 +991,14 @@ describe("displayAnswer", () => {
       "What does triage deliver?",
     );
     expect(delivery).toContain("drone");
+    const delivered = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it deliver?") }],
+      "",
+      "What does it deliver?",
+    );
+    expect(delivered).toContain("medication-delivery");
+    expect(delivered).toContain("delivery scheduling");
+    expect(delivered).toContain("staged delivery");
     const ensemble = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the pedigree engine include?") }],
       "",

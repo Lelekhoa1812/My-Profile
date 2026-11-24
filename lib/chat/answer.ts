@@ -953,6 +953,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(title);
     }
   }
+  if (/\bdeliver/i.test(question) && !/\b(drone|medication|staged|foodflow)\b/i.test(question)) {
+    const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bdeliver/i.test(sentence) && !exposesGap(sentence));
+    if (lines.length > 0) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of [...new Set(lines)].slice(0, 3)) push(sentence);
+    }
+  }
   if (/\bdevelopment consultant\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const title = sentences.find((sentence) => /\bdevelopment consultant\b/i.test(sentence));
