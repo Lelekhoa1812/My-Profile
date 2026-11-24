@@ -147,7 +147,11 @@ describe("profile store", () => {
   it("finds the Ericsson digital twin from the resume", () => {
     const result = searchSections(profile.sections, "Ericsson 5G digital twin");
     expect(result.found).toBe(true);
-    if (result.found) expect(result.sections.some((section) => section.sectionId === "project-ericsson")).toBe(true);
+    if (result.found) {
+      const section = result.sections.find((item) => item.sectionId === "project-ericsson");
+      expect(section?.text).toContain("production-grade");
+      expect(section?.text).toContain("does not name it as a live customer app");
+    }
   });
 
   it("finds the writing coach sold to Hai Au Group", () => {
