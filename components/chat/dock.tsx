@@ -189,7 +189,7 @@ export function ChatDock({ questions }: { questions: string[] }) {
                   <ul className="mt-3 flex flex-wrap gap-2" aria-label="Sources">
                     {turn.sources.map((source, n) => (
                       <li key={source.sectionId}>
-                        <a href={source.href} className="data flex items-center gap-1.5 border border-white/25 px-2 py-1.5 text-[9px] text-white/72 transition-colors hover:bg-white hover:text-black">
+                        <a href={source.href} aria-label={`${source.label}. ${source.meta}`} title={source.meta} className="data flex items-center gap-1.5 border border-white/25 px-2 py-1.5 text-[9px] text-white/72 transition-colors hover:bg-white hover:text-black">
                           <span className="text-white/55">{n + 1}</span>
                           {source.label}
                           <ArrowDownRight aria-hidden className="h-3 w-3" strokeWidth={1.5} />
