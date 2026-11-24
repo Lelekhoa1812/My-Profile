@@ -2373,6 +2373,14 @@ describe("displayAnswer", () => {
     expect(cvHere).toContain("drafts a CV");
     expect(cvHere).not.toContain("MedSwin");
     expect(cvHere).not.toContain("clinical records");
+    const ciUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use CI for?") }],
+      "",
+      "What does he use CI for?",
+    );
+    expect(ciUse).toContain("CI/CD");
+    expect(ciUse).toContain("Kubernetes");
+    expect(ciUse).not.toContain("LangChain");
     const routePlan = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e plan after detection?") }],
       "",
