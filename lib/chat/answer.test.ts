@@ -1936,6 +1936,33 @@ describe("displayAnswer", () => {
     );
     expect(medvietIs).toContain("Vietnamese medical language model");
     expect(medvietIs).toContain("MedSwin");
+    const namJava = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do in the Nam A software role?") }],
+      "",
+      "What did he do in the Nam A software role?",
+    );
+    expect(namJava).toContain("Vert.x");
+    expect(namJava).toContain("Android");
+    const namResearch = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Nam A Bank?") }],
+      "",
+      "What did he do at Nam A Bank?",
+    );
+    expect(namResearch).toContain("remittance documents");
+    expect(namResearch).toContain("OpenCV");
+    const aitcDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at AITC?") }],
+      "",
+      "What did he do at AITC?",
+    );
+    expect(aitcDuty).toContain("ingestion");
+    expect(aitcDuty).toContain("Nvidia");
+    const vietdanJetson = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at VietDan?") }],
+      "",
+      "What did he do at VietDan?",
+    );
+    expect(vietdanJetson).toContain("Jetson");
     expect(cameFirst).toContain("April 2023");
     expect(cameFirst).toContain("December 2024");
     const pedigreeBefore = displayAnswer(

@@ -374,6 +374,27 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       cap = 4;
       push(blockSentences.find((sentence) => /\brecall above 95\b/i.test(sentence)));
     }
+    if (/\bwhat did he do\b/i.test(question) && /\bnam\b/i.test(question) && /\bsoftware\b/i.test(question)) {
+      cap = 4;
+      const java = sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bvert\.x\b/i.test(sentence));
+      if (java && !chosen.includes(java)) chosen.unshift(java);
+    }
+    if (/\bwhat did he do\b/i.test(question) && /\bnam\b/i.test(question) && !/\bsoftware\b/i.test(question)) {
+      cap = 4;
+      const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block));
+      const research = lines.find((sentence) => /\bremittance documents\b/i.test(sentence));
+      if (research && !chosen.includes(research)) chosen.unshift(research);
+      push(lines.find((sentence) => /\bopencv\b/i.test(sentence)));
+    }
+    if (/\bwhat did he do\b/i.test(question) && /\baitc\b/i.test(question)) {
+      cap = 4;
+      push(blockSentences.find((sentence) => /\bingestion\b/i.test(sentence)));
+      push(blockSentences.find((sentence) => /\bpartner work\b/i.test(sentence)));
+    }
+    if (/\bwhat did he do\b/i.test(question) && /\bvietdan\b/i.test(question)) {
+      cap = 4;
+      push(sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bjetson\b/i.test(sentence)));
+    }
     if (/\bwhat did he do\b/i.test(question) && /\bswinburne\b/i.test(question)) {
       cap = 4;
       push(blockSentences.find((sentence) => /\bthe lab is medswin\b/i.test(sentence)));
