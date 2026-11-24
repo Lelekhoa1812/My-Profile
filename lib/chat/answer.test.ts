@@ -1092,6 +1092,13 @@ describe("displayAnswer", () => {
     );
     expect(spQueue).toContain("Kafka");
     expect(spQueue).not.toContain("LangChain");
+    const bareQueue = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What queue does it use?") }],
+      "",
+      "What queue does it use?",
+    );
+    expect(bareQueue).toContain("Kafka");
+    expect(bareQueue).not.toContain("LangChain");
     const classify = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e classify?") }],
       "",

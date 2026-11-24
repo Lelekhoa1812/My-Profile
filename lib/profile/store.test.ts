@@ -37,6 +37,15 @@ describe("profile store", () => {
     expect(result.found).toBe(false);
   });
 
+  it("answers a queue question from the S&P data path", () => {
+    const result = searchSections(profile.sections, "What queue does it use?");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections[0]?.sectionId).toBe("project-sp500");
+      expect(result.sections[0]?.text).toContain("Apache Kafka");
+    }
+  });
+
   it("treats a current title question as the public title", () => {
     expect(asksForTitle("What is his current title?")).toBe(true);
     expect(asksForTitle("What was his title at Harry the Hirer?")).toBe(false);
