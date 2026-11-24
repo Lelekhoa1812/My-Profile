@@ -765,6 +765,7 @@ describe("displayAnswer", () => {
       "What did Nam A use for vision?",
     );
     expect(namVision).toContain("OpenCV");
+    expect(namVision).not.toContain("REST");
     const meterHardware = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What hardware runs the water meter?") }],
       "",

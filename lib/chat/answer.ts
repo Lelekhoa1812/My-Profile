@@ -334,7 +334,7 @@ function workSentence(sentences: readonly string[]): string | undefined {
 }
 
 function secondPeriod(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string, timed: string): string {
-  if (!/\b(do|did|work|role)\b/i.test(question) || /\b(bertscore|percent|preview|score|cut|pilot|ocr|stack|many)\b/i.test(question)) return "";
+  if (!/\b(do|did|work|role)\b/i.test(question) || /\b(bertscore|percent|preview|score|cut|pilot|ocr|stack|many|vision|hardware)\b/i.test(question)) return "";
   const employer = namedEmployer(question);
   if (!employer) return "";
   const current = blockSentences.join(" ");
@@ -349,7 +349,7 @@ function secondPeriod(outputs: readonly Record<string, unknown>[], blockSentence
 
 function siblingWork(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string): string {
   if (/\bavailable\b/i.test(question)) return "";
-  if (!/\b(do|did|work|role)\b/i.test(question) || /\b(bertscore|percent|preview|score|cut|pilot|ocr|stack|many)\b/i.test(question)) return "";
+  if (!/\b(do|did|work|role)\b/i.test(question) || /\b(bertscore|percent|preview|score|cut|pilot|ocr|stack|many|vision|hardware)\b/i.test(question)) return "";
   const employer = namedEmployer(question);
   if (!employer) return "";
   const current = blockSentences.join(" ");
