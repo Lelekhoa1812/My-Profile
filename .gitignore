@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+node_modules/
+.next/
+out/
+dist/
+.vercel/
+research_notes/
+reports/
+*.tsbuildinfo
+.DS_Store
+.vitest/
