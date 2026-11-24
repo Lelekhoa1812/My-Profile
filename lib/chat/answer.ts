@@ -774,6 +774,25 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(founders);
     }
   }
+  if (/\bsegment/i.test(question)) {
+    const names = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /water-meter segmentation/i.test(sentence));
+    if (names) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(names.endsWith(".") ? names : `${names}.`);
+    }
+  }
+  if (/\bclassif/i.test(question) && !/\bsall-?e\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const dataset = sentences.find((sentence) => /garbage-classification/i.test(sentence));
+    const names = sentences.find((sentence) => /garbage classification/i.test(sentence));
+    if (dataset || names) {
+      chosen.length = 0;
+      cap = 2;
+      if (dataset) push(dataset);
+      if (names && names !== dataset) chosen.push(names.endsWith(".") ? names : `${names}.`);
+    }
+  }
   if (/\b(scores?|recall|precision)\b/i.test(question) && /\bclara\b/i.test(question)) {
     const scores = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\brecall above 95\b/i.test(sentence));
     if (scores) {

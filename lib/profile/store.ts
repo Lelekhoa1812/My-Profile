@@ -371,6 +371,8 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\b5g\b/.test(text), ids: ["project-ericsson"] },
     { when: /\bericsson\b/.test(text) && /\bgraph\b/.test(text), ids: ["project-ericsson"] },
     { when: /\bdeliver/.test(text) && !/\b(drone|medication|staged|foodflow)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["project-triage", "role-axion", "role-teqar"] },
+    { when: /\bsegment/.test(text) && /\b(do|does|is|use|uses|for|what)\b/.test(text), ids: ["project-hf-models"] },
+    { when: /\bclassif/.test(text) && /\b(do|does|is|use|uses|for|what)\b/.test(text) && !/\bsall-?e/.test(text) && !namedEmployer(text), ids: ["project-hf-models"] },
     { when: /\baccounting\b/.test(text), ids: ["project-acnt"] },
     { when: /\b(download|rank)\b/.test(text) && text.includes("medswin"), ids: ["project-medswin"] },
     { when: /\bagents?\b/.test(text) && /\b(lab|clinical|medswin)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },

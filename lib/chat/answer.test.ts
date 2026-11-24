@@ -2363,6 +2363,19 @@ describe("displayAnswer", () => {
     );
     expect(claraScores).toContain("95");
     expect(claraScores).toContain("92");
+    const meterSegment = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it segment?") }],
+      "",
+      "What does it segment?",
+    );
+    expect(meterSegment).toContain("water-meter segmentation");
+    const garbageClass = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it classify?") }],
+      "",
+      "What does it classify?",
+    );
+    expect(garbageClass).toContain("garbage-classification");
+    expect(garbageClass).not.toContain("localise waste");
     const promptMe = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does prompt-me refine?") }],
       "",
