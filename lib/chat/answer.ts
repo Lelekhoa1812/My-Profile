@@ -1838,6 +1838,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bmodels?\b/i.test(question) && /vietnamese passport field recognition|mnist numeric recognition|ctc mnist|graffiti detection|water-meter segmentation|water meter segmentation|rust detection|garbage detection|garbage classification|driver behaviour|fuel efficiency|s&p 500 series/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bthe names are\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
   if (/\bdatasets?\b/i.test(question) && !/\b(lab|medswin)\b/i.test(question)) {
     const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bpublic datasets\b/i.test(line));
     if (sentence) {

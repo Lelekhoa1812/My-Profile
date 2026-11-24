@@ -196,6 +196,11 @@ function statesDataset(body: string): boolean {
 }
 
 const DATASET_METRIC_TERMS = new Set(["many", "much", "download", "downloads", "count", "counts", "accuracy", "user", "users", "star", "stars", "error", "rate", "return", "size", "revenue", "figure", "figures", "number", "numbers", "outcome", "report", "reports", "reported"]);
+const MODEL_CARDS = ["vietnamese passport field recognition", "mnist numeric recognition", "ctc mnist", "graffiti detection", "water-meter segmentation", "water meter segmentation", "rust detection", "garbage detection", "garbage classification", "driver behaviour", "fuel efficiency", "s&p 500 series"];
+
+function asksForModelCard(text: string): boolean {
+  return /\bmodels?\b/.test(text) && MODEL_CARDS.some((name) => text.includes(name));
+}
 
 function statedDatasetSections<T extends { section: ProfileSection; title: string; body: string }>(pool: readonly T[], asked: string, terms: readonly string[]): T[] | undefined {
   if (!/\bdatasets?\b/.test(asked) || /\blab\b/.test(asked)) return undefined;
@@ -782,10 +787,12 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   if (/\b(do|does|did) it present\b/.test(asked)) return { found: false as const };
   if (/\bpublish/.test(asked) && /\b(he|him|his|written|article|journal)\b/.test(asked) && !/\b(quotient|statement|recording)\b/.test(asked)) return { found: false as const };
   const datasetHits = statedDatasetSections(visible, asked, terms);
-  if (datasetHits) {
+  const modelCard = asksForModelCard(asked) ? visible.filter((hit) => hit.section.sectionId === "project-hf-models") : [];
+  const cardHits = datasetHits ?? (modelCard.length > 0 ? modelCard : undefined);
+  if (cardHits) {
     return {
       found: true as const,
-      sections: datasetHits.slice(0, 3).map((hit) => ({
+      sections: cardHits.slice(0, 3).map((hit) => ({
         sectionId: hit.section.sectionId,
         heading: hit.section.heading,
         sourceType: hit.section.sourceType,

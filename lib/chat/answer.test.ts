@@ -5272,6 +5272,31 @@ describe("displayAnswer", () => {
     expect(medswin).not.toContain("synthetic passport set");
   });
 
+  it("answers a named model card from the Hugging Face name list", () => {
+    const questions = [
+      ["What is the rust detection model?", "rust detection", "tower telemetry"],
+      ["What is the garbage detection model?", "garbage detection", "localise"],
+      ["What is the Vietnamese passport field recognition model?", "Vietnamese passport field recognition", "VietOCR"],
+      ["What is the S&P 500 series model?", "S&P 500 series", "FinBERT"],
+      ["What is the graffiti detection model?", "graffiti detection", "tower telemetry"],
+    ];
+    for (const [question, proof, avoid] of questions) {
+      const answer = displayAnswer(
+        [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, question) }],
+        "",
+        question,
+      );
+      expect(answer, question).toContain(proof);
+      expect(answer, question).not.toContain(avoid);
+    }
+    const forecast = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the S&P 500 forecast?") }],
+      "",
+      "What is the S&P 500 forecast?",
+    );
+    expect(forecast).toContain("FinBERT");
+  });
+
   it("keeps the model sentence when a tool found a section", () => {
     const text = displayAnswer(
       [{ type: "tool-read_section", state: "output-available", output: { found: true, sectionId: "role-axion", text: "Axion Solutions. AI Software Engineer." } }],

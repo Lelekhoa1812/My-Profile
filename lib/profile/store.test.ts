@@ -182,9 +182,29 @@ describe("profile store", () => {
       expect(result.sections[0]?.sectionId, question).toBe("project-hf-models");
       expect(result.sections[0]?.text.toLowerCase(), question).toContain(proof);
     }
+    const forecast = searchSections(profile.sections, "What is the S&P 500 forecast?");
+    expect(forecast.found).toBe(true);
+    if (forecast.found) expect(forecast.sections[0]?.sectionId).toBe("project-sp500");
     const lab = searchSections(profile.sections, "What datasets did the lab use?");
     expect(lab.found).toBe(true);
     if (lab.found) expect(lab.sections.some((section) => section.sectionId === "project-medswin" || section.sectionId === "role-swinburne-research")).toBe(true);
+  });
+
+  it("answers a named model-card question from the Hugging Face model list", () => {
+    const questions = [
+      ["What is the rust detection model?", "rust detection"],
+      ["What is the garbage detection model?", "garbage detection"],
+      ["What is the Vietnamese passport field recognition model?", "vietnamese passport field recognition"],
+      ["What is the S&P 500 series model?", "s&p 500 series"],
+      ["What is the graffiti detection model?", "graffiti detection"],
+    ];
+    for (const [question, proof] of questions) {
+      const result = searchSections(profile.sections, question);
+      expect(result.found, question).toBe(true);
+      if (!result.found) continue;
+      expect(result.sections[0]?.sectionId, question).toBe("project-hf-models");
+      expect(result.sections[0]?.text.toLowerCase(), question).toContain(proof);
+    }
   });
 
   it("answers a golf scorecard dataset question from the Hugging Face datasets", () => {
