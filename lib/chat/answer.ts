@@ -2296,7 +2296,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const body = chosen.length > 0 ? chosen : definition && !fallback.includes(definition) ? [definition, ...fallback].slice(0, 2) : fallback;
   const extra = siblingWork(outputs, blockSentences, question);
   const withExtra = extra && !body.includes(extra) ? [...body, extra] : body;
-  const timed = withIdentity(question, withPeriod(withExtra, blockSentences, outputs, question), blockSentences);
+  const outcome = dutyOutcome(question, outputs);
+  const withOutcome = outcome && !withExtra.some((sentence) => sentence.toLowerCase().includes(outcome.slice(0, 24).toLowerCase())) ? [...withExtra, outcome] : withExtra;
+  const timed = withIdentity(question, withPeriod(withOutcome, blockSentences, outputs, question), blockSentences);
   const second = secondPeriod(outputs, blockSentences, question, timed);
   return keptOffer(question, shown, withSchool(question, second ? `${timed} ${second}` : timed, blockSentences));
 }
@@ -2486,7 +2488,14 @@ function toolDutyAnswer(question: string, outputs: readonly Record<string, unkno
   const lines = productLines.length > 0 ? [...productLines, ...archiveLines] : archiveLines;
   const productMentions = sectionBlocks(outputs).some((block) => !/public repositories/i.test(block) && named.test(block));
   const distinct = [...new Set(lines)].filter((line, _, all) => !all.some((other) => other !== line && other.includes(line.replace(/\.$/, ""))));
-  if (distinct.length > 0 && (productLines.length > 0 || !productMentions)) return distinct.slice(0, 5).join(" ");
+  if (distinct.length > 0 && (productLines.length > 0 || !productMentions)) {
+    const titlesOnly = distinct.every((line) => /\b20\d{2}\b/.test(line) || line.split(/\s+/).length <= 6);
+    const figure = titlesOnly
+      ? sectionBlocks(outputs).filter((block) => named.test(block)).flatMap((block) => plainSentences(block)).find((line) => /\b(\d[\d,.]* percent|sold to)\b/i.test(line) && !/\bestimate\b|servicing-cost/i.test(line) && !exposesGap(line))
+      : undefined;
+    const lines = figure && !distinct.some((line) => line.includes(figure.slice(0, 24))) ? [...distinct.slice(0, 4), figure.endsWith(".") ? figure : `${figure}.`] : distinct.slice(0, 5);
+    return lines.join(" ");
+  }
   const listed = sectionBlocks(outputs).some((block) => /named tools include/i.test(block) && named.test(block));
   return listed ? `Named tools include ${raw}.` : "";
 }
@@ -2841,6 +2850,18 @@ function secondPeriod(outputs: readonly Record<string, unknown>[], blockSentence
 function askedOnlyHere(question: string, current: string, other: string): boolean {
   const shorts = new Set((question.match(/\b[A-Z]{3}\b/g) ?? []).map((word) => word.toLowerCase()));
   return askWords(question).some((word) => (word.length >= 4 || shorts.has(word)) && word !== namedEmployer(question)?.toLowerCase() && mentions(current, word) && !mentions(other, word));
+}
+
+function dutyOutcome(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/^what does (?!he\b|his\b|the\b|it\b|this\b|that\b).+ do\??$/i.test(question.trim())) return "";
+  const words = question.toLowerCase().replace(/[^a-z0-9 ]/g, " ").split(/\s+/).filter((word) => word.length > 3 && word !== "what" && word !== "does");
+  for (const block of sectionBlocks(outputs)) {
+    const text = block.toLowerCase();
+    if (words.length > 0 && !words.some((word) => text.includes(word))) continue;
+    const sentence = plainSentences(block).find((line) => /\b(\d[\d,.]* percent|sold to)\b/i.test(line) && !/\bestimate\b|servicing-cost/i.test(line) && !exposesGap(line));
+    if (sentence) return sentence.endsWith(".") ? sentence : `${sentence}.`;
+  }
+  return "";
 }
 
 function siblingWork(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string): string {

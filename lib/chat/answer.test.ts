@@ -5282,6 +5282,32 @@ describe("displayAnswer", () => {
     expect(medswin).not.toContain("synthetic passport set");
   });
 
+  it("keeps the recorded figure when the question asks what the work does", () => {
+    const questions = [
+      ["What does Harry the Hirer do?", "event inventory", "40 percent"],
+      ["What does MedSwin do?", "specialist medical agents", "86 percent"],
+      ["What does VietDan do?", "ML Engineer", "35 percent"],
+      ["What does WritingJourney do?", "IELTS", "sold"],
+      ["What does Pythera do?", "175 Hospital", "400,000"],
+    ];
+    for (const [question, work, proof] of questions) {
+      const answer = displayAnswer(
+        [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, question) }],
+        "",
+        question,
+      );
+      expect(answer, question).toContain(work);
+      expect(answer, question).toContain(proof);
+    }
+    const skyledge = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does SkyLedge fleet maintenance do?") }],
+      "",
+      "What does SkyLedge fleet maintenance do?",
+    );
+    expect(skyledge).toContain("OBD-II");
+    expect(skyledge).not.toContain("15 percent");
+  });
+
   it("answers what a role does with the recorded work", () => {
     const questions = [
       ["What does Mizco do?", "trust-first", "50 percent"],
