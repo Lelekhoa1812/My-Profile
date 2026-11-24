@@ -244,6 +244,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bnam\b/.test(text) && /\b(first|earlier)\b/.test(text), ids: ["role-nam-a-software", "role-nam-a-ai"] },
     { when: Boolean(adjacent?.length), ids: adjacent ?? [] },
     { when: text.includes("axion") && (text.includes("axis") || text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
+    { when: /\b(build|built)\b/.test(text) && text.includes("axion") && !/\b(workflow|engine|recipe)\b/.test(text), ids: ["role-axion"] },
     { when: text.includes("axis") && (text.includes("write") || text.includes("preview") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: /\bs&p\b/.test(text), ids: ["project-sp500"] },
     { when: /\bha manager\b/.test(text), ids: ["role-hai-au"] },

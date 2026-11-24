@@ -1336,6 +1336,26 @@ describe("displayAnswer", () => {
       "What does Hugging Face models do?",
     );
     expect(modelCards).toContain("MNIST");
+    const mizcoBuild = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at Mizco?") }],
+      "",
+      "What did he build at Mizco?",
+    );
+    expect(mizcoBuild).toContain("vLLM");
+    expect(mizcoBuild).toContain("ReAct");
+    const axionBuild = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at Axion?") }],
+      "",
+      "What did he build at Axion?",
+    );
+    expect(axionBuild).toContain("LangChain");
+    expect(axionBuild).not.toContain("investor scouting");
+    const labBuild = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
+      "",
+      "What did he build at the Swinburne lab?",
+    );
+    expect(labBuild).toContain("LoRA");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",

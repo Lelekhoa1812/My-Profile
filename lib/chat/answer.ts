@@ -116,6 +116,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     }
     const action = blockSentences.find((sentence) => /\b(scores|drafts|detect|reads|localise|localize)\b/i.test(sentence));
     if (action && !chosen.some((sentence) => /\b(scores|drafts|detect|reads|localise|localize)\b/i.test(sentence))) push(action);
+    if (/\bbuild\b/i.test(question)) {
+      const stack = blockSentences.find((sentence) => /\b(uses|used)\b/i.test(sentence) && sentence.split(/\s+/).length <= 28 && !/named tools include/i.test(sentence) && !chosen.includes(sentence));
+      if (stack) {
+        const title = chosen.findIndex((sentence) => sentence.split(/\s+/).length <= 4);
+        if (title >= 0) chosen.splice(title, 1);
+        cap = 3;
+        push(stack);
+      }
+    }
   }
   for (const item of ranked) {
     const exact = words.some((word) => new RegExp(`\\b${word}\\b`, "i").test(item.sentence));
