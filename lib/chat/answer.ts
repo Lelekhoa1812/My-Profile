@@ -142,6 +142,12 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     const layer = blockSentences.find((sentence) => /\bmulti-agent layer\b/i.test(sentence));
     if (layer && !chosen.includes(layer)) chosen.unshift(layer);
   }
+  if (/\b(contribut\w*|author)\b/i.test(question) && /\b(clara|pythera)\b/i.test(question)) {
+    cap = 4;
+    const credit = blockSentences.find((sentence) => /\bnot the sole author\b/i.test(sentence));
+    if (credit && !chosen.includes(credit)) chosen.unshift(credit);
+    push(blockSentences.find((sentence) => /\brecall above 95\b/i.test(sentence)));
+  }
   if (/\bharry\b/i.test(question) && /\brerank/i.test(question)) {
     cap = 3;
     const retrieval = blockSentences.find((sentence) => /\bcross-encoder\b/i.test(sentence));
@@ -1142,6 +1148,7 @@ function isDecision(question: string, sentence: string): boolean {
   if ((/\bcapital-markets\b/i.test(question) || /\bcapital markets\b/i.test(question)) && /\bcapital-markets automation\b/i.test(sentence)) return true;
   if (/\bharry\b/i.test(question) && /\bagents?\b/i.test(question) && /\bmulti-agent layer\b/i.test(sentence)) return true;
   if (/\bharry\b/i.test(question) && /\brerank/i.test(question) && /\bcross-encoder\b/i.test(sentence)) return true;
+  if (/\b(contribut\w*|author)\b/i.test(question) && /\b(clara|pythera)\b/i.test(question) && /\bnot the sole author\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bsall-?e\b/i.test(question) && /\boceanic garbage\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bgolf\b/i.test(question) && /\bsold to vhandicap\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\broster\b/i.test(question) && /\bsold to mj industrial\b/i.test(sentence)) return true;

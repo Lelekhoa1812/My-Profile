@@ -1964,6 +1964,19 @@ describe("displayAnswer", () => {
     );
     expect(documentTools).toContain("document AI");
     expect(documentTools).not.toContain("Pydantic");
+    const claraContribution = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he contribute to Clara?") }],
+      "",
+      "What did he contribute to Clara?",
+    );
+    expect(claraContribution).toContain("not the sole author");
+    expect(claraContribution).toContain("400,000");
+    const claraIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
+      "",
+      "What is Clara?",
+    );
+    expect(claraIs).not.toContain("sole author");
     const managerIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is HA Manager?") }],
       "",
