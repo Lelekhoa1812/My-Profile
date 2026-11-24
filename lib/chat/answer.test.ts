@@ -741,6 +741,13 @@ describe("displayAnswer", () => {
       "What did he do after Harry the Hirer?",
     );
     expect(afterHarry).toContain("owns");
+    const langsmith = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does LangSmith cover at Axion?") }],
+      "",
+      "What does LangSmith cover at Axion?",
+    );
+    expect(langsmith).toContain("traces");
+    expect(langsmith).not.toContain("delivery scheduling");
     expect(afterHarry).toContain("Axis");
     expect(coach).toContain("rewrite");
     expect(refuse).toContain("does not score");

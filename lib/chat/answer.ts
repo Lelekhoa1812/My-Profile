@@ -107,7 +107,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   for (const item of ranked) {
     const exact = words.some((word) => new RegExp(`\\b${word}\\b`, "i").test(item.sentence));
     if (picked && /\bhow many\b/i.test(question) && /\b\d/.test(item.sentence)) continue;
+    const answered = words.some((word) => !new RegExp(`\\b${word}\\b`, "i").test(item.sentence) && mentions(item.sentence, word) && chosen.some((sentence) => new RegExp(`\\b${word}\\b`, "i").test(sentence)));
     if (picked && item.score < 2 && !exact) continue;
+    if (!picked && unique && item.score < 2 && !exact && answered) continue;
     push(item.sentence);
   }
   const body = chosen.length > 0
