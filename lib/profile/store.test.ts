@@ -67,6 +67,16 @@ describe("profile store", () => {
     if (result.found) expect(result.sections.some((section) => section.sectionId === "project-medvietai")).toBe(true);
   });
 
+  it("keeps the SkyLedge cost figure as an estimate", () => {
+    const result = searchSections(profile.sections, "SkyLedge capstone team");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      const hit = result.sections.find((section) => section.sectionId === "project-skyledge");
+      expect(hit?.text).toContain("four-person");
+      expect(hit?.text).toContain("estimate of about 15 percent");
+    }
+  });
+
   it("finds the S&P forecast without treating it as a published return", () => {
     const result = searchSections(profile.sections, "S&P 500 stock forecast");
     expect(result.found).toBe(true);

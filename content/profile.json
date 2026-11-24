@@ -175,11 +175,11 @@
       "text": "Clinical triage response. Speech, vision, and language models over MIMIC-IV, with a drone medication-delivery path. Repository: Lelekhoa1812/Triage-LLM-Based. Space: huggingface.co/spaces/khoaliamle/Triage_LLM."
     },
     {
-      "sectionId": "project-skylege",
+      "sectionId": "project-skyledge",
       "heading": "SkyLedge fleet maintenance",
       "sourceType": "project",
-      "aliases": ["OBD", "capstone"],
-      "text": "SkyLedge fleet maintenance. OBD-II capstone. The resume says SkyLedge Kenya acquired it and records about 15 percent lower servicing cost."
+      "aliases": ["OBD", "capstone", "SkyLedge"],
+      "text": "SkyLedge fleet maintenance. Liam led a four-person capstone team on an OBD-II platform. The resume says SkyLedge Kenya acquired it. The build uses Raspberry Pi telemetry, FastAPI, and fault-prediction models. The servicing-cost figure is an estimate of about 15 percent."
     },
     {
       "sectionId": "project-salle",
