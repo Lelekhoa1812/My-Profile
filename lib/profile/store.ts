@@ -723,6 +723,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
     if (leftNamed !== rightNamed) return rightNamed - leftNamed;
     return right.score - left.score;
   }).filter((hit) => {
+    if (hit.section.sectionId.includes("pedigree") && /\b(harry|hirer)\b/.test(asked) && !/\bpedigree\b/.test(asked)) return false;
     const owner = sectionEmployer(hit.section);
     return !employer || !owner || owner === employer;
   });

@@ -947,6 +947,13 @@ describe("displayAnswer", () => {
     );
     expect(harryPartners).toContain("Harry the Hirer");
     expect(harryPartners).not.toContain("Nvidia");
+    const harryDetect = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Harry detect?") }],
+      "",
+      "What did Harry detect?",
+    );
+    expect(harryDetect).toContain("event inventory");
+    expect(harryDetect).not.toContain("mate-selection");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
