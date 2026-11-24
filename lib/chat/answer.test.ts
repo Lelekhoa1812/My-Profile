@@ -576,6 +576,12 @@ describe("displayAnswer", () => {
       "What does the writing coach send?",
     );
     expect(coachSend).toContain("scores a submission");
+    const control = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who stays in control of the writing coach?") }],
+      "",
+      "Who stays in control of the writing coach?",
+    );
+    expect(control).toContain("stays in control");
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],
