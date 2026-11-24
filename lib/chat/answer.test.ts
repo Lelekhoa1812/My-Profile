@@ -239,6 +239,13 @@ describe("displayAnswer", () => {
     expect(harry).toContain("40 percent");
     expect(harry).toContain("Planner");
     expect(harry).not.toMatch(/^Melbourne/);
+    const pedigree = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Harry the Hirer, pedigree AI. March 2026 to May 2026. Thoroughbred pedigree AI for the Black Caviar lineage platform, in an ML and data science role. It is a mate-selection engine for genetic merit, compatibility, and inbreeding risk." }] } }],
+      "The record does not show a role at Harry the Hirer before the Senior AI Engineer position that started in December 2025; the only earlier Harry the Hirer entry is a pedigree AI project from March to May 2026.",
+    );
+    expect(pedigree).toContain("Black Caviar");
+    expect(pedigree).toContain("mate-selection");
+    expect(pedigree).not.toContain("does not show");
   });
 
   it("drops a modifier that only exists inside a longer record word", () => {
