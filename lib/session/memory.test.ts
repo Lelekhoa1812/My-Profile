@@ -124,4 +124,14 @@ describe("withMemory", () => {
     const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "Is it live?" }] } as UIMessage;
     expect(groundedQuestion([harry, answer, follow], 2)).toBe("Is it live?");
   });
+
+  it("names MedChat or stt-studio on a release follow-up", () => {
+    const medchat = { id: "u1", role: "user", parts: [{ type: "text", text: "What is MedChat?" }] } as UIMessage;
+    const studio = { id: "u2", role: "user", parts: [{ type: "text", text: "What is stt-studio?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "Recorded." }] } as UIMessage;
+    const harry = { id: "u3", role: "user", parts: [{ type: "text", text: "What did he do at Harry?" }] } as UIMessage;
+    expect(groundedQuestion([medchat, answer, { id: "f1", role: "user", parts: [{ type: "text", text: "Is it a deployed clinical system?" }] } as UIMessage], 2)).toContain("medchat");
+    expect(groundedQuestion([studio, answer, { id: "f2", role: "user", parts: [{ type: "text", text: "Is it a production app?" }] } as UIMessage], 2)).toContain("stt-studio");
+    expect(groundedQuestion([harry, answer, { id: "f3", role: "user", parts: [{ type: "text", text: "What does he ship to production?" }] } as UIMessage], 2)).toBe("What does he ship to production?");
+  });
 });

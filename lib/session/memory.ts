@@ -44,18 +44,18 @@ function messageText(message: UIMessage): string {
   return message.parts.map((part) => part.type === "text" && "text" in part ? part.text : "").join(" ");
 }
 
-const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent|agents?|retrieval|ocr|measure|models?|score|database|bought|cut|live)\b/i;
-const NAMED_PRODUCT = /\b(golf|skyledge|roster|triage|survee|prophet|pedigree|writingjourney|medviet|clara|salle|meter|acnt|cva)\b/i;
+const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent|agents?|retrieval|ocr|measure|models?|score|database|bought|cut|live|deployed clinical|production app)\b/i;
+const NAMED_PRODUCT = /\b(golf|skyledge|roster|triage|survee|prophet|pedigree|writingjourney|medviet|clara|salle|meter|acnt|cva|medchat|stt-studio)\b/i;
 const SPOKEN_EMPLOYER: Record<string, string> = { "hai-au": "Hai Au", "nam-a": "Nam A", "tien-thanh": "Tien Thanh" };
 
 export function groundedQuestion(messages: readonly UIMessage[], index: number): string {
   const message = messages[index];
   const question = message ? messageText(message) : "";
   if (!message || message.role !== "user" || namedEmployer(question) || NAMED_PRODUCT.test(question) || !FOLLOW_UP.test(question)) return question;
-  if (/\b(database|bought|cut|live)\b/i.test(question)) {
+  if (/\b(database|bought|cut|live|deployed clinical|production app)\b/i.test(question)) {
     const named = lastNamed(messages, index);
     const stem = question.replace(/\?$/, "").trim();
-    if (/\blive\b/i.test(question)) return named.product ? `${stem} for ${named.product}?` : question;
+    if (/\b(live|deployed clinical|production app)\b/i.test(question)) return named.product ? `${stem} for ${named.product}?` : question;
     if (named.product && named.productAt >= named.employerAt) return `${stem} for ${named.product}?`;
     if (named.employer) return `${stem} at ${SPOKEN_EMPLOYER[named.employer] ?? named.employer}?`;
     return question;
