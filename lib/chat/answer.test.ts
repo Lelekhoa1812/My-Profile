@@ -598,6 +598,13 @@ describe("displayAnswer", () => {
       "What does the writing coach send?",
     );
     expect(coachSend).toContain("scores a submission");
+    const coachScore = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does WritingJourney score?") }],
+      "",
+      "What does WritingJourney score?",
+    );
+    expect(coachScore).toContain("IELTS");
+    expect(coachScore).toContain("scores a submission");
     const control = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who stays in control of the writing coach?") }],
       "",

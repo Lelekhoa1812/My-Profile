@@ -203,6 +203,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\bscores a submission\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bstays in control\b/i.test(sentence)));
   }
+  if (/\b(writingjourney|writing coach)\b/i.test(question) && /\bscor(?:e|es|ing)\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\bielts\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bquotient\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\bpoints to the moment\b/i.test(sentence)));
