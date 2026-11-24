@@ -87,7 +87,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(sentence, blockSentences) : "";
     if (!named || chosen.includes(named) || chosen.length >= 2) return;
-    if (named.split(/\s+/).length < 4 && !isDecision(question, named)) return;
+    const shortFact = named.split(/\s+/).length >= 3 && /\b(use|uses|run|runs|led|cut)\b/.test(named) && words.some((word) => word.length >= 5 && mentions(named, word));
+    if (named.split(/\s+/).length < 4 && !isDecision(question, named) && !shortFact) return;
     chosen.push(named);
   };
   push(decision);
@@ -355,6 +356,7 @@ function periodSentence(answer: string, block: string): string {
 
 function isLabel(sentence: string): boolean {
   if (isToolList(sentence)) return false;
+  if (/\b(use|uses|run|runs|led|cut)\b/.test(sentence) && /[A-Z]/.test(sentence)) return false;
   return sentence.replace(/[.]+$/, "").split(/\s+/).filter((word) => /^[a-z]{4,}/.test(word)).length === 0;
 }
 

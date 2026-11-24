@@ -715,6 +715,12 @@ describe("displayAnswer", () => {
       "What reads the Mizco documents?",
     );
     expect(documents).toContain("PDF");
+    const prophet = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What forecast model does Prophet use?") }],
+      "",
+      "What forecast model does Prophet use?",
+    );
+    expect(prophet).toContain("TimesFM");
     expect(coach).toContain("rewrite");
     expect(refuse).toContain("does not score");
     expect(validators).toContain("evidence");
