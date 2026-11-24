@@ -19,3 +19,11 @@ export function loadNimKeys(env: Record<string, string | undefined>): string[] {
   }
   return keys;
 }
+
+export function emptyNimSlots(env: Record<string, string | undefined>): number[] {
+  const empty: number[] = [];
+  for (let index = 1; index <= NUMBERED_KEY_COUNT; index += 1) {
+    if (!env[`NVIDIA_NIM_API_KEY_${index}`]?.trim()) empty.push(index);
+  }
+  return empty;
+}

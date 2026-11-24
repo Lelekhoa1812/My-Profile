@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { loadNimKeys } from "./keys";
+import { emptyNimSlots, loadNimKeys } from "./keys";
 import { NimPool } from "./pool";
 
 const SECRET_A = "test-key-alpha";
@@ -14,6 +14,7 @@ describe("loadNimKeys", () => {
       NVIDIA_NIM_API_KEY_3: "  ",
     });
     expect(keys).toEqual([SECRET_A, SECRET_B, "test-key-gamma"]);
+    expect(emptyNimSlots({ NVIDIA_NIM_API_KEY_1: SECRET_A, NVIDIA_NIM_API_KEY_7: "  " })).toEqual([2, 3, 4, 5, 6, 7, 8, 9]);
   });
 });
 

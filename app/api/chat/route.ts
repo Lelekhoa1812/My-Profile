@@ -5,7 +5,7 @@ import { turnToStore } from "../../../lib/chat/answer";
 import { visitorCookie } from "../../../lib/session/cookie";
 import { instructionPrefix } from "../../../lib/agent/instructions";
 import { createProfileTools } from "../../../lib/agent/tools";
-import { loadNimKeys } from "../../../lib/nim/keys";
+import { emptyNimSlots, loadNimKeys } from "../../../lib/nim/keys";
 import { NIM_MODELS } from "../../../lib/nim/models";
 import { createPoolFetch, getNimPool } from "../../../lib/nim/provider";
 import { recordCard } from "../../../lib/profile/card";
@@ -39,6 +39,7 @@ export async function POST(request: Request): Promise<Response> {
   if (loadNimKeys(process.env).length === 0) {
     return Response.json({ error: "The model keys are not configured." }, { status: 503 });
   }
+  noteEmptySlots();
 
   const visitor = readVisitor(request);
   const threadId = cleanId(payload.threadId) ?? visitor.id;
@@ -74,6 +75,16 @@ export async function POST(request: Request): Promise<Response> {
   return result.toUIMessageStreamResponse({
     headers: visitor.setCookie ? { "set-cookie": visitorCookie(visitor.id, new URL(request.url).protocol === "https:") } : undefined,
   });
+}
+
+let notedEmptySlots = false;
+
+function noteEmptySlots(): void {
+  if (notedEmptySlots) return;
+  notedEmptySlots = true;
+  const empty = emptyNimSlots(process.env);
+  if (empty.length === 0) return;
+  console.error(`NIM key slots are empty: ${empty.join(", ")}`);
 }
 
 function readVisitor(request: Request): { id: string; setCookie: boolean } {
