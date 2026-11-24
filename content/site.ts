@@ -224,6 +224,6 @@ export const research = {
 export const skills: { group: string; items: string[] }[] = [
   { group: "Agents and LLMOps", items: ["LangGraph", "LangChain", "LangSmith", "LlamaIndex", "MCP", "Tool calling", "Human approval", "Evals"] },
   { group: "Retrieval and document AI", items: ["RAG", "BM25", "HNSW", "Reranking", "OCR/IDP", "VLMs", "Constrained JSON", "YOLO"] },
-  { group: "Cloud and serving", items: ["Azure AI Foundry", "Azure OpenAI", "AWS Bedrock", "SageMaker", "vLLM", "Nvidia NIM", "Docker", "Kubernetes"] },
+  { group: "Cloud and serving", items: ["Azure AI Foundry", "Azure OpenAI", "AWS Bedrock", "SageMaker", "Salesforce Agentforce", "Nvidia NIM", "Docker", "Kubernetes", "Kafka"] },
   { group: "Software and applied ML", items: ["Python", "TypeScript", "Java", "FastAPI", "Next.js", "React", "LoRA/QLoRA", "XGBoost"] },
 ];

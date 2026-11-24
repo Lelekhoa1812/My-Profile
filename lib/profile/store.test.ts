@@ -60,6 +60,15 @@ describe("profile store", () => {
     }
   });
 
+  it("finds Kafka and Agentforce from the resume skills list", () => {
+    const kafka = searchSections(profile.sections, "does he use Kafka");
+    const agentforce = searchSections(profile.sections, "does he use Salesforce Agentforce");
+    expect(kafka.found).toBe(true);
+    expect(agentforce.found).toBe(true);
+    if (kafka.found) expect(kafka.sections.some((section) => section.text.includes("Kafka"))).toBe(true);
+    if (agentforce.found) expect(agentforce.sections.some((section) => section.sectionId === "skills")).toBe(true);
+  });
+
   it("finds Kubernetes in the skills section", () => {
     const result = searchSections(profile.sections, "does he use Kubernetes");
     expect(result.found).toBe(true);

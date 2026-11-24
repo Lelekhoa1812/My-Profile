@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowDownToLine, Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const NAV = [
   { href: "#work", label: "Work" },
@@ -15,6 +15,7 @@ export function Header({ name, title, cv }: { name: string; title: string; cv: s
   const [active, setActive] = useState<string>("");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const sections = NAV.map((item) => document.querySelector(item.href)).filter((node): node is Element => Boolean(node));
@@ -39,10 +40,36 @@ export function Header({ name, title, cv }: { name: string; title: string; cv: s
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);
+    const main = document.getElementById("top");
+    const dock = document.querySelector<HTMLElement>("[aria-controls='ask-the-record']");
+    if (main) main.inert = true;
+    if (dock) dock.inert = true;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButton.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const root = document.getElementById("menu");
+      if (!root) return;
+      const items = [...root.querySelectorAll<HTMLElement>("a, button")];
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (!first || !last) return;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
+      if (main) main.inert = false;
+      if (dock) dock.inert = false;
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
@@ -80,7 +107,7 @@ export function Header({ name, title, cv }: { name: string; title: string; cv: s
             CV
             <ArrowDownToLine aria-hidden className="h-3.5 w-3.5" strokeWidth={1.5} />
           </a>
-          <button type="button" aria-expanded={open} aria-controls="menu" aria-label={open ? "Close the menu" : "Open the menu"} onClick={() => setOpen((value) => !value)} className="grid h-11 w-11 place-items-center border border-white/30 text-ink">
+          <button ref={menuButton} type="button" aria-expanded={open} aria-controls="menu" aria-label={open ? "Close the menu" : "Open the menu"} onClick={() => setOpen((value) => !value)} className="grid h-11 w-11 place-items-center border border-white/30 text-ink">
             {open ? <X aria-hidden className="h-4 w-4" strokeWidth={1.5} /> : <Menu aria-hidden className="h-4 w-4" strokeWidth={1.5} />}
           </button>
         </div>

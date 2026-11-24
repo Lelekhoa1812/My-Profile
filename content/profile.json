@@ -241,8 +241,8 @@
       "sectionId": "project-sp500",
       "heading": "S&P 500 forecast",
       "sourceType": "project",
-      "aliases": ["FinBERT", "portfolio"],
-      "text": "S&P 500 forecast. The resume describes a multi-horizon system. It uses temporal fusion transformers, graph networks, FinBERT on news and SEC filings, and a reinforcement-learning agent for portfolio execution. The record does not include a return figure."
+      "aliases": ["FinBERT", "portfolio", "Kafka"],
+      "text": "S&P 500 forecast. The resume describes a multi-horizon system. It uses temporal fusion transformers, graph networks, FinBERT on news and SEC filings, and a reinforcement-learning agent for portfolio execution. The data path uses Apache Kafka. The record does not include a return figure."
     },
     {
       "sectionId": "project-estatefolio",
@@ -269,8 +269,8 @@
       "sectionId": "skills",
       "heading": "Skills",
       "sourceType": "skills",
-      "aliases": ["Python", "Kubernetes", "LangGraph", "NIM"],
-      "text": "Skills. Languages: Vietnamese native, English fluent, Mandarin intermediate. The resume groups the stack as agents, retrieval, cloud platforms, software, machine learning, and document AI. Named tools include Python, Java, TypeScript, C#, SQL, React, Next.js, Vue, Node.js, FastAPI, LangChain, LangGraph, LangSmith, LlamaIndex, MCP, Azure AI Foundry, AWS Bedrock, SageMaker, Nvidia NIM, vLLM, Docker, Kubernetes, LoRA, and OCR."
+      "aliases": ["Python", "Kubernetes", "LangGraph", "NIM", "Kafka", "Agentforce"],
+      "text": "Skills. Languages: Vietnamese native, English fluent, Mandarin intermediate. The resume groups the stack as agents, retrieval, cloud platforms, software, machine learning, and document AI. Named tools include Python, Java, TypeScript, C#, SQL, React, Next.js, Vue, Node.js, FastAPI, LangChain, LangGraph, LangSmith, LlamaIndex, MCP, Azure AI Foundry, AWS Bedrock, SageMaker, Nvidia NIM, vLLM, Docker, Kubernetes, LoRA, OCR, Salesforce Agentforce, and Kafka."
     }
   ]
 }

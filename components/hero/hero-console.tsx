@@ -23,7 +23,10 @@ export function HeroConsole({ positioning, intro, questions, email }: Props) {
     <div className="flex min-h-[calc(100svh-7rem)] flex-col justify-end gap-10 pb-10 pt-28 md:gap-12 md:pb-14">
       <div className="min-h-[19rem] md:min-h-[22rem]">
         {turn ? (
-          <Answer key={turn.id} turn={turn} error={turn === latest && !busy ? error : undefined} email={email} onClear={() => setHidden(turn.id)} onContinue={() => setDockOpen(true)} />
+          <>
+            <h1 className="sr-only">{positioning}</h1>
+            <Answer key={turn.id} turn={turn} error={turn === latest && !busy ? error : undefined} email={email} onClear={() => setHidden(turn.id)} onContinue={() => setDockOpen(true)} />
+          </>
         ) : (
           <div key="statement" className="constitute max-w-[52rem]">
             <h1 className="balance text-[clamp(2.4rem,5.2vw,4.75rem)] font-light leading-[1.02] tracking-[-0.025em] text-ink">{positioning}</h1>
@@ -81,9 +84,11 @@ function AskField({ questions, busy, onAsk }: { questions: string[]; busy: boole
           <li key={question}>
             <button
               type="button"
-              disabled={busy}
-              onClick={() => onAsk(question)}
-              className="text-left text-sm text-white/55 underline decoration-white/20 underline-offset-[6px] transition-colors hover:text-white hover:decoration-white/60 disabled:opacity-50"
+              aria-disabled={busy}
+              onClick={() => {
+                if (!busy) onAsk(question);
+              }}
+              className={`text-left text-sm text-white/55 underline decoration-white/20 underline-offset-[6px] transition-colors hover:text-white hover:decoration-white/60 ${busy ? "opacity-50" : ""}`}
             >
               {question}
             </button>
