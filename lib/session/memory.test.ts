@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { UIMessage } from "ai";
-import { dropOtherEmployer, withMemory } from "./memory";
+import { dropOtherEmployer, groundFollowUp, groundedQuestion, withMemory } from "./memory";
 
 const question = { id: "q", role: "user", parts: [{ type: "text", text: "What is his title?" }] } as UIMessage;
 
@@ -56,5 +56,15 @@ describe("withMemory", () => {
     const medswinAnswer = { id: "a2", role: "assistant", parts: [{ type: "text", text: "86 percent BERTScore." }] } as UIMessage;
     const follow = { id: "u3", role: "user", parts: [{ type: "text", text: "What was that percent?" }] } as UIMessage;
     expect(dropOtherEmployer([harry, harryAnswer, medswin, medswinAnswer, follow])).toEqual([medswin, medswinAnswer, follow]);
+  });
+
+  it("names the previous employer on a stack follow-up", () => {
+    const harry = { id: "u1", role: "user", parts: [{ type: "text", text: "At Harry the Hirer, what did the pilot cut?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "About 40 percent." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What was the stack?" }] } as UIMessage;
+    const messages = [harry, answer, follow];
+    expect(groundedQuestion(messages, 2)).toContain("harry");
+    expect(groundFollowUp(messages).at(-1)?.parts[0]).toMatchObject({ text: expect.stringContaining("stack") });
+    expect(follow.parts[0]).toMatchObject({ text: "What was the stack?" });
   });
 });

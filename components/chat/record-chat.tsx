@@ -5,7 +5,7 @@ import { DefaultChatTransport, type UIMessage } from "ai";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { displayAnswer, shownAnswer } from "@/lib/chat/answer";
 import { sourcesFromParts, type Source } from "@/lib/chat/sources";
-import { withMemory } from "@/lib/session/memory";
+import { groundedQuestion, withMemory } from "@/lib/session/memory";
 
 export type Turn = { id: string; question: string; answer: string; sources: Source[]; steps: string[]; done: boolean; reading: boolean };
 
@@ -100,7 +100,7 @@ export function toTurns(messages: readonly UIMessage[], streaming: boolean): Tur
     const question = message.parts.map((part) => (part.type === "text" ? part.text : "")).join("");
     const reply = messages[index + 1]?.role === "assistant" ? messages[index + 1] : undefined;
     const raw = reply ? reply.parts.map((part) => (part.type === "text" ? part.text : "")).join("") : "";
-    const draft = reply ? displayAnswer(reply.parts, raw, question) : "";
+    const draft = reply ? displayAnswer(reply.parts, raw, groundedQuestion(messages, index)) : "";
     const last = index >= messages.length - 2;
     const done = !(last && streaming);
     const answer = shownAnswer(draft, done, Boolean(reply));

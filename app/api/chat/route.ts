@@ -14,7 +14,7 @@ import { identityCard } from "../../../lib/profile/card";
 import { loadProfile } from "../../../lib/profile/load";
 import { tailForModel } from "../../../lib/session/tail";
 import { loadStoredTurns } from "../../../lib/session/load";
-import { dropOtherEmployer, withMemory } from "../../../lib/session/memory";
+import { dropOtherEmployer, groundFollowUp, groundedUserText, withMemory } from "../../../lib/session/memory";
 import { saveTraces } from "../../../lib/session/traces";
 import { appendTurns } from "../../../lib/session/turns";
 
@@ -61,6 +61,8 @@ export async function POST(request: Request): Promise<Response> {
   const record = await loadProfile();
   const stored = await loadStoredTurns(threadId, visitor.id);
   const question = lastUserText(messages);
+  const remembered = dropOtherEmployer(withMemory(stored, messages));
+  const grounded = groundedUserText(remembered);
   const agent = new ToolLoopAgent({
     model: nim().chatModel(NIM_MODELS[0]),
     instructions: `${instructionPrefix()}\n\n<record>\n${identityCard(record.facts)}\n</record>`,
@@ -69,14 +71,14 @@ export async function POST(request: Request): Promise<Response> {
     maxRetries: 0,
     maxOutputTokens: 1024,
     toolOrder: ["lookup_fact", "list_sections", "read_section", "search_sections"],
-    prepareStep: ({ stepNumber, steps }) => stepTools(stepNumber, steps, question),
+    prepareStep: ({ stepNumber, steps }) => stepTools(stepNumber, steps, grounded),
   });
   const result = await agent.stream({
-    messages: tailForModel(await convertToModelMessages(dropOtherEmployer(withMemory(stored, messages)))),
+    messages: tailForModel(await convertToModelMessages(groundFollowUp(remembered))),
     abortSignal: request.signal,
     timeout: { firstChunkMs: 20_000, chunkMs: 30_000, toolMs: 8_000, stepMs: 45_000, totalMs: 55_000 },
     onEnd: (event) => {
-      const sentence = turnToStore(request.signal.aborted, event.toolResults.map((result) => result.output), event.text ?? "", question);
+      const sentence = turnToStore(request.signal.aborted, event.toolResults.map((result) => result.output), event.text ?? "", grounded);
       void saveTraces(threadId, event.toolResults.map((result) => ({
         toolName: result.toolName,
         input: result.input,
