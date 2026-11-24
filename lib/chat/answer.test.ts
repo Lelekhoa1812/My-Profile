@@ -791,6 +791,13 @@ describe("displayAnswer", () => {
       "What reviews uncertain output?",
     );
     expect(uncertain).toContain("person reviews uncertain output");
+    const mizcoReviews = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Mizco review?") }],
+      "",
+      "What does Mizco review?",
+    );
+    expect(mizcoReviews).toContain("uncertain output");
+    expect(mizcoReviews).not.toContain("50 percent");
     const cockpit = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "At Mizco, what is the cockpit?") }],
       "",
