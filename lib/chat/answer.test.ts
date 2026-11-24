@@ -486,6 +486,12 @@ describe("displayAnswer", () => {
       "What languages does he speak?",
     );
     expect(spoken).toContain("Vietnamese");
+    const background = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is his background?") }],
+      "",
+      "What is his background?",
+    );
+    expect(background).toContain("AI Software Engineer");
     expect(spoken).toContain("Mandarin");
     expect(cases).not.toContain("5 million");
     const synthetic = displayAnswer(

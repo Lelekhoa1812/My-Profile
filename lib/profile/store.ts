@@ -162,7 +162,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("person") && (text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-cva", "project-writing"] },
     { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },
     { when: /\b(work|job)\b/.test(text) && text.includes("now"), ids: ["role-axion", "project-cva"] },
-    { when: /\bintroduce\b/.test(text) || (/\bavailable\b/.test(text) && /\bwork\b/.test(text)), ids: ["role-axion"] },
+    { when: /\bintroduce\b/.test(text) || (/\bbackground\b/.test(text) && !namedEmployer(text)) || (/\bavailable\b/.test(text) && /\bwork\b/.test(text)), ids: ["role-axion"] },
     { when: /\b(study|university|bachelor|degree)\b/.test(text) && !/\bresearch\b/.test(text), ids: ["education-swinburne"] },
     { when: /\b(acquir\w*|sold|sell|sale|bought|buyer|purchase\w*)\b/.test(text), ids: saleIds(text) },
   ];
@@ -342,7 +342,9 @@ const FACT_ONLY_TERMS = new Set([
 ]);
 
 export function contactLookupKey(query: string): string | undefined {
-  const terms = [...new Set(query.toLowerCase().split(/[^a-z0-9]+/))].filter((term) => term.length > 2 && !STOP_WORDS.has(term));
+  const text = query.toLowerCase();
+  if (/\bcontact\b/.test(text) && !namedEmployer(text) && !/\b(phone|mobile)\b/.test(text)) return "email";
+  const terms = [...new Set(text.split(/[^a-z0-9]+/))].filter((term) => term.length > 2 && !STOP_WORDS.has(term));
   if (terms.length === 0 || !terms.every((term) => FACT_ONLY_TERMS.has(term))) return undefined;
   if (terms.includes("email")) return "email";
   if (terms.includes("phone") || terms.includes("mobile")) return "phone";

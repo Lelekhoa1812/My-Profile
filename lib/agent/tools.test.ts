@@ -35,6 +35,9 @@ describe("profile tools", () => {
     const called = await search.execute({ query: "What is he also called?" });
     expect(called.found).toBe(true);
     expect(called.facts?.[0]?.value).toContain("Liam");
+    const contact = await search.execute({ query: "How can I contact him?" });
+    expect(contact.found).toBe(true);
+    expect(contact.facts?.[0]?.label).toBe("Email");
     const graduated = await search.execute({ query: "When did he graduate?" });
     expect(graduated.found).toBe(true);
     expect(graduated.facts?.[0]?.value).toContain("Bachelor");
