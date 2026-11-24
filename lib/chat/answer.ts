@@ -158,6 +158,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (recipes && /\b(workflow|engine)\b/i.test(question) && !chosen.some((sentence) => /recipes are/i.test(sentence))) {
     const title = chosen.findIndex((sentence) => sentence.split(/\s+/).length <= 4);
     if (title >= 0) chosen.splice(title, 1);
+    const platform = blockSentences.find((sentence) => /\bgoverned graph platform\b/i.test(sentence));
+    if (platform && !chosen.includes(platform)) push(platform);
     push(recipes);
   }
   const openSentences = blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence));

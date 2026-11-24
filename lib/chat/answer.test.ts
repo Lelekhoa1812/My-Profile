@@ -1127,6 +1127,7 @@ describe("displayAnswer", () => {
       "Tell me about the Axion workflow engine.",
     );
     expect(workflow).toContain("startup scouting");
+    expect(workflow).toContain("separate from FoodFlow");
     expect(workflow).not.toContain("AI Software Engineer");
     expect(medvietAbout).not.toMatch(/^The Hugging Face org is MedVietAI/);
     expect(fastApi).not.toContain("LoRA");
