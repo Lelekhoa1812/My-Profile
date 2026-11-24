@@ -877,6 +877,12 @@ describe("displayAnswer", () => {
     );
     expect(downloads).toContain("downloaded");
     expect(downloads).not.toContain("re-counted");
+    const host = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Axis draft on?") }],
+      "",
+      "What does Axis draft on?",
+    );
+    expect(host).toContain("same host");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(

@@ -282,6 +282,7 @@ function matchingBlock(outputs: readonly Record<string, unknown>[], question: st
     if (employer && !chronological && employerMentioned(employer, block)) score += 8;
     if (!employer && /\b(sold|sell|products)\b/i.test(question) && /named live or sold work/i.test(block)) score += 20;
     if (/\bocr\b/i.test(question) && !employer && !/\b(meter|water|harry|golf|passport|nam)\b/i.test(question) && /\b(vietocr|paddleocr)\b/i.test(block)) score += 15;
+    if (/\bdraft on\b/i.test(question) && /\bsame host\b/i.test(block)) score += 12;
     if (!chronological && titledInQuestion(question, block)) score += 8;
     if (countedFact(question, sentences, words)) score += 12;
     if (score > bestScore) {
@@ -443,6 +444,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\blab\b/i.test(question) && /\brecord/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bmodels were\b/i.test(question) && /\bdownloaded\b/i.test(sentence)) return true;
+  if (/\bdraft on\b/i.test(question) && /\bsame host\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence)) {
     const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 5 && !["cases", "people", "using", "about"].includes(word));
