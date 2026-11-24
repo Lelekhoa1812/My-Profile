@@ -508,6 +508,33 @@ describe("displayAnswer", () => {
     expect(databases).toContain("MongoDB");
     expect(databases).toContain("SQLite");
     expect(databases).not.toContain("does not own");
+    const employer = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is his current employer?") }],
+      "",
+      "What is his current employer?",
+    );
+    expect(employer).toContain("Axion");
+    const coded = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What languages does he code in?") }],
+      "",
+      "What languages does he code in?",
+    );
+    expect(coded).toContain("Python");
+    expect(coded).toContain("TypeScript");
+    const sold = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],
+      "",
+      "What products has he sold?",
+    );
+    expect(sold).toContain("HA Manager");
+    expect(sold).toContain("SkyLedge");
+    const companies = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What companies has he worked for?") }],
+      "",
+      "What companies has he worked for?",
+    );
+    expect(companies).toContain("Axion Solutions");
+    expect(companies).toContain("Harry the Hirer");
     expect(spoken).toContain("Mandarin");
     expect(cases).not.toContain("5 million");
     const synthetic = displayAnswer(

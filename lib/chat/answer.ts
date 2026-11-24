@@ -55,6 +55,8 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
   const stores = databaseAnswer(question, outputs);
   if (stores) return stores;
+  const employers = employerNames(question, outputs);
+  if (employers) return employers;
   if (!text.trim() && primary.length > 0) {
     const outcome = recordedOutcome(primary);
     const focused = question.trim() ? focusOnQuestion(outcome, primary, question) : outcome;
@@ -125,6 +127,21 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   return keptOffer(question, shown, second ? `${timed} ${second}` : timed);
 }
 
+function employerNames(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\b(companies|employers)\b/i.test(question)) return "";
+  const names: string[] = [];
+  for (const output of outputs) {
+    if (!Array.isArray(output.sections)) continue;
+    for (const section of output.sections) {
+      if (typeof section !== "object" || section === null || !("heading" in section) || !("sourceType" in section)) continue;
+      if (section.sourceType !== "role") continue;
+      const heading = String(section.heading).split(",")[0].replace(/\.$/, "").trim();
+      if (heading && !names.includes(heading)) names.push(heading);
+    }
+  }
+  return names.join(", ");
+}
+
 function databaseAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (!/\bdatabases?\b/i.test(question) || !/\b(use|uses|used)\b/i.test(question) || namedEmployer(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(mongodb|mariadb|mysql|sqlite)\b/i.test(sentence) && !/\bdoes not\b/i.test(sentence)));
@@ -168,6 +185,7 @@ function matchingBlock(outputs: readonly Record<string, unknown>[], question: st
     const chronological = /\b(before|after)\b/.test(question.toLowerCase());
     let score = sentences.reduce((best, sentence) => Math.max(best, askScore(question, sentence, words)), 0);
     if (employer && !chronological && employerMentioned(employer, block)) score += 8;
+    if (!employer && /\b(sold|sell|products)\b/i.test(question) && /named live or sold work/i.test(block)) score += 20;
     if (!chronological && titledInQuestion(question, block)) score += 8;
     if (countedFact(question, sentences, words)) score += 12;
     if (score > bestScore) {
@@ -273,7 +291,8 @@ function mentions(sentence: string, word: string): boolean {
 
 function askWords(question: string): string[] {
   const words = [...new Set(question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 3 && !ASK_STOP.has(word)))];
-  return /\b(available|summarise|summarize)\b/i.test(question) ? words.filter((word) => word !== "work") : words;
+  const dropWork = /\b(available|summarise|summarize)\b/i.test(question) || (/\bwork\b/i.test(question) && /\bnow\b/i.test(question));
+  return dropWork ? words.filter((word) => word !== "work") : words;
 }
 
 function askScore(question: string, sentence: string, words: readonly string[]): number {
@@ -299,7 +318,7 @@ function isDecision(question: string, sentence: string): boolean {
   }
   if (/\b(sell|sold|buyer|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
   if (/\b(store|stored|stores|stay|stays)\b/i.test(question) && /\bmongodb\b/i.test(sentence)) return true;
-  if (/\bstack\b/i.test(question) && /\bpython\b/i.test(sentence)) return true;
+  if (/\b(stack|code|coding|programming)\b/i.test(question) && /\bpython\b/i.test(sentence)) return true;
   if (/\bplan\b/i.test(question) && /\bplans?\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;

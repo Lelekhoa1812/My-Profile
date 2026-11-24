@@ -146,6 +146,21 @@ function adjacentRoleIds(text: string) {
 
 function pinnedSections(pool: readonly { section: ProfileSection; title: string; body: string }[], query: string) {
   const text = query.toLowerCase();
+  if (/\b(companies|employers)\b/.test(text) && /\bwork/.test(text)) {
+    const roles = pool.filter((item) => item.section.sourceType === "role");
+    if (roles.length > 0) {
+      return {
+        found: true as const,
+        sections: roles.map((hit) => ({
+          sectionId: hit.section.sectionId,
+          heading: hit.section.heading,
+          sourceType: hit.section.sourceType,
+          text: hit.section.text,
+          match: "keyword" as const,
+        })),
+      };
+    }
+  }
   const adjacent = adjacentRoleIds(text);
   const sets = [
     { when: Boolean(adjacent?.length), ids: adjacent ?? [] },
@@ -162,6 +177,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("person") && (text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-cva", "project-writing"] },
     { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },
     { when: /\b(work|job)\b/.test(text) && text.includes("now"), ids: ["role-axion", "project-cva"] },
+    { when: /\b(current employer|latest role|most recently)\b/.test(text), ids: ["role-axion"] },
     { when: /\bintroduce\b/.test(text) || (/\bbackground\b/.test(text) && !namedEmployer(text)) || (/\bavailable\b/.test(text) && /\bwork\b/.test(text)), ids: ["role-axion"] },
     { when: /\bcareer\b/.test(text) && !/\b(cva|application|agent)\b/.test(text), ids: ["role-axion"] },
     { when: (/\bknow about\b/.test(text) || /\bhire\b/.test(text) || (/\b(summarise|summarize)\b/.test(text) && /\bwork\b/.test(text))) && !namedEmployer(text), ids: ["role-axion"] },
