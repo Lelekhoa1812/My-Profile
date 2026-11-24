@@ -699,6 +699,27 @@ describe("displayAnswer", () => {
     expect(fastapiIs).toContain("FastAPI streaming");
     expect(fastapiIs).toContain("Raspberry Pi");
     expect(fastapiIs).toContain("faster-whisper");
+    const azureOpenAI = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Azure OpenAI?") }],
+      "",
+      "What is Azure OpenAI?",
+    );
+    expect(azureOpenAI).toContain("Azure OpenAI");
+    expect(azureOpenAI).not.toContain("40 percent");
+    const webCrawl = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is web crawling?") }],
+      "",
+      "What is web crawling?",
+    );
+    expect(webCrawl).toContain("web crawling");
+    expect(webCrawl).toContain("Apollo");
+    const raspberryIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Raspberry Pi?") }],
+      "",
+      "What is Raspberry Pi?",
+    );
+    expect(raspberryIs).toContain("Raspberry Pi");
+    expect(raspberryIs).toContain("FastAPI");
     const nimUsed = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Nvidia NIM used for?") }],
       "",
