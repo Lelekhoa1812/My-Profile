@@ -83,7 +83,7 @@ export const cases: Case[] = [
     built: [
       "FoodFlow is the multi-tenant ERP and the system of record: sales, purchasing, inventory, production, finance, and delivery. Axis is a separate product with Studio copilot, Data Insight, and Message Writer.",
       "Axis calls typed MCP tools on FoodFlow, shows a preview, and waits for a person to approve. Axis does not own the FoodFlow database.",
-      "A LangGraph engine runs startup outreach, investor and persona search, and portfolio reporting, with LangSmith traces and approval gates.",
+      "A LangGraph engine runs startup scouting, investor and persona search, and portfolio reporting, with LangSmith traces and approval gates.",
     ],
     result: null,
     stack: ["LangGraph", "LangChain", "LangSmith", "MCP", "OpenTelemetry"],
