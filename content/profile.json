@@ -73,8 +73,8 @@
       "sectionId": "role-hai-au",
       "heading": "Hai Au Academy",
       "sourceType": "role",
-      "aliases": ["Hai Au", "student management"],
-      "text": "Hai Au Academy, AI Software Engineer. Binh Duong, August 2025 to October 2025. Bilingual student-management system. The resume records about 35 percent less admin effort."
+      "aliases": ["Hai Au", "HA Manager", "student management"],
+      "text": "Hai Au Academy. AI Software Engineer, August 2025 to October 2025, Binh Duong. HA Manager is the bilingual student-management platform, sold to Hai Au Group. It covers enrollment, placement testing, scheduling, and attendance. The resume records about 35 percent less admin effort."
     },
     {
       "sectionId": "role-pythera",
@@ -201,6 +201,13 @@
       "sourceType": "project",
       "aliases": ["career agent"],
       "text": "CVA. Career application agent. Repository: Lelekhoa1812/CVA. Live app: cva-mauve.vercel.app."
+    },
+    {
+      "sectionId": "project-writing",
+      "heading": "WritingJourney",
+      "sourceType": "project",
+      "aliases": ["Hai Au Group", "IELTS", "PTE", "TOEIC"],
+      "text": "WritingJourney. The resume says version 1.5.0 was sold to Hai Au Group. It is an IELTS, PTE, and TOEIC writing coach. It scores a submission, explains the error, and plans the rewrite. A person stays in control of the result."
     },
     {
       "sectionId": "project-roster",
