@@ -104,21 +104,21 @@
       "heading": "Nam A Bank, AI and data",
       "sourceType": "role",
       "aliases": ["Nam Á Bank", "passport OCR"],
-      "text": "Nam A Bank, AI and data. Nam Á Bank, AI and Data Engineer, Ho Chi Minh City, December 2024 to May 2025. OCR, computer vision, and language-model research for passport and remittance documents."
+      "text": "Nam A Bank, AI and data. Nam Á Bank, AI and Data Engineer, Ho Chi Minh City, December 2024 to May 2025. OCR, computer vision, and language-model research for passport and remittance documents. The public work trains VietOCR on synthetic passports. The pipelines use OpenCV and structured extraction for foreign-customer onboarding."
     },
     {
       "sectionId": "role-nam-a-software",
       "heading": "Nam A Bank, software",
       "sourceType": "role",
       "aliases": ["Vert.x"],
-      "text": "Nam A Bank, software. Nam Á Bank, Software Engineer, April 2023 to June 2024. Banking modules in Java, including Vert.x and Android work."
+      "text": "Nam A Bank, software. Nam Á Bank, Software Engineer, April 2023 to June 2024. Banking modules in Java, including Vert.x services and Android screens. The services use REST and asynchronous requests, with authentication on the customer data path."
     },
     {
       "sectionId": "role-inet",
       "heading": "iNet Solution",
       "sourceType": "role",
       "aliases": ["Obsei", "sentiment"],
-      "text": "iNet Solution, Software and Data Scientist. Ho Chi Minh City, April 2024 to March 2025. Sentiment pipeline over news text with Obsei and Transformers."
+      "text": "iNet Solution, Software and Data Scientist. Ho Chi Minh City, April 2024 to March 2025. An LLM pipeline over news text for sentiment, fact-checking, and summarisation. The stack is Obsei and Transformers."
     },
     {
       "sectionId": "role-vietdan-ml",
@@ -167,7 +167,7 @@
       "heading": "MedVietAI",
       "sourceType": "project",
       "aliases": ["Vietnamese medical LLM"],
-      "text": "MedVietAI. Liam is the founder of this non-profit effort toward a sovereign Vietnamese medical language model. The resume says Vietnam's National Data Association sponsored the initiative. The Hugging Face org is MedVietAI."
+      "text": "MedVietAI. Liam is the founder of this non-profit effort toward a sovereign Vietnamese medical language model. It extends the MedSwin architecture for Vietnamese language and healthcare context. The resume says Vietnam's National Data Association sponsored the initiative. The resume also defines a vision for EMR-based monitoring. The Hugging Face org is MedVietAI."
     },
     {
       "sectionId": "project-codoptic",
@@ -244,21 +244,21 @@
       "heading": "MedChat",
       "sourceType": "project",
       "aliases": ["medical conversation", "multilingual"],
-      "text": "MedChat. The resume calls this a prototype. It is a multilingual medical conversation agent with a planner, specialist routing, and citation checks. The resume does not describe it as a deployed clinical system."
+      "text": "MedChat. The resume calls this a prototype. It is a multilingual medical conversation agent with a planner, specialist routing, source ranking, safety filters, and citation checks. The resume does not describe it as a deployed clinical system."
     },
     {
       "sectionId": "project-sp500",
       "heading": "S&P 500 forecast",
       "sourceType": "project",
       "aliases": ["FinBERT", "portfolio", "Kafka"],
-      "text": "S&P 500 forecast. The resume describes a multi-horizon system. It uses temporal fusion transformers, graph networks, FinBERT on news and SEC filings, and a reinforcement-learning agent for portfolio execution. The data path uses Apache Kafka. Public repository: Lelekhoa1812/S-P500_Prediction_Model. The record does not include a return figure."
+      "text": "S&P 500 forecast. The resume describes a multi-horizon system. It uses temporal fusion transformers, graph networks, FinBERT on news and SEC filings, and a reinforcement-learning agent for portfolio execution. Training uses combinatorial purged cross-validation, and drift detection can trigger a retrain. The data path uses Apache Kafka. Public repository: Lelekhoa1812/S-P500_Prediction_Model. The record does not include a return figure."
     },
     {
       "sectionId": "project-estatefolio",
       "heading": "EstateFolio",
       "sourceType": "project",
       "aliases": ["Hanoi", "Ho Chi Minh City", "real estate"],
-      "text": "EstateFolio. The resume describes a price forecast for homes in Ho Chi Minh City and Hanoi. It models links between districts and reads listing text. The record does not include an error rate."
+      "text": "EstateFolio. The resume describes a price forecast for homes in Ho Chi Minh City and Hanoi. A spatio-temporal graph network, an ST-GNN, models links between districts. A transformer reads listing text, bond updates, and regulatory notes. Drift detection is part of the pipeline. The record does not include an error rate."
     },
     {
       "sectionId": "project-public-code",

@@ -194,6 +194,10 @@ describe("profile store", () => {
     const triage = searchSections(profile.sections, "What drone does the clinical triage response use?");
     expect(pop.found && pop.sections[0]?.text).toContain("XGBoost");
     expect(triage.found && triage.sections[0]?.text).toContain("Great Shark");
+    const estate = searchSections(profile.sections, "What does EstateFolio forecast for Hanoi?");
+    const nam = searchSections(profile.sections, "What synthetic passports did he build at Nam A Bank?");
+    expect(estate.found && estate.sections[0]?.text).toContain("ST-GNN");
+    expect(nam.found && nam.sections[0]?.sectionId).toBe("role-nam-a-ai");
   });
 
   it("opens the degree when the question asks where he studied", () => {
