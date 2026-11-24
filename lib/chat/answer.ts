@@ -143,7 +143,9 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
 
 function mentions(sentence: string, word: string): boolean {
   if (new RegExp(`\\b${word}(?:s|es|ed|ing)?\\b`, "i").test(sentence)) return true;
-  return word === "ocr" && /\b\w*ocr\b/i.test(sentence);
+  if (word === "ocr" && /\b\w*ocr\b/i.test(sentence)) return true;
+  if (word.endsWith("s") && word.length > 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
+  return word.length >= 8 && new RegExp(`\\b${word.slice(0, word.length - 3)}`, "i").test(sentence);
 }
 
 function askWords(question: string): string[] {
@@ -165,11 +167,13 @@ function namedSubject(sentence: string, blockSentences: readonly string[]): stri
 
 function isDecision(question: string, sentence: string): boolean {
   if (/\bocr\b/i.test(question)) return /\b\w*ocr\b/i.test(sentence);
-  if (/\b(write|show|preview|approv)/i.test(question) && /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
+  if (/\b(write|show|preview|approv)\b/i.test(question) && /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
   if (/\b(sell|sold|buyer|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
   if (/\b(store|stored|stores|stay|stays)\b/i.test(question) && /\bmongodb\b/i.test(sentence)) return true;
   if (/\bstack\b/i.test(question) && /\bpython\b/i.test(sentence)) return true;
-  return /\b(cut|pilot|percent|measure|bert|score|metric)/i.test(question) && /\bpercent\b/i.test(sentence);
+  if (/\b(run|running|deploy)\b/i.test(question) && /\b(raspberry|jetson|aws|docker|fastapi)\b/i.test(sentence)) return true;
+  if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
+  return /\b(cut|pilot|percent|measure|bert|score|metric)\b/i.test(question) && /\bpercent\b/i.test(sentence);
 }
 
 function plainSentences(text: string): string[] {

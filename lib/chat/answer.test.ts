@@ -498,6 +498,24 @@ describe("displayAnswer", () => {
     );
     expect(corrections).toContain("Qwen");
     expect(bought).toContain("MJ Industrial");
+    const vision = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What vision model checks the scorecard handwriting?") }],
+      "",
+      "What vision model checks the scorecard handwriting?",
+    );
+    const hardware = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did SkyLedge run on?") }],
+      "",
+      "What did SkyLedge run on?",
+    );
+    const signals = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many signals does the pedigree ensemble use?") }],
+      "",
+      "How many signals does the pedigree ensemble use?",
+    );
+    expect(vision.split(/(?<=[.!])\s+/)[0]).toContain("Qwen");
+    expect(hardware).toContain("Raspberry");
+    expect(signals).toContain("10-signal");
   });
 
   it("keeps the model sentence when a tool found a section", () => {
