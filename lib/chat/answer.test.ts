@@ -2221,6 +2221,14 @@ describe("displayAnswer", () => {
     expect(bothEmployers).toContain("event inventory");
     expect(bothEmployers).toContain("trust-first");
     expect(bothEmployers).not.toContain("mate-selection");
+    const skyledgeHardware = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What hardware does SkyLedge use?") }],
+      "",
+      "What hardware does SkyLedge use?",
+    );
+    expect(skyledgeHardware).toContain("Raspberry Pi");
+    expect(skyledgeHardware).toContain("OBD-II");
+    expect(skyledgeHardware).not.toContain("15 percent");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],

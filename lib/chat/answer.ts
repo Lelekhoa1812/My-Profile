@@ -544,6 +544,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (platform && !chosen.includes(platform)) push(platform);
     push(recipes);
   }
+  if (/\bhardware\b/i.test(question) && /\bskyledge\b/i.test(question)) {
+    cap = 3;
+    const board = blockSentences.find((sentence) => /\braspberry pi\b/i.test(sentence));
+    if (board) {
+      chosen.length = 0;
+      push(board);
+      push(blockSentences.find((sentence) => /\bobd-ii\b/i.test(sentence)));
+    }
+  }
   if (/\b(lead|leads|leader)\b/i.test(question) && /\b(axion|axis)\b/i.test(question)) {
     cap = 3;
     const owns = blockSentences.find((sentence) => /\bowns the ai vision\b/i.test(sentence));
