@@ -160,6 +160,9 @@ describe("profile store", () => {
       expect(ids[0]).toBe("project-shipped");
       expect(ids).toContain("project-skyledge");
     }
+    const purchaser = searchSections(profile.sections, "Who is the purchaser of the golf app?");
+    expect(purchaser.found && purchaser.sections[0]?.sectionId).toBe("project-golf");
+    expect(purchaser.found && purchaser.sections[0]?.text).toContain("VHandicap");
     const golf = searchSections(profile.sections, "What did the golf app sell to?");
     expect(golf.found && golf.sections[0]?.sectionId).toBe("project-golf");
     expect(golf.found && golf.sections[0]?.text).toContain("VHandicap");
