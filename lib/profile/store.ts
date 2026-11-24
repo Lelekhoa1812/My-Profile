@@ -279,6 +279,8 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("ship") && text.includes("production"), ids: ["project-shipped", "project-cva"] },
     { when: /\blive app\b/.test(text) || /\bonly named live\b/.test(text), ids: ["project-shipped", "project-cva"] },
     { when: text.includes("measure") && text.includes("live"), ids: ["project-meter", "project-cva", "project-shipped"] },
+    { when: /\badmin effort\b/.test(text), ids: ["role-hai-au"] },
+    { when: /\bpedigree\b/.test(text) && /\b(measure|measured)\b/.test(text), ids: ["role-harry-pedigree"] },
     { when: /\b(measure|measured|cut)\b/.test(text) && !namedEmployer(text) && !/\b(live|pilot|uptime|bert|golf|meter|scanner|recall|precision)\b/.test(text), ids: ["role-harry-senior", "role-mizco", "role-swinburne-research"] },
     { when: /\b(train|trained|training)\b/.test(text) && /\b(he|him|his|lab)\b/.test(text) && !namedEmployer(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: /\b(founder|founded)\b/.test(text), ids: ["project-medvietai"] },

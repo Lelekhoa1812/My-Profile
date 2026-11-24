@@ -837,6 +837,20 @@ describe("displayAnswer", () => {
     );
     expect(claraAccuracy).toContain("95");
     expect(claraAccuracy).toContain("92");
+    const adminEffort = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What was the admin effort cut?") }],
+      "",
+      "What was the admin effort cut?",
+    );
+    expect(adminEffort).toContain("35 percent");
+    expect(adminEffort).not.toContain("40 percent");
+    const pedigreeMeasure = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
+      "",
+      "What did the pedigree project measure?",
+    );
+    expect(pedigreeMeasure).toContain("inbreeding");
+    expect(pedigreeMeasure).not.toContain("40 percent");
     const namVision = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Nam A use for vision?") }],
       "",
