@@ -44,7 +44,7 @@ function messageText(message: UIMessage): string {
   return message.parts.map((part) => part.type === "text" && "text" in part ? part.text : "").join(" ");
 }
 
-const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent)\b/i;
+const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent|agents?|retrieval)\b/i;
 const SPOKEN_EMPLOYER: Record<string, string> = { "hai-au": "Hai Au", "nam-a": "Nam A", "tien-thanh": "Tien Thanh" };
 
 export function groundedQuestion(messages: readonly UIMessage[], index: number): string {

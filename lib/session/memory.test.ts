@@ -67,4 +67,12 @@ describe("withMemory", () => {
     expect(groundFollowUp(messages).at(-1)?.parts[0]).toMatchObject({ text: expect.stringContaining("stack") });
     expect(follow.parts[0]).toMatchObject({ text: "What was the stack?" });
   });
+
+  it("names the previous employer on an agent follow-up", () => {
+    const medswin = { id: "u1", role: "user", parts: [{ type: "text", text: "At MedSwin, what BERTScore did the lab record?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "86 percent BERTScore." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What agents did he use?" }] } as UIMessage;
+    expect(groundedQuestion([medswin, answer, follow], 2)).toContain("medswin");
+    expect(follow.parts[0]).toMatchObject({ text: "What agents did he use?" });
+  });
 });
