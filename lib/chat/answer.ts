@@ -895,6 +895,10 @@ function productStackAnswer(question: string, outputs: readonly Record<string, u
   if (/\broster\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bkotlin\b/i.test(sentence)) ?? "";
   if (/\btriage\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bportals use\b/i.test(sentence)) ?? "";
   if (/\bcva\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(scores role fit|person approves|profile memory)\b/i.test(sentence)).slice(0, 3).join(" ");
+  if (/\bsall-?e\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bperception uses\b/i.test(sentence)) ?? "";
+  if (/\bestatefolio\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(transformer reads|st-gnn)\b/i.test(sentence)).slice(0, 2).join(" ");
+  if (/\bcodoptic\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(generate or review code|interactive dsl)\b/i.test(sentence)).slice(0, 2).join(" ");
+  if (/\bskyledge\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(raspberry pi|fault prediction)\b/i.test(sentence)).slice(0, 2).join(" ");
   return "";
 }
 

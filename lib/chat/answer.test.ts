@@ -1992,6 +1992,34 @@ describe("displayAnswer", () => {
     );
     expect(cvaStack).toContain("scores role fit");
     expect(cvaStack).not.toContain("Named tools include");
+    const salleStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does Sall-e use?") }],
+      "",
+      "What stack does Sall-e use?",
+    );
+    expect(salleStack).toContain("Transformer");
+    expect(salleStack).not.toContain("Named tools include");
+    const estateStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does EstateFolio use?") }],
+      "",
+      "What stack does EstateFolio use?",
+    );
+    expect(estateStack).toContain("transformer reads");
+    expect(estateStack).toContain("ST-GNN");
+    const codopticStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does Codoptic use?") }],
+      "",
+      "What stack does Codoptic use?",
+    );
+    expect(codopticStack).toContain("generate or review code");
+    expect(codopticStack).toContain("DSL");
+    const skyledgeStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does SkyLedge use?") }],
+      "",
+      "What stack does SkyLedge use?",
+    );
+    expect(skyledgeStack).toContain("FastAPI");
+    expect(skyledgeStack).toContain("LSTM");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
