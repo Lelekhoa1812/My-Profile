@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import profile from "../../content/profile.json";
+import { withArchive } from "./archive";
 import { recordCard } from "./card";
 
 describe("recordCard", () => {
@@ -16,5 +17,11 @@ describe("recordCard", () => {
     expect(card).toContain("## Hugging Face models");
     expect(card).not.toContain("Initech");
     expect(card).not.toContain("Headings:");
+  });
+
+  it("leaves the full archive out of the prompt", () => {
+    const card = recordCard(profile.facts, withArchive(profile.sections));
+    expect(card).toContain("## Public repositories");
+    expect(card).not.toContain("Browser path puzzle");
   });
 });
