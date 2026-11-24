@@ -1049,6 +1049,14 @@ describe("displayAnswer", () => {
     );
     expect(sttLimit).toContain("faster-whisper");
     expect(sttLimit).toContain("not a packaged production app");
+    const codopticIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Codoptic?") }],
+      "",
+      "What is Codoptic?",
+    );
+    expect(codopticIs.startsWith("Open-source coding agent.") || codopticIs.includes("Open-source coding agent.")).toBe(true);
+    expect(codopticIs).toContain("DSL diagrams");
+    expect(codopticIs).toContain("generate or review code");
     const meterProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the water-meter scanner?") }],
       "",

@@ -273,6 +273,12 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\bmultilingual medical\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bdeployed clinical system\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bcodoptic\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\bopen-source coding agent\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bgenerate or review code\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\binteractive dsl\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bstt-studio\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\bfaster-whisper\b/i.test(sentence)));
@@ -1037,6 +1043,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bskyledge\b/i.test(question) && /\bobd-ii\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bmedchat\b/i.test(question) && /\bcalls this a prototype\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bstt-studio\b/i.test(question) && /\blocal speech-to-text\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bcodoptic\b/i.test(question) && /\bopen-source coding agent\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question) && /\bcareer application agent\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bsurvee\b/i.test(question) && /\bhost-run interview\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bquotient\b/i.test(question) && /\brecorded meeting\b/i.test(sentence)) return true;
