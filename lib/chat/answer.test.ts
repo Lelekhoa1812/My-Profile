@@ -2307,6 +2307,15 @@ describe("displayAnswer", () => {
     expect(salleIs).toContain("computer vision");
     expect(salleIs).toContain("Transformer");
     expect(salleIs).not.toContain("download count");
+    const salleDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e do?") }],
+      "",
+      "What does Sall-e do?",
+    );
+    expect(salleDoes).toContain("oceanic garbage");
+    expect(salleDoes).toContain("computer vision");
+    expect(salleDoes).toContain("object tracking");
+    expect(salleDoes).not.toContain("download count");
     const golfIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the golf scorecard scanner?") }],
       "",

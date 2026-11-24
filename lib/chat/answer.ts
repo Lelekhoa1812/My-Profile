@@ -1701,6 +1701,19 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bwhat does\b/i.test(question) && /\bsall-?e\b/i.test(question) && /\bdo\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\boceanic garbage\b/i.test(sentence)),
+      sentences.find((sentence) => /\bcomputer vision\b/i.test(sentence)),
+      sentences.find((sentence) => /\bobject tracking\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bwhat does\b/i.test(question) && /\bestatefolio\b/i.test(question) && /\bdo\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
