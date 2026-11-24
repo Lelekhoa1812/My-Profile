@@ -2374,6 +2374,14 @@ describe("displayAnswer", () => {
     );
     expect(medchatLimit).toContain("prototype");
     expect(medchatLimit).toContain("deployed clinical system");
+    const medchatDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does MedChat do?") }],
+      "",
+      "What does MedChat do?",
+    );
+    expect(medchatDoes).toContain("prototype");
+    expect(medchatDoes).toContain("citation checks");
+    expect(medchatDoes).toContain("deployed clinical system");
     const sttLimit = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is stt-studio?") }],
       "",
