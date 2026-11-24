@@ -478,7 +478,15 @@ describe("displayAnswer", () => {
     );
     expect(intro).toContain("AI Software Engineer");
     expect(availability).toContain("July 2026");
+    expect(availability).toContain("AI Software Engineer");
     expect(availability.toLowerCase()).not.toContain("available");
+    const spoken = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Vietnamese (native), English (fluent), Mandarin (intermediate)" }] } }],
+      "",
+      "What languages does he speak?",
+    );
+    expect(spoken).toContain("Vietnamese");
+    expect(spoken).toContain("Mandarin");
     expect(cases).not.toContain("5 million");
     const synthetic = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many synthetic cases does the MedSwin line cite?") }],

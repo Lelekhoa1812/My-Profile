@@ -226,6 +226,7 @@ function secondPeriod(outputs: readonly Record<string, unknown>[], blockSentence
 }
 
 function siblingWork(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string): string {
+  if (/\bavailable\b/i.test(question)) return "";
   if (!/\b(do|did|work|role)\b/i.test(question) || /\b(bertscore|percent|preview|score|cut|pilot|ocr|stack|many)\b/i.test(question)) return "";
   const employer = namedEmployer(question);
   if (!employer) return "";
@@ -263,7 +264,8 @@ function mentions(sentence: string, word: string): boolean {
 }
 
 function askWords(question: string): string[] {
-  return [...new Set(question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 3 && !ASK_STOP.has(word)))];
+  const words = [...new Set(question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 3 && !ASK_STOP.has(word)))];
+  return /\bavailable\b/i.test(question) ? words.filter((word) => word !== "work") : words;
 }
 
 function askScore(question: string, sentence: string, words: readonly string[]): number {
@@ -368,7 +370,7 @@ function periodSentence(answer: string, block: string): string {
 function isLabel(sentence: string): boolean {
   if (isToolList(sentence)) return false;
   if (/\b(use|uses|run|runs|led|cut)\b/.test(sentence) && /[A-Z]/.test(sentence)) return false;
-  return sentence.replace(/[.]+$/, "").split(/\s+/).filter((word) => /^[a-z]{4,}/.test(word)).length === 0;
+  return sentence.replace(/[()]/g, " ").replace(/[.]+$/, "").split(/\s+/).filter((word) => /^[a-z]{4,}/.test(word)).length === 0;
 }
 
 function isToolList(sentence: string): boolean {
