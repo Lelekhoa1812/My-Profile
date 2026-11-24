@@ -401,6 +401,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bsurvee\b/.test(text) && /\bdatabases?\b/.test(text), ids: ["project-survee"] },
     { when: /\broster\b/.test(text) && /\bdatabases?\b/.test(text), ids: ["project-roster"] },
     { when: /\bprophet\b/.test(text) && /\bdatabases?\b/.test(text), ids: ["project-prophet"] },
+    { when: /\bwater[\s-]?meter\b/.test(text) && /\bdatabases?\b/.test(text), ids: ["project-meter", "role-vietdan-ml"] },
     { when: /\bdatabases?\b/.test(text) && Boolean(askedProductSectionIds(text)?.length), ids: askedProductSectionIds(text) ?? [] },
     { when: /\bdatabases?\b/.test(text) && /\b(use|uses|used)\b/.test(text) && !namedEmployer(text) && !/\bvector\b/.test(text) && !askedProductSectionIds(text), ids: ["project-roster", "project-survee", "project-prophet", "project-ericsson", "project-triage"] },
     { when: /\b(study|university|bachelor|degree|education)\b/.test(text) && !/\bresearch\b/.test(text), ids: ["education-swinburne"] },
@@ -435,6 +436,8 @@ function saleIds(text: string): string[] {
   ];
   const chosen = named.flatMap(([test, id]) => (test.test(text) ? [id] : []));
   if (chosen.length > 0) return chosen;
+  const product = askedProductSectionIds(text);
+  if (product) return product;
   if (/\bhai[\s-]?au\b/.test(text) && /\b(student|platform|manager|enrollment)\b/.test(text)) return ["role-hai-au"];
   return ["project-shipped", "project-skyledge", "project-writing", "project-roster", "project-golf"];
 }

@@ -2143,6 +2143,20 @@ describe("displayAnswer", () => {
       "What vector database does triage use?",
     );
     expect(triageVector).toContain("FAISS");
+    const estateBuyer = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who bought EstateFolio?") }],
+      "",
+      "Who bought EstateFolio?",
+    );
+    expect(estateBuyer).toContain("transformer");
+    expect(estateBuyer).not.toContain("VHandicap");
+    const meterDatabase = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What database does the water meter use?") }],
+      "",
+      "What database does the water meter use?",
+    );
+    expect(meterDatabase).toContain("meter photos");
+    expect(meterDatabase).not.toContain("MariaDB");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
