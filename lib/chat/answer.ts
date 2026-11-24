@@ -286,7 +286,7 @@ function placeAnswer(question: string, outputs: readonly Record<string, unknown>
 }
 
 function sameTimeAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\b(same time|overlap)\b/i.test(question)) return "";
+  if (!/\b(same time|overlaps?)\b/i.test(question)) return "";
   const lines: string[] = [];
   for (const output of outputs) {
     if (!Array.isArray(output.sections)) continue;
@@ -300,7 +300,7 @@ function sameTimeAnswer(question: string, outputs: readonly Record<string, unkno
       if (!lines.includes(line)) lines.push(line);
     }
   }
-  return lines.slice(0, 3).join(" ");
+  return lines.slice(0, 4).join(" ");
 }
 
 function toolUseAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {

@@ -1222,6 +1222,15 @@ describe("displayAnswer", () => {
     );
     expect(pedigreeBefore).toContain("March 2026");
     expect(pedigreeBefore).toContain("December 2025");
+    const overlapsLab = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What overlaps with the MedSwin lab?") }],
+      "",
+      "What overlaps with the MedSwin lab?",
+    );
+    expect(overlapsLab).toContain("Harry");
+    expect(overlapsLab).toContain("Mizco");
+    expect(overlapsLab).toContain("Teqar");
+    expect(overlapsLab).toContain("August 2025");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",

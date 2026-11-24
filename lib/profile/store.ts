@@ -129,6 +129,24 @@ const ROLE_SPANS: readonly { key: string; start: number; end: number; ids: reado
   { key: "alta", start: 202205, end: 202301, ids: ["role-alta"] },
 ];
 
+function spanMonths(value: number): number {
+  return Math.floor(value / 100) * 12 + (value % 100);
+}
+
+function overlappingRoleIds(text: string): string[] | undefined {
+  if (!/\boverlaps?\b/.test(text)) return undefined;
+  const named = ROLE_SPANS.filter((span) => text.includes(span.key) && !span.nested);
+  if (named.length !== 1) return undefined;
+  const anchor = named[0];
+  if (!anchor) return undefined;
+  const others = ROLE_SPANS.filter((span) => !span.nested && span.ids.every((id) => !anchor.ids.includes(id)) && span.start < anchor.end && span.end > anchor.start)
+    .map((span) => ({ id: span.ids[0] ?? "", months: spanMonths(Math.min(span.end, anchor.end)) - spanMonths(Math.max(span.start, anchor.start)) }))
+    .filter((item) => item.id.length > 0)
+    .sort((left, right) => right.months - left.months);
+  const ids = [...anchor.ids, ...others.map((item) => item.id)].filter((id, index, list) => list.indexOf(id) === index).slice(0, 4);
+  return ids.length > 1 ? ids : undefined;
+}
+
 function adjacentRoleIds(text: string) {
   const before = text.match(/\bbefore\s+(?:the\s+)?([a-z]+)\b/);
   const after = text.match(/\bafter\s+(?:the\s+)?([a-z]+)\b/);
@@ -162,7 +180,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
       };
     }
   }
-  if (namedRoles.length >= 2 && /\b(same time|overlap|both)\b/.test(text)) {
+  if (namedRoles.length >= 2 && /\b(same time|overlaps?|both)\b/.test(text)) {
     const roles = pool.filter((item) => item.section.sourceType === "role" && namedRoles.some((employer) => employer.section(item.section.sectionId, item.title)));
     if (roles.length >= 2) {
       return {
@@ -193,11 +211,13 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     }
   }
   const adjacent = adjacentRoleIds(text);
+  const overlapping = overlappingRoleIds(text);
   const city = ["melbourne", "perth", "ho chi minh", "binh duong"].find((name) => text.includes(name));
   const cityRoles = city && /\b(jobs|roles)\b/.test(text)
     ? pool.filter((item) => item.section.sourceType === "role" && (item.body.includes(city) || item.title.includes(city))).map((item) => item.section.sectionId)
     : [];
   const sets = [
+    { when: Boolean(overlapping?.length), ids: overlapping ?? [] },
     { when: cityRoles.length > 0, ids: cityRoles },
     { when: /\bnam\b/.test(text) && /\b(two|difference)\b/.test(text) && /\broles?\b/.test(text), ids: ["role-nam-a-ai", "role-nam-a-software"] },
     { when: /\bnam\b/.test(text) && /\b(first|earlier)\b/.test(text), ids: ["role-nam-a-software", "role-nam-a-ai"] },
