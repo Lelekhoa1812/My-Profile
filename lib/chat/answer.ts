@@ -28,7 +28,20 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
     .filter((output): output is Record<string, unknown> => typeof output === "object" && output !== null);
   if (outputs.some((output) => output.reason === "unavailable")) return UNREAD;
   if (outputs.length > 0 && outputs.every((output) => output.found === false)) return SILENCE;
-  return dropSourceTail(modelText, sourceHeadings(outputs));
+  return dropSourceTail(dropRecordTalk(modelText), sourceHeadings(outputs));
+}
+
+export function dropRecordTalk(text: string): string {
+  const sentences = text.trim().split(/(?<=[.!])\s+/);
+  const kept = sentences.filter((sentence) => !narratesRecord(sentence));
+  const next = kept.join(" ").trim();
+  return next || text.trim();
+}
+
+function narratesRecord(sentence: string): boolean {
+  return /\bthe record (lists|says|shows|states|reads|notes|gives)\b/i.test(sentence)
+    || /\bfield reads\b/i.test(sentence)
+    || /\b(title|page) field\b/i.test(sentence);
 }
 
 function sourceHeadings(outputs: readonly Record<string, unknown>[]): Set<string> {

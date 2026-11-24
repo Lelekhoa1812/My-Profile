@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { displayAnswer, dropSourceTail, keptSentence, MISSED, shownAnswer, SILENCE, turnToStore, UNREAD } from "./answer";
+import { displayAnswer, dropRecordTalk, dropSourceTail, keptSentence, MISSED, shownAnswer, SILENCE, turnToStore, UNREAD } from "./answer";
 
 describe("displayAnswer", () => {
   it("replaces a boast when every tool missed", () => {
@@ -66,6 +66,17 @@ describe("displayAnswer", () => {
       "Axis waits for approval. (Axion Solutions)",
     );
     expect(text).toBe("Axis waits for approval.");
+  });
+
+  it("drops a sentence that narrates the record and keeps the answer", () => {
+    const text = dropRecordTalk(
+      "Liam's job title is Senior AI Software Engineer. The record lists the current title as Senior AI Software Engineer. The page title field reads AI Software Engineer.",
+    );
+    expect(text).toBe("Liam's job title is Senior AI Software Engineer.");
+  });
+
+  it("keeps the silence sentence", () => {
+    expect(dropRecordTalk(SILENCE)).toBe(SILENCE);
   });
 
   it("keeps the model sentence when a tool found a section", () => {
