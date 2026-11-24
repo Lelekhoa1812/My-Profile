@@ -1435,6 +1435,14 @@ describe("displayAnswer", () => {
     );
     expect(pedigreeModels).toContain("matrix factorization");
     expect(pedigreeModels).toContain("Dosage Theory");
+    const golfModels = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the golf scanner use?") }],
+      "",
+      "What models does the golf scanner use?",
+    );
+    expect(golfModels).toContain("YOLOv8");
+    expect(golfModels).toContain("MNIST");
+    expect(golfModels).toContain("Qwen2.5-VL");
     const labBuild = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
       "",

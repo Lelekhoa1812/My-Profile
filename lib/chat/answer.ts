@@ -381,6 +381,10 @@ function modelAnswer(question: string, outputs: readonly Record<string, unknown>
     const ensemble = sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bensemble\b/i.test(sentence));
     if (ensemble) return ensemble;
   }
+  if (/\bmodels?\b/i.test(question) && /\bgolf\b/i.test(question)) {
+    const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /yolo|vietocr|mnist|qwen/i.test(sentence) && sentence.split(/\s+/).length <= 16));
+    if (lines.length > 0) return [...new Set(lines)].slice(0, 4).join(" ");
+  }
   if (!/\bwhat\b/i.test(question) || !/\bmodels?\b/i.test(question) || !/\b(use|uses)\b/i.test(question) || namedEmployer(question)) return "";
   const product = question.match(/\b(triage|golf|prophet|poptech|ericsson)\b/i)?.[1];
   const lines = sectionBlocks(outputs).flatMap((block) => {
