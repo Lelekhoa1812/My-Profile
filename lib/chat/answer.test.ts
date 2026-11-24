@@ -714,6 +714,23 @@ describe("displayAnswer", () => {
     expect(openAIIs).toContain("Azure OpenAI");
     expect(openAIIs).toContain("OpenAI-compatible");
     expect(openAIIs).not.toContain("Next.js");
+    const scoringIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is scoring?") }],
+      "",
+      "What is scoring?",
+    );
+    expect(scoringIs).toContain("review gates");
+    expect(scoringIs).toContain("scores and exports");
+    expect(scoringIs).toContain("role fit");
+    expect(scoringIs).toContain("submission");
+    expect(scoringIs).toContain("does not score people");
+    const automationIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is automation?") }],
+      "",
+      "What is automation?",
+    );
+    expect(automationIs).toContain("capital-markets automation");
+    expect(automationIs).toContain("does not rename");
     const webCrawl = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is web crawling?") }],
       "",

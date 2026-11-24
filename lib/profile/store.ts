@@ -340,6 +340,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bmnist\b/.test(text) && /\b(do|does|use|uses|used|for)\b/.test(text), ids: ["project-golf", "project-hf-models"] },
     { when: /\bnim\b/.test(text) && /\b(use|uses|used|for|do|does)\b/.test(text) && !namedEmployer(text), ids: ["project-adhd", "project-router"] },
     { when: /\bopenai\b/.test(text) && !/\bazure\b/.test(text) && /\b(is|do|does|use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["role-harry-senior", "project-router"] },
+    { when: /\bscoring\b/.test(text) && !/\b(bertscore|survee|golf|cva|writing|people)\b/.test(text) && !namedEmployer(text), ids: ["role-axion", "project-axion-workflows", "project-cva", "project-writing", "project-survee"] },
     { when: /\breranker\b/.test(text) && /\b(how many|documents?)\b/.test(text) && !/\b(use|uses|used)\b/.test(text), ids: ["project-medswin", "role-swinburne-research"] },
     { when: /\bevaluat/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["role-harry-senior", "project-sp500", "role-mizco"] },
     { when: /\bvalidat/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["role-harry-senior", "project-sp500", "role-mizco"] },

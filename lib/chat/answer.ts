@@ -96,7 +96,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(focusClause(question, sentence), blockSentences) : "";
     if (!named || chosen.includes(named) || chosen.length >= cap || otherRepo(question, named)) return;
-    if (/the resume also uses the phrase/i.test(named) && !/\bphrase\b/i.test(question) && !/\bcapital-markets\b/i.test(question) && !/\bcapital markets\b/i.test(question)) return;
+    if (/the resume also uses the phrase/i.test(named) && !/\b(phrase|automation|capital-markets)\b/i.test(question) && !/\bcapital markets\b/i.test(question)) return;
     const shortFact = named.split(/\s+/).length >= 3 && /\b(use|uses|run|runs|led|cut)\b/.test(named) && words.some((word) => word.length >= 4 && mentions(named, word));
     const shortUse = /\b(do|did)\b/i.test(question) && named.split(/\s+/).length >= 3 && (/\buses\b/i.test(named) || /\b(sold|acquired)\b/i.test(named));
     if (named.split(/\s+/).length < 4 && !isDecision(question, named) && !shortFact && !shortUse) return;
@@ -766,6 +766,16 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(limit);
     }
   }
+  if (/\bautomation\b/i.test(question)) {
+    const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const phrase = lines.find((sentence) => /\bcapital-markets automation\b/i.test(sentence));
+    if (phrase) {
+      chosen.length = 0;
+      cap = 2;
+      push(phrase);
+      push(lines.find((sentence) => /\bdoes not rename\b/i.test(sentence)));
+    }
+  }
   if (/\bopenai\b/i.test(question) && !/\bazure openai\b/i.test(question)) {
     const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bopenai\b/i.test(sentence) && !exposesGap(sentence) && sentence.split(/\s+/).length <= 28);
     if (lines.length > 0) {
@@ -1164,9 +1174,9 @@ function reviewedAnswer(question: string, outputs: readonly Record<string, unkno
 }
 
 function scoreAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\b(scored|scoring)\b/i.test(question) || /\bbertscore\b/i.test(question)) return "";
-  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bscores\b/i.test(sentence) && sentence.split(/\s+/).length <= 24));
-  return [...new Set(lines)].slice(0, 2).join(" ");
+  if (!/\b(scored|scoring)\b/i.test(question) || /\bbertscore\b/i.test(question) || /\b(survee|golf|cva|writingjourney|writing coach|people)\b/i.test(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bscor(?:e|es|ing)\b/i.test(sentence) && !/scorecard|dataset/i.test(sentence) && !exposesGap(sentence) && sentence.split(/\s+/).length <= 28));
+  return [...new Set(lines)].slice(0, 5).join(" ");
 }
 
 function measureAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
