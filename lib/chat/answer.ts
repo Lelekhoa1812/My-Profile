@@ -104,7 +104,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     : blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence)).slice(0, 2);
   const extra = siblingWork(outputs, blockSentences, question);
   const withExtra = extra && !body.includes(extra) ? [...body, extra] : body;
-  return keptOffer(question, shown, withIdentity(question, withPeriod(withExtra, blockSentences, outputs), blockSentences));
+  const timed = withIdentity(question, withPeriod(withExtra, blockSentences, outputs), blockSentences);
+  const second = secondPeriod(outputs, blockSentences, question, timed);
+  return keptOffer(question, shown, second ? `${timed} ${second}` : timed);
 }
 
 function countedSentence(question: string, sentences: readonly string[], words: readonly string[]): string | undefined {
@@ -180,6 +182,20 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
 
 function employmentPeriod(sentences: readonly string[]): string {
   return sentences.find((sentence) => /\b20\d{2}\b.*\b(20\d{2}|present)\b/i.test(sentence) && sentence.split(/\s+/).length <= 18) ?? "";
+}
+
+function secondPeriod(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string, timed: string): string {
+  if (!/\b(do|did|work|role)\b/i.test(question) || /\b(bertscore|percent|preview|score|cut|pilot|ocr|stack|many)\b/i.test(question)) return "";
+  const employer = namedEmployer(question);
+  if (!employer) return "";
+  const current = blockSentences.join(" ");
+  for (const block of sectionBlocks(outputs)) {
+    const sentences = plainSentences(block);
+    if (sentences.join(" ") === current || !employerMentioned(employer, block)) continue;
+    const period = employmentPeriod(sentences);
+    if (period && !timed.includes(period)) return period;
+  }
+  return "";
 }
 
 function siblingWork(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string): string {

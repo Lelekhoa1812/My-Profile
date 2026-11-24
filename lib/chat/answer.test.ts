@@ -675,6 +675,7 @@ describe("displayAnswer", () => {
     expect(nam).toContain("VietOCR");
     expect(nam).toContain("REST");
     expect(nam).toContain("2024");
+    expect(nam).toContain("2023");
     const aitc = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did AITC build?") }],
       "",
