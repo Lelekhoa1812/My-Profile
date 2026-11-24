@@ -750,6 +750,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(limit);
     }
   }
+  if (/\bguardrails?\b/i.test(question)) {
+    const guard = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bguardrails?\b/i.test(sentence));
+    if (guard) {
+      chosen.length = 0;
+      cap = 1;
+      push(guard);
+    }
+  }
   if (/\bwater[\s-]?meter\b/i.test(question)) {
     const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const read = /\bread/i.test(question) ? lines.find((sentence) => /\breads meter photos\b/i.test(sentence)) : undefined;

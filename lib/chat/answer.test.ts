@@ -3355,6 +3355,13 @@ describe("displayAnswer", () => {
     );
     expect(meterWhere).toContain("Deployment used Jetson and AWS");
     expect(meterWhere).not.toContain("not a named public app");
+    const guardrails = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for guardrails?") }],
+      "",
+      "What does he use for guardrails?",
+    );
+    expect(guardrails).toContain("safety guardrails");
+    expect(guardrails).not.toContain("LoRA");
     const embeddings = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the mate-selection engine use for embeddings?") }],
       "",
