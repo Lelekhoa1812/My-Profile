@@ -1,12 +1,18 @@
 import { describe, expect, it } from "vitest";
 import profile from "../../content/profile.json";
-import { lookupFacts, searchSections } from "./store";
+import { lookupFacts, readSection, searchSections } from "./store";
 
 describe("profile store", () => {
   it("returns a resume contact fact by key", () => {
     const result = lookupFacts(profile.facts, { key: "email" });
     expect(result.found).toBe(true);
     if (result.found) expect(result.facts[0]?.value).toBe("liamkl.work@gmail.com");
+  });
+
+  it("reads a section by its heading as well as its id", () => {
+    const result = readSection(profile.sections, "Axion Solutions");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sectionId).toBe("role-axion");
   });
 
   it("does not invent an employer that is absent", () => {

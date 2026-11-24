@@ -40,7 +40,10 @@ export function listSections(sections: readonly ProfileSection[], sourceType?: s
 }
 
 export function readSection(sections: readonly ProfileSection[], sectionId: string) {
-  const section = sections.find((item) => item.sectionId === sectionId && (item.visibility ?? "public") === "public");
+  const wanted = sectionId.trim().toLowerCase();
+  const visible = sections.filter((item) => (item.visibility ?? "public") === "public");
+  const section = visible.find((item) => item.sectionId === sectionId)
+    ?? visible.find((item) => item.heading.toLowerCase() === wanted || item.sectionId.toLowerCase() === wanted);
   if (!section) return { found: false as const };
   return {
     found: true as const,

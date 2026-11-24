@@ -52,7 +52,7 @@ export async function POST(request: Request): Promise<Response> {
     toolOrder: ["lookup_fact", "list_sections", "read_section", "search_sections"],
     prepareStep: ({ stepNumber }) => {
       if (stepNumber === 0) return { toolChoice: "required" as const };
-      if (stepNumber >= 4) return { toolChoice: "none" as const };
+      if (stepNumber >= 3) return { toolChoice: "none" as const, activeTools: [] };
       return {};
     },
   });
