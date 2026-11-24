@@ -747,6 +747,13 @@ describe("displayAnswer", () => {
       "What does LangSmith cover at Axion?",
     );
     expect(langsmith).toContain("traces");
+    const gates = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What approval gates govern Axion execution?") }],
+      "",
+      "What approval gates govern Axion execution?",
+    );
+    expect(gates).toContain("audit trails");
+    expect(gates).not.toContain("message drafting");
     expect(langsmith).not.toContain("delivery scheduling");
     expect(afterHarry).toContain("Axis");
     expect(coach).toContain("rewrite");

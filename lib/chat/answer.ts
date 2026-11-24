@@ -98,7 +98,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   if (!picked) push(unique);
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
-  if (/\b(do|did|build|built|work|role)\b/i.test(question)) {
+  if (/\b(do|did|build|built|role)\b/i.test(question) || /\b(his|her) work\b/i.test(question)) {
     push(blockSentences.find((sentence) => isToolList(sentence)));
     if (!chosen.some((sentence) => /\b(led|built|uses|used|owned|owns|covers|percent|python|ocr)\b/i.test(sentence))) {
       push(workSentence(blockSentences));
@@ -110,6 +110,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     const answered = words.some((word) => !new RegExp(`\\b${word}\\b`, "i").test(item.sentence) && mentions(item.sentence, word) && chosen.some((sentence) => new RegExp(`\\b${word}\\b`, "i").test(sentence)));
     if (picked && item.score < 2 && !exact) continue;
     if (!picked && unique && item.score < 2 && !exact && answered) continue;
+    if (!picked && unique && words.every((word) => !mentions(item.sentence, word) || mentions(unique, word))) continue;
     push(item.sentence);
   }
   const body = chosen.length > 0
@@ -269,7 +270,7 @@ function askScore(question: string, sentence: string, words: readonly string[]):
   if (exposesGap(sentence)) return 0;
   if (isLabel(sentence) && !isDecision(question, sentence) && !words.some((word) => mentions(sentence, word))) return 0;
   const hits = words.filter((word) => mentions(sentence, word)).length;
-  const boundary = (/\baxis\b/i.test(question) || /\b(write|preview|approv)/i.test(question)) && /\bseparate\b/i.test(sentence) && /\baxis\b/i.test(sentence) ? 3 : 0;
+  const boundary = (/\baxis\b/i.test(question) || /\b(write|preview)\b/i.test(question) || /\bapprove\b/i.test(question)) && /\bseparate\b/i.test(sentence) && /\baxis\b/i.test(sentence) ? 3 : 0;
   return hits + boundary + (isDecision(question, sentence) ? 4 : 0);
 }
 
