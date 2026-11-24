@@ -179,7 +179,7 @@ export const lanes: { id: Lane; label: string }[] = [
 ];
 
 export const roles: Role[] = [
-  { id: "axion", sectionId: "role-axion", employer: "Axion Solutions", title: "Senior AI Software Engineer", place: null, start: "2026-07", end: null, lane: "full-time", outcome: "Ships governed workflows for outreach, investor search, and portfolio reporting.", overlap: "Current role. Overlaps Teqar." },
+  { id: "axion", sectionId: "role-axion", employer: "Axion Solutions", title: "Senior AI Software Engineer", place: null, start: "2026-07", end: null, lane: "full-time", outcome: "Ships governed workflows for startup scouting, investor search, and portfolio reporting.", overlap: "Current role. Overlaps Teqar." },
   { id: "teqar", sectionId: "role-teqar", employer: "Teqar", title: "AI Development Consultant", place: "Perth", start: "2025-05", end: null, lane: "consulting", outcome: "Maps client workflows and turns the gaps into delivery plans.", overlap: "Concurrent consulting, still open." },
   { id: "harry-senior", sectionId: "role-harry-senior", employer: "Harry the Hirer", title: "Senior AI Engineer", place: "Melbourne", start: "2025-12", end: "2026-07", lane: "full-time", outcome: "Cut repetitive lookup and drafting about 40% in targeted pilot workflows.", overlap: "Overlaps Mizco, Teqar, and Swinburne." },
   { id: "swinburne-research", sectionId: "role-swinburne-research", employer: "Swinburne University", title: "Researcher", place: "Melbourne", start: "2025-08", end: "2026-07", lane: "research", outcome: "Reached 86% BERTScore on MedMCQA, PubMedQA, and MedQuAD.", overlap: "Concurrent research." },

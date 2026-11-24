@@ -8,6 +8,8 @@ describe("public facts", () => {
     expect(site).toContain('title: "Senior AI Software Engineer"');
     expect(layout).toContain("Dang Khoa Le · Senior AI Software Engineer");
     expect(site).toContain("FoodFlow is the multi-tenant ERP");
+    expect(site).toContain("startup scouting, investor search, and portfolio reporting");
+    expect(site).not.toContain("workflows for outreach");
   });
 
   it("uses the product stills, not a stock stand-in", () => {
