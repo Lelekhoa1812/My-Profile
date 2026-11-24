@@ -75,6 +75,7 @@ export function lookupFacts(facts: readonly ProfileFact[], input: { key?: string
 export function listSections(sections: readonly ProfileSection[], sourceType?: string) {
   const sectionsOut = sections
     .filter((section) => (section.visibility ?? "public") === "public")
+    .filter((section) => !section.sectionId.startsWith("archive-"))
     .filter((section) => !sourceType || section.sourceType === sourceType)
     .map((section) => ({
       sectionId: section.sectionId,
