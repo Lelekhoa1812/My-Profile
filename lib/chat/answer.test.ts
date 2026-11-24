@@ -206,6 +206,17 @@ describe("displayAnswer", () => {
     expect(detailed).not.toContain("person approves");
   });
 
+  it("adds the preview when a long write answer leaves it out", () => {
+    const axion = profile.sections.find((item) => item.sectionId === "role-axion");
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: axion?.text ?? "" }] } }],
+      "He will not let a model write into the system of record without a person. The employer is Axion Solutions and the product is Axis. The work covers the operating model, the strategy, and the vision for the platform across the current role.",
+    );
+    expect(text).toContain("preview");
+    expect(text).toMatch(/approv/i);
+    expect(text).not.toContain("Axion system");
+  });
+
   it("keeps a normal sentence start when the offer names a recorded detail", () => {
     const text = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Water-meter scanner. Deployment used Jetson and AWS. The resume records about 35 percent less manual meter processing." }] } }],

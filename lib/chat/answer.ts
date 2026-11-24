@@ -47,7 +47,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
   const cleaned = text;
   if (outputs.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(outputs), evidenceBlocks(outputs));
   if (!text.trim() && outputs.length > 0) return recordedOutcome(outputs) || (cleaned.trim() ? holdAnswer() : "");
-  if (text.trim() && outputs.length > 0 && (text.split(/\s+/).length < 22 || lacksMeasuredFigure(text, outputs))) text = withSectionProof(text, outputs);
+  if (text.trim() && outputs.length > 0 && (text.split(/\s+/).length < 22 || lacksMeasuredFigure(text, outputs) || lacksApproval(text, outputs))) text = withSectionProof(text, outputs);
   return text;
 }
 
@@ -63,14 +63,26 @@ function withSectionProof(answer: string, outputs: readonly Record<string, unkno
     .filter((sentence) => sentence && !exposesGap(sentence))
     .map(plainSentence)
     .filter((sentence) => sentence.split(/\s+/).length > 3 && !isLabel(sentence));
+  const approval = candidates.filter((sentence) => missingApproval(answer, sentence));
   const measured = candidates.filter((sentence) => missingMeasured(answer, sentence));
   const technical = candidates.filter((sentence) => technicalProof(answer, sentence) && !otherProduct(answer, sentence));
-  const extras = [...measured, ...(technical.length > 0 ? technical : candidates.filter((sentence) => newProof(answer, sentence)))]
+  const extras = [...approval, ...measured, ...(technical.length > 0 ? technical : candidates.filter((sentence) => newProof(answer, sentence)))]
     .filter((sentence, index, list) => list.indexOf(sentence) === index)
     .slice(0, 3);
   const period = periodSentence(answer, block);
   const chosen = period && !extras.some((sentence) => /\b20\d{2}\b/.test(sentence)) ? [...extras, period] : extras;
   return [answer, ...chosen].filter(Boolean).join(" ");
+}
+
+function lacksApproval(answer: string, outputs: readonly Record<string, unknown>[]): boolean {
+  if (/\b(preview|approv)/i.test(answer)) return false;
+  const block = sectionBlocks(outputs)[0] ?? "";
+  return /\bpreview\b/i.test(block) && /\bapprov/i.test(block);
+}
+
+function missingApproval(answer: string, sentence: string): boolean {
+  if (/\b(preview|approv)/i.test(answer)) return false;
+  return /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence);
 }
 
 function lacksMeasuredFigure(answer: string, outputs: readonly Record<string, unknown>[]): boolean {
