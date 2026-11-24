@@ -879,6 +879,13 @@ describe("displayAnswer", () => {
       "What datasets did MedSwin use?",
     );
     expect(medswinDatasets).toContain("MedQuAD");
+    const poptechUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he use at PopTech?") }],
+      "",
+      "What did he use at PopTech?",
+    );
+    expect(poptechUse).toContain("TFT");
+    expect(poptechUse).toContain("DQN");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
