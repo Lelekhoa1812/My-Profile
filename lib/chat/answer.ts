@@ -388,11 +388,15 @@ function secondPeriod(outputs: readonly Record<string, unknown>[], blockSentence
   const current = blockSentences.join(" ");
   for (const block of sectionBlocks(outputs)) {
     const sentences = plainSentences(block);
-    if (sentences.join(" ") === current || !employerMentioned(employer, block)) continue;
+    if (sentences.join(" ") === current || !employerMentioned(employer, block) || askedOnlyHere(question, current, block)) continue;
     const period = employmentPeriod(sentences);
     if (period && !timed.includes(period)) return period;
   }
   return "";
+}
+
+function askedOnlyHere(question: string, current: string, other: string): boolean {
+  return askWords(question).some((word) => word.length >= 5 && mentions(current, word) && !mentions(other, word));
 }
 
 function siblingWork(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string): string {
@@ -403,7 +407,7 @@ function siblingWork(outputs: readonly Record<string, unknown>[], blockSentences
   const current = blockSentences.join(" ");
   for (const block of sectionBlocks(outputs)) {
     const sentences = plainSentences(block);
-    if (sentences.join(" ") === current || !employerMentioned(employer, block)) continue;
+    if (sentences.join(" ") === current || !employerMentioned(employer, block) || askedOnlyHere(question, current, block)) continue;
     const work = workSentence(sentences);
     if (work && !current.includes(work)) return work;
   }

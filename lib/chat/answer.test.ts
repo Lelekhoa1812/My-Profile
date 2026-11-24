@@ -1044,6 +1044,20 @@ describe("displayAnswer", () => {
     );
     expect(cvaApprove).toContain("person approves");
     expect(cvaApprove).not.toContain("FoodFlow");
+    const planner = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the planner do at Harry?") }],
+      "",
+      "What does the planner do at Harry?",
+    );
+    expect(planner).toContain("Planner");
+    expect(planner).not.toContain("mate-selection");
+    const namWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Nam A?") }],
+      "",
+      "What did he do at Nam A?",
+    );
+    expect(namWork).toContain("VietOCR");
+    expect(namWork).toContain("REST");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
