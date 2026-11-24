@@ -1402,6 +1402,31 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !/\b(axion|axis)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/\bled\b/i, 7);
   }
+  if (/\bextract/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|vietocr|golf|nam|harry|passport)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /document extraction/i.test(sentence)),
+      sentences.find((sentence) => /structured extraction/i.test(sentence)),
+      sentences.find((sentence) => /Text extraction uses VietOCR/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 0) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\bdocuments?\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|read|reranker|how many)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /document extraction/i.test(sentence)),
+      sentences.find((sentence) => /passport and remittance documents/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bbuild/i.test(question) && !/\bagents?\b/i.test(question) && !namedEmployer(question) && !/\b(lab|5g|axion|mizco|poptech)\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
@@ -1932,6 +1957,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bagents?\b/i.test(question) && /\b(build|built)\b/i.test(question)) return joined;
   if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bbuild/i.test(question) && !namedEmployer(question) && !/\b(lab|5g)\b/i.test(question)) return joined;
+  if (/\bextract/i.test(question) && !namedEmployer(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;

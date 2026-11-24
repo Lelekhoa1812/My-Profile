@@ -734,6 +734,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   const asked = query.toLowerCase();
   if (/\bcity\b/.test(asked) && /\b(it|that)\b/.test(asked) && !namedEmployer(asked)) return { found: false as const };
   if (/\bpapers\b/.test(asked)) return { found: false as const };
+  if (/\b(do|does|did) it present\b/.test(asked)) return { found: false as const };
   if (/\bpublish/.test(asked) && /\b(he|him|his|written|article|journal)\b/.test(asked) && !/\b(quotient|statement|recording)\b/.test(asked)) return { found: false as const };
   const pinned = pinnedSections(visible, query);
   if (pinned) return pinned;

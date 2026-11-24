@@ -1764,6 +1764,29 @@ describe("displayAnswer", () => {
     );
     expect(buildIt).toContain("builds a people list");
     expect(buildIt).toContain("specialist medical agents");
+    const extractIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it extract?") }],
+      "",
+      "What does it extract?",
+    );
+    expect(extractIt).toContain("document extraction");
+    expect(extractIt).toContain("structured extraction");
+    expect(extractIt).toContain("Text extraction uses VietOCR");
+    expect(extractIt).not.toContain("December 2025");
+    const documentIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it document?") }],
+      "",
+      "What does it document?",
+    );
+    expect(documentIt).toContain("document extraction");
+    expect(documentIt).toContain("remittance documents");
+    const presentIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it present?") }],
+      "",
+      "What does it present?",
+    );
+    expect(presentIt).not.toContain("to present");
+    expect(presentIt).not.toContain("July 2026");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",
