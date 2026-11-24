@@ -579,6 +579,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(size);
     }
   }
+  if (/\bapprov/i.test(question) && /\b(harry|hirer)\b/i.test(question)) {
+    cap = 2;
+    const loop = blockSentences.find((sentence) => /\bstays in the loop\b/i.test(sentence));
+    if (loop) {
+      chosen.length = 0;
+      push(loop);
+    }
+  }
   if (/\bharry\b/i.test(question) && /\b(authenticat\w*|msal)\b/i.test(question)) {
     cap = 2;
     const auth = blockSentences.find((sentence) => /\bmsal\b/i.test(sentence));

@@ -1007,6 +1007,13 @@ describe("displayAnswer", () => {
     );
     expect(axisStack).toContain("LangChain");
     expect(axisStack).toContain("LangGraph");
+    const harryApproval = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What approval does Harry require?") }],
+      "",
+      "What approval does Harry require?",
+    );
+    expect(harryApproval).toContain("stays in the loop");
+    expect(harryApproval).not.toContain("Human approval gates");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
