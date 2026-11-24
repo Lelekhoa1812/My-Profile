@@ -237,6 +237,17 @@ describe("displayAnswer", () => {
     expect(text).toContain("Would you like");
   });
 
+  it("does not attach the BERTScore to the synthetic case count", () => {
+    const medswin = profile.sections.find((item) => item.sectionId === "role-swinburne-research");
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: medswin?.text ?? "" }] } }],
+      "The lab recorded 86 percent BERTScore on 5 million synthetic cases.",
+    );
+    expect(text).toContain("86 percent");
+    expect(text).toContain("MedMCQA");
+    expect(text).not.toContain("BERTScore on 5 million");
+  });
+
   it("does not give the uptime figure to the pilot cut", () => {
     const harry = profile.sections.find((item) => item.sectionId === "role-harry-senior");
     const text = displayAnswer(
