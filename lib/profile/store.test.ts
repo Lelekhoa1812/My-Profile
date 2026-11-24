@@ -97,6 +97,14 @@ describe("profile store", () => {
     }
   });
 
+  it("answers a production-release question from the sale and the public Space", () => {
+    const result = searchSections(profile.sections, "What is not a production release?");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections.map((section) => section.sectionId)).toEqual(["project-shipped", "project-hf-models"]);
+    }
+  });
+
   it("answers a ship-to-production question from the shipped-work section", () => {
     const result = searchSections(profile.sections, "What does he ship to production?");
     expect(result.found).toBe(true);

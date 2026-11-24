@@ -1622,6 +1622,19 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\brelease\b/i.test(question) && !/pre-release/i.test(question) && !namedEmployer(question) && !/\b(cva|foodflow|skyledge|golf|roster|writingjourney|axis|meter|scanner)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /sale or an acquisition is not a production release/i.test(sentence)),
+      sentences.find((sentence) => /public Space is not a production release/i.test(sentence)),
+      sentences.find((sentence) => /not for a release/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bin production\b/i.test(question) && !/\b(foodflow|skyledge|meter|scanner)\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
@@ -2193,6 +2206,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bocr\b/i.test(question) && /\b(use|uses|used|for)\b/i.test(question) && !/\b(scorecard|golf)\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bseparate\b/i.test(question) && /\bfoodflow\b/i.test(question)) return joined;
   if (/\bin production\b/i.test(question) && !/\b(foodflow|skyledge|meter|scanner)\b/i.test(question)) return joined;
+  if (/\brelease\b/i.test(question) && !/pre-release/i.test(question) && !namedEmployer(question) && !/\b(cva|foodflow|skyledge|golf|roster|writingjourney|axis|meter|scanner)\b/i.test(question)) return joined;
   if (/\b(cite|explain|train|guard|embed|validat\w*|recogni|recommend|graph|score|trace|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv\w*|rank|track|own|rout|turn|check|gate|version|call|remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
   if (/\bagents?\b/i.test(question) && /\b(build|built)\b/i.test(question)) return joined;
   if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !namedEmployer(question)) return joined;

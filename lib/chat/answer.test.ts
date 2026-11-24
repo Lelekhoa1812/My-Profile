@@ -1796,6 +1796,16 @@ describe("displayAnswer", () => {
     expect(inProduction).toContain("not for a release");
     expect(inProduction).not.toContain("the record does not");
     expect(inProduction).not.toContain("July 2026");
+    const notRelease = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is not a production release?") }],
+      "",
+      "What is not a production release?",
+    );
+    expect(notRelease).toContain("sale or an acquisition is not a production release");
+    expect(notRelease).toContain("public Space is not a production release");
+    expect(notRelease).toContain("not for a release");
+    expect(notRelease).not.toContain("the record does not");
+    expect(notRelease).not.toContain("July 2026");
     const versionIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it version?") }],
       "",
