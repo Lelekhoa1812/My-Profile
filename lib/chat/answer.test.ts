@@ -1787,6 +1787,15 @@ describe("displayAnswer", () => {
     expect(writeGate).toContain("govern execution");
     expect(writeGate).not.toContain("confidence gates");
     expect(writeGate).not.toContain("review gates");
+    const inProduction = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is in production?") }],
+      "",
+      "What is in production?",
+    );
+    expect(inProduction).toContain("only named live app");
+    expect(inProduction).toContain("not for a release");
+    expect(inProduction).not.toContain("the record does not");
+    expect(inProduction).not.toContain("July 2026");
     const versionIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it version?") }],
       "",
