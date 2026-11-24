@@ -871,6 +871,24 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(title);
     }
   }
+  const askedTool = question.match(/^what is ([a-z0-9.+#-]{4,})\??$/i)?.[1];
+  if (askedTool) {
+    const token = askedTool.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const named = askedTool === "ReAct"
+      ? /(?<![\w-])ReAct(?![a-zA-Z])/
+      : askedTool.toLowerCase() === "react"
+        ? /(?<![\w-])React(?![a-zA-Z])/
+        : new RegExp(`(?<![\\w-])${token}(?![a-z])`, "i");
+    const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => {
+      const length = sentence.split(/\s+/).length;
+      return named.test(sentence) && !/named tools include/i.test(sentence) && !/^repository:/i.test(sentence) && !exposesGap(sentence) && !isLabel(sentence) && length >= 4 && length <= 24;
+    });
+    if (lines.length > 0 && !chosen.some((sentence) => named.test(sentence))) {
+      chosen.length = 0;
+      cap = 5;
+      for (const sentence of [...new Set(lines)].slice(0, 5)) push(sentence);
+    }
+  }
   const openSentences = blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence));
   const workSentences = openSentences.filter((sentence) => /\b(uses|use|led|reads|covers|owns|turns|trains|answers)\b/i.test(sentence));
   const shortUses = workSentences.filter((sentence) => /\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 6);

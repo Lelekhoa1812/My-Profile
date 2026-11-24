@@ -671,6 +671,34 @@ describe("displayAnswer", () => {
     );
     expect(caviarIs).toContain("Black Caviar");
     expect(caviarIs).toContain("lineage");
+    const apolloIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Apollo?") }],
+      "",
+      "What is Apollo?",
+    );
+    expect(apolloIs).toContain("Apollo");
+    expect(apolloIs).toContain("Tavily");
+    const langsmithIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is LangSmith?") }],
+      "",
+      "What is LangSmith?",
+    );
+    expect(langsmithIs).toContain("LangSmith and OpenTelemetry cover the traces");
+    const msalIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is MSAL?") }],
+      "",
+      "What is MSAL?",
+    );
+    expect(msalIs).toContain("MSAL authentication");
+    expect(msalIs).not.toContain("40 percent");
+    const fastapiIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is FastAPI?") }],
+      "",
+      "What is FastAPI?",
+    );
+    expect(fastapiIs).toContain("FastAPI streaming");
+    expect(fastapiIs).toContain("Raspberry Pi");
+    expect(fastapiIs).toContain("faster-whisper");
     const nimUsed = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Nvidia NIM used for?") }],
       "",
