@@ -2248,6 +2248,20 @@ describe("displayAnswer", () => {
       "What corpus does the lab use?",
     );
     expect(labCorpus).toContain("clinical records and PubMed");
+    const spRead = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What data does the S&P forecast read?") }],
+      "",
+      "What data does the S&P forecast read?",
+    );
+    expect(spRead).toContain("SEC filings");
+    expect(spRead).not.toContain("Kafka");
+    const harryDocuments = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What documents does Harry read?") }],
+      "",
+      "What documents does Harry read?",
+    );
+    expect(harryDocuments).toContain("document extraction");
+    expect(harryDocuments).toContain("Pydantic");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
