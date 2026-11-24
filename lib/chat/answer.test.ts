@@ -1137,6 +1137,7 @@ describe("displayAnswer", () => {
     expect(draftSend).toContain("does not send email");
     expect(draftSend).not.toContain("export does not");
     expect(draftSend).not.toContain("persona");
+    expect(draftSend).not.toContain("same host");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",
