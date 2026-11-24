@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || scoreAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -371,6 +371,12 @@ function percentFigureAnswer(question: string, outputs: readonly Record<string, 
   if (!percent || !/\bfigure\b/i.test(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => sentence.includes(percent) && /\bpercent\b/i.test(sentence) && sentence.split(/\s+/).length <= 28));
   return [...new Set(lines)].slice(0, 3).join(" ");
+}
+
+function scoreAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\b(scored|scoring)\b/i.test(question) || /\bbertscore\b/i.test(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bscores\b/i.test(sentence) && sentence.split(/\s+/).length <= 24));
+  return [...new Set(lines)].slice(0, 2).join(" ");
 }
 
 function measureAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
@@ -711,6 +717,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\b(train|trained|training)\b/i.test(question) && /\bfine-tuning used\b/i.test(sentence)) return true;
   if (/\bdeployed\b/i.test(question) && /\bjetson\b/i.test(sentence)) return true;
   if (/\b(founder|founded)\b/i.test(question) && /\bfounder\b/i.test(sentence)) return true;
+  if (/\bpartners?\b/i.test(question) && /\bpartner work\b/i.test(sentence)) return true;
   if (/\bmeasure\b/i.test(question) && /\b(drift|impute|quality)\b/i.test(sentence)) return true;
   if (/\befficiency\b/i.test(question) && /\befficiency\b/i.test(sentence)) return true;
   if (/\b(good at|strengths)\b/i.test(question) && /\bgroups the stack\b/i.test(sentence)) return true;

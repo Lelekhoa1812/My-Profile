@@ -1122,6 +1122,20 @@ describe("displayAnswer", () => {
       "What has he founded?",
     );
     expect(foundedWork).toContain("founder");
+    const aitcPartners = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What partners has he named?") }],
+      "",
+      "What partners has he named?",
+    );
+    expect(aitcPartners).toContain("Nvidia");
+    expect(aitcPartners).not.toContain("CVA");
+    const scoredWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he scored?") }],
+      "",
+      "What has he scored?",
+    );
+    expect(scoredWork).toContain("role fit");
+    expect(scoredWork).toContain("submission");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",
