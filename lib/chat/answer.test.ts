@@ -690,6 +690,25 @@ describe("displayAnswer", () => {
       "What stack does Alta use?",
     );
     expect(altaStack).toContain("Kubernetes");
+    const waits = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Axis wait for?") }],
+      "",
+      "What does Axis wait for?",
+    );
+    expect(waits).toMatch(/approve/);
+    const syntheticCases = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many synthetic cases did MedSwin use?") }],
+      "",
+      "How many synthetic cases did MedSwin use?",
+    );
+    expect(syntheticCases).toContain("5 million");
+    expect(syntheticCases.indexOf("5 million")).toBeLessThan(syntheticCases.indexOf("500,000") === -1 ? syntheticCases.length : syntheticCases.indexOf("500,000"));
+    const drift = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Ericsson use to detect drift?") }],
+      "",
+      "What does Ericsson use to detect drift?",
+    );
+    expect(drift).toContain("population stability index");
     const rosterStack = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the roster app use?") }],
       "",

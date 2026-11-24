@@ -245,13 +245,17 @@ function runSentence(question: string, sentences: readonly string[]): string | u
   return platforms.find((sentence) => /\b(run|running|deploy)\b/i.test(sentence)) ?? platforms[0];
 }
 
+function longestAsked(sentence: string, words: readonly string[]): number {
+  return words.reduce((best, word) => mentions(sentence, word) && word.length > best ? word.length : best, 0);
+}
+
 function countedSentence(question: string, sentences: readonly string[], words: readonly string[]): string | undefined {
   if (!/\bhow many\b/i.test(question)) return undefined;
   const ranked = sentences
     .filter((sentence) => /\b\d/.test(sentence))
     .map((sentence) => ({ sentence, hits: words.filter((word) => mentions(sentence, word)).length }))
     .filter((item) => item.hits > 0)
-    .sort((left, right) => right.hits - left.hits);
+    .sort((left, right) => right.hits - left.hits || longestAsked(right.sentence, words) - longestAsked(left.sentence, words));
   return ranked[0]?.sentence;
 }
 
@@ -404,6 +408,7 @@ function namedSubject(sentence: string, blockSentences: readonly string[]): stri
 function isDecision(question: string, sentence: string): boolean {
   if (/\bocr\b/i.test(question)) return /\b\w*ocr\b/i.test(sentence);
   if (/\b(write|show|preview|approv)\b/i.test(question) && /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
+  if (/\bwait/i.test(question) && /\bwaits?\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
   if (/\bnot\b/i.test(question) && /\bdoes not\b/i.test(sentence)) {
     const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 4 && !["does", "that", "this", "what", "with"].includes(word));
     return words.some((word) => mentions(sentence, word));
@@ -418,11 +423,15 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\brank\b/i.test(question) && /\branking\b/i.test(sentence)) return true;
   if (/\bspeech\b/i.test(question) && /\bwhisper\b/i.test(sentence)) return true;
   if (/\bforecast\b/i.test(question) && /\bforecast(?:s|ing)?\b/i.test(sentence)) return true;
-  if (/\bdetect\b/i.test(question) && /\bdetects?\b/i.test(sentence)) return true;
+  if (/\bdrift\b/i.test(question) && /\bstability\b/i.test(sentence)) return true;
+  if (/\bdetect\b/i.test(question) && !/\bdrift\b/i.test(question) && /\bdetects?\b/i.test(sentence)) return true;
   if (/\barchive\b/i.test(question) && /\bprompt-me\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
-  if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence) && question.toLowerCase().split(/[^a-z0-9]+/).some((word) => word.length >= 5 && mentions(sentence, word))) return true;
+  if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence)) {
+    const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 5 && !["cases", "people", "using", "about"].includes(word));
+    return words.some((word) => mentions(sentence, word));
+  }
   if (/\b(poptech|electricity)\b/i.test(question) && /\btft\b/i.test(sentence)) return true;
   if (/\bstack\b/i.test(question) && isToolList(sentence)) return true;
   if (/\b(use|used|operate|operates)\b/i.test(question) && (/\bthe stack is\b/i.test(sentence) || isToolList(sentence))) return true;
