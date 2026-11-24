@@ -100,7 +100,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (named.split(/\s+/).length < 4 && !isDecision(question, named) && !shortFact && !shortUse) return;
     chosen.push(named);
   };
-  if (orgLine && /\bwhat is\b/i.test(question) && !/\borg\b/i.test(question)) {
+  if (orgLine && /\b(what is|tell me about)\b/i.test(question) && !/\borg\b/i.test(question)) {
     push(workSentence(blockSentences));
     push(blockSentences.find((sentence) => /\bextends\b/i.test(sentence)));
   } else push(picked);
@@ -123,7 +123,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     const answered = words.some((word) => !new RegExp(`\\b${word}\\b`, "i").test(item.sentence) && mentions(item.sentence, word) && chosen.some((sentence) => new RegExp(`\\b${word}\\b`, "i").test(sentence)));
     if (/\b(code|coding|programming)\b/i.test(question) && /\b(vietnamese|mandarin|fluent)\b/i.test(item.sentence)) continue;
     if (/the resume also uses the phrase/i.test(item.sentence) && !/\bphrase\b/i.test(question)) continue;
-    if (orgLine && /\bwhat is\b/i.test(question) && !/\borg\b/i.test(question) && /hugging face org is/i.test(item.sentence)) continue;
+    if (orgLine && /\b(what is|tell me about)\b/i.test(question) && !/\borg\b/i.test(question) && /hugging face org is/i.test(item.sentence)) continue;
     if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (picked && item.score < 2 && !exact) continue;
     if (!picked && unique && item.score < 2 && !exact && answered) continue;

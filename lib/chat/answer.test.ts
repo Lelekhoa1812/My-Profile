@@ -1115,6 +1115,13 @@ describe("displayAnswer", () => {
       "What does the pedigree engine explain with an LLM?",
     );
     expect(explained).toContain("LLM explanations");
+    const medvietAbout = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Tell me about MedVietAI.") }],
+      "",
+      "Tell me about MedVietAI.",
+    );
+    expect(medvietAbout).toContain("founder");
+    expect(medvietAbout).not.toMatch(/^The Hugging Face org is MedVietAI/);
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
