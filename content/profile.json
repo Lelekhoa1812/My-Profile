@@ -19,7 +19,7 @@
       "heading": "Axion Solutions",
       "sourceType": "role",
       "aliases": ["Axion", "Axis", "FoodFlow"],
-      "text": "Axion Solutions. Senior AI Software Engineer, July 2026 to present. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. Axis is a separate AI product for Studio copilot, data insight, and message drafting. It calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write. Axis does not own FoodFlow's database. The resume also uses the phrase capital-markets automation for investment and growth workflows. That phrase does not rename FoodFlow."
+      "text": "Axion Solutions. Senior AI Software Engineer, July 2026 to present. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. Axis is a separate AI product for Studio copilot, data insight, and message drafting. It calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write. Axis does not own FoodFlow's database. The resume also uses the phrase capital-markets automation for investment and growth workflows. That phrase does not rename FoodFlow. The word production in that list is a business module, not a release."
     },
     {
       "sectionId": "project-axion-workflows",
@@ -27,6 +27,13 @@
       "sourceType": "project",
       "aliases": ["startup outreach", "investor scouting", "portfolio reporting"],
       "text": "Axion workflow engine. A governed graph platform in the Engine monorepo, separate from FoodFlow. The recipes are startup scouting, investor scouting, and portfolio reporting. Startup scouting searches a list and public profiles, then scores and exports. That export does not send a message. Investor scouting builds a people list. One recipe starts from a saved persona. Portfolio reporting writes company updates. The draft recipe does not send email. A separate recipe emails founders. The record does not call those recipes capital-markets products. Axis can draft on the same host. Axis does not own the Engine database or FoodFlow's data."
+    },
+    {
+      "sectionId": "project-shipped",
+      "heading": "Shipped work",
+      "sourceType": "project",
+      "aliases": ["ship", "production", "live app", "deployed"],
+      "text": "Shipped work. FoodFlow uses the word production for a business module, not for a release. The record does not say FoodFlow is in a customer production environment. Named live or sold work: CVA has a live app, HA Manager was sold, WritingJourney was sold, the roster app was sold, the golf scanner was sold, and SkyLedge was acquired."
     },
     {
       "sectionId": "role-harry-senior",

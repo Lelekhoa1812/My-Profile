@@ -15,6 +15,12 @@ describe("profile store", () => {
     if (result.found) expect(result.facts[0]?.value).toBe("Senior AI Software Engineer");
   });
 
+  it("answers a ship-to-production question from the shipped-work section", () => {
+    const result = searchSections(profile.sections, "What does he ship to production?");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections[0]?.sectionId).toBe("project-shipped");
+  });
+
   it("finds the current role when the question asks for the title", () => {
     const result = searchSections(profile.sections, "current title", "role");
     expect(result.found).toBe(true);
