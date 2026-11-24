@@ -989,6 +989,20 @@ describe("displayAnswer", () => {
       "What is the Ericsson 5G digital twin?",
     );
     expect(ericssonName).toContain("tower telemetry");
+    const namA = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Nam A Bank?") }],
+      "",
+      "What is Nam A Bank?",
+    );
+    expect(namA).toContain("VietOCR");
+    expect(namA).toContain("REST");
+    const pythera = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Pythera?") }],
+      "",
+      "What is Pythera?",
+    );
+    expect(pythera).toContain("Clara");
+    expect(pythera).toContain("400,000");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");

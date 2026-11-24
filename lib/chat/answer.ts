@@ -125,7 +125,18 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (!picked && unique && words.every((word) => !mentions(item.sentence, word) || mentions(unique, word))) continue;
     push(item.sentence);
   }
-  if (/\bwhat is\b/i.test(question) && chosen.length === 1 && chosen[0] && !/\b(is|are|led|uses|use|reads|covers|owns|built|turns|takes)\b/i.test(chosen[0])) push(workSentence(blockSentences));
+  if (/\bwhat is\b/i.test(question) && chosen.length > 0 && !chosen.some((sentence) => isDecision(question, sentence)) && chosen.every((sentence) => !/\b(is|are|led|uses|use|used|reads|covers|owns|built|turns|takes|trains|advises)\b/i.test(sentence))) {
+    chosen.length = 0;
+    push(workSentence(blockSentences));
+    const employer = namedEmployer(question);
+    if (employer) {
+      for (const block of sectionBlocks(outputs)) {
+        if (!employerMentioned(employer, block) || plainSentences(block).join(" ") === blockSentences.join(" ")) continue;
+        push(workSentence(plainSentences(block)));
+      }
+    }
+    if (chosen.length < 2) push(blockSentences.find((sentence) => /\bpercent\b/i.test(sentence)));
+  }
   const body = chosen.length > 0
     ? chosen
     : blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence)).slice(0, 2);
@@ -362,6 +373,7 @@ function employmentPeriod(sentences: readonly string[]): string {
 function workSentence(sentences: readonly string[]): string | undefined {
   const content = sentences.filter((sentence) => !isLabel(sentence) && !employmentPeriod([sentence]) && sentence.split(/\s+/).length >= 4);
   return content.find((sentence) => /\b(led|trains|built|covers|owns)\b/i.test(sentence))
+    ?? content.find((sentence) => /^[A-Za-z0-9][\w.-]* is an?\b/.test(sentence))
     ?? content.find((sentence) => /\breads\b/i.test(sentence) && /\b(telemetry|meter|bandwidth|photos)\b/i.test(sentence))
     ?? content.find((sentence) => /\b(uses|use|used|percent|ocr)\b/i.test(sentence))
     ?? content[0];
