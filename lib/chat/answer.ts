@@ -232,6 +232,16 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\bfault prediction\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\braspberry pi\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bmedchat\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\bmultilingual medical\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bdeployed clinical system\b/i.test(sentence)));
+  }
+  if (/\bwhat is\b/i.test(question) && /\bstt-studio\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\bfaster-whisper\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bpackaged production app\b/i.test(sentence)));
+  }
   if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question)) {
     push(blockSentences.find((sentence) => /\b(jetson|aws)\b/i.test(sentence) && /\b(deploy|deployment|used)\b/i.test(sentence)));
   }
@@ -954,6 +964,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bgolf\b/i.test(question) && /\bsold to vhandicap\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\broster\b/i.test(question) && /\bsold to mj industrial\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bskyledge\b/i.test(question) && /\bobd-ii\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bmedchat\b/i.test(question) && /\bcalls this a prototype\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bstt-studio\b/i.test(question) && /\blocal speech-to-text\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question) && /\bcareer application agent\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bsurvee\b/i.test(question) && /\bhost-run interview\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bquotient\b/i.test(question) && /\brecorded meeting\b/i.test(sentence)) return true;

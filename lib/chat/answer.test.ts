@@ -979,6 +979,20 @@ describe("displayAnswer", () => {
     expect(skyledgeProduct).toContain("OBD-II");
     expect(skyledgeProduct).toContain("SkyLedge Kenya");
     expect(skyledgeProduct).toContain("FastAPI");
+    const medchatLimit = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is MedChat?") }],
+      "",
+      "What is MedChat?",
+    );
+    expect(medchatLimit).toContain("prototype");
+    expect(medchatLimit).toContain("deployed clinical system");
+    const sttLimit = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is stt-studio?") }],
+      "",
+      "What is stt-studio?",
+    );
+    expect(sttLimit).toContain("faster-whisper");
+    expect(sttLimit).toContain("not a packaged production app");
     const meterProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the water-meter scanner?") }],
       "",
