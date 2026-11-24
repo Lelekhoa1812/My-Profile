@@ -1103,6 +1103,12 @@ describe("displayAnswer", () => {
       "What did he do at Sall-e?",
     );
     expect(salleWork).toContain("localise");
+    const funded = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who funded MedVietAI?") }],
+      "",
+      "Who funded MedVietAI?",
+    );
+    expect(funded).toContain("National Data Association");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
