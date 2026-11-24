@@ -681,10 +681,18 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     }
   }
   if (/\buse[sd]?\b/i.test(question) && !namedEmployer(question) && !/\bmcp\b/i.test(question)) {
-    const tool = question.match(/\buse[sd]?\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1];
+    const tool = question.match(/\buse[sd]?\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1] ?? question.match(/\buse[sd]?\s+for\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1];
     if (tool) {
-      const named = new RegExp(`\\b${tool.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
-      const lines = [...new Set(sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => named.test(sentence) && !/named tools include/i.test(sentence)))];
+      const named = tool.toLowerCase() === "ocr" ? /\b\w*ocr\b/i : new RegExp(`\\b${tool.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      const seen = new Set<string>();
+      const lines: string[] = [];
+      for (const sentence of sectionBlocks(outputs).flatMap((item) => plainSentences(item))) {
+        if (!named.test(sentence) || /named tools include/i.test(sentence) || /^Repository:/i.test(sentence) || sentence.split(/\s+/).length < 4) continue;
+        const marker = sentence.toLowerCase().match(/\b(?:vietocr|paddleocr)\b/)?.[0];
+        if (marker && seen.has(marker)) continue;
+        if (marker) seen.add(marker);
+        if (!lines.includes(sentence)) lines.push(sentence);
+      }
       if (lines.length >= 2) {
         chosen.length = 0;
         cap = 3;

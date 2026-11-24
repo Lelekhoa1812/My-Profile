@@ -1056,6 +1056,13 @@ describe("displayAnswer", () => {
     );
     expect(dockerFor).toContain("MSAL");
     expect(dockerFor).toContain("Kubernetes");
+    const ocrUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for OCR?") }],
+      "",
+      "What does he use for OCR?",
+    );
+    expect(ocrUse).toContain("VietOCR");
+    expect(ocrUse).toContain("document extraction");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
