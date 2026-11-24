@@ -2453,6 +2453,22 @@ describe("displayAnswer", () => {
     expect(skyledgeDoes).toContain("Fault prediction");
     expect(skyledgeDoes).toContain("FastAPI");
     expect(skyledgeDoes).not.toContain("acquired");
+    const skyledgeAcquires = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does SkyLedge acquire?") }],
+      "",
+      "What does SkyLedge acquire?",
+    );
+    expect(skyledgeAcquires).toContain("SkyLedge Kenya");
+    expect(skyledgeAcquires).toContain("acquired");
+    expect(skyledgeAcquires).not.toContain("OBD-II");
+    const vietdanRecords = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does VietDan record?") }],
+      "",
+      "What does VietDan record?",
+    );
+    expect(vietdanRecords).toContain("35 percent");
+    expect(vietdanRecords).toContain("manual work");
+    expect(vietdanRecords).not.toContain("meter processing");
     const medchatLimit = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is MedChat?") }],
       "",

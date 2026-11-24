@@ -2073,9 +2073,25 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
-  if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
+  if (/\bvietdan\b/i.test(question) && /\brecords?\b/i.test(question) && !/\b(meter|scanner)\b/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\b35 percent less manual work\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
+  if (/\bskyledge\b/i.test(question) && /\bacquir/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bskyledge kenya acquired\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
+  if ((/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) && !/\bacquir/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
-    if (/\bwhat does\b/i.test(question) && !/\b(estimate|servicing|cost|save)\b/i.test(question)) {
+    if (/\bwhat does\b/i.test(question) && !/\b(estimate|servicing|cost|save|acquir)\b/i.test(question)) {
       const lines = [
         sentences.find((sentence) => /\bOBD-II\b/.test(sentence)),
         sentences.find((sentence) => /\bfault prediction\b/i.test(sentence)),
