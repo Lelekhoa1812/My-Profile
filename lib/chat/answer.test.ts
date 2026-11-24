@@ -486,6 +486,18 @@ describe("displayAnswer", () => {
     expect(golfOcr.split(/(?<=[.!])\s+/)[0]).toContain("VietOCR");
     expect(stayed).toContain("MongoDB");
     expect(stack).toContain("Python");
+    const corrections = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What checks the handwritten corrections?") }],
+      "",
+      "What checks the handwritten corrections?",
+    );
+    const bought = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who bought the roster app?") }],
+      "",
+      "Who bought the roster app?",
+    );
+    expect(corrections).toContain("Qwen");
+    expect(bought).toContain("MJ Industrial");
   });
 
   it("keeps the model sentence when a tool found a section", () => {

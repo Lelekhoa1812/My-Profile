@@ -80,7 +80,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(sentence, blockSentences) : "";
     if (!named || chosen.includes(named) || chosen.length >= 2) return;
-    if (named.split(/\s+/).length < 5 && !isDecision(question, named)) return;
+    if (named.split(/\s+/).length < 4 && !isDecision(question, named)) return;
     chosen.push(named);
   };
   push(decision);
@@ -166,7 +166,7 @@ function namedSubject(sentence: string, blockSentences: readonly string[]): stri
 function isDecision(question: string, sentence: string): boolean {
   if (/\bocr\b/i.test(question)) return /\b\w*ocr\b/i.test(sentence);
   if (/\b(write|show|preview|approv)/i.test(question) && /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
-  if (/\b(sell|sold|buyer|purchas|acquir)/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
+  if (/\b(sell|sold|buyer|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
   if (/\b(store|stored|stores|stay|stays)\b/i.test(question) && /\bmongodb\b/i.test(sentence)) return true;
   if (/\bstack\b/i.test(question) && /\bpython\b/i.test(sentence)) return true;
   return /\b(cut|pilot|percent|measure|bert|score|metric)/i.test(question) && /\bpercent\b/i.test(sentence);
