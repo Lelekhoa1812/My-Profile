@@ -1611,6 +1611,73 @@ describe("displayAnswer", () => {
       "What does it degrade?",
     );
     expect(degradeIt).toContain("degradation");
+    const speakIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it speak?") }],
+      "",
+      "What does it speak?",
+    );
+    expect(speakIt).toContain("Speech uses Whisper");
+    expect(speakIt).toContain("speech input");
+    const transformIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it transform?") }],
+      "",
+      "What does it transform?",
+    );
+    expect(transformIt).toContain("AI transformation");
+    expect(transformIt).toContain("temporal fusion transformer");
+    expect(transformIt).toContain("listing text");
+    const maintainIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it maintain?") }],
+      "",
+      "What does it maintain?",
+    );
+    expect(maintainIt).toContain("fleet maintenance");
+    expect(maintainIt).toContain("predictive-maintenance");
+    const reviewIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it review?") }],
+      "",
+      "What does it review?",
+    );
+    expect(reviewIt).toContain("review gates");
+    expect(reviewIt).toContain("uncertain output");
+    expect(reviewIt).toContain("review code");
+    expect(reviewIt).toContain("reviewer agent");
+    const readIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it read?") }],
+      "",
+      "What does it read?",
+    );
+    expect(readIt).toContain("PDF");
+    expect(readIt).toContain("repository");
+    expect(readIt).toContain("tower telemetry");
+    const filterIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it filter?") }],
+      "",
+      "What does it filter?",
+    );
+    expect(filterIt).toContain("metadata filters");
+    expect(filterIt).toContain("safety filters");
+    const approveIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it approve?") }],
+      "",
+      "What does it approve?",
+    );
+    expect(approveIt).toContain("approve a write");
+    expect(approveIt).toContain("person approves");
+    const rankIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it rank?") }],
+      "",
+      "What does it rank?",
+    );
+    expect(rankIt).toContain("temporal ranking");
+    expect(rankIt).toContain("source ranking");
+    const trackIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it track?") }],
+      "",
+      "What does it track?",
+    );
+    expect(trackIt).toContain("object tracking");
+    expect(trackIt).toContain("shift tracking");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",

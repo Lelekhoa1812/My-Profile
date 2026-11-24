@@ -1335,6 +1335,33 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\bdegrad/i.test(question) && !namedEmployer(question)) {
     keepSentences(/degradation/i, 1);
   }
+  if (/\b(speak|speech)\b/i.test(question) && !/\b(use|uses|used|for|whisper|he|him|his|language)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/Speech uses Whisper|speech input/i, 2);
+  }
+  if (/\btransform/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question) && !/\b(estatefolio|ericsson|poptech|s&p|teqar)\b/i.test(question)) {
+    keepSentences(/AI transformation|temporal fusion transformer|transformer reads/i, 4);
+  }
+  if (/\bmaint/i.test(question) && !/\b(fleet|skyledge|ericsson)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/fleet maintenance|predictive-maintenance|OBD-II/i, 3);
+  }
+  if (/\breview/i.test(question) && !/\b(uncertain|reviewed|use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/review gates|reviews uncertain output|review code|reviewer agent/i, 4);
+  }
+  if (/\bread\b/i.test(question) && !/\b(use|uses|used|for|data|documents|meter|water|forecast|estatefolio|reranker)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/pipelines read|reads a repository|reads tower telemetry/i, 3);
+  }
+  if (/\bfilter/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/metadata filters|safety filters/i, 2);
+  }
+  if (/\bapprov/i.test(question) && !/\b(axis|preview|write|cva)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/approve a write|person approves/i, 2);
+  }
+  if (/\brank/i.test(question) && !/\b(download|bert|clara)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/temporal ranking|source ranking/i, 2);
+  }
+  if (/\btrack/i.test(question) && !namedEmployer(question) && !/\b(salle|sall-e|roster)\b/i.test(question)) {
+    keepSentences(/object tracking|shift tracking/i, 2);
+  }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));
@@ -1849,7 +1876,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bforecast/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|read|reads|data|graph)\b/i.test(question)) return joined;
   if (/\bschedul/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bdraft/i.test(question) && !/\b(send|recipe|on|axis|drafted)\b/i.test(question) && !namedEmployer(question)) return joined;
-  if (/\b(cite|explain|train|guard|embed|validat|recogni|recommend|graph|score|trace|retriev|control|fund|detect|plan|navigat|govern|compl|publish|degrad)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
+  if (/\b(cite|explain|train|guard|embed|validat|recogni|recommend|graph|score|trace|retriev|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv|rank|track)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;
