@@ -19,6 +19,11 @@ describe("profile store", () => {
     if (result.found) expect(result.facts[0]?.value).toBe("liamkl.work@gmail.com");
   });
 
+  it("does not return every fact when the kind is absent", () => {
+    const result = lookupFacts(profile.facts, { kind: "role" });
+    expect(result.found).toBe(false);
+  });
+
   it("resolves the current title when the key and the kind are both off", () => {
     const result = lookupFacts(profile.facts, { key: "current_title", kind: "role" });
     expect(result.found).toBe(true);

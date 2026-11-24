@@ -63,6 +63,7 @@ export function lookupFacts(facts: readonly ProfileFact[], input: { key?: string
   if (input.kind) {
     const byKind = rows.filter((fact) => fact.kind === input.kind);
     if (byKind.length > 0) rows = byKind;
+    else if (!input.key) return { found: false as const };
   }
   if (rows.length === 0) return { found: false as const };
   return {
