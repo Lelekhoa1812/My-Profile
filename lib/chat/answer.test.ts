@@ -2365,6 +2365,14 @@ describe("displayAnswer", () => {
     expect(llmFor).toContain("LLM pipeline");
     expect(llmFor).toContain("Gemini");
     expect(llmFor).not.toContain("March 2026");
+    const cvHere = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is a CV here?") }],
+      "",
+      "What is a CV here?",
+    );
+    expect(cvHere).toContain("drafts a CV");
+    expect(cvHere).not.toContain("MedSwin");
+    expect(cvHere).not.toContain("clinical records");
     const routePlan = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e plan after detection?") }],
       "",
