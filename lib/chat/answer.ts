@@ -115,8 +115,10 @@ function newProof(answer: string, sentence: string): boolean {
 
 function recordedOutcome(outputs: readonly Record<string, unknown>[]): string {
   for (const block of sectionBlocks(outputs)) {
-    const sentences = block.split(/(?<=[.!])\s+/).map((sentence) => sentence.trim()).filter((sentence) => sentence && !exposesGap(sentence));
-    const plain = sentences.slice(0, 6).map(plainSentence).filter(Boolean);
+    const sentences = block.split(/(?<=[.!])\s+/).map((sentence) => sentence.trim()).filter((sentence) => sentence && !exposesGap(sentence)).map(plainSentence).filter(Boolean);
+    const lead = sentences.slice(0, 6);
+    const measured = sentences.filter((sentence) => !lead.includes(sentence) && /\b(percent|million)\b/i.test(sentence));
+    const plain = [...lead, ...measured];
     if (plain.length > 0) return plain.join(" ");
   }
   return "";

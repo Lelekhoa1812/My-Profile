@@ -206,6 +206,23 @@ describe("displayAnswer", () => {
     expect(detailed).not.toContain("person approves");
   });
 
+  it("keeps a later measured figure when the model answer is dropped", () => {
+    const harry = profile.sections.find((item) => item.sectionId === "role-harry-senior");
+    const harryText = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: harry?.text ?? "" }] } }],
+      "The record does not list the pilot result.",
+    );
+    expect(harryText).toContain("40 percent");
+    expect(harryText).toContain("Planner");
+    const medswin = profile.sections.find((item) => item.sectionId === "role-swinburne-research");
+    const medswinText = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: medswin?.text ?? "" }] } }],
+      "The record does not list a BERTScore.",
+    );
+    expect(medswinText).toContain("86 percent");
+    expect(medswinText).toContain("5 million");
+  });
+
   it("keeps the Ericsson live-app boundary when the model only names a gap", () => {
     const section = profile.sections.find((item) => item.sectionId === "project-ericsson");
     const text = displayAnswer(
