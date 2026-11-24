@@ -1134,6 +1134,13 @@ describe("displayAnswer", () => {
     );
     expect(rerankerUse).toContain("cross-encoder");
     expect(rerankerUse).toContain("8-million-document");
+    const labRecordScore = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What score did the lab record?") }],
+      "",
+      "What score did the lab record?",
+    );
+    expect(labRecordScore).toContain("86 percent BERTScore");
+    expect(labRecordScore).not.toContain("does not score");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
