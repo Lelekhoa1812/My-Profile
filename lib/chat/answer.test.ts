@@ -263,6 +263,13 @@ describe("displayAnswer", () => {
     expect(text).toContain("preview");
     expect(text).toMatch(/approv/i);
     expect(text).not.toContain("Axion system");
+    const shortWrite = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What will he not let a model write?") }],
+      "",
+      "What will he not let a model write?",
+    );
+    expect(shortWrite).toContain("preview");
+    expect(shortWrite).toMatch(/approv/i);
   });
 
   it("keeps a normal sentence start when the offer names a recorded detail", () => {

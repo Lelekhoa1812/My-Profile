@@ -97,6 +97,15 @@ describe("profile store", () => {
     }
   });
 
+  it("answers a short model-write question from the same approval", () => {
+    const result = searchSections(profile.sections, "What will he not let a model write?");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections[0]?.sectionId).toBe("role-axion");
+      expect(result.sections[0]?.text).toContain("approve a write");
+    }
+  });
+
   it("answers a Free Router share question from the gateway", () => {
     const result = searchSections(profile.sections, "What does Free Router share?");
     expect(result.found).toBe(true);
