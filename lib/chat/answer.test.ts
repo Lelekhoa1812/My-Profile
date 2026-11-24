@@ -205,6 +205,18 @@ describe("displayAnswer", () => {
     expect(detailed).not.toContain("person approves");
   });
 
+  it("does not give Mizco the Harry percent", () => {
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [
+        { text: "Mizco. The resume records about 50 percent less manual review." },
+        { text: "Harry the Hirer. The resume records about 40 percent less repetitive lookup." },
+      ] } }],
+      "Mizco cut manual review by 40 percent.",
+    );
+    expect(text).toContain("50");
+    expect(text).not.toContain("40");
+  });
+
   it("replaces a denied research answer with the research role", () => {
     const text = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Swinburne research. Researcher at Swinburne University of Technology, Melbourne, August 2025 to July 2026. Clinical AI lab of five people. The resume records more than 500,000 curated cases and 86 percent BERTScore on MedMCQA, PubMedQA, and MedQuAD." }] } }],

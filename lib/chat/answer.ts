@@ -45,7 +45,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
     sourceHeadings(outputs),
   ));
   const cleaned = text;
-  if (outputs.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(outputs));
+  if (outputs.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(outputs), evidenceBlocks(outputs));
   if (!text.trim() && outputs.length > 0) return recordedOutcome(outputs) || (cleaned.trim() ? holdAnswer() : "");
   if (text.trim() && outputs.length > 0 && text.split(/\s+/).length < 22) text = withSectionProof(text, outputs);
   return text;
@@ -120,6 +120,17 @@ function recordedOutcome(outputs: readonly Record<string, unknown>[]): string {
     if (plain.length > 0) return plain.join(" ");
   }
   return "";
+}
+
+function evidenceBlocks(outputs: readonly Record<string, unknown>[]): string[] {
+  const blocks = sectionBlocks(outputs);
+  for (const output of outputs) {
+    if (!Array.isArray(output.facts)) continue;
+    for (const fact of output.facts) {
+      if (typeof fact === "object" && fact !== null && "value" in fact && typeof fact.value === "string") blocks.push(fact.value);
+    }
+  }
+  return blocks;
 }
 
 function sectionBlocks(outputs: readonly Record<string, unknown>[]): string[] {
@@ -254,14 +265,17 @@ function collectStrings(value: unknown): string {
   return "";
 }
 
-export function certifySentences(text: string, evidence: string): string {
+const IDENTITY_NAMES = new Set(["dang", "khoa"]);
+
+export function certifySentences(text: string, evidence: string, blocks: readonly string[] = []): string {
   const hay = evidence.toLowerCase();
-  return text.trim().split(/(?<=[.!])\s+/).map((sentence) => keptSentenceForm(sentence, hay)).filter(Boolean).join(" ").trim();
+  const pools = blocks.length > 0 ? blocks : [evidence];
+  return text.trim().split(/(?<=[.!])\s+/).map((sentence) => keptSentenceForm(sentence, hay, pools)).filter(Boolean).join(" ").trim();
 }
 
-function keptSentenceForm(sentence: string, hay: string): string {
+function keptSentenceForm(sentence: string, hay: string, pools: readonly string[]): string {
   if (/liam will answer/i.test(sentence) || /i am liam's portfolio assistant/i.test(sentence)) return sentence;
-  if (!quantitiesInEvidence(sentence, hay)) return "";
+  if (!quantitiesInEvidence(sentence, hay) || !numbersShareOneBlock(sentence, pools)) return "";
   const named = namesInEvidence(sentence, hay) ? sentence : sentenceWithoutUnknownNames(sentence, hay);
   const grounded = withoutJoinedModifier(named, hay);
   if (!grounded || !namesInEvidence(grounded, hay)) return "";
@@ -287,6 +301,19 @@ function sentenceWithoutUnknownNames(sentence: string, hay: string): string {
     if (index === 0 && LEAD_WORDS.has(raw.toLowerCase())) return true;
     return hay.includes(raw.toLowerCase());
   }).join(" ").replace(/\s+/g, " ").trim();
+}
+
+function numbersShareOneBlock(sentence: string, pools: readonly string[]): boolean {
+  const numbers = sentence.match(/\d[\d,]*(?:\.\d+)?/g) ?? [];
+  if (numbers.length === 0) return true;
+  const names = (sentence.match(/\b[A-Z][A-Za-z0-9.+&-]{2,}\b/g) ?? [])
+    .map((name) => name.toLowerCase())
+    .filter((name) => !LEAD_WORDS.has(name) && !IDENTITY_NAMES.has(name));
+  return pools.some((block) => {
+    const digits = block.toLowerCase().replace(/,/g, "");
+    if (!numbers.every((raw) => new RegExp(`(?<![\\d])${raw.replace(/,/g, "")}(?![\\d])`).test(digits))) return false;
+    return names.every((name) => block.toLowerCase().includes(name));
+  });
 }
 
 function quantitiesInEvidence(sentence: string, hay: string): boolean {
