@@ -1838,6 +1838,23 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bdataset\b/i.test(question) && /\b(golf|scorecard)\b/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bpublic datasets\b/i.test(line) && /\bgolf scorecard\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
+  if (/\bvisitor page\b/i.test(question) && /\b(list|public|archive|code)\b/i.test(question)) {
+    const block = sectionBlocks(outputs).find((item) => /\bfull public archive\b/i.test(item));
+    const lines = block ? plainSentences(block) : [];
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 12;
+      for (const sentence of lines) chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
   if (/\bpublic\b/i.test(question) && /\brepositor/i.test(question) && /\bnot\b/i.test(question) && /\bproduction\b/i.test(question)) {
     const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bno production claim\b/i.test(line));
     if (sentence) {
@@ -2793,7 +2810,7 @@ function mentions(sentence: string, word: string): boolean {
 }
 
 function focusClause(question: string, sentence: string): string {
-  if (/\b(archive|repositor|public)\b/i.test(question) || !/no production claim/i.test(sentence)) return sentence;
+  if (/\b(archive|repositor|public)\b/i.test(question) || /\bno production claim\b/i.test(question) || !/no production claim/i.test(sentence)) return sentence;
   const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 4);
   const hit = sentence.split(/,\s+(?:and\s+)?/).find((part) => words.some((word) => part.toLowerCase().includes(word)));
   if (!hit) return sentence;

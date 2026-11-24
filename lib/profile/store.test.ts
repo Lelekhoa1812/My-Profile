@@ -165,6 +165,15 @@ describe("profile store", () => {
     }
   });
 
+  it("answers a golf scorecard dataset question from the Hugging Face datasets", () => {
+    const result = searchSections(profile.sections, "What is the golf scorecard dataset?");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections[0]?.sectionId).toBe("project-hf-models");
+      expect(result.sections[0]?.text).toContain("Vietnamese golf scorecard set");
+    }
+  });
+
   it("answers a public-but-not-production question from the repository list", () => {
     const result = searchSections(profile.sections, "What repositories are public but not production?");
     expect(result.found).toBe(true);

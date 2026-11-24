@@ -191,6 +191,7 @@ function adjacentRoleIds(text: string) {
 }
 
 function askedProductSectionIds(text: string): string[] | undefined {
+  if (/\bdataset\b/.test(text) && /\b(golf|scorecard)\b/.test(text)) return ["project-hf-models"];
   const named: Array<[RegExp, string]> = [
     [/\bestatefolio\b/, "project-estatefolio"],
     [/\bcva\b/, "project-cva"],

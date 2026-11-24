@@ -4614,6 +4614,32 @@ describe("displayAnswer", () => {
     expect(publicRepos).toContain("no production claim");
     expect(publicRepos).not.toContain("business module");
     expect(publicRepos).not.toContain("star counts");
+    const claimRepos = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Which repositories have no production claim?") }],
+      "",
+      "Which repositories have no production claim?",
+    );
+    expect(claimRepos).toContain("prompt-me");
+    expect(claimRepos).toContain("undercut");
+    expect(claimRepos).toContain("StudyBuddy");
+    expect(claimRepos).toContain("Cooking-Tutor");
+    const visitorArchive = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the visitor page list as public code?") }],
+      "",
+      "What does the visitor page list as public code?",
+    );
+    expect(visitorArchive).toContain("full public archive");
+    expect(visitorArchive).toContain("Prophet");
+    expect(visitorArchive).toContain("prompt-me");
+    expect(visitorArchive).not.toContain("star counts");
+    const golfDataset = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the golf scorecard dataset?") }],
+      "",
+      "What is the golf scorecard dataset?",
+    );
+    expect(golfDataset).toContain("Vietnamese golf scorecard set");
+    expect(golfDataset).not.toContain("VHandicap");
+    expect(golfDataset).not.toContain("download count");
     const pedigreeProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the pedigree project?") }],
       "",
