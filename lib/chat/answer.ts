@@ -86,7 +86,12 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   };
   push(unique);
   push(decision);
-  if (/\b(do|did|work|role)\b/i.test(question)) push(blockSentences.find((sentence) => isToolList(sentence)));
+  if (/\b(do|did|build|built|work|role)\b/i.test(question)) {
+    push(blockSentences.find((sentence) => isToolList(sentence)));
+    if (!chosen.some((sentence) => /\b(led|built|uses|owned|owns|covers|percent|python)\b/i.test(sentence))) {
+      push(blockSentences.find((sentence) => /\b(led|built|owned|owns|covers|trains)\b/i.test(sentence)));
+    }
+  }
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   for (const item of ranked) push(item.sentence);
   const body = chosen.length > 0

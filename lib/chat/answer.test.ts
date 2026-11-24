@@ -593,6 +593,12 @@ describe("displayAnswer", () => {
       "What did he do at Alta Media?",
     );
     expect(opencv).toContain("OpenCV");
+    const aitc = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did AITC build?") }],
+      "",
+      "What did AITC build?",
+    );
+    expect(aitc).toContain("industrial assistant");
     expect(altaWork).toContain("Kubernetes");
     expect(golfDetect).toContain("YOLOv8");
     expect(inet).toContain("Obsei");

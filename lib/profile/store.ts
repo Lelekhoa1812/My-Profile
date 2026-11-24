@@ -379,7 +379,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       }, 0);
       return { section, title, body, score, matched };
     })
-    .filter((hit) => hit.matched / terms.length >= 0.5)
+    .filter((hit) => hit.matched / terms.length >= 0.5 || terms.some((term) => term.length >= 5 && (covers(hit.title, term) || covers(hit.body, term)) && pool.filter((item) => covers(item.title, term) || covers(item.body, term)).length === 1))
     .filter((hit) => !hit.section.sectionId.startsWith("archive-") || terms.some((term) => hit.title.includes(term)))
     .sort((left, right) => right.score - left.score);
   if (terms.includes("title") && !namesAnotherRole(pool, terms)) {
