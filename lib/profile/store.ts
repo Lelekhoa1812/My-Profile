@@ -111,16 +111,50 @@ export function readSection(sections: readonly ProfileSection[], sectionId: stri
 
 const BROAD_SECTION_IDS = ["role-axion", "project-shipped"] as const;
 
+const ROLE_SPANS: readonly { key: string; start: number; end: number; ids: readonly string[]; before?: readonly string[]; nested?: boolean }[] = [
+  { key: "axion", start: 202607, end: 999912, ids: ["role-axion"] },
+  { key: "harry", start: 202512, end: 202607, ids: ["role-harry-senior"] },
+  { key: "pedigree", start: 202603, end: 202605, ids: ["role-harry-pedigree"], before: ["role-harry-senior"], nested: true },
+  { key: "mizco", start: 202511, end: 202606, ids: ["role-mizco"] },
+  { key: "teqar", start: 202505, end: 999912, ids: ["role-teqar"] },
+  { key: "medswin", start: 202508, end: 202607, ids: ["role-swinburne-research"] },
+  { key: "research", start: 202508, end: 202607, ids: ["role-swinburne-research"] },
+  { key: "aitc", start: 202506, end: 202511, ids: ["role-aitc"] },
+  { key: "hai", start: 202508, end: 202510, ids: ["role-hai-au"] },
+  { key: "pythera", start: 202501, end: 202509, ids: ["role-pythera"] },
+  { key: "poptech", start: 202505, end: 202507, ids: ["role-poptech"] },
+  { key: "nam", start: 202412, end: 202505, ids: ["role-nam-a-ai"] },
+  { key: "inet", start: 202404, end: 202503, ids: ["role-inet"] },
+  { key: "vietdan", start: 202412, end: 202502, ids: ["role-vietdan-ml"] },
+  { key: "alta", start: 202205, end: 202301, ids: ["role-alta"] },
+];
+
+function adjacentRoleIds(text: string) {
+  const before = text.match(/\bbefore\s+(?:the\s+)?([a-z]+)\b/);
+  const after = text.match(/\bafter\s+(?:the\s+)?([a-z]+)\b/);
+  const word = before?.[1] ?? after?.[1];
+  const key = word === "hirer" ? "harry" : word;
+  const named = ROLE_SPANS.find((span) => span.key === key);
+  if (!named) return undefined;
+  if (before && named.before) return [...named.before];
+  const spans = before
+    ? ROLE_SPANS.filter((span) => span.end <= named.start && span.ids.every((id) => !named.ids.includes(id)) && !span.nested).sort((left, right) => right.end - left.end || right.start - left.start)
+    : ROLE_SPANS.filter((span) => span.start >= named.end && span.ids.every((id) => !named.ids.includes(id))).sort((left, right) => left.start - right.start);
+  const ids = spans.flatMap((span) => span.ids).filter((id, index, list) => list.indexOf(id) === index).slice(0, 3);
+  return ids.length > 0 ? ids : undefined;
+}
+
 function pinnedSections(pool: readonly { section: ProfileSection; title: string; body: string }[], query: string) {
   const text = query.toLowerCase();
+  const adjacent = adjacentRoleIds(text);
   const sets = [
+    { when: Boolean(adjacent?.length), ids: adjacent ?? [] },
     { when: text.includes("axion") && (text.includes("axis") || text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: text.includes("harry") && (text.includes("pilot") || text.includes("cut")), ids: ["role-harry-senior"] },
     { when: (text.includes("medswin") || text.includes("bertscore")) && /\b(bertscore|lab|score)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: text.includes("mizco"), ids: ["role-mizco"] },
     { when: /\bstack\b/.test(text) && !namedEmployer(text), ids: ["skills"] },
     { when: /\bwater[-\s]?meter\b/.test(text) && /\b(sample|measur\w*|productionized|result|model|cut|percent)\b/.test(text), ids: ["project-meter", "role-vietdan-ml"] },
-    { when: /\bbefore (?:harry|the hirer)\b/.test(text), ids: ["role-aitc", "role-hai-au", "role-pythera"] },
     { when: text.includes("harry") && (text.includes("pedigree") || text.includes("earlier") || (text.includes("before") && !/\bbefore (?:harry|the hirer)\b/.test(text))), ids: ["role-harry-pedigree", "role-harry-senior"] },
     { when: text.includes("live") && (text.includes("sale") || text.includes("sales") || text.includes("customer")), ids: ["project-shipped", "project-cva"] },
     { when: text.includes("ship") && text.includes("production"), ids: ["project-shipped", "project-cva"] },

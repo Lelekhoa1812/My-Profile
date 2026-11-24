@@ -194,6 +194,14 @@ describe("profile store", () => {
     const prior = searchSections(profile.sections, "What did he do before Harry the Hirer?");
     expect(prior.found && prior.sections[0]?.sectionId).toBe("role-aitc");
     expect(prior.found && prior.sections.some((section) => section.sectionId === "role-harry-pedigree")).toBe(false);
+    const beforeAxion = searchSections(profile.sections, "What did he do before Axion?");
+    const afterHarry = searchSections(profile.sections, "What did he do after Harry the Hirer?");
+    const beforeMizco = searchSections(profile.sections, "What did he do before Mizco?");
+    const beforePedigree = searchSections(profile.sections, "Where did he work before the pedigree project?");
+    expect(beforeAxion.found && beforeAxion.sections[0]?.sectionId).toBe("role-harry-senior");
+    expect(afterHarry.found && afterHarry.sections[0]?.sectionId).toBe("role-axion");
+    expect(beforeMizco.found && beforeMizco.sections[0]?.sectionId).toBe("role-aitc");
+    expect(beforePedigree.found && beforePedigree.sections[0]?.sectionId).toBe("role-harry-senior");
     const axion = searchSections(profile.sections, "What LangGraph engine does he run at Axion?");
     const harry = searchSections(profile.sections, "What agents did he use at Harry?");
     expect(axion.found && axion.sections.some((section) => section.sectionId === "role-harry-senior")).toBe(false);
