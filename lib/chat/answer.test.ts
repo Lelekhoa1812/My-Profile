@@ -2339,6 +2339,15 @@ describe("displayAnswer", () => {
     expect(cicdUse).toContain("CI/CD");
     expect(cicdUse).toContain("Kubernetes");
     expect(cicdUse).not.toContain("LangChain");
+    const csharpUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use C# for?") }],
+      "",
+      "What does he use C# for?",
+    );
+    expect(csharpUse).toContain("C#");
+    expect(csharpUse).toContain(".NET");
+    expect(csharpUse).toContain("ONNX");
+    expect(csharpUse).not.toContain("LangChain");
     const routePlan = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e plan after detection?") }],
       "",
