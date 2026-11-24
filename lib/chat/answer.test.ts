@@ -589,6 +589,19 @@ describe("displayAnswer", () => {
     );
     expect(production).toContain("business module");
     expect(production).toContain("not for a release");
+    const skyledge = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Is SkyLedge in production?") }],
+      "",
+      "Is SkyLedge in production?",
+    );
+    expect(skyledge).toContain("not a production release");
+    expect(skyledge).toContain("acquired");
+    const rosterLive = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Is the roster app live?") }],
+      "",
+      "Is the roster app live?",
+    );
+    expect(rosterLive).toContain("only named live app");
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],

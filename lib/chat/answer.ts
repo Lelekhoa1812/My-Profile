@@ -59,10 +59,10 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   if (employers) return employers;
   if (!text.trim() && primary.length > 0) {
     const outcome = recordedOutcome(primary);
-    const focused = question.trim() ? focusOnQuestion(outcome, primary, question) : outcome;
+    const focused = question.trim() ? withReleaseLimit(question, focusOnQuestion(outcome, primary, question), outputs) : outcome;
     return focused || (cleaned.trim() ? holdAnswer() : "");
   }
-  if (question.trim() && primary.length > 0 && text.trim()) return focusOnQuestion(text, primary, question);
+  if (question.trim() && primary.length > 0 && text.trim()) return withReleaseLimit(question, focusOnQuestion(text, primary, question), outputs);
   if (text.trim() && primary.length > 0 && (text.split(/\s+/).length < 22 || lacksMeasuredFigure(text, primary) || lacksApproval(text, primary))) text = withSectionProof(text, primary);
   return text;
 }
@@ -162,6 +162,17 @@ function llmAnswer(question: string, outputs: readonly Record<string, unknown>[]
   if (!/\bllms?\b/i.test(question) || namedEmployer(question) || /\b(pedigree|mate|explanation)\b/i.test(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(gemini|qwen|openai|vllm)\b/i.test(sentence)));
   return [...new Set(lines)].slice(0, 2).join(" ");
+}
+
+function withReleaseLimit(question: string, proof: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!proof.trim() || !/\b(production|live)\b/i.test(question) || /\bship\b/i.test(question)) return proof;
+  if (/\bnot (?:a|for) a (?:production )?release\b/i.test(proof) || /\bonly named live app\b/i.test(proof)) return proof;
+  if (!/\b(skyledge|roster|golf|writingjourney|writing coach)\b/i.test(question) && !/\b(sold|acquired)\b/i.test(proof)) return proof;
+  const sentences = sectionBlocks(outputs).flatMap((block) => plainSentences(block));
+  const wanted = /\blive\b/i.test(question) && !/\bproduction\b/i.test(question)
+    ? sentences.find((sentence) => /\bonly named live app\b/i.test(sentence))
+    : sentences.find((sentence) => /\bnot a production release\b/i.test(sentence)) ?? sentences.find((sentence) => /\bnot (?:a|for) a release\b/i.test(sentence));
+  return wanted && !proof.includes(wanted) ? `${wanted} ${proof}`.trim() : proof;
 }
 
 function databaseAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {

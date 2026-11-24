@@ -187,6 +187,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bwhat\b/.test(text) && /\bmodels\b/.test(text) && /\b(use|uses)\b/.test(text) && !namedEmployer(text), ids: ["project-triage", "project-golf", "project-prophet"] },
     { when: /\bdatabases?\b/.test(text) && /\b(use|uses|used)\b/.test(text) && !namedEmployer(text) && !/\bvector\b/.test(text), ids: ["project-roster", "project-survee", "project-prophet"] },
     { when: /\b(study|university|bachelor|degree|education)\b/.test(text) && !/\bresearch\b/.test(text), ids: ["education-swinburne"] },
+    { when: /\b(production|live)\b/.test(text) && /\b(skyledge|roster|golf|writingjourney|writing coach)\b/.test(text) && !text.includes("ship"), ids: ["project-shipped", ...saleIds(text)] },
     { when: /\b(acquir\w*|sold|sell|sale|bought|buyer|purchase\w*)\b/.test(text), ids: saleIds(text) },
   ];
   const match = sets.find((item) => item.when);
