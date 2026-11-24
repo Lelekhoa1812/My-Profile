@@ -2899,6 +2899,16 @@ describe("displayAnswer", () => {
       "What does he use Python for?",
     );
     expect(pythonUse).toContain("Named tools include Python");
+    const skillList = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What skills does he list?") }],
+      "",
+      "What skills does he list?",
+    );
+    expect(skillList).toContain("Vietnamese");
+    expect(skillList).toContain("groups the stack");
+    expect(skillList).toContain("Named tools include");
+    expect(skillList).toContain("Python");
+    expect(skillList).not.toContain("does not name one metric");
     expect(pythonUse).not.toContain("Java");
     expect(pythonUse).not.toContain("does not name");
     const separateFrom = displayAnswer(

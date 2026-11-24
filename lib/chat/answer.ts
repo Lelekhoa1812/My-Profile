@@ -1645,6 +1645,19 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bskills?\b/i.test(question) && !namedEmployer(question) && !/\b(soft|clinical|stack)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\bvietnamese native\b/i.test(sentence)),
+      sentences.find((sentence) => /\bgroups the stack\b/i.test(sentence)),
+      sentences.find((sentence) => /\bnamed tools include\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bml\b/i.test(question) && /\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question) && !/\b(pedigree|poptech|harry)\b/i.test(question)) {
     const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /machine learning/i.test(line) && /groups the stack/i.test(line));
     if (sentence) {
