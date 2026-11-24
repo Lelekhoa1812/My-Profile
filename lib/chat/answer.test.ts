@@ -1577,6 +1577,34 @@ describe("displayAnswer", () => {
     expect(cloud).toContain("AWS");
     expect(cloud).toContain("Azure");
     expect(cloud).not.toContain("groups the stack");
+    const harryCloud = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What cloud does Harry use?") }],
+      "",
+      "What cloud does Harry use?",
+    );
+    expect(harryCloud).toContain("Azure");
+    expect(harryCloud).not.toContain("Planner");
+    const rosterProductStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the roster use?") }],
+      "",
+      "What stack does the roster use?",
+    );
+    expect(rosterProductStack).toContain("Kotlin");
+    expect(rosterProductStack).not.toContain("CVA");
+    const triageProductStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does triage use?") }],
+      "",
+      "What stack does triage use?",
+    );
+    expect(triageProductStack).toContain("FAISS");
+    expect(triageProductStack).not.toContain("MIMIC");
+    const vectorUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for vectors?") }],
+      "",
+      "What does he use for vectors?",
+    );
+    expect(vectorUse).toMatch(/pgvector|FAISS/);
+    expect(vectorUse).not.toContain("LangChain");
     const studyBuddy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does StudyBuddy do?") }],
       "",
