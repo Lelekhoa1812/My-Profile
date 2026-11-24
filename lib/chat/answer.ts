@@ -680,6 +680,16 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(period);
     }
   }
+  if (/\bmcp\b/i.test(question) && !/\bacnt\b/i.test(question)) {
+    const account = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\baccounting assistant\b/i.test(sentence));
+    const access = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bmcp-style\b/i.test(sentence));
+    if (account || access) {
+      chosen.length = 0;
+      cap = 3;
+      push(account);
+      push(access);
+    }
+  }
   if (/\bhai[\s-]?au group\b/i.test(question)) {
     const sold = blockSentences.find((sentence) => /\bversion 1\.5\.0\b/i.test(sentence));
     if (sold) {
