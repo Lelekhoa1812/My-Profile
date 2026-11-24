@@ -1109,6 +1109,12 @@ describe("displayAnswer", () => {
       "Who funded MedVietAI?",
     );
     expect(funded).toContain("National Data Association");
+    const explained = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the pedigree engine explain with an LLM?") }],
+      "",
+      "What does the pedigree engine explain with an LLM?",
+    );
+    expect(explained).toContain("LLM explanations");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");

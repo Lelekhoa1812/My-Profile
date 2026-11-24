@@ -451,6 +451,7 @@ function mentions(sentence: string, word: string): boolean {
   if ((word === "summarise" || word === "summarize") && /\bsummaris(?:ation|ation)\b/i.test(sentence)) return true;
   if (word === "plan" && /\bplanning\b/i.test(sentence)) return true;
   if ((word === "fund" || word === "funded" || word === "funding") && /\bsponsor/i.test(sentence)) return true;
+  if ((word === "explain" || word === "explains" || word === "explanation") && /\bexplanations?\b/i.test(sentence)) return true;
   if (word.length >= 4 && new RegExp(`\\b${word}(?:v\\d+|-[a-z0-9]+)\\b`, "i").test(sentence)) return true;
   if (word.endsWith("s") && word.length >= 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
   if (word.endsWith("e") && new RegExp(`\\b${word.slice(0, -1)}ed\\b`, "i").test(sentence)) return true;
@@ -498,6 +499,7 @@ function isDecision(question: string, sentence: string): boolean {
   }
   if (/\bown/i.test(question) && /\bown(?:s|ed)\b/i.test(sentence)) return true;
   if (/\bfund/i.test(question) && /\bsponsor/i.test(sentence)) return true;
+  if (/\bexplain/i.test(question) && /\bexplanations?\b/i.test(sentence)) return true;
   if (/\b(sell|sold|buyer|buy|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
   if (/\bvhandicap\b/i.test(question) && /\bvhandicap\b/i.test(sentence)) return true;
   if (/\bmj industrial\b/i.test(question) && /\bmj industrial\b/i.test(sentence)) return true;
