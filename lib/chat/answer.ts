@@ -80,13 +80,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     .filter((item) => item.score > 0)
     .sort((left, right) => right.score - left.score);
   const decision = countedSentence(question, blockSentences, words) ?? runSentence(question, blockSentences) ?? blockSentences.find((sentence) => isDecision(question, sentence));
+  const employerKey = namedEmployer(question)?.toLowerCase() ?? "";
   const unique = words
     .filter((word) => word.length >= 4)
     .flatMap((word) => {
       const owners = blockSentences.filter((sentence) => mentions(sentence, word));
       return owners.length === 1 && owners[0] ? [{ word, sentence: owners[0] }] : [];
     })
-    .sort((left, right) => right.word.length - left.word.length)[0]?.sentence;
+    .sort((left, right) => Number(left.word === employerKey) - Number(right.word === employerKey) || right.word.length - left.word.length)[0]?.sentence;
   const picked = decision && unique && unique !== decision && /\bthe stack is\b/i.test(decision) ? unique : decision;
   const orgLine = blockSentences.some((sentence) => /hugging face org is/i.test(sentence));
   const chosen: string[] = [];
@@ -544,7 +545,7 @@ function secondPeriod(outputs: readonly Record<string, unknown>[], blockSentence
 }
 
 function askedOnlyHere(question: string, current: string, other: string): boolean {
-  return askWords(question).some((word) => word.length >= 5 && mentions(current, word) && !mentions(other, word));
+  return askWords(question).some((word) => word.length >= 4 && word !== namedEmployer(question)?.toLowerCase() && mentions(current, word) && !mentions(other, word));
 }
 
 function siblingWork(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string): string {

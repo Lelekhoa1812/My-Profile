@@ -1364,6 +1364,13 @@ describe("displayAnswer", () => {
     );
     expect(golfEfficiency).toContain("15 percent");
     expect(golfEfficiency).toContain("efficiency");
+    const bm25 = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does BM25 do at Harry?") }],
+      "",
+      "What does BM25 do at Harry?",
+    );
+    expect(bm25).toContain("BM25");
+    expect(bm25).not.toContain("mate-selection");
     const labBuild = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
       "",
