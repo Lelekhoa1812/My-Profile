@@ -1594,6 +1594,13 @@ describe("displayAnswer", () => {
     );
     expect(geminiDuty).toContain("Clinical reasoning uses Gemini");
     expect(geminiDuty).toContain("Free-router");
+    const signalUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What signals does it use?") }],
+      "",
+      "What signals does it use?",
+    );
+    expect(signalUse).toContain("10-signal");
+    expect(signalUse).not.toContain("LangChain");
     const fastapiDuty = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does FastAPI do?") }],
       "",

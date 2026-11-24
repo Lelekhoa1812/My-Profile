@@ -168,4 +168,11 @@ describe("withMemory", () => {
     const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What authentication does it use?" }] } as UIMessage;
     expect(groundedQuestion([axion, answer, follow], 2)).toContain("axion");
   });
+
+  it("keeps the pedigree engine on a signal follow-up", () => {
+    const pedigree = { id: "u1", role: "user", parts: [{ type: "text", text: "What is the pedigree engine?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "A mate-selection engine." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What signals does it use?" }] } as UIMessage;
+    expect(groundedQuestion([pedigree, answer, follow], 2)).toContain("pedigree");
+  });
 });
