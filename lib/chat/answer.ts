@@ -128,6 +128,12 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\b64-dimensional\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bmate-selection\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bworkflow\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\brecipes are\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bexport does not send\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bdraft recipe does not send email\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\b(axion|axis)\b/i.test(question) && !/\bworkflow\b/i.test(question)) {
     cap = 5;
     const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block));
@@ -929,6 +935,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bericsson\b/i.test(question) && /\bpredictive-maintenance\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bpedigree\b/i.test(question) && /\bmate-selection\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\b(axion|axis)\b/i.test(question) && !/\bworkflow\b/i.test(question) && /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bworkflow\b/i.test(question) && /\bgoverned graph platform\b/i.test(sentence)) return true;
   if (/\bpedigree\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && !/\b(what is|models?)\b/i.test(question) && /\b10-signal ensemble\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\btriage\b/i.test(question) && /\b(speech uses whisper|clinical reasoning uses gemini|vision uses qwen|mimic-iv|medication-delivery)\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;

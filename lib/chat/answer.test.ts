@@ -2048,6 +2048,14 @@ describe("displayAnswer", () => {
     expect(axionProduct).toContain("approve");
     expect(axionProduct).toContain("does not own");
     expect(axionProduct).toContain("AI vision");
+    const workflowIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the Axion workflow?") }],
+      "",
+      "What is the Axion workflow?",
+    );
+    expect(workflowIs).toContain("startup scouting");
+    expect(workflowIs).toContain("export does not send");
+    expect(workflowIs).toContain("does not send email");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",
