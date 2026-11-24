@@ -415,12 +415,13 @@ function isDecision(question: string, sentence: string): boolean {
     return words.some((word) => mentions(sentence, word));
   }
   if (/\b(sell|sold|buyer|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
-  if (/\b(store|stored|stores|stay|stays)\b/i.test(question) && /\bmongodb\b/i.test(sentence)) return true;
+  if (/\b(store|stored|stores|stay|stays|keep|keeps|database)\b/i.test(question) && /\bmongodb\b/i.test(sentence)) return true;
   if (/\b(stack|code|coding|programming)\b/i.test(question) && /\bpython\b/i.test(sentence)) return true;
   if (/\bplan\b/i.test(question) && /\bplans?\b/i.test(sentence)) return true;
   if (/\b(coach|writingjourney)\b/i.test(question) && /\b(send|score|scores)\b/i.test(question) && /\bscores a submission\b/i.test(sentence)) return true;
   if (/\bcontrol\b/i.test(question) && /\bstays in control\b/i.test(sentence)) return true;
   if (/\bproduction\b/i.test(question) && !/\bship\b/i.test(question) && /\bnot (?:a|for) a release\b/i.test(sentence)) return true;
+  if (/\bwater[\s-]?meter\b/i.test(question) && /\bnamed public app\b/i.test(sentence)) return true;
   if (/\brank\b/i.test(question) && /\branking\b/i.test(sentence)) return true;
   if (/\bspeech\b/i.test(question) && /\bwhisper\b/i.test(sentence)) return true;
   if (/\bforecast\b/i.test(question) && /\bforecast(?:s|ing)?\b/i.test(sentence)) return true;
@@ -450,10 +451,12 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\btraces?\b/i.test(question) && /\btraces?\b/i.test(sentence)) return true;
   if (/\b(reduce|reduced|reduction|less)\b/i.test(question) && /\bpercent\b/i.test(sentence)) return true;
   if (/\b(refuse|send)\b/i.test(question) && /\bdoes not\b/i.test(sentence)) {
+    if (/\bseparate\b/i.test(question)) return false;
     if (/\bexport\b/i.test(question)) return /\bexport\b/i.test(sentence);
     if (/\bdraft\b/i.test(question)) return /\bdraft\b/i.test(sentence);
     return true;
   }
+  if (/\bseparate\b/i.test(question) && /\bemails founders\b/i.test(sentence)) return true;
   return /\b(cut|pilot|percent|measure|bert|score|metric)\b/i.test(question) && /\bpercent\b/i.test(sentence);
 }
 

@@ -803,6 +803,24 @@ describe("displayAnswer", () => {
       "What does the golf scanner measure?",
     );
     expect(golfMeasure).toContain("15");
+    const surveeStore = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Survee keep in the database?") }],
+      "",
+      "What does Survee keep in the database?",
+    );
+    expect(surveeStore).toContain("MongoDB");
+    const founders = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does a separate Axion recipe send?") }],
+      "",
+      "What does a separate Axion recipe send?",
+    );
+    expect(founders).toContain("founders");
+    const meterClaim = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the water meter production claim exclude?") }],
+      "",
+      "What does the water meter production claim exclude?",
+    );
+    expect(meterClaim).toContain("named public app");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the roster app use?") }],
