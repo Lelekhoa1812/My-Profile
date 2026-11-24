@@ -2015,6 +2015,14 @@ describe("displayAnswer", () => {
     expect(faceCards).toContain("Public datasets");
     expect(faceCards).toContain("huggingface.co/khoaliamle");
     expect(faceCards).toContain("not a production release");
+    const pedigreeProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the pedigree project?") }],
+      "",
+      "What is the pedigree project?",
+    );
+    expect(pedigreeProduct).toContain("mate-selection");
+    expect(pedigreeProduct).toContain("matrix factorization");
+    expect(pedigreeProduct).toContain("64-dimensional");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",
