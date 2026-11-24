@@ -1129,6 +1129,20 @@ describe("displayAnswer", () => {
     expect(workflow).toContain("startup scouting");
     expect(workflow).toContain("separate from FoodFlow");
     expect(workflow).not.toContain("AI Software Engineer");
+    const draftSend = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the draft recipe send?") }],
+      "",
+      "What does the draft recipe send?",
+    );
+    expect(draftSend).toContain("does not send email");
+    expect(draftSend).not.toContain("export does not");
+    const exportSend = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
+      "",
+      "What does the export send?",
+    );
+    expect(exportSend).toContain("export does not send");
+    expect(exportSend).not.toContain("draft recipe");
     expect(medvietAbout).not.toMatch(/^The Hugging Face org is MedVietAI/);
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
