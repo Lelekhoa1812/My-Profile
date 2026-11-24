@@ -1090,6 +1090,13 @@ describe("displayAnswer", () => {
     );
     expect(pytheraCity).toContain("January 2025");
     expect(pytheraCity).not.toContain("175 Hospital");
+    const shippedList = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he shipped?") }],
+      "",
+      "What has he shipped?",
+    );
+    expect(shippedList).toContain("CVA");
+    expect(shippedList).toContain("live app");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",

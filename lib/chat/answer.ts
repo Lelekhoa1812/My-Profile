@@ -691,7 +691,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bforecast\b/i.test(question) && /\bforecast(?:s|ing)?\b/i.test(sentence) && sentence.split(/\s+/).length > 4) return true;
   if (/\bdrift\b/i.test(question) && /\bstability\b/i.test(sentence)) return true;
   if (/\buptime\b/i.test(question) && /\buptime\b/i.test(sentence)) return true;
-  if (/\bship\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
+  if (/\b(ship|ships|shipped|shipping)\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
   if (/\btext\b/i.test(question) && /\bfinbert\b/i.test(sentence)) return true;
   if (/\bagents?\b/i.test(question) && /\blab\b/i.test(question) && /\bspecialist medical agents\b/i.test(sentence)) return true;
   if (/\borchestrator\b/i.test(question) && /\breranker feeds the orchestrator\b/i.test(sentence)) return true;
