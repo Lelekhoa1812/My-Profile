@@ -679,6 +679,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\buptime\b/i.test(question) && /\buptime\b/i.test(sentence)) return true;
   if (/\bship\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
   if (/\btext\b/i.test(question) && /\bfinbert\b/i.test(sentence)) return true;
+  if (/\bagents?\b/i.test(question) && /\blab\b/i.test(question) && /\bspecialist medical agents\b/i.test(sentence)) return true;
+  if (/\borchestrator\b/i.test(question) && /\breranker feeds the orchestrator\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\b(train|trained|training)\b/i.test(question) && /\bfine-tuning used\b/i.test(sentence)) return true;
   if (/\bmeasure\b/i.test(question) && /\b(drift|impute|quality)\b/i.test(sentence)) return true;

@@ -956,6 +956,19 @@ describe("displayAnswer", () => {
     );
     expect(labTrain).toContain("LoRA");
     expect(labTrain).toContain("500,000");
+    const labAgents = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What agents does the clinical lab use?") }],
+      "",
+      "What agents does the clinical lab use?",
+    );
+    expect(labAgents).toContain("specialist medical agents");
+    expect(labAgents).not.toContain("React Native");
+    const orchestrator = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the reasoning orchestrator do?") }],
+      "",
+      "What does the reasoning orchestrator do?",
+    );
+    expect(orchestrator).toContain("reranker");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",
