@@ -1231,6 +1231,22 @@ describe("displayAnswer", () => {
     expect(overlapsLab).toContain("Mizco");
     expect(overlapsLab).toContain("Teqar");
     expect(overlapsLab).toContain("August 2025");
+    const betweenRoles = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do between Mizco and Axion?") }],
+      "",
+      "What did he do between Mizco and Axion?",
+    );
+    expect(betweenRoles).toContain("June 2026");
+    expect(betweenRoles).toContain("July 2026");
+    expect(betweenRoles).toContain("Harry");
+    expect(betweenRoles).toContain("Axion");
+    const betweenAlta = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What sits between Alta and Pythera?") }],
+      "",
+      "What sits between Alta and Pythera?",
+    );
+    expect(betweenAlta).toContain("iNet");
+    expect(betweenAlta).toContain("VietDan");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",

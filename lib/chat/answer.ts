@@ -286,7 +286,7 @@ function placeAnswer(question: string, outputs: readonly Record<string, unknown>
 }
 
 function sameTimeAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\b(same time|overlaps?)\b/i.test(question)) return "";
+  if (!/\b(same time|overlaps?)\b/i.test(question) && !(/\bbetween\b/i.test(question) && /\b(did|do|sits|sit|work)\b/i.test(question) && !/\b(difference|roles)\b/i.test(question))) return "";
   const lines: string[] = [];
   for (const output of outputs) {
     if (!Array.isArray(output.sections)) continue;

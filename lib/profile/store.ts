@@ -147,6 +147,22 @@ function overlappingRoleIds(text: string): string[] | undefined {
   return ids.length > 1 ? ids : undefined;
 }
 
+function betweenRoleIds(text: string): string[] | undefined {
+  if (!/\bbetween\b/.test(text)) return undefined;
+  const named = ROLE_SPANS.filter((span, index, list) => text.includes(span.key) && !span.nested && list.findIndex((item) => item.ids[0] === span.ids[0]) === index);
+  if (named.length !== 2) return undefined;
+  const ordered = [...named].sort((left, right) => left.start - right.start);
+  const earlier = ordered[0];
+  const later = ordered[1];
+  if (!earlier || !later) return undefined;
+  const other = (span: (typeof ROLE_SPANS)[number]) => !span.nested && span.ids.every((id) => !earlier.ids.includes(id) && !later.ids.includes(id));
+  const startedAfter = ROLE_SPANS.filter((span) => other(span) && span.start >= earlier.end && span.start < later.start).sort((left, right) => left.start - right.start);
+  if (startedAfter.length > 0) return startedAfter.flatMap((span) => span.ids).filter((id, index, list) => list.indexOf(id) === index).slice(0, 3);
+  const covering = ROLE_SPANS.filter((span) => other(span) && span.start < later.start && span.end > earlier.end).sort((left, right) => right.start - left.start);
+  const middle = covering.flatMap((span) => span.ids).filter((id, index, list) => list.indexOf(id) === index).slice(0, 2);
+  return [...earlier.ids, ...middle, ...later.ids].filter((id, index, list) => list.indexOf(id) === index);
+}
+
 function adjacentRoleIds(text: string) {
   const before = text.match(/\bbefore\s+(?:the\s+)?([a-z]+)\b/);
   const after = text.match(/\bafter\s+(?:the\s+)?([a-z]+)\b/);
@@ -212,11 +228,13 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
   }
   const adjacent = adjacentRoleIds(text);
   const overlapping = overlappingRoleIds(text);
+  const between = betweenRoleIds(text);
   const city = ["melbourne", "perth", "ho chi minh", "binh duong"].find((name) => text.includes(name));
   const cityRoles = city && /\b(jobs|roles)\b/.test(text)
     ? pool.filter((item) => item.section.sourceType === "role" && (item.body.includes(city) || item.title.includes(city))).map((item) => item.section.sectionId)
     : [];
   const sets = [
+    { when: Boolean(between?.length), ids: between ?? [] },
     { when: Boolean(overlapping?.length), ids: overlapping ?? [] },
     { when: cityRoles.length > 0, ids: cityRoles },
     { when: /\bnam\b/.test(text) && /\b(two|difference)\b/.test(text) && /\broles?\b/.test(text), ids: ["role-nam-a-ai", "role-nam-a-software"] },
