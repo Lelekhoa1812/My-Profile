@@ -837,6 +837,13 @@ describe("displayAnswer", () => {
       "What did the golf scanner gain?",
     );
     expect(golfGain).toContain("15 percent");
+    const golfGainLead = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the golf scanner efficiency gain?") }],
+      "",
+      "What is the golf scanner efficiency gain?",
+    );
+    expect(golfGainLead.startsWith("About 15 percent")).toBe(true);
+    expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
       "",

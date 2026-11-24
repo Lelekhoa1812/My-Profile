@@ -183,7 +183,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\bnational data association\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bemr-based monitoring\b/i.test(sentence)));
   }
-  if (/\bwhat is\b/i.test(question) && /\bgolf\b/i.test(question)) {
+  if (/\bwhat is\b/i.test(question) && /\bgolf\b/i.test(question) && !/\b(gain|efficiency)\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\byolov8\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bvietocr\b/i.test(sentence)));
@@ -1288,7 +1288,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bharry\b/i.test(question) && /\brerank/i.test(question) && /\bcross-encoder\b/i.test(sentence)) return true;
   if (/\b(contribut\w*|author)\b/i.test(question) && /\b(clara|pythera)\b/i.test(question) && /\bnot the sole author\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bsall-?e\b/i.test(question) && /\boceanic garbage\b/i.test(sentence)) return true;
-  if (/\bwhat is\b/i.test(question) && /\bgolf\b/i.test(question) && /\bsold to vhandicap\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bgolf\b/i.test(question) && !/\b(gain|efficiency)\b/i.test(question) && /\bsold to vhandicap\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\broster\b/i.test(question) && /\bsold to mj industrial\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bskyledge\b/i.test(question) && /\bobd-ii\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bmedchat\b/i.test(question) && /\bcalls this a prototype\b/i.test(sentence)) return true;
