@@ -114,12 +114,15 @@ const BROAD_SECTION_IDS = ["role-axion", "project-shipped"] as const;
 function pinnedSections(pool: readonly { section: ProfileSection; title: string; body: string }[], query: string) {
   const text = query.toLowerCase();
   const sets = [
+    { when: /\bwater[-\s]?meter\b/.test(text) && /\b(sample|measured|productionized)\b/.test(text), ids: ["project-meter", "role-vietdan-ml"] },
+    { when: text.includes("harry") && (text.includes("before") || text.includes("earlier") || text.includes("pedigree")), ids: ["role-harry-pedigree", "role-harry-senior"] },
+    { when: text.includes("live") && (text.includes("sale") || text.includes("sales") || text.includes("customer")), ids: ["project-shipped", "project-cva"] },
     { when: text.includes("ship") && text.includes("production"), ids: ["project-shipped", "project-cva"] },
     { when: text.includes("measure") && text.includes("live"), ids: ["project-meter", "project-cva", "project-shipped"] },
     { when: text.includes("person") && (text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-cva", "project-writing"] },
     { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },
     { when: text.includes("work") && text.includes("now"), ids: ["role-axion", "project-cva"] },
-    { when: /\b(study|university|bachelor|degree)\b/.test(text), ids: ["education-swinburne"] },
+    { when: /\b(study|university|bachelor|degree)\b/.test(text) && !/\bresearch\b/.test(text), ids: ["education-swinburne"] },
     { when: /\b(acquir\w*|sold)\b/.test(text), ids: ["project-shipped", "project-skyledge", "project-writing", "project-roster", "project-golf"] },
   ];
   const match = sets.find((item) => item.when);

@@ -51,10 +51,24 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
 }
 
 function recordedOutcome(outputs: readonly Record<string, unknown>[]): string {
-  const sentences = sectionSentences(outputs).filter((sentence) => !exposesGap(sentence));
-  const measured = sentences.find((sentence) => /percent/i.test(sentence));
-  const approval = sentences.find((sentence) => /person (?:to )?approv/i.test(sentence) && sentence !== measured);
-  return [measured, approval].filter((sentence): sentence is string => Boolean(sentence)).map(plainSentence).join(" ");
+  for (const block of sectionBlocks(outputs)) {
+    const sentences = block.split(/(?<=[.!])\s+/).map((sentence) => sentence.trim()).filter((sentence) => sentence && !exposesGap(sentence));
+    const plain = sentences.slice(0, 6).map(plainSentence).filter(Boolean);
+    if (plain.length > 0) return plain.join(" ");
+  }
+  return "";
+}
+
+function sectionBlocks(outputs: readonly Record<string, unknown>[]): string[] {
+  const blocks: string[] = [];
+  for (const output of outputs) {
+    if (typeof output.text === "string") blocks.push(output.text);
+    if (!Array.isArray(output.sections)) continue;
+    for (const section of output.sections) {
+      if (typeof section === "object" && section !== null && "text" in section && typeof section.text === "string") blocks.push(section.text);
+    }
+  }
+  return blocks;
 }
 
 function plainSentence(sentence: string): string {

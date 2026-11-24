@@ -167,6 +167,19 @@ describe("profile store", () => {
     }
   });
 
+  it("opens the proof for the three employer questions", () => {
+    const live = searchSections(profile.sections, "Which one app is live for a customer, and which sales does he keep out of that list?");
+    const meter = searchSections(profile.sections, "What measured change does the resume record for the productionized water-meter scanner, and on how many samples?");
+    const write = searchSections(profile.sections, "What must a model show a person before he lets the write land?");
+    const research = searchSections(profile.sections, "What research did he study at Swinburne?");
+    const earlier = searchSections(profile.sections, "What did he build for Harry the Hirer before the senior role?");
+    expect(live.found && live.sections[0]?.sectionId).toBe("project-shipped");
+    expect(meter.found && meter.sections.map((section) => section.sectionId)).toEqual(["project-meter", "role-vietdan-ml"]);
+    expect(write.found && write.sections[0]?.sectionId).toBe("role-axion");
+    expect(research.found && research.sections.some((section) => section.sectionId === "role-swinburne-research")).toBe(true);
+    expect(earlier.found && earlier.sections[0]?.sectionId).toBe("role-harry-pedigree");
+  });
+
   it("opens the degree when the question asks where he studied", () => {
     const result = searchSections(profile.sections, "Where did he study?");
     expect(result.found).toBe(true);

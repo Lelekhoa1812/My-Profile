@@ -66,9 +66,9 @@ export const person = {
 };
 
 export const starterQuestions = [
-  "What does he ship to production?",
-  "What does he measure after a model is live?",
-  "What will he not let a model write without a person?",
+  "Which one app is live for a customer, and which sales does he keep out of that list?",
+  "What measured change does the resume record for the productionized water-meter scanner, and on how many samples?",
+  "What must a model show a person before he lets the write land?",
 ];
 
 export const cases: Case[] = [

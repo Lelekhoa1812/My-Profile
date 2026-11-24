@@ -177,7 +177,7 @@ describe("displayAnswer", () => {
       [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Water-meter scanner. The resume records about 35 percent less manual meter processing, on more than 10,000 samples." }] } }],
       "The project does not list post-deployment metrics.",
     );
-    expect(text).toBe("About 35 percent less manual meter processing, on more than 10,000 samples.");
+    expect(text).toBe("Water-meter scanner. About 35 percent less manual meter processing, on more than 10,000 samples.");
     const narrated = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "The resume records about 35 percent less manual meter processing, on more than 10,000 samples." }] } }],
       "The record shows a 35 percent reduction across more than ten thousand samples.",
@@ -190,7 +190,19 @@ describe("displayAnswer", () => {
       ] } }],
       "The record shows a reduction.",
     );
-    expect(withApproval).toBe("About 35 percent less manual meter processing, on more than 10,000 samples. A reviewer agent critiques the draft, and a person approves it.");
+    expect(withApproval).toBe("About 35 percent less manual meter processing, on more than 10,000 samples.");
+    const detailed = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [
+        { text: "Water-meter scanner. ML work for VietDan JSC, December 2024 to February 2025. The resume records about 35 percent less manual meter processing, on more than 10,000 samples. The resume says the scanner was productionized. Deployment used Jetson and AWS." },
+        { text: "A reviewer agent critiques the draft, and a person approves it." },
+      ] } }],
+      "The record shows a reduction.",
+    );
+    expect(detailed).toContain("VietDan JSC");
+    expect(detailed).toContain("35 percent");
+    expect(detailed).toContain("10,000 samples");
+    expect(detailed).toContain("Jetson");
+    expect(detailed).not.toContain("person approves");
   });
 
   it("drops a modifier that only exists inside a longer record word", () => {
