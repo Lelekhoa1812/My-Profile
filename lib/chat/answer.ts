@@ -89,7 +89,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       return owners.length === 1 && owners[0] ? [{ word, sentence: owners[0] }] : [];
     })
     .sort((left, right) => Number(left.word === employerKey) - Number(right.word === employerKey) || right.word.length - left.word.length)[0]?.sentence;
-  const picked = decision && unique && unique !== decision && /\bthe stack is\b/i.test(decision) ? unique : decision;
+  const picked = decision && unique && unique !== decision && /\bthe stack is\b/i.test(decision) && !/\bobsei\b/i.test(decision) ? unique : decision;
   const orgLine = blockSentences.some((sentence) => /hugging face org is/i.test(sentence));
   const chosen: string[] = [];
   let cap = 2;
@@ -795,6 +795,9 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\blanguages?\b/i.test(question) && /\blab\b/i.test(question) && /\bclinical records and pubmed\b/i.test(sentence)) return true;
   if (/\b(datasets?|benchmarks?)\b/i.test(question) && /\b(medswin|lab)\b/i.test(question) && /\bmedmcqa\b/i.test(sentence)) return true;
   if (/\bpoptech\b/i.test(question) && /\b(use|uses|used|models)\b/i.test(question) && /\bmodels include\b/i.test(sentence)) return true;
+  if (/\bharry\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && !/\b(pedigree|ocr|retrieval|agent)\b/i.test(question) && /\bstack includes\b/i.test(sentence)) return true;
+  if (/\bmizco\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && /\binference uses\b/i.test(sentence)) return true;
+  if (/\binet\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && /\bobsei\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\b(download|rank)\b/i.test(question) && /\bmost downloaded\b/i.test(sentence)) return true;

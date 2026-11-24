@@ -886,6 +886,25 @@ describe("displayAnswer", () => {
     );
     expect(poptechUse).toContain("TFT");
     expect(poptechUse).toContain("DQN");
+    const harryTools = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he use at Harry?") }],
+      "",
+      "What did he use at Harry?",
+    );
+    expect(harryTools).toContain("Azure");
+    expect(harryTools).toContain("FastAPI");
+    const mizcoTools = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he use at Mizco?") }],
+      "",
+      "What did he use at Mizco?",
+    );
+    expect(mizcoTools).toContain("vLLM");
+    const inetTools = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he use at iNet?") }],
+      "",
+      "What did he use at iNet?",
+    );
+    expect(inetTools).toContain("Obsei");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
