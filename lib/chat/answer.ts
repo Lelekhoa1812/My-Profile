@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || productStackAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || previousRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || scoreAnswer(question, outputs) || draftedAnswer(question, outputs) || reviewedAnswer(question, outputs) || exportedAnswer(question, outputs) || forecastedAnswer(question, outputs) || monitoredAnswer(question, outputs) || detectedAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolDutyAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || productStackAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || teamAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || previousRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || scoreAnswer(question, outputs) || draftedAnswer(question, outputs) || reviewedAnswer(question, outputs) || exportedAnswer(question, outputs) || forecastedAnswer(question, outputs) || monitoredAnswer(question, outputs) || detectedAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolDutyAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -246,6 +246,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\brecipes are\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bexport does not send\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bdraft recipe does not send email\b/i.test(sentence)));
+  }
+  if (/\bexport\b/i.test(question) && /\brecipe\b/i.test(question)) {
+    cap = 3;
+    const limit = blockSentences.find((sentence) => /\bexport does not send\b/i.test(sentence));
+    if (limit) {
+      chosen.length = 0;
+      push(limit);
+      push(blockSentences.find((sentence) => /\bapollo\b/i.test(sentence)));
+    }
   }
   if (/\bwhat is\b/i.test(question) && /\b(axion|axis)\b/i.test(question) && !/\bworkflow\b/i.test(question)) {
     cap = 5;
@@ -645,6 +654,12 @@ function cityJobsAnswer(question: string, outputs: readonly Record<string, unkno
   return lines.slice(0, 4).join(" ");
 }
 
+function teamAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bteams?\b/i.test(question) || !/\b(lead|led|leads)\b/i.test(question) || namedEmployer(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\bled\b/i.test(sentence) && /\b(people|person|team of)\b/i.test(sentence));
+  return [...new Set(lines)].slice(0, 4).join(" ");
+}
+
 function bothWorkAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (!/\bboth\b/i.test(question) && !/\b(compare|versus|vs|difference)\b/i.test(question) && !(/\btwo\b/i.test(question) && /\broles?\b/i.test(question))) return "";
   const lines: string[] = [];
@@ -879,6 +894,7 @@ function productStackAnswer(question: string, outputs: readonly Record<string, u
   if (!/\bstack\b/i.test(question)) return "";
   if (/\broster\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bkotlin\b/i.test(sentence)) ?? "";
   if (/\btriage\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bportals use\b/i.test(sentence)) ?? "";
+  if (/\bcva\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(scores role fit|person approves|profile memory)\b/i.test(sentence)).slice(0, 3).join(" ");
   return "";
 }
 

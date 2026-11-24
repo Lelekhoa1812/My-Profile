@@ -1970,6 +1970,28 @@ describe("displayAnswer", () => {
       "What did he contribute to Clara?",
     );
     expect(claraContribution).toContain("not the sole author");
+    const exportLimit = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the export recipe do?") }],
+      "",
+      "What did the export recipe do?",
+    );
+    expect(exportLimit).toContain("does not send a message");
+    expect(exportLimit).toContain("Apollo");
+    const ledTeams = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What teams did he lead?") }],
+      "",
+      "What teams did he lead?",
+    );
+    expect(ledTeams).toContain("five people");
+    expect(ledTeams).toContain("four-person");
+    expect(ledTeams).toContain("software team of five");
+    const cvaStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does CVA use?") }],
+      "",
+      "What stack does CVA use?",
+    );
+    expect(cvaStack).toContain("scores role fit");
+    expect(cvaStack).not.toContain("Named tools include");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
