@@ -91,6 +91,28 @@ describe("displayAnswer", () => {
     expect(text).not.toContain("Initech");
   });
 
+  it("speaks a contact fact when the tool returns no section", () => {
+    const email = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, facts: [{ label: "Email", value: "liamkl.work@gmail.com" }] } }],
+      "",
+      "What is his email?",
+    );
+    const place = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, facts: [{ label: "Location", value: "Melbourne, Australia" }] } }],
+      "",
+      "Where is he based?",
+    );
+    const experience = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, facts: [{ label: "Experience", value: "The resume summary says 4 years of software engineering experience and 3 years of AI and machine-learning delivery." }] } }],
+      "",
+      "How many years of experience does the resume state?",
+    );
+    expect(email).toContain("liamkl.work@gmail.com");
+    expect(place).toContain("Melbourne, Australia");
+    expect(experience).toContain("4 years");
+    expect(experience).toContain("3 years");
+  });
+
   it("uses the hold sentence when the store could not be read", () => {
     const text = displayAnswer(
       [{ type: "tool-lookup_fact", state: "output-available", output: { found: false, reason: "unavailable" } }],

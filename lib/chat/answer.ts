@@ -354,7 +354,9 @@ function recordedOutcome(outputs: readonly Record<string, unknown>[]): string {
     const plain = [...lead, ...measured];
     if (plain.length > 0) return plain.join(" ");
   }
-  return "";
+  const values = outputs.flatMap((output) => Array.isArray(output.facts) ? output.facts : [])
+    .flatMap((fact) => typeof fact === "object" && fact !== null && "value" in fact && typeof fact.value === "string" ? [fact.value] : []);
+  return values.join(" ");
 }
 
 function hasSectionText(output: Record<string, unknown>): boolean {
