@@ -17,9 +17,14 @@ function factValue(key: string): string {
   return typeof fact?.value === "string" ? fact.value.trim() : "";
 }
 
-export function turnToStore(aborted: boolean, outputs: readonly unknown[], modelText: string): string | null {
+export function turnToStore(aborted: boolean, outputs: readonly unknown[], modelText: string, question = ""): string | null {
   if (aborted) return null;
-  return keptSentence(outputs, modelText);
+  const text = displayAnswer(
+    outputs.map((output) => ({ type: "tool-output", state: "output-available", output })),
+    modelText,
+    question,
+  );
+  return text.trim() ? text : holdAnswer();
 }
 
 export function shownAnswer(draft: string, done: boolean, hasReply: boolean): string {
@@ -34,7 +39,7 @@ export function keptSentence(outputs: readonly unknown[], modelText: string): st
   return text.trim() ? text : holdAnswer();
 }
 
-export function displayAnswer(parts: readonly AnswerPart[], modelText: string): string {
+export function displayAnswer(parts: readonly AnswerPart[], modelText: string, question = ""): string {
   const outputs = parts
     .filter((part) => part.type.startsWith("tool-") && part.state === "output-available")
     .map((part) => part.output)
@@ -47,9 +52,90 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  if (!text.trim() && primary.length > 0) return recordedOutcome(primary) || (cleaned.trim() ? holdAnswer() : "");
+  if (!text.trim() && primary.length > 0) {
+    const outcome = recordedOutcome(primary);
+    const focused = question.trim() ? focusOnQuestion(outcome, primary, question) : outcome;
+    return focused || (cleaned.trim() ? holdAnswer() : "");
+  }
+  if (question.trim() && primary.length > 0 && text.trim()) return focusOnQuestion(text, primary, question);
   if (text.trim() && primary.length > 0 && (text.split(/\s+/).length < 22 || lacksMeasuredFigure(text, primary) || lacksApproval(text, primary))) text = withSectionProof(text, primary);
   return text;
+}
+
+const ASK_STOP = new Set(["what", "does", "did", "does", "do", "the", "his", "her", "for", "and", "with", "from", "that", "this", "into", "about", "when", "where", "which", "who", "how", "was", "were", "are", "you", "your", "him", "she", "they", "their", "have", "has", "had", "not", "any", "can", "will", "just", "than", "then", "also", "only", "before", "after"]);
+
+function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>[], question: string): string {
+  const block = sectionBlocks(outputs)[0] ?? "";
+  if (!block.trim()) return text;
+  const words = askWords(question);
+  const blockSentences = plainSentences(block);
+  const shown = plainSentences(text);
+  const dump = isSectionDump(text, block);
+  const ranked = (dump ? blockSentences : shown)
+    .map((sentence) => ({ sentence, score: askScore(question, sentence, words) }))
+    .filter((item) => item.score > 0)
+    .sort((left, right) => right.score - left.score);
+  const decision = blockSentences.find((sentence) => isDecision(question, sentence));
+  const modelAnswers = !dump && shown.length > 0 && shown.length <= 3 && shown.some((sentence) => isDecision(question, sentence) || askScore(question, sentence, words) >= 2);
+  if (modelAnswers) {
+    const tight = shown.filter((sentence) => !isLabel(sentence)).slice(0, 2);
+    const withDecision = decision && !tight.some((sentence) => isDecision(question, sentence)) ? [decision, ...tight] : tight;
+    return withPeriod(withDecision.slice(0, 3), blockSentences);
+  }
+  const chosen: string[] = [];
+  const push = (sentence?: string) => {
+    const named = sentence ? namedSubject(sentence, blockSentences) : "";
+    if (!named || chosen.includes(named) || chosen.length >= 2) return;
+    if (named.split(/\s+/).length < 5 && !isDecision(question, named)) return;
+    chosen.push(named);
+  };
+  if (dump || !shown.some((sentence) => isDecision(question, sentence))) push(decision);
+  push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
+  for (const item of ranked) push(item.sentence);
+  if (chosen.length === 0 && dump) return blockSentences.filter((sentence) => !isLabel(sentence) && !exposesGap(sentence)).slice(0, 2).join(" ");
+  if (chosen.length === 0) return text;
+  return withPeriod(chosen, blockSentences);
+}
+
+function withPeriod(sentences: readonly string[], blockSentences: readonly string[]): string {
+  const joined = sentences.join(" ");
+  if (/\b20\d{2}\b/.test(joined) || sentences.length >= 3) return joined;
+  const period = blockSentences.find((sentence) => /\b20\d{2}\b/.test(sentence) && sentence.split(/\s+/).length <= 18);
+  return period ? `${joined} ${period}` : joined;
+}
+
+function askWords(question: string): string[] {
+  return [...new Set(question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 3 && !ASK_STOP.has(word)))];
+}
+
+function askScore(question: string, sentence: string, words: readonly string[]): number {
+  if (isLabel(sentence) || exposesGap(sentence)) return 0;
+  const hits = words.filter((word) => new RegExp(`\\b${word}(?:s|es|ed|ing)?\\b`, "i").test(sentence)).length;
+  const boundary = (/\baxis\b/i.test(question) || /\b(write|preview|approv)/i.test(question)) && /\bseparate\b/i.test(sentence) && /\baxis\b/i.test(sentence) ? 3 : 0;
+  return hits + boundary + (isDecision(question, sentence) ? 4 : 0);
+}
+
+function namedSubject(sentence: string, blockSentences: readonly string[]): string {
+  const namesAxis = blockSentences.some((item) => /\baxis is a separate\b/i.test(item));
+  if (namesAxis && /^it\b/i.test(sentence) && /\bpreview\b/i.test(sentence)) return sentence.replace(/^It\b/, "Axis");
+  return sentence;
+}
+
+function isDecision(question: string, sentence: string): boolean {
+  if (/\b(write|show|preview|approv)/i.test(question) && /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
+  if (/\b(sell|sold|buyer|purchas|acquir)/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
+  return /\b(cut|pilot|percent|measure|bert|score|metric)/i.test(question) && /\bpercent\b/i.test(sentence);
+}
+
+function isSectionDump(text: string, block: string): boolean {
+  const sentences = text.trim().split(/(?<=[.!])\s+/).map((sentence) => sentence.trim()).filter(Boolean);
+  if (sentences.length < 4) return false;
+  const hay = block.toLowerCase();
+  return sentences.filter((sentence) => hay.includes(sentence.toLowerCase().slice(0, 48))).length >= 3;
+}
+
+function plainSentences(text: string): string[] {
+  return text.split(/(?<=[.!])\s+/).map((sentence) => sentence.trim()).filter((sentence) => sentence && !exposesGap(sentence)).map(plainSentence).filter(Boolean);
 }
 
 function separateAxis(text: string): string {

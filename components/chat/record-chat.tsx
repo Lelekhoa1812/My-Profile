@@ -100,7 +100,7 @@ export function toTurns(messages: readonly UIMessage[], streaming: boolean): Tur
     const question = message.parts.map((part) => (part.type === "text" ? part.text : "")).join("");
     const reply = messages[index + 1]?.role === "assistant" ? messages[index + 1] : undefined;
     const raw = reply ? reply.parts.map((part) => (part.type === "text" ? part.text : "")).join("") : "";
-    const draft = reply ? displayAnswer(reply.parts, raw) : "";
+    const draft = reply ? displayAnswer(reply.parts, raw, question) : "";
     const last = index >= messages.length - 2;
     const done = !(last && streaming);
     const answer = shownAnswer(draft, done, Boolean(reply));

@@ -76,7 +76,7 @@ export async function POST(request: Request): Promise<Response> {
     abortSignal: request.signal,
     timeout: { firstChunkMs: 20_000, chunkMs: 30_000, toolMs: 8_000, stepMs: 45_000, totalMs: 55_000 },
     onEnd: (event) => {
-      const sentence = turnToStore(request.signal.aborted, event.toolResults.map((result) => result.output), event.text ?? "");
+      const sentence = turnToStore(request.signal.aborted, event.toolResults.map((result) => result.output), event.text ?? "", question);
       void saveTraces(threadId, event.toolResults.map((result) => ({
         toolName: result.toolName,
         input: result.input,

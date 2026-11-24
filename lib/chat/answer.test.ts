@@ -379,6 +379,61 @@ describe("displayAnswer", () => {
     expect(text).not.toContain("production samples");
   });
 
+  it("answers the Axis write question without retelling the role", () => {
+    const section = profile.sections.find((item) => item.sectionId === "role-axion");
+    const parts = [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: section?.text ?? "" }] } }];
+    const question = "At Axion, what does Axis show before a write?";
+    const dumped = displayAnswer(parts, section?.text ?? "", question);
+    const dropped = displayAnswer(parts, "The record does not say what Axis shows.", question);
+    for (const text of [dumped, dropped]) {
+      expect(text.split(/(?<=[.!])\s+/)[0]).toMatch(/preview/i);
+      expect(text).toMatch(/approv/i);
+      expect(text).toContain("separate");
+      expect(text).toContain("2026");
+      expect(text).not.toContain("delivery scheduling");
+      expect(text).not.toContain("capital-markets");
+      expect(text.split(/\s+/).length).toBeLessThan(80);
+    }
+  });
+
+  it("answers the pilot and the lab score without the rest of the role", () => {
+    const harry = profile.sections.find((item) => item.sectionId === "role-harry-senior");
+    const harryText = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: harry?.text ?? "" }] } }],
+      harry?.text ?? "",
+      "At Harry the Hirer, what did the pilot cut?",
+    );
+    expect(harryText).toContain("40 percent");
+    expect(harryText).toContain("2025");
+    expect(harryText).not.toContain("Docker");
+    expect(harryText.split(/\s+/).length).toBeLessThan(70);
+    const medswin = profile.sections.find((item) => item.sectionId === "role-swinburne-research");
+    const medswinText = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: medswin?.text ?? "" }] } }],
+      medswin?.text ?? "",
+      "At MedSwin, what BERTScore did the lab record?",
+    );
+    expect(medswinText).toContain("86 percent");
+    expect(medswinText).toContain("MedMCQA");
+    expect(medswinText).not.toContain("5 million");
+    expect(medswinText.split(/\s+/).length).toBeLessThan(80);
+    const pedigree = profile.sections.find((item) => item.sectionId === "role-harry-pedigree");
+    const pedigreeText = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: pedigree?.text ?? "" }] } }],
+      pedigree?.text ?? "",
+      "What did the mate-selection engine use?",
+    );
+    expect(pedigreeText).toContain("Black Caviar");
+    const golf = profile.sections.find((item) => item.sectionId === "project-golf");
+    const golfText = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: golf?.text ?? "" }] } }],
+      golf?.text ?? "",
+      "What did the golf app sell to?",
+    );
+    expect(golfText).toContain("VHandicap");
+    expect(golfText.split(/(?<=[.!])\s+/)[0]).toMatch(/sold/i);
+  });
+
   it("keeps the model sentence when a tool found a section", () => {
     const text = displayAnswer(
       [{ type: "tool-read_section", state: "output-available", output: { found: true, sectionId: "role-axion", text: "Axion Solutions. AI Software Engineer." } }],
