@@ -6,7 +6,7 @@ export { namedEmployer };
 
 export function dropOtherEmployer(messages: readonly UIMessage[]): UIMessage[] {
   const question = [...messages].reverse().find((message) => message.role === "user");
-  const employer = namedEmployer(question ? messageText(question) : "");
+  const employer = namedEmployer(question ? messageText(question) : "") || previousEmployer(messages);
   if (!employer) return [...messages];
   let skip = false;
   const kept: UIMessage[] = [];
@@ -29,6 +29,15 @@ export function dropOtherEmployer(messages: readonly UIMessage[]): UIMessage[] {
     kept.push(message);
   }
   return kept;
+}
+
+function previousEmployer(messages: readonly UIMessage[]): string | undefined {
+  const prior = messages.filter((message) => message.role === "user").slice(0, -1).reverse();
+  for (const message of prior) {
+    const named = namedEmployer(messageText(message));
+    if (named) return named;
+  }
+  return undefined;
 }
 
 function messageText(message: UIMessage): string {

@@ -48,4 +48,13 @@ describe("withMemory", () => {
     const next = { id: "u2", role: "user", parts: [{ type: "text", text: "What engine does Axis use?" }] } as UIMessage;
     expect(dropOtherEmployer([first, answer, next])).toEqual([first, answer, next]);
   });
+
+  it("keeps the latest employer when the follow-up does not name one", () => {
+    const harry = { id: "u1", role: "user", parts: [{ type: "text", text: "At Harry the Hirer, what did the pilot cut?" }] } as UIMessage;
+    const harryAnswer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "About 40 percent less repetitive lookup." }] } as UIMessage;
+    const medswin = { id: "u2", role: "user", parts: [{ type: "text", text: "At MedSwin, what BERTScore did the lab record?" }] } as UIMessage;
+    const medswinAnswer = { id: "a2", role: "assistant", parts: [{ type: "text", text: "86 percent BERTScore." }] } as UIMessage;
+    const follow = { id: "u3", role: "user", parts: [{ type: "text", text: "What was that percent?" }] } as UIMessage;
+    expect(dropOtherEmployer([harry, harryAnswer, medswin, medswinAnswer, follow])).toEqual([medswin, medswinAnswer, follow]);
+  });
 });
