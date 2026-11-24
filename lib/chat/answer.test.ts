@@ -169,6 +169,15 @@ describe("displayAnswer", () => {
     expect(dropGapSentences("Liam builds CVA. The record does not include that.")).toBe("Liam builds CVA.");
     expect(dropGapSentences("CVA is the live app. The record does not say FoodFlow is in production.")).toBe("CVA is the live app.");
     expect(dropGapSentences("The record does not specify a live metric. Manual processing fell about 35 percent.")).toBe("Manual processing fell about 35 percent.");
+    expect(dropGapSentences("The project does not list post-deployment metrics.")).toBe("");
+  });
+
+  it("uses the recorded percent when the model only names a gap", () => {
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Water-meter scanner. The resume records about 35 percent less manual meter processing, on more than 10,000 samples." }] } }],
+      "The project does not list post-deployment metrics.",
+    );
+    expect(text).toBe("About 35 percent less manual meter processing, on more than 10,000 samples.");
   });
 
   it("drops a modifier that only exists inside a longer record word", () => {

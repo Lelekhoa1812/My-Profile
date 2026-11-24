@@ -46,8 +46,28 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
   ));
   const cleaned = text;
   if (outputs.length > 0 && cleaned.trim()) text = certifySentences(cleaned, evidenceCorpus(outputs));
-  if (outputs.length > 0 && cleaned.trim() && !text.trim()) return holdAnswer();
+  if (!text.trim() && outputs.length > 0) return recordedOutcome(outputs) || (cleaned.trim() ? holdAnswer() : "");
   return text;
+}
+
+function recordedOutcome(outputs: readonly Record<string, unknown>[]): string {
+  const sentences = sectionSentences(outputs);
+  const measured = sentences.find((sentence) => /percent/i.test(sentence) && !exposesGap(sentence));
+  if (!measured) return "";
+  const plain = measured.replace(/^The resume (?:records|says) (?:that )?/i, "").trim();
+  return plain ? plain[0].toUpperCase() + plain.slice(1) : "";
+}
+
+function sectionSentences(outputs: readonly Record<string, unknown>[]): string[] {
+  const texts: string[] = [];
+  for (const output of outputs) {
+    if (typeof output.text === "string") texts.push(output.text);
+    if (!Array.isArray(output.sections)) continue;
+    for (const section of output.sections) {
+      if (typeof section === "object" && section !== null && "text" in section && typeof section.text === "string") texts.push(section.text);
+    }
+  }
+  return texts.flatMap((text) => text.split(/(?<=[.!])\s+/).map((sentence) => sentence.trim()).filter(Boolean));
 }
 
 export function stripMarkdown(text: string): string {
@@ -124,7 +144,8 @@ function exposesGap(sentence: string): boolean {
     || /i do not have/i.test(sentence)
     || /not in the record/i.test(sentence)
     || /\bunnamed\b/i.test(sentence)
-    || /does not specify/i.test(sentence);
+    || /does not specify/i.test(sentence)
+    || /does not list/i.test(sentence);
 }
 
 export function dropGapSentences(text: string): string {
