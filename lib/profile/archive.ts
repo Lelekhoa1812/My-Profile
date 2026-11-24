@@ -25,7 +25,7 @@ function sectionId(id: string): string {
 export function archiveSection(item: ArchiveItem): ProfileSection {
   const kind = KIND[item.kind] ?? item.kind;
   const parts = [item.title, kind, item.summary, item.detail, item.year ? String(item.year) : "", item.url].filter((part) => part && part.trim().length > 0);
-  const note = item.kind === "space" ? " A public Space is not a production release." : "";
+  const note = item.kind === "space" ? " A public Space is not a released product." : "";
   return {
     sectionId: sectionId(item.id),
     heading: item.title,

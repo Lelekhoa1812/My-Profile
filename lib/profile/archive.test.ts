@@ -4,6 +4,14 @@ import { withArchive } from "./archive";
 import { listSections, searchSections } from "./store";
 
 describe("withArchive", () => {
+  it("keeps a production question on the shipped-work section", () => {
+    const result = searchSections(withArchive(profile.sections), "What does he ship to production?");
+    expect(result.found).toBe(true);
+    if (!result.found) return;
+    expect(result.sections[0]?.sectionId).toBe("project-shipped");
+    expect(result.sections.some((section) => section.sectionId.startsWith("archive-"))).toBe(false);
+  });
+
   it("finds a repository the resume summary does not name", () => {
     const result = searchSections(withArchive(profile.sections), "path game");
     expect(result.found).toBe(true);
