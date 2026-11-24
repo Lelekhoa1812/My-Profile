@@ -1308,6 +1308,33 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\bretriev/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/Retrieval uses agentic chunking|Agentic retrieval covers clinical records/i, 2);
   }
+  if (/\bcontrol\b/i.test(question) && !/\b(writing|coach|stays)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/control platform|stays in control/i, 2);
+  }
+  if (/\bfund/i.test(question) && !/\b(lab|medswin|ericsson)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/Swinburne-funded|funded this/i, 2);
+  }
+  if (/\bdetect/i.test(question) && !/\bdetected\b/i.test(question) && !/\b(use|uses|used|for|salle|sall-e|golf|ericsson)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/detect and localise|Field detection|detects degradation|Anomaly detection/i, 4);
+  }
+  if (/\bplan/i.test(question) && !namedEmployer(question) && !/\b(writingjourney|writing coach|cva|codoptic|teqar|salle|sall-e)\b/i.test(question)) {
+    keepSentences(/staged delivery plans|plans an implementation|plans the rewrite|planner agent|route planning/i, 5);
+  }
+  if (/\bnavigat/i.test(question) && !namedEmployer(question) && !/\b(codoptic|salle|sall-e)\b/i.test(question)) {
+    keepSentences(/navigate the architecture|navigation to detect/i, 2);
+  }
+  if (/\bgovern/i.test(question) && !/\bexecut/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/govern execution|governed graph|governed industrial/i, 3);
+  }
+  if (/\bcompl/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/compliance-sensitive/i, 1);
+  }
+  if (/\bpublish/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/published statement/i, 1);
+  }
+  if (/\bdegrad/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/degradation/i, 1);
+  }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));
@@ -1822,7 +1849,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bforecast/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|read|reads|data|graph)\b/i.test(question)) return joined;
   if (/\bschedul/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bdraft/i.test(question) && !/\b(send|recipe|on|axis|drafted)\b/i.test(question) && !namedEmployer(question)) return joined;
-  if (/\b(cite|explain|train|guard|embed|validat|recogni|recommend|graph|score|trace|retriev)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
+  if (/\b(cite|explain|train|guard|embed|validat|recogni|recommend|graph|score|trace|retriev|control|fund|detect|plan|navigat|govern|compl|publish|degrad)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;

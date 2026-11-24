@@ -1545,6 +1545,72 @@ describe("displayAnswer", () => {
     );
     expect(retrieveIt).toContain("BM25");
     expect(retrieveIt).toContain("clinical records");
+    const controlIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it control?") }],
+      "",
+      "What does it control?",
+    );
+    expect(controlIt).toContain("control platform");
+    expect(controlIt).toContain("stays in control");
+    const fundIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it fund?") }],
+      "",
+      "What does it fund?",
+    );
+    expect(fundIt).toContain("Swinburne-funded");
+    expect(fundIt).toContain("funded this");
+    const detectIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it detect?") }],
+      "",
+      "What does it detect?",
+    );
+    expect(detectIt).toContain("localise");
+    expect(detectIt).toContain("YOLOv8");
+    expect(detectIt).toContain("degradation");
+    expect(detectIt).toContain("autoencoder");
+    const planIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it plan?") }],
+      "",
+      "What does it plan?",
+    );
+    expect(planIt).toContain("staged delivery");
+    expect(planIt).toContain("plans an implementation");
+    expect(planIt).toContain("plans the rewrite");
+    expect(planIt).toContain("planner agent");
+    expect(planIt).toContain("route planning");
+    const navigateIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it navigate?") }],
+      "",
+      "What does it navigate?",
+    );
+    expect(navigateIt).toContain("navigate the architecture");
+    expect(navigateIt).toContain("navigation");
+    const governIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it govern?") }],
+      "",
+      "What does it govern?",
+    );
+    expect(governIt).toContain("govern execution");
+    expect(governIt).toContain("governed graph");
+    expect(governIt).toContain("compliance-sensitive");
+    const complyIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it comply with?") }],
+      "",
+      "What does it comply with?",
+    );
+    expect(complyIt).toContain("compliance-sensitive");
+    const publishIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it publish?") }],
+      "",
+      "What does it publish?",
+    );
+    expect(publishIt).toContain("published statement");
+    const degradeIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it degrade?") }],
+      "",
+      "What does it degrade?",
+    );
+    expect(degradeIt).toContain("degradation");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",

@@ -441,6 +441,11 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\brecogni/.test(text) && /\b(do|does|is|what|use|uses)\b/.test(text) && !namedEmployer(text), ids: ["project-hf-models"] },
     { when: /\brecommend/.test(text) && /\b(do|does|is|what)\b/.test(text) && !namedEmployer(text), ids: ["role-poptech"] },
     { when: /\bgraph\b/.test(text) && /\b(do|does|is|what)\b/.test(text) && !/\b(ericsson|use|uses|used|for|forecast|hanoi)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["project-axion-workflows", "role-harry-pedigree", "project-ericsson", "project-sp500", "project-estatefolio"] },
+    { when: /\bplan/.test(text) && /\b(do|does|is|what)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-teqar", "project-codoptic", "project-writing", "project-cva", "project-salle"] },
+    { when: /\bnavigat/.test(text) && /\b(do|does|is|what)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["project-codoptic", "project-salle"] },
+    { when: /\bcompl/.test(text) && /\b(do|does|is|what)\b/.test(text) && !namedEmployer(text), ids: ["role-mizco"] },
+    { when: /\bpublish/.test(text) && /\b(do|does|is|what)\b/.test(text) && !namedEmployer(text), ids: ["project-quotient"] },
+    { when: /\bdegrad/.test(text) && /\b(do|does|is|what)\b/.test(text) && !namedEmployer(text), ids: ["project-ericsson"] },
     { when: /\bexported\b/.test(text), ids: ["project-axion-workflows"] },
     { when: /\bforecasted\b/.test(text), ids: ["project-prophet", "project-ericsson", "role-poptech", "project-estatefolio"] },
     { when: /\bforecast/.test(text) && /\b(do|does|is|what|use|uses)\b/.test(text) && !/\b(use|uses|used|read|reads|data|graph)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-poptech", "project-ericsson", "project-sp500", "project-estatefolio", "project-prophet"] },
@@ -720,7 +725,8 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   if (asksForPlace(query)) return { found: false as const };
   const asked = query.toLowerCase();
   if (/\bcity\b/.test(asked) && /\b(it|that)\b/.test(asked) && !namedEmployer(asked)) return { found: false as const };
-  if (/\b(papers|publish(?:ed)?)\b/.test(asked) && !/\b(quotient|statement|recording)\b/.test(asked)) return { found: false as const };
+  if (/\bpapers\b/.test(asked)) return { found: false as const };
+  if (/\bpublish/.test(asked) && /\b(he|him|his|written|article|journal)\b/.test(asked) && !/\b(quotient|statement|recording)\b/.test(asked)) return { found: false as const };
   const pinned = pinnedSections(visible, query);
   if (pinned) return pinned;
   if (terms.length === 0) return broadSections(visible.filter((item) => !sourceType || item.section.sourceType === sourceType));
