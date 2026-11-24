@@ -2,6 +2,11 @@ import { describe, expect, it } from "vitest";
 import { displayAnswer, dropRecordTalk, dropSourceTail, keptSentence, MISSED, shownAnswer, SILENCE, turnToStore, UNREAD } from "./answer";
 
 describe("displayAnswer", () => {
+  it("reads the sentence field from a structured answer", () => {
+    const text = displayAnswer([], '{"sentence": "His title is Senior AI Software Engineer."}');
+    expect(text).toBe("His title is Senior AI Software Engineer.");
+  });
+
   it("hides a tool call that leaked into the sentence", () => {
     const text = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: { found: true, heading: "Harry the Hirer" } }],

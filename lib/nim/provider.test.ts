@@ -15,7 +15,7 @@ describe("createPoolFetch", () => {
       const header = new Headers(init?.headers).get("authorization") ?? "";
       seen.push(header);
       const body = JSON.parse(String(init?.body)) as { prompt_cache_key?: string; stream?: boolean };
-      expect(body.prompt_cache_key).toBeUndefined();
+      expect(body.prompt_cache_key).toBe("secret-thread");
       expect(body.stream).toBe(true);
       if (header.includes(KEY_A)) return new Response("{}", { status: 401 });
       return new Response("data: [DONE]\n\n", { status: 200, headers: { "content-type": "text/event-stream" } });

@@ -13,14 +13,20 @@ function jsonResponse(status: number, retryAfter?: string): Response {
 }
 
 describe("wireBody", () => {
-  it("drops prompt-cache fields and keeps response_format when there are no tools", () => {
+  it("keeps the prompt cache key and a caller response format when there are no tools", () => {
     const body = wireBody(
       { messages: [], prompt_cache_key: "thread-1", response_format: { type: "json_object" } },
       "nvidia/nemotron-3-ultra-550b-a55b",
     );
-    expect(body.prompt_cache_key).toBeUndefined();
+    expect(body.prompt_cache_key).toBe("thread-1");
     expect(body.response_format).toEqual({ type: "json_object" });
     expect(body.stream).toBe(true);
+  });
+
+  it("adds a sentence schema and a stable cache key when the caller sends neither", () => {
+    const body = wireBody({ messages: [] }, "nvidia/nemotron-3-ultra-550b-a55b");
+    expect(body.prompt_cache_key).toBe("profile-record");
+    expect(body.response_format).toMatchObject({ type: "json_schema" });
   });
 
   it("drops response_format when tools are present", () => {

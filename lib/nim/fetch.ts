@@ -10,6 +10,20 @@ export type NimCall = {
   release: () => void;
 };
 
+const SENTENCE_FORMAT = {
+  type: "json_schema",
+  json_schema: {
+    name: "answer",
+    strict: true,
+    schema: {
+      type: "object",
+      additionalProperties: false,
+      properties: { sentence: { type: "string" } },
+      required: ["sentence"],
+    },
+  },
+};
+
 export function wireBody(body: ChatBody, model: string): ChatBody {
   const next: ChatBody = {
     ...body,
@@ -18,10 +32,14 @@ export function wireBody(body: ChatBody, model: string): ChatBody {
     stream_options: { include_usage: true },
     chat_template_kwargs: { enable_thinking: false, ...(body.chat_template_kwargs as object | undefined) },
   };
-  delete next.prompt_cache_key;
+  const toolCount = Array.isArray(next.tools) ? next.tools.length : 0;
+  if (toolCount > 0) delete next.response_format;
+  else if (!next.response_format) next.response_format = SENTENCE_FORMAT;
+  if (typeof next.prompt_cache_key !== "string" || next.prompt_cache_key.length === 0) {
+    next.prompt_cache_key = "profile-record";
+  }
   delete next.prompt_cache_options;
   delete next.prompt_cache_breakpoint;
-  if (next.tools) delete next.response_format;
   return next;
 }
 

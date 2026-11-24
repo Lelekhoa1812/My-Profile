@@ -28,7 +28,25 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
     .filter((output): output is Record<string, unknown> => typeof output === "object" && output !== null);
   if (outputs.some((output) => output.reason === "unavailable")) return UNREAD;
   if (outputs.length > 0 && outputs.every((output) => output.found === false)) return SILENCE;
-  return dropSourceTail(dropRecordTalk(stripToolMarkup(modelText)), sourceHeadings(outputs));
+  return dropSourceTail(dropRecordTalk(sentenceFromModel(stripToolMarkup(modelText))), sourceHeadings(outputs));
+}
+
+export function sentenceFromModel(text: string): string {
+  const trimmed = text.trim();
+  if (!trimmed.startsWith("{")) return trimmed;
+  try {
+    const parsed = JSON.parse(trimmed) as { sentence?: unknown };
+    if (typeof parsed.sentence === "string") return parsed.sentence.trim();
+  } catch {
+    const match = trimmed.match(/^\{\s*"sentence"\s*:\s*"((?:\\.|[^"\\])*)/);
+    if (!match) return trimmed.startsWith('{"sentence"') ? "" : trimmed;
+    try {
+      return JSON.parse(`"${match[1]}"`) as string;
+    } catch {
+      return match[1];
+    }
+  }
+  return trimmed;
 }
 
 function stripToolMarkup(text: string): string {
