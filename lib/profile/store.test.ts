@@ -209,6 +209,11 @@ describe("profile store", () => {
     expect(hai.found && hai.sections[0]?.sectionId).toBe("role-hai-au");
     expect(hai.found && hai.sections.some((section) => section.sectionId === "role-harry-senior")).toBe(false);
     expect(hai.found && hai.sections.some((section) => section.sectionId === "role-axion")).toBe(false);
+    const stack = searchSections(profile.sections, "What is in his stack?");
+    expect(stack.found && stack.sections[0]?.sectionId).toBe("skills");
+    expect(stack.found && stack.sections[0]?.text).toContain("Python");
+    const harryStack = searchSections(profile.sections, "What is in his stack at Harry the Hirer?");
+    expect(harryStack.found && harryStack.sections[0]?.sectionId).toBe("role-harry-senior");
     const survey = searchSections(profile.sections, "What does the survey tool store answers in?");
     expect(survey.found && survey.sections[0]?.sectionId).toBe("project-survee");
     expect(survey.found && survey.sections[0]?.text).toContain("MongoDB");

@@ -118,6 +118,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("harry") && (text.includes("pilot") || text.includes("cut")), ids: ["role-harry-senior"] },
     { when: (text.includes("medswin") || text.includes("bertscore")) && /\b(bertscore|lab|score)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: text.includes("mizco"), ids: ["role-mizco"] },
+    { when: /\bstack\b/.test(text) && !namedEmployer(text), ids: ["skills"] },
     { when: /\bwater[-\s]?meter\b/.test(text) && /\b(sample|measur\w*|productionized|result|model|cut|percent)\b/.test(text), ids: ["project-meter", "role-vietdan-ml"] },
     { when: text.includes("harry") && (text.includes("before") || text.includes("earlier") || text.includes("pedigree")), ids: ["role-harry-pedigree", "role-harry-senior"] },
     { when: text.includes("live") && (text.includes("sale") || text.includes("sales") || text.includes("customer")), ids: ["project-shipped", "project-cva"] },
