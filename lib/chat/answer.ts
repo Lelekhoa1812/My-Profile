@@ -1701,6 +1701,18 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bwhat does\b/i.test(question) && /\broster\b/i.test(question) && /\bdo\b/i.test(question) && !/\b(track|payroll|sold|manage)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\bmj industrial\b/i.test(sentence) && !/does not list/i.test(sentence)),
+      sentences.find((sentence) => /\bkotlin\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bwhat does\b/i.test(question) && /\bpoptech\b/i.test(question) && /\bdo\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [

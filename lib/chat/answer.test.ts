@@ -2341,6 +2341,15 @@ describe("displayAnswer", () => {
     );
     expect(rosterIs).toContain("MJ Industrial");
     expect(rosterIs).toContain("Kotlin");
+    const rosterDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the roster app do?") }],
+      "",
+      "What does the roster app do?",
+    );
+    expect(rosterDoes).toContain("MJ Industrial");
+    expect(rosterDoes).toContain("rostering");
+    expect(rosterDoes).toContain("Kotlin");
+    expect(rosterDoes).not.toContain("does not list");
     const cvaProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is CVA?") }],
       "",
