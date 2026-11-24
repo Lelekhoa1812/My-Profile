@@ -649,6 +649,21 @@ describe("displayAnswer", () => {
     expect(archive.toLowerCase()).toContain("stt-studio");
     expect(archive).toContain("Acnt-MCP");
     expect(archive).not.toContain("star counts");
+    const products = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the difference between Axis and FoodFlow?") }],
+      "",
+      "What is the difference between Axis and FoodFlow?",
+    );
+    expect(products).toContain("Axis");
+    expect(products).toContain("FoodFlow");
+    expect(products).not.toContain("EstateFolio");
+    const overlap = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Did he work at Harry and MedSwin at the same time?") }],
+      "",
+      "Did he work at Harry and MedSwin at the same time?",
+    );
+    expect(overlap).toContain("December 2025");
+    expect(overlap).toContain("August 2025");
     expect(archive.toLowerCase()).toContain("free-router");
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(

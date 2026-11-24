@@ -146,6 +146,22 @@ function adjacentRoleIds(text: string) {
 
 function pinnedSections(pool: readonly { section: ProfileSection; title: string; body: string }[], query: string) {
   const text = query.toLowerCase();
+  const namedRoles = EMPLOYERS.filter((item) => item.test.test(text));
+  if (namedRoles.length >= 2 && /\b(same time|overlap|both)\b/.test(text)) {
+    const roles = pool.filter((item) => item.section.sourceType === "role" && namedRoles.some((employer) => employer.section(item.section.sectionId, item.title)));
+    if (roles.length >= 2) {
+      return {
+        found: true as const,
+        sections: roles.map((hit) => ({
+          sectionId: hit.section.sectionId,
+          heading: hit.section.heading,
+          sourceType: hit.section.sourceType,
+          text: hit.section.text,
+          match: "keyword" as const,
+        })),
+      };
+    }
+  }
   if (/\b(companies|employers)\b/.test(text) && /\bwork/.test(text)) {
     const roles = pool.filter((item) => item.section.sourceType === "role");
     if (roles.length > 0) {
@@ -341,7 +357,7 @@ const GENERIC_TERMS = new Set([
   "answer", "answers", "build", "built", "code", "data", "hold", "holds", "keep", "keeps",
   "make", "makes", "model", "models", "platform", "read", "reads", "run", "runs", "show",
   "shows", "store", "stored", "stores", "system", "tool", "tools", "used", "user", "users",
-  "using", "work", "works", "write", "writes",
+  "using", "work", "works", "write", "writes", "between", "difference",
 ]);
 
 function narrowToDistinctiveLead<T extends { title: string; body: string }>(hits: readonly T[], terms: readonly string[]): T[] {
