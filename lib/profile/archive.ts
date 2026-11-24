@@ -36,8 +36,12 @@ export function archiveSection(item: ArchiveItem): ProfileSection {
   };
 }
 
+export function archiveSections(): ProfileSection[] {
+  return (archive.items as ArchiveItem[]).map(archiveSection);
+}
+
 export function withArchive(sections: readonly ProfileSection[]): ProfileSection[] {
   const seen = new Set(sections.map((section) => section.sectionId));
-  const extra = (archive.items as ArchiveItem[]).map(archiveSection).filter((section) => !seen.has(section.sectionId));
+  const extra = archiveSections().filter((section) => !seen.has(section.sectionId));
   return [...sections, ...extra];
 }

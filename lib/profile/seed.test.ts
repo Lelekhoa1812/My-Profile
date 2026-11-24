@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { needsRefresh, needsSeed, profileHash } from "./seed";
+import { needsRefresh, needsSeed, profileHash, recordSections } from "./seed";
 
 describe("needsSeed", () => {
   it("seeds when either collection is empty", () => {
@@ -19,6 +19,12 @@ describe("needsSeed", () => {
     expect(needsRefresh(12, 20, "old-hash", current)).toBe(true);
     expect(needsRefresh(0, 20, current, current)).toBe(true);
     expect(current).toMatch(/^[a-f0-9]{64}$/);
+  });
+
+  it("keeps a public repository in the seeded record", () => {
+    const sections = recordSections();
+    expect(sections.some((section) => section.sectionId === "archive-gh-path-game")).toBe(true);
+    expect(sections.filter((section) => section.sectionId === "role-axion")).toHaveLength(1);
   });
 
   it("creates the tool trace indexes when the record is seeded", () => {

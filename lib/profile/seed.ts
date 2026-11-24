@@ -1,14 +1,20 @@
 import { createHash } from "node:crypto";
 import type { Db } from "mongodb";
 import profile from "../../content/profile.json";
+import { withArchive } from "./archive";
 import { idsToRetire } from "./retire";
 
 export function needsSeed(factCount: number, sectionCount: number): boolean {
   return factCount === 0 || sectionCount === 0;
 }
 
+export function recordSections() {
+  return withArchive(profile.sections);
+}
+
 export function profileHash(): string {
-  return createHash("sha256").update(JSON.stringify({ facts: profile.facts, sections: profile.sections })).digest("hex");
+  const sections = recordSections().map((section) => ({ sectionId: section.sectionId, text: section.text }));
+  return createHash("sha256").update(JSON.stringify({ facts: profile.facts, sections })).digest("hex");
 }
 
 export function needsRefresh(factCount: number, sectionCount: number, storedHash: string | null, currentHash: string): boolean {
@@ -30,7 +36,8 @@ export async function seedProfile(db: Db): Promise<void> {
   for (const fact of profile.facts) {
     await facts.updateOne({ key: fact.key }, { $set: { ...fact, visibility: "public", updatedAt: now } }, { upsert: true });
   }
-  for (const section of profile.sections) {
+  const sections = recordSections();
+  for (const section of sections) {
     await chunks.updateOne(
       { sectionId: section.sectionId },
       { $set: { ...section, visibility: "public", updatedAt: now } },
@@ -46,7 +53,7 @@ export async function seedProfile(db: Db): Promise<void> {
   const storedSections = await chunks.distinct("sectionId", { visibility: "public" });
   const retireSections = idsToRetire(
     storedSections.filter((id): id is string => typeof id === "string"),
-    profile.sections.map((section) => section.sectionId),
+    sections.map((section) => section.sectionId),
   );
   if (retireSections.length > 0) await chunks.deleteMany({ sectionId: { $in: retireSections }, visibility: "public" });
   await db.collection("profile_meta").updateOne(
