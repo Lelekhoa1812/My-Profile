@@ -84,8 +84,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (named.split(/\s+/).length < 4 && !isDecision(question, named)) return;
     chosen.push(named);
   };
-  push(unique);
   push(decision);
+  push(unique);
   if (/\b(do|did|build|built|work|role)\b/i.test(question)) {
     push(blockSentences.find((sentence) => isToolList(sentence)));
     if (!chosen.some((sentence) => /\b(led|built|uses|owned|owns|covers|percent|python)\b/i.test(sentence))) {

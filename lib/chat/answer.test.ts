@@ -415,6 +415,7 @@ describe("displayAnswer", () => {
       "At MedSwin, what BERTScore did the lab record?",
     );
     expect(medswinText).toContain("86 percent");
+    expect(medswinText.indexOf("Agentic retrieval") === -1 || medswinText.indexOf("BERTScore") < medswinText.indexOf("Agentic retrieval")).toBe(true);
     expect(medswinText).toContain("MedMCQA");
     expect(medswinText).not.toContain("5 million");
     expect(medswinText.split(/\s+/).length).toBeLessThan(80);
