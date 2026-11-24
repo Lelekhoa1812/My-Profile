@@ -528,6 +528,21 @@ describe("displayAnswer", () => {
       "What OCR does he use?",
     );
     expect(ocr).toContain("VietOCR");
+    const education = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is his education?") }],
+      "",
+      "What is his education?",
+    );
+    expect(education).toContain("Bachelor");
+    const frameworks = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What frameworks does he use?") }],
+      "",
+      "What frameworks does he use?",
+    );
+    expect(frameworks).toContain("LangChain");
+    expect(frameworks).not.toContain("capital-markets");
+    expect(searchSections(profile.sections, "What papers has he written?").found).toBe(false);
+    expect(searchSections(profile.sections, "What did he publish?").found).toBe(false);
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],

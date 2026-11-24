@@ -183,7 +183,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: (/\bknow about\b/.test(text) || /\bhire\b/.test(text) || (/\b(summarise|summarize)\b/.test(text) && /\bwork\b/.test(text))) && !namedEmployer(text), ids: ["role-axion"] },
     { when: (/\bgood at\b/.test(text) || /\bstrengths\b/.test(text)) && !namedEmployer(text), ids: ["skills"] },
     { when: /\bdatabases?\b/.test(text) && /\b(use|uses|used)\b/.test(text) && !namedEmployer(text), ids: ["project-roster", "project-survee", "project-prophet"] },
-    { when: /\b(study|university|bachelor|degree)\b/.test(text) && !/\bresearch\b/.test(text), ids: ["education-swinburne"] },
+    { when: /\b(study|university|bachelor|degree|education)\b/.test(text) && !/\bresearch\b/.test(text), ids: ["education-swinburne"] },
     { when: /\b(acquir\w*|sold|sell|sale|bought|buyer|purchase\w*)\b/.test(text), ids: saleIds(text) },
   ];
   const match = sets.find((item) => item.when);
@@ -395,6 +395,8 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
     }));
   if (terms.length === 0) return broadSections(visible.filter((item) => !sourceType || item.section.sourceType === sourceType));
   if (asksForPlace(query)) return { found: false as const };
+  const asked = query.toLowerCase();
+  if (/\b(papers|publish(?:ed)?)\b/.test(asked) && !/\b(quotient|statement|recording)\b/.test(asked)) return { found: false as const };
   const pinned = pinnedSections(visible, query);
   if (pinned) return pinned;
   const pool = visible.filter((item) => !sourceType || item.section.sourceType === sourceType);

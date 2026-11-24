@@ -113,6 +113,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (picked && /\bhow many\b/i.test(question) && /\b\d/.test(item.sentence)) continue;
     const answered = words.some((word) => !new RegExp(`\\b${word}\\b`, "i").test(item.sentence) && mentions(item.sentence, word) && chosen.some((sentence) => new RegExp(`\\b${word}\\b`, "i").test(sentence)));
     if (/\b(code|coding|programming)\b/i.test(question) && /\b(vietnamese|mandarin|fluent)\b/i.test(item.sentence)) continue;
+    if (/the resume also uses the phrase/i.test(item.sentence) && !/\bphrase\b/i.test(question)) continue;
     if (picked && item.score < 2 && !exact) continue;
     if (!picked && unique && item.score < 2 && !exact && answered) continue;
     if (!picked && unique && words.every((word) => !mentions(item.sentence, word) || mentions(unique, word))) continue;
