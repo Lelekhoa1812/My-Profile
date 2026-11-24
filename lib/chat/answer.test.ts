@@ -4236,6 +4236,14 @@ describe("displayAnswer", () => {
     expect(coachProduct).toContain("Hai Au");
     expect(coachProduct).toContain("scores a submission");
     expect(coachProduct).toContain("stays in control");
+    const coachDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does WritingJourney do?") }],
+      "",
+      "What does WritingJourney do?",
+    );
+    expect(coachDoes).toContain("IELTS");
+    expect(coachDoes).toContain("scores a submission");
+    expect(coachDoes).toContain("stays in control");
     const forecastProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the S&P 500 forecast?") }],
       "",
