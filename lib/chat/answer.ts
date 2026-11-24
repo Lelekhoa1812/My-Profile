@@ -667,6 +667,7 @@ function matchingBlock(outputs: readonly Record<string, unknown>[], question: st
     if (/\bocr\b/i.test(question) && !employer && !/\b(meter|water|harry|golf|passport|nam)\b/i.test(question) && /\b(vietocr|paddleocr)\b/i.test(block)) score += 15;
     if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && /\bsame host\b/i.test(block)) score += 12;
     if (/\blive app\b/i.test(question) && /\bonly named live app\b/i.test(block)) score += 12;
+    if (/\b(funded|funding)\b/i.test(question) && /\bswinburne-funded\b/i.test(block)) score += 12;
     if (/\bmj industrial\b/i.test(question) && /\bmj industrial\b/i.test(block)) score += 12;
     if (!chronological && titledInQuestion(question, block)) score += 8;
     if (countedFact(question, sentences, words)) score += 12;
@@ -829,6 +830,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bown/i.test(question) && /\bdatabase\b/i.test(question) && /\bdoes not own\b/i.test(sentence)) return true;
   if (/\bown/i.test(question) && !/\bdatabase\b/i.test(question) && /\bown(?:s|ed)\b/i.test(sentence)) return true;
   if (/\bfund/i.test(question) && /\bsponsor/i.test(sentence)) return true;
+  if (/\b(funded|funding)\b/i.test(question) && /\bswinburne-funded\b/i.test(sentence)) return true;
   if (/\bexplain/i.test(question) && /\bexplanations?\b/i.test(sentence)) return true;
   if (/\b(sell|sold|buyer|buy|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
   if (/\bvhandicap\b/i.test(question) && /\bvhandicap\b/i.test(sentence)) return true;
