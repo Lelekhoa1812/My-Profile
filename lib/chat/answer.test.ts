@@ -3200,6 +3200,20 @@ describe("displayAnswer", () => {
     );
     expect(nicking).toContain("Bayesian nicking");
     expect(nicking).toContain("ensemble");
+    const vaeIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is a VAE fingerprint?") }],
+      "",
+      "What is a VAE fingerprint?",
+    );
+    expect(vaeIs).toContain("VAE genetic fingerprints");
+    expect(vaeIs).toContain("10-signal");
+    const gbmIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is GBM ranking?") }],
+      "",
+      "What is GBM ranking?",
+    );
+    expect(gbmIs).toContain("GBM temporal ranking");
+    expect(gbmIs).toContain("10-signal");
     const confidence = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is a confidence gate?") }],
       "",

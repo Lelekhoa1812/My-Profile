@@ -840,6 +840,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(graph);
     }
   }
+  if (/\b(vae|gbm|matrix factorization|bayesian nicking|dosage theory|shared ancestor|genetic fingerprints?)\b/i.test(question)) {
+    const ensemble = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\b10-signal\b/i.test(sentence));
+    if (ensemble) {
+      chosen.length = 0;
+      cap = 1;
+      push(ensemble);
+    }
+  }
   if (/\bblack caviar\b/i.test(question)) {
     const lineage = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bblack caviar\b/i.test(sentence));
     if (lineage) {
