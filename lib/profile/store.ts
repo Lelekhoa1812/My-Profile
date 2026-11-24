@@ -27,16 +27,16 @@ export function lookupFacts(facts: readonly ProfileFact[], input: { key?: string
 }
 
 export function listSections(sections: readonly ProfileSection[], sourceType?: string) {
-  return {
-    sections: sections
-      .filter((section) => (section.visibility ?? "public") === "public")
-      .filter((section) => !sourceType || section.sourceType === sourceType)
-      .map((section) => ({
-        sectionId: section.sectionId,
-        heading: section.heading,
-        sourceType: section.sourceType,
-      })),
-  };
+  const sectionsOut = sections
+    .filter((section) => (section.visibility ?? "public") === "public")
+    .filter((section) => !sourceType || section.sourceType === sourceType)
+    .map((section) => ({
+      sectionId: section.sectionId,
+      heading: section.heading,
+      sourceType: section.sourceType,
+    }));
+  if (sectionsOut.length === 0) return { found: false as const, sections: sectionsOut };
+  return { found: true as const, sections: sectionsOut };
 }
 
 export function readSection(sections: readonly ProfileSection[], sectionId: string) {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import profile from "../../content/profile.json";
-import { lookupFacts, readSection, searchSections } from "./store";
+import { listSections, lookupFacts, readSection, searchSections } from "./store";
 
 describe("profile store", () => {
   it("returns a resume contact fact by key", () => {
@@ -13,6 +13,10 @@ describe("profile store", () => {
     const result = readSection(profile.sections, "Axion Solutions");
     expect(result.found).toBe(true);
     if (result.found) expect(result.sectionId).toBe("role-axion");
+  });
+
+  it("marks an empty section list as a miss", () => {
+    expect(listSections(profile.sections, "writing")).toEqual({ found: false, sections: [] });
   });
 
   it("does not invent an employer that is absent", () => {

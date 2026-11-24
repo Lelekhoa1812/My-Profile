@@ -10,5 +10,7 @@ describe("instructionPrefix", () => {
     expect(text).toContain("I am Liam's portfolio assistant.");
     expect(text).not.toContain("Great question");
     expect(text).not.toContain("capital-markets");
+    expect(text).not.toContain("FoodFlow");
+    expect(text).toContain("answer only from the Axion sections in the record");
   });
 });
