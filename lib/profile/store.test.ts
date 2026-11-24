@@ -45,6 +45,12 @@ describe("profile store", () => {
     if (result.found) expect(result.sections.some((section) => section.sectionId === "project-writing")).toBe(true);
   });
 
+  it("finds Kubernetes in the skills section", () => {
+    const result = searchSections(profile.sections, "does he use Kubernetes");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections.some((section) => section.sectionId === "skills")).toBe(true);
+  });
+
   it("finds the skills section from a language question", () => {
     const result = searchSections(profile.sections, "which languages does he speak");
     expect(result.found).toBe(true);

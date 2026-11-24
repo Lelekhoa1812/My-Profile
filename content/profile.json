@@ -255,8 +255,8 @@
       "sectionId": "skills",
       "heading": "Skills",
       "sourceType": "skills",
-      "aliases": ["Python", "NIM", "LangGraph"],
-      "text": "Skills. Languages: Vietnamese native, English fluent, Mandarin intermediate. Delivery stack on the resume includes Python, Java, TypeScript, SQL, C#, React, Next.js, FastAPI, LangChain, LangGraph, LangSmith, MCP, Azure AI Foundry, AWS Bedrock, vLLM, Nvidia NIM, LoRA, and OCR pipelines."
+      "aliases": ["Python", "Kubernetes", "LangGraph", "NIM"],
+      "text": "Skills. Languages: Vietnamese native, English fluent, Mandarin intermediate. The resume groups the stack as agents, retrieval, cloud platforms, software, machine learning, and document AI. Named tools include Python, Java, TypeScript, C#, SQL, React, Next.js, Vue, Node.js, FastAPI, LangChain, LangGraph, LangSmith, LlamaIndex, MCP, Azure AI Foundry, AWS Bedrock, SageMaker, Nvidia NIM, vLLM, Docker, Kubernetes, LoRA, and OCR."
     }
   ]
 }
