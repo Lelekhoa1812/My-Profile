@@ -1989,6 +1989,14 @@ describe("displayAnswer", () => {
     expect(forecastProduct).toContain("multi-horizon");
     expect(forecastProduct).toContain("FinBERT");
     expect(forecastProduct).toContain("Kafka");
+    const adhdProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is ADHD Assistant?") }],
+      "",
+      "What is ADHD Assistant?",
+    );
+    expect(adhdProduct).toContain("Nvidia NIM");
+    expect(adhdProduct).toContain("voice or text");
+    expect(adhdProduct).not.toContain("user count");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",

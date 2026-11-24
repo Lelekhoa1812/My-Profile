@@ -123,6 +123,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     cap = 3;
     push(blockSentences.find((sentence) => /\bkotlin\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\badhd\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\bvoice or text\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bs&p\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\btemporal fusion\b/i.test(sentence)));
@@ -891,6 +895,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bquotient\b/i.test(question) && /\brecorded meeting\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bwritingjourney\b/i.test(question) && /\bwriting coach\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bs&p\b/i.test(question) && /\bmulti-horizon\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\badhd\b/i.test(question) && /\bnvidia nim\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\btriage\b/i.test(question) && /\b(speech uses whisper|clinical reasoning uses gemini|vision uses qwen|mimic-iv|medication-delivery)\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
