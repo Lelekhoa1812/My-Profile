@@ -1,7 +1,7 @@
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import type { UpdateFilter } from "mongodb";
 import { convertToModelMessages, isStepCount, ToolLoopAgent, type UIMessage } from "ai";
-import { keptSentence } from "../../../lib/chat/answer";
+import { turnToStore } from "../../../lib/chat/answer";
 import { visitorCookie } from "../../../lib/session/cookie";
 import { instructionPrefix } from "../../../lib/agent/instructions";
 import { createProfileTools } from "../../../lib/agent/tools";
@@ -63,8 +63,9 @@ export async function POST(request: Request): Promise<Response> {
     abortSignal: request.signal,
     timeout: { firstChunkMs: 20_000, chunkMs: 30_000, toolMs: 8_000, stepMs: 45_000, totalMs: 55_000 },
     onEnd: (event) => {
-      const outputs = event.toolResults.map((result) => result.output);
-      void saveTurn(threadId, visitor.id, question, keptSentence(outputs, event.text ?? "")).catch((error: unknown) => {
+      const sentence = turnToStore(request.signal.aborted, event.toolResults.map((result) => result.output), event.text ?? "");
+      if (!sentence) return;
+      void saveTurn(threadId, visitor.id, question, sentence).catch((error: unknown) => {
         const name = error instanceof Error ? error.name : "Error";
         console.error(`Session save failed: ${name}`);
       });

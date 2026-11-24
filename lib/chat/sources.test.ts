@@ -14,6 +14,13 @@ describe("sourcesFromParts", () => {
     expect(sources[0].meta).toBe("Senior AI Software Engineer · Jul 2026 – now");
   });
 
+  it("points a public repository chip at the archive", () => {
+    const sources = sourcesFromParts([
+      { type: "tool-read_section", state: "output-available", output: { found: true, sectionId: "project-public-code", heading: "Public repositories", sourceType: "project" } },
+    ]);
+    expect(sources[0]?.href).toBe("#archive");
+  });
+
   it("ignores lookups that found nothing", () => {
     expect(sourcesFromParts([{ type: "tool-read_section", state: "output-available", output: { found: false } }])).toEqual([]);
   });

@@ -3,6 +3,11 @@ export const UNREAD = "The record could not be read.";
 
 type AnswerPart = { type: string; state?: string; output?: unknown };
 
+export function turnToStore(aborted: boolean, outputs: readonly unknown[], modelText: string): string | null {
+  if (aborted) return null;
+  return keptSentence(outputs, modelText);
+}
+
 export function keptSentence(outputs: readonly unknown[], modelText: string): string {
   return displayAnswer(
     outputs.map((output) => ({ type: "tool-output", state: "output-available", output })),

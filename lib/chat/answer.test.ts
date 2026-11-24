@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { displayAnswer, keptSentence, SILENCE, UNREAD } from "./answer";
+import { displayAnswer, keptSentence, SILENCE, turnToStore, UNREAD } from "./answer";
 
 describe("displayAnswer", () => {
   it("replaces a boast when every tool missed", () => {
@@ -16,6 +16,10 @@ describe("displayAnswer", () => {
       "His email is on the resume.",
     );
     expect(text).toBe(UNREAD);
+  });
+
+  it("stores nothing when the visitor stops the answer", () => {
+    expect(turnToStore(true, [{ found: true }], "Liam works at Axion Solutions.")).toBeNull();
   });
 
   it("keeps the silence sentence for the session when every tool missed", () => {
