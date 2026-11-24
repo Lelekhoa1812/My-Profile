@@ -644,7 +644,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   if (/\bwhen\b/i.test(question) && /\b(start|started|begin|began|end|ended)\b/i.test(question)) {
     cap = 2;
-    const period = blockSentences.find((sentence) => /\b20\d{2}\b/.test(sentence) && sentence.split(/\s+/).length <= 16);
+    const periods = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bto\b/i.test(sentence) && /\b20\d{2}\b/.test(sentence) && sentence.split(/\s+/).length <= 18 && !/\bdownloaded\b/i.test(sentence));
+    const startAsked = /\b(start|started|begin|began)\b/i.test(question);
+    const period = [...periods].sort((left, right) => startAsked ? startKey(left) - startKey(right) : endKey(right) - endKey(left))[0];
     if (period) {
       chosen.length = 0;
       push(period);

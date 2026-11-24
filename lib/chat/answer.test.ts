@@ -857,6 +857,19 @@ describe("displayAnswer", () => {
       "When did the VietDan cloud role start?",
     );
     expect(vietdanCloudStart).toContain("June 2022");
+    const medswinStart = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "When did MedSwin start?") }],
+      "",
+      "When did MedSwin start?",
+    );
+    expect(medswinStart.startsWith("MedSwin. Researcher at Swinburne")).toBe(true);
+    expect(medswinStart).toContain("August 2025");
+    const namStart = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "When did Nam A start?") }],
+      "",
+      "When did Nam A start?",
+    );
+    expect(namStart.startsWith("Nam Á Bank, Software Engineer, April 2023")).toBe(true);
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
