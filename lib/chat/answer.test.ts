@@ -3353,6 +3353,12 @@ describe("displayAnswer", () => {
     );
     expect(foodflowNot).toContain("not for a release");
     expect(foodflowNot.split(/(?<=[.!])\s+/).find((sentence) => /\bfoodflow\b/i.test(sentence)) ?? "").toContain("not for a release");
+    const quotientNot = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Quotient not?") }],
+      "",
+      "What is Quotient not?",
+    );
+    expect(quotientNot.split(/(?<=[.!])\s+/).find((sentence) => /\bnot\b/i.test(sentence)) ?? "").toContain("not a deployed product");
     expect(axisNotOwn).toContain("Engine database");
     expect(axisNotOwn.split(/(?<=[.!])\s+/).find((sentence) => /\bown/i.test(sentence)) ?? "").toContain("does not own");
     expect(hardware).toContain("Raspberry");

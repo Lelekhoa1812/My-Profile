@@ -788,6 +788,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(lines.find((sentence) => /\bdoes not own foodflow/i.test(sentence)));
     }
   }
+  if (/\bwhat is\b/i.test(question) && /\bnot\b/i.test(question) && !/\bfoodflow\b/i.test(question)) {
+    const limit = blockSentences.find((sentence) => /\bnot\b/i.test(sentence) && !exposesGap(sentence) && !isLabel(sentence));
+    if (limit) {
+      chosen.length = 0;
+      cap = 2;
+      push(limit);
+    }
+  }
   if (/\bnot\b/i.test(question) && /\bown/i.test(question)) {
     const limits = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bdoes not own\b/i.test(sentence));
     if (limits.length > 0) {
