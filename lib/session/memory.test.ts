@@ -1,8 +1,29 @@
 import { describe, expect, it } from "vitest";
 import type { UIMessage } from "ai";
-import { dropOtherEmployer, groundFollowUp, groundedQuestion, withMemory } from "./memory";
+import { compactForModel, dropOtherEmployer, groundFollowUp, groundedQuestion, MODEL_ROUNDS, withMemory } from "./memory";
 
 const question = { id: "q", role: "user", parts: [{ type: "text", text: "What is his title?" }] } as UIMessage;
+
+describe("compactForModel", () => {
+  it("keeps three rounds and names the dropped subject", () => {
+    const messages = [1, 2, 3, 4].flatMap((round) => [
+      { id: `u${round}`, role: "user" as const, parts: [{ type: "text" as const, text: round === 1 ? "What did he do at Axion?" : `Question ${round}` }] },
+      { id: `a${round}`, role: "assistant" as const, parts: [{ type: "text" as const, text: `Answer ${round}` }] },
+    ]);
+    const packed = compactForModel(messages, MODEL_ROUNDS);
+    expect(packed).toHaveLength(7);
+    expect(packed[0].parts[0]).toMatchObject({ text: "Earlier questions named axion." });
+    expect(packed.at(-1)?.id).toBe("a4");
+  });
+
+  it("leaves three rounds unchanged", () => {
+    const messages = [1, 2, 3].flatMap((round) => [
+      { id: `u${round}`, role: "user" as const, parts: [{ type: "text" as const, text: `Question ${round}` }] },
+      { id: `a${round}`, role: "assistant" as const, parts: [{ type: "text" as const, text: `Answer ${round}` }] },
+    ]);
+    expect(compactForModel(messages)).toEqual(messages);
+  });
+});
 
 describe("withMemory", () => {
   it("leaves the current page transcript alone", () => {

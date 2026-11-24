@@ -171,6 +171,36 @@ export function groundFollowUp(messages: readonly UIMessage[]): UIMessage[] {
   return messages.map((message, item) => item === index ? { ...message, parts: [{ type: "text", text: grounded }] } : message);
 }
 
+export const MODEL_ROUNDS = 3;
+
+export function compactForModel(messages: readonly UIMessage[], rounds = MODEL_ROUNDS): UIMessage[] {
+  const userAt = messages.flatMap((message, index) => message.role === "user" ? [index] : []);
+  if (userAt.length <= rounds) return [...messages];
+  const start = userAt[userAt.length - rounds] ?? 0;
+  const kept = messages.slice(start);
+  const earlier = earlierName(messages.slice(0, start));
+  if (!earlier) return kept;
+  const note: UIMessage = {
+    id: "memory-compact",
+    role: "user",
+    parts: [{ type: "text", text: `Earlier questions named ${earlier}.` }],
+  };
+  return [note, ...kept];
+}
+
+function earlierName(messages: readonly UIMessage[]): string | undefined {
+  let name = "";
+  for (const message of messages) {
+    if (message.role !== "user") continue;
+    const text = messageText(message);
+    const employer = namedEmployer(text);
+    const product = text.match(NAMED_PRODUCT)?.[1];
+    if (employer) name = SPOKEN_EMPLOYER[employer] ?? employer;
+    if (product) name = product;
+  }
+  return name || undefined;
+}
+
 export function withMemory(stored: readonly StoredTurn[], incoming: readonly UIMessage[]): UIMessage[] {
   if (stored.length === 0 || incoming.some((message) => message.role === "assistant")) return [...incoming];
   const prior = stored.flatMap((turn, index) => {

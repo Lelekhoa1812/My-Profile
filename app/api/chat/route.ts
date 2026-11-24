@@ -14,7 +14,7 @@ import { identityCard } from "../../../lib/profile/card";
 import { loadProfile } from "../../../lib/profile/load";
 import { tailForModel } from "../../../lib/session/tail";
 import { loadStoredTurns } from "../../../lib/session/load";
-import { dropOtherEmployer, groundFollowUp, groundedUserText, withMemory } from "../../../lib/session/memory";
+import { compactForModel, dropOtherEmployer, groundFollowUp, groundedUserText, withMemory } from "../../../lib/session/memory";
 import { saveTraces } from "../../../lib/session/traces";
 import { appendTurns } from "../../../lib/session/turns";
 
@@ -69,12 +69,12 @@ export async function POST(request: Request): Promise<Response> {
     tools: createProfileTools(record),
     stopWhen: isStepCount(3),
     maxRetries: 0,
-    maxOutputTokens: 1024,
+    maxOutputTokens: 4096,
     toolOrder: ["lookup_fact", "list_sections", "read_section", "search_sections"],
     prepareStep: ({ stepNumber, steps }) => stepTools(stepNumber, steps, grounded),
   });
   const result = await agent.stream({
-    messages: tailForModel(await convertToModelMessages(groundFollowUp(remembered))),
+    messages: tailForModel(await convertToModelMessages(compactForModel(groundFollowUp(remembered))), 12),
     abortSignal: request.signal,
     timeout: { firstChunkMs: 20_000, chunkMs: 30_000, toolMs: 8_000, stepMs: 45_000, totalMs: 55_000 },
     onEnd: (event) => {

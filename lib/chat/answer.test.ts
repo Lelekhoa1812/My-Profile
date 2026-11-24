@@ -5272,6 +5272,24 @@ describe("displayAnswer", () => {
     expect(medswin).not.toContain("synthetic passport set");
   });
 
+  it("answers the FoodFlow design question and the Mizco outcome question", () => {
+    const design = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How Liam design AI-native software for FoodFlow ERP?") }],
+      "",
+      "How Liam design AI-native software for FoodFlow ERP?",
+    );
+    expect(design).toContain("multi-tenant");
+    expect(design).toContain("separate");
+    expect(design).toContain("approve a write");
+    const outcome = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How did Liam lead the AI team at Mizco, and what was the outcome?") }],
+      "",
+      "How did Liam lead the AI team at Mizco, and what was the outcome?",
+    );
+    expect(outcome).toContain("trust-first");
+    expect(outcome).toContain("50 percent");
+  });
+
   it("answers a catalogue metric question with the recorded list", () => {
     const questions = [
       ["What star count do the public repositories have?", "prompt-me", "star counts"],

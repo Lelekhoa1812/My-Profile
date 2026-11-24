@@ -2233,6 +2233,31 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /rostering/i.test(line));
     if (sentence && !chosen.some((line) => /rostering/i.test(line))) chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
   }
+  if (/\bmizco\b/i.test(question) && /\b(outcome|lead|led)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\btrust-first platform\b/i.test(sentence)),
+      sentences.find((sentence) => /\b50 percent less manual review\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\bfoodflow\b/i.test(question) && /\b(design|architecture|ai-native|native)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\bmulti-tenant food-distribution\b/i.test(sentence)),
+      sentences.find((sentence) => /\baxis is a separate\b/i.test(sentence)),
+      sentences.find((sentence) => /\bapprove a write\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   const openSentences = blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence));
   const workSentences = openSentences.filter((sentence) => /\b(uses|use|led|reads|covers|owns|turns|trains|answers)\b/i.test(sentence));
   const shortUses = workSentences.filter((sentence) => /\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 6);
