@@ -1303,6 +1303,20 @@ describe("displayAnswer", () => {
       "Is CVA live?",
     );
     expect(cvaLive).toContain("cva-mauve.vercel.app");
+    const liveUrl = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the live app URL?") }],
+      "",
+      "What is the live app URL?",
+    );
+    expect(liveUrl).toContain("cva-mauve.vercel.app");
+    expect(liveUrl).not.toContain("SkyLedge");
+    const claraAchieve = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Clara achieve?") }],
+      "",
+      "What did Clara achieve?",
+    );
+    expect(claraAchieve).toContain("recall above 95");
+    expect(claraAchieve).toContain("400,000");
     const handwriting = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the golf scanner do with handwriting?") }],
       "",

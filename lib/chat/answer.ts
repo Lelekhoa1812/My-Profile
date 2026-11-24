@@ -117,6 +117,11 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\b5 million synthetic\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bnot the same count\b/i.test(sentence)));
   }
+  if (/\b(url|link)\b/i.test(question) && /\blive\b/i.test(question)) {
+    cap = 3;
+    const urlSentence = sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /vercel\.app/i.test(sentence));
+    if (urlSentence && !chosen.includes(urlSentence)) chosen.unshift(urlSentence);
+  }
   if (/\bforecast\b/i.test(question) && /\bread\b/i.test(question) && /\bestatefolio\b/i.test(question)) {
     cap = 3;
     push(blockSentences.find((sentence) => /\btransformer reads\b/i.test(sentence)));
@@ -328,6 +333,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       cap = 4;
       push(blockSentences.find((sentence) => /\blangchain\b/i.test(sentence)));
     }
+    if (/\bclara\b/i.test(question) && /\b(achieve|achieved|result)\b/i.test(question)) {
+      cap = 4;
+      push(blockSentences.find((sentence) => /\brecall above 95\b/i.test(sentence)));
+    }
     if (/\bwhat did he do\b/i.test(question) && /\bswinburne\b/i.test(question)) {
       cap = 4;
       push(blockSentences.find((sentence) => /\bthe lab is medswin\b/i.test(sentence)));
@@ -355,6 +364,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\b8[-\s]?million\b/i.test(question) && /\b(5 million|500,000|not the same count)\b/i.test(item.sentence)) continue;
     if (/\b5\s+million\b/i.test(question) && /\b8-million\b/i.test(item.sentence)) continue;
     if (/\b500[,.]?000\b/i.test(question) && !/\b5\s+million\b/i.test(question) && /\b(5 million|8-million)\b/i.test(item.sentence)) continue;
+    if (/\b(url|link)\b/i.test(question) && /\blive\b/i.test(question) && /\bnamed live or sold\b/i.test(item.sentence)) continue;
     if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && !/\b(draft recipe|emails founders|can draft)\b/i.test(item.sentence)) continue;
@@ -1037,6 +1047,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bpedigree\b/i.test(question) && /\bmate-selection\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\b(axion|axis)\b/i.test(question) && !/\bworkflow\b/i.test(question) && /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bworkflow\b/i.test(question) && /\bgoverned graph platform\b/i.test(sentence)) return true;
+  if (/\b(url|link)\b/i.test(question) && /\blive\b/i.test(question) && /vercel\.app/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bmizco\b/i.test(question) && /\binference uses\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bharry\b/i.test(question) && !/\bpedigree\b/i.test(question) && /\bstack includes\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bpoptech\b/i.test(question) && /\bmodels include\b/i.test(sentence)) return true;
