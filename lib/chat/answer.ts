@@ -153,6 +153,7 @@ function vectorAnswer(question: string, outputs: readonly Record<string, unknown
 }
 
 function modelAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (/\b(speech|whisper|vision|forecast)\b/i.test(question)) return "";
   if (!/\bwhat\b/i.test(question) || !/\bmodels?\b/i.test(question) || !/\b(use|uses)\b/i.test(question) || namedEmployer(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(gemini|qwen|timesfm|yolo|tft)\b/i.test(sentence) && sentence.split(/\s+/).length <= 24));
   return [...new Set(lines)].slice(0, 3).join(" ");
@@ -359,6 +360,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bcontrol\b/i.test(question) && /\bstays in control\b/i.test(sentence)) return true;
   if (/\bproduction\b/i.test(question) && !/\bship\b/i.test(question) && /\bnot (?:a|for) a release\b/i.test(sentence)) return true;
   if (/\brank\b/i.test(question) && /\branking\b/i.test(sentence)) return true;
+  if (/\bspeech\b/i.test(question) && /\bwhisper\b/i.test(sentence)) return true;
+  if (/\bforecast\b/i.test(question) && /\bforecasts?\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence) && question.toLowerCase().split(/[^a-z0-9]+/).some((word) => word.length >= 5 && mentions(sentence, word))) return true;

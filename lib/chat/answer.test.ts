@@ -614,6 +614,18 @@ describe("displayAnswer", () => {
       "How does the pedigree engine rank horses?",
     );
     expect(ranking).toContain("ranking");
+    const speech = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What speech model does triage use?") }],
+      "",
+      "What speech model does triage use?",
+    );
+    expect(speech).toContain("Whisper");
+    const bandwidth = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Ericsson forecast?") }],
+      "",
+      "What does Ericsson forecast?",
+    );
+    expect(bandwidth).toContain("bandwidth");
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],
