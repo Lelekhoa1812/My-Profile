@@ -1790,6 +1790,25 @@ describe("displayAnswer", () => {
     );
     expect(presentIt).not.toContain("to present");
     expect(presentIt).not.toContain("July 2026");
+    const coverIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it cover?") }],
+      "",
+      "What does it cover?",
+    );
+    expect(coverIt).toContain("covering sales");
+    expect(coverIt).toContain("cover the traces");
+    expect(coverIt).toContain("clinical records");
+    expect(coverIt).toContain("enrollment");
+    expect(coverIt).not.toContain("July 2026");
+    const includeIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it include?") }],
+      "",
+      "What does it include?",
+    );
+    expect(includeIt).toContain("Azure AI Foundry");
+    expect(includeIt).toContain("vision quality checks");
+    expect(includeIt).toContain("TFT");
+    expect(includeIt).not.toContain("December 2025");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",

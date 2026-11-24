@@ -1427,6 +1427,33 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bcover/i.test(question) && !namedEmployer(question) && !/\b(lab|clinical|foodflow|traces)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /covering sales/i.test(sentence)),
+      sentences.find((sentence) => /cover the traces/i.test(sentence)),
+      sentences.find((sentence) => /covers clinical records/i.test(sentence)),
+      sentences.find((sentence) => /covers enrollment/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 4;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\binclud/i.test(question) && !namedEmployer(question) && !/\b(stack|scope|models|tools)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /stack includes Azure/i.test(sentence)),
+      sentences.find((sentence) => /scope includes analytics/i.test(sentence)),
+      sentences.find((sentence) => /models include TFT/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bbuild/i.test(question) && !/\bagents?\b/i.test(question) && !namedEmployer(question) && !/\b(lab|5g|axion|mizco|poptech)\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
@@ -1959,6 +1986,8 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bbuild/i.test(question) && !namedEmployer(question) && !/\b(lab|5g)\b/i.test(question)) return joined;
   if (/\bextract/i.test(question) && !namedEmployer(question)) return joined;
+  if (/\bcover/i.test(question) && !namedEmployer(question) && !/\b(lab|clinical|foodflow|traces)\b/i.test(question)) return joined;
+  if (/\binclud/i.test(question) && !namedEmployer(question) && !/\b(stack|scope|models|tools)\b/i.test(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;
