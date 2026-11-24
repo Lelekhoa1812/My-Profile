@@ -1973,6 +1973,14 @@ describe("displayAnswer", () => {
     expect(quotientProduct).toContain("moment");
     expect(quotientProduct).toContain("held for review");
     expect(quotientProduct).toContain("not a deployed product");
+    const coachProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is WritingJourney?") }],
+      "",
+      "What is WritingJourney?",
+    );
+    expect(coachProduct).toContain("Hai Au");
+    expect(coachProduct).toContain("scores a submission");
+    expect(coachProduct).toContain("stays in control");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",

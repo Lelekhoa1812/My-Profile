@@ -123,6 +123,13 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     cap = 3;
     push(blockSentences.find((sentence) => /\bkotlin\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bwritingjourney\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\bsold to hai au\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bwriting coach\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bscores a submission\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bstays in control\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bquotient\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\bpoints to the moment\b/i.test(sentence)));
@@ -876,6 +883,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question) && /\bcareer application agent\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bsurvee\b/i.test(question) && /\bhost-run interview\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bquotient\b/i.test(question) && /\brecorded meeting\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bwritingjourney\b/i.test(question) && /\bwriting coach\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\btriage\b/i.test(question) && /\b(speech uses whisper|clinical reasoning uses gemini|vision uses qwen|mimic-iv|medication-delivery)\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
