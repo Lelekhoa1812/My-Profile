@@ -102,7 +102,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const body = chosen.length > 0
     ? chosen
     : blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence)).slice(0, 2);
-  return keptOffer(question, shown, withIdentity(question, withPeriod(body, blockSentences, outputs), blockSentences));
+  const extra = siblingWork(outputs, blockSentences, question);
+  const withExtra = extra && !body.includes(extra) ? [...body, extra] : body;
+  return keptOffer(question, shown, withIdentity(question, withPeriod(withExtra, blockSentences, outputs), blockSentences));
 }
 
 function countedSentence(question: string, sentences: readonly string[], words: readonly string[]): string | undefined {
@@ -178,6 +180,20 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
 
 function employmentPeriod(sentences: readonly string[]): string {
   return sentences.find((sentence) => /\b20\d{2}\b.*\b(20\d{2}|present)\b/i.test(sentence) && sentence.split(/\s+/).length <= 18) ?? "";
+}
+
+function siblingWork(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string): string {
+  if (!/\b(do|did|work|role)\b/i.test(question) || /\b(bertscore|percent|preview|score|cut|pilot|ocr|stack|many)\b/i.test(question)) return "";
+  const employer = namedEmployer(question);
+  if (!employer) return "";
+  const current = blockSentences.join(" ");
+  for (const block of sectionBlocks(outputs)) {
+    const sentences = plainSentences(block);
+    if (sentences.join(" ") === current || !employerMentioned(employer, block)) continue;
+    const work = sentences.find((sentence) => /\b(led|uses|use|trains|covers|built)\b/i.test(sentence) && !isLabel(sentence));
+    if (work && !current.includes(work)) return work;
+  }
+  return "";
 }
 
 function siblingPeriod(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[]): string {

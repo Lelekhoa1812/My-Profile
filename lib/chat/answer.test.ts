@@ -667,6 +667,13 @@ describe("displayAnswer", () => {
       "What did he do at Alta Media?",
     );
     expect(opencv).toContain("OpenCV");
+    const nam = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Nam A Bank?") }],
+      "",
+      "What did he do at Nam A Bank?",
+    );
+    expect(nam).toContain("VietOCR");
+    expect(nam).toContain("REST");
     const aitc = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did AITC build?") }],
       "",
