@@ -1612,6 +1612,15 @@ describe("displayAnswer", () => {
     );
     expect(studyBuddy).toContain("study assistant");
     expect(studyBuddy).not.toContain("Prophet");
+    expect(studyBuddy).not.toContain("Public repositories");
+    const engineOwns = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the Engine own?") }],
+      "",
+      "What does the Engine own?",
+    );
+    expect(engineOwns).toContain("does not own the Engine database");
+    expect(engineOwns).not.toContain("AI vision");
+    expect(engineOwns).not.toContain("governed graph");
     const strengths = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is he good at?") }],
       "",

@@ -113,8 +113,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   if (/\b(do|did|build|built|role|experience)\b/i.test(question) || /\b(his|her) work\b/i.test(question)) {
     push(blockSentences.find((sentence) => isToolList(sentence)));
-    if (!/\b(draft recipe|investor scouting)\b/i.test(question) && !chosen.some((sentence) => /\b(led|built|uses|used|owned|owns|covers|percent|python|ocr)\b/i.test(sentence))) {
-      push(workSentence(blockSentences));
+    const work = workSentence(blockSentences);
+    const archiveLabel = Boolean(work && /^Public repositories\.$/i.test(work) && !/\b(archive|repositor|public)\b/i.test(question));
+    if (!/\b(draft recipe|investor scouting)\b/i.test(question) && !(/\bengine\b/i.test(question) && /\bown/.test(question)) && !archiveLabel && !chosen.some((sentence) => /\b(led|built|uses|used|owned|owns|covers|percent|python|ocr)\b/i.test(sentence))) {
+      push(work);
     }
     const action = blockSentences.find((sentence) => /\b(scores|drafts|detect|reads|localise|localize)\b/i.test(sentence));
     if (!/\b(draft recipe|investor scouting)\b/i.test(question) && action && !chosen.some((sentence) => /\b(scores|drafts|detect|reads|localise|localize)\b/i.test(sentence))) push(action);
@@ -145,6 +147,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && !/\b(draft recipe|emails founders|can draft)\b/i.test(item.sentence)) continue;
     if (/\binvestor scouting\b/i.test(question) && !/\binvestor scouting\b/i.test(item.sentence)) continue;
+    if (/\bengine\b/i.test(question) && /\bown/.test(question) && !/\bengine database\b/i.test(item.sentence)) continue;
+    if (/^Public repositories\.$/i.test(item.sentence) && !/\b(archive|repositor|public)\b/i.test(question)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\b(send|refuse)\b/i.test(question) && !/\b(send|email)\b/i.test(item.sentence) && !/\bdraft recipe\b/i.test(item.sentence)) continue;
     if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && !/\b(send|refuse)\b/i.test(question) && /\bdoes not send\b/i.test(item.sentence)) continue;
     if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && !/\b(own|database)\b/i.test(question) && /\bdoes not own\b/i.test(item.sentence)) continue;
@@ -606,6 +610,7 @@ function specificQuestion(question: string): boolean {
 function withIdentity(question: string, proof: string, blockSentences: readonly string[]): string {
   const opening = blockSentences[0];
   if (!opening || !proof.trim()) return proof;
+  if (/^Public repositories\.?$/i.test(opening) && !/\b(archive|repositor|public)\b/i.test(question)) return proof;
   const chronological = /\b(before|after)\b/i.test(question);
   if (!chronological && opening.split(/\s+/).length > 2) return proof;
   if (/\bpreview\b/i.test(proof) && /\bapprov/i.test(proof)) return proof;
@@ -707,7 +712,7 @@ function focusClause(question: string, sentence: string): string {
   const hit = sentence.split(/,\s+(?:and\s+)?/).find((part) => words.some((word) => part.toLowerCase().includes(word)));
   if (!hit) return sentence;
   const clause = hit.replace(/^.*?:\s*/, "").replace(/\.$/, "").trim();
-  return clause ? `Also public, with no production claim. ${clause[0].toUpperCase()}${clause.slice(1)}.` : sentence;
+  return clause ? `${clause[0].toUpperCase()}${clause.slice(1)}. Also public, with no production claim.` : sentence;
 }
 
 function askWords(question: string): string[] {
@@ -780,6 +785,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bpartners?\b/i.test(question) && /\bpartner work\b/i.test(sentence)) return true;
   if (/\bdraft recipe\b/i.test(question) && /\bdraft recipe does not send email\b/i.test(sentence)) return true;
   if (/\binvestor scouting\b/i.test(question) && /\binvestor scouting builds\b/i.test(sentence)) return true;
+  if (/\bengine\b/i.test(question) && /\bown/.test(question) && /\bdoes not own the engine database\b/i.test(sentence)) return true;
   if (/\bmeasure\b/i.test(question) && /\b(drift|impute|quality)\b/i.test(sentence)) return true;
   if (/\befficiency\b/i.test(question) && /\befficiency\b/i.test(sentence)) return true;
   if (/\b(good at|strengths)\b/i.test(question) && /\bgroups the stack\b/i.test(sentence)) return true;
