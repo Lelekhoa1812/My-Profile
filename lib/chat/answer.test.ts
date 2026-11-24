@@ -1049,6 +1049,13 @@ describe("displayAnswer", () => {
     );
     expect(langchainWhere).toContain("The engine uses LangChain");
     expect(langchainWhere).toContain("Azure AI Foundry");
+    const dockerFor = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use Docker for?") }],
+      "",
+      "What does he use Docker for?",
+    );
+    expect(dockerFor).toContain("MSAL");
+    expect(dockerFor).toContain("Kubernetes");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],

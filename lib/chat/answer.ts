@@ -680,8 +680,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(period);
     }
   }
-  if (/\bwhere\b/i.test(question) && /\buse\b/i.test(question) && !namedEmployer(question) && !/\bmcp\b/i.test(question)) {
-    const tool = question.match(/\buse\s+([A-Za-z0-9.+#-]{2,})/i)?.[1];
+  if (/\buse[sd]?\b/i.test(question) && !namedEmployer(question) && !/\bmcp\b/i.test(question)) {
+    const tool = question.match(/\buse[sd]?\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1];
     if (tool) {
       const named = new RegExp(`\\b${tool.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
       const lines = [...new Set(sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => named.test(sentence) && !/named tools include/i.test(sentence)))];
