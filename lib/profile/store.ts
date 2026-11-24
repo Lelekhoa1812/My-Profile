@@ -184,6 +184,25 @@ function uniqueAlias(sections: readonly ProfileSection[], wanted: string): Profi
   return hits.length === 1 ? hits[0] : undefined;
 }
 
+export function namedEmployer(text: string): "axion" | "harry" | "medswin" | "mizco" | undefined {
+  const value = text.toLowerCase();
+  if (/\b(axion|axis|foodflow)\b/.test(value)) return "axion";
+  if (/\bharry\b/.test(value) || value.includes("black caviar")) return "harry";
+  if (/\bmedswin\b/.test(value) || value.includes("bertscore")) return "medswin";
+  if (/\bmizco\b/.test(value)) return "mizco";
+  return undefined;
+}
+
+function sectionEmployer(section: ProfileSection): ReturnType<typeof namedEmployer> {
+  const id = section.sectionId.toLowerCase();
+  const title = `${section.heading} ${(section.aliases ?? []).join(" ")}`.toLowerCase();
+  if (id.includes("axion") || title.includes("foodflow")) return "axion";
+  if (id.includes("harry")) return "harry";
+  if (id.includes("medswin") || id === "role-swinburne-research") return "medswin";
+  if (id.includes("mizco")) return "mizco";
+  return undefined;
+}
+
 export function asksForExperienceSpan(query: string): boolean {
   const text = query.toLowerCase();
   if (!/\bexperience\b/.test(text) || /\b(at|with)\b/.test(text)) return false;
@@ -266,12 +285,17 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   }
   const complete = hits.filter((hit) => terms.every((term) => hit.title.includes(term)));
   const exactHeading = query.trim().toLowerCase();
-  const top = (complete.length > 0 ? complete : hits).slice().sort((left, right) => {
+  const employer = namedEmployer(query);
+  const ranked = (complete.length > 0 ? complete : hits).slice().sort((left, right) => {
     const leftExact = left.section.heading.toLowerCase() === exactHeading ? 1 : 0;
     const rightExact = right.section.heading.toLowerCase() === exactHeading ? 1 : 0;
     if (leftExact !== rightExact) return rightExact - leftExact;
     return right.score - left.score;
-  }).slice(0, 3);
+  }).filter((hit) => {
+    const owner = sectionEmployer(hit.section);
+    return !employer || !owner || owner === employer;
+  });
+  const top = ranked.slice(0, 3);
   if (top.length === 0) return { found: false as const };
   return {
     found: true as const,

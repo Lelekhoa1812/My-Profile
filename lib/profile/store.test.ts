@@ -181,6 +181,10 @@ describe("profile store", () => {
     expect(write.found && write.sections[0]?.text).toContain("BERTScore");
     expect(research.found && research.sections.some((section) => section.sectionId === "role-swinburne-research")).toBe(true);
     expect(earlier.found && earlier.sections[0]?.sectionId).toBe("role-harry-pedigree");
+    const axion = searchSections(profile.sections, "What LangGraph engine does he run at Axion?");
+    const harry = searchSections(profile.sections, "What agents did he use at Harry?");
+    expect(axion.found && axion.sections.some((section) => section.sectionId === "role-harry-senior")).toBe(false);
+    expect(harry.found && harry.sections.some((section) => section.sectionId === "role-swinburne-research")).toBe(false);
   });
 
   it("opens the degree when the question asks where he studied", () => {

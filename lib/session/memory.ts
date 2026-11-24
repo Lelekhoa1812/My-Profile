@@ -1,14 +1,8 @@
 import type { UIMessage } from "ai";
+import { namedEmployer } from "../profile/store";
 import type { StoredTurn } from "./turns";
 
-export function namedEmployer(text: string): "axion" | "harry" | "medswin" | "mizco" | undefined {
-  const value = text.toLowerCase();
-  if (/\b(axion|axis|foodflow)\b/.test(value)) return "axion";
-  if (/\bharry\b/.test(value) || value.includes("black caviar")) return "harry";
-  if (/\bmedswin\b/.test(value) || value.includes("bertscore")) return "medswin";
-  if (/\bmizco\b/.test(value)) return "mizco";
-  return undefined;
-}
+export { namedEmployer };
 
 export function dropOtherEmployer(messages: readonly UIMessage[]): UIMessage[] {
   const question = [...messages].reverse().find((message) => message.role === "user");
