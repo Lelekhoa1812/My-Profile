@@ -1063,6 +1063,13 @@ describe("displayAnswer", () => {
     );
     expect(ocrUse).toContain("VietOCR");
     expect(ocrUse).toContain("document extraction");
+    const forecastUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for forecasts?") }],
+      "",
+      "What does he use for forecasts?",
+    );
+    expect(forecastUse).toContain("tower telemetry");
+    expect(forecastUse).toContain("TimesFM");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],

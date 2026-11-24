@@ -681,13 +681,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     }
   }
   if (/\buse[sd]?\b/i.test(question) && !namedEmployer(question) && !/\bmcp\b/i.test(question)) {
-    const tool = question.match(/\buse[sd]?\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1] ?? question.match(/\buse[sd]?\s+for\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1];
+    const tool = question.match(/\buse[sd]?\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1] ?? question.match(/\buse[sd]?\s+for\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1] ?? question.match(/\buse[sd]?\s+for\s+(forecasts?)\b/i)?.[1];
     if (tool) {
-      const named = tool.toLowerCase() === "ocr" ? /\b\w*ocr\b/i : new RegExp(`\\b${tool.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      const named = tool.toLowerCase() === "ocr" ? /\b\w*ocr\b/i : /^forecast/i.test(tool) ? /\bforecast\w*/i : new RegExp(`\\b${tool.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
       const seen = new Set<string>();
       const lines: string[] = [];
       for (const sentence of sectionBlocks(outputs).flatMap((item) => plainSentences(item))) {
-        if (!named.test(sentence) || /named tools include/i.test(sentence) || /^Repository:/i.test(sentence) || sentence.split(/\s+/).length < 4) continue;
+        if (!named.test(sentence) || /named tools include/i.test(sentence) || /^Repository:/i.test(sentence)) continue;
+        if (sentence.split(/\s+/).length < 4 && !/\b(use|uses|used)\b/i.test(sentence)) continue;
         const marker = sentence.toLowerCase().match(/\b(?:vietocr|paddleocr)\b/)?.[0];
         if (marker && seen.has(marker)) continue;
         if (marker) seen.add(marker);
