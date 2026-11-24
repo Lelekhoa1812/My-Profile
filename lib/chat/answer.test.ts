@@ -618,6 +618,7 @@ describe("displayAnswer", () => {
     );
     expect(production).toContain("business module");
     expect(production).toContain("not for a release");
+    expect(production.split(/(?<=[.!])\s+/)[0]).toMatch(/business module/i);
     const skyledge = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Is SkyLedge in production?") }],
       "",

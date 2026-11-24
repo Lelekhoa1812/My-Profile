@@ -1289,6 +1289,7 @@ function withIdentity(question: string, proof: string, blockSentences: readonly 
   const opening = blockSentences[0];
   if (!opening || !proof.trim()) return proof;
   if (/^Public repositories\.?$/i.test(opening) && !/\b(archive|repositor|public)\b/i.test(question)) return proof;
+  if (/^Shipped work\.?$/i.test(opening) && /\bfoodflow\b/i.test(proof) && /\bnot for a release\b/i.test(proof)) return proof;
   const chronological = /\b(before|after)\b/i.test(question);
   const sale = /\b(sell|sold|buyer|buy|purchas|acquir|bought)\b/i.test(question);
   if (!chronological && opening.split(/\s+/).length > (sale ? 4 : 2)) return proof;
