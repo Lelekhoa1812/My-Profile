@@ -66,9 +66,9 @@ export const person = {
 };
 
 export const starterQuestions = [
-  "Which one app is live for a customer, and which sales does he keep out of that list?",
-  "What measured change does the resume record for the productionized water-meter scanner, and on how many samples?",
-  "What must a model show a person before he lets the write land?",
+  "What is live for a customer?",
+  "What result did the water-meter model deliver?",
+  "Where must a person approve a write?",
 ];
 
 export const cases: Case[] = [

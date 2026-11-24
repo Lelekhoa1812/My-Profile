@@ -168,9 +168,9 @@ describe("profile store", () => {
   });
 
   it("opens the proof for the three employer questions", () => {
-    const live = searchSections(profile.sections, "Which one app is live for a customer, and which sales does he keep out of that list?");
-    const meter = searchSections(profile.sections, "What measured change does the resume record for the productionized water-meter scanner, and on how many samples?");
-    const write = searchSections(profile.sections, "What must a model show a person before he lets the write land?");
+    const live = searchSections(profile.sections, "What is live for a customer?");
+    const meter = searchSections(profile.sections, "What result did the water-meter model deliver?");
+    const write = searchSections(profile.sections, "Where must a person approve a write?");
     const research = searchSections(profile.sections, "What research did he study at Swinburne?");
     const earlier = searchSections(profile.sections, "What did he build for Harry the Hirer before the senior role?");
     expect(live.found && live.sections[0]?.sectionId).toBe("project-shipped");
