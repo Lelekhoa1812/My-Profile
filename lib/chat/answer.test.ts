@@ -468,6 +468,24 @@ describe("displayAnswer", () => {
     expect(survey.split(/(?<=[.!])\s+/)[0]).toBe("Survee.");
     expect(survey).toContain("MongoDB");
     expect(survey).not.toContain("Medical-Chatbot");
+    const golfOcr = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What OCR did the scorecard use?") }],
+      "",
+      "What OCR did the scorecard use?",
+    );
+    const stayed = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where do Survee answers stay?") }],
+      "",
+      "Where do Survee answers stay?",
+    );
+    const stack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is in his stack?") }],
+      "",
+      "What is in his stack?",
+    );
+    expect(golfOcr.split(/(?<=[.!])\s+/)[0]).toContain("VietOCR");
+    expect(stayed).toContain("MongoDB");
+    expect(stack).toContain("Python");
   });
 
   it("keeps the model sentence when a tool found a section", () => {
