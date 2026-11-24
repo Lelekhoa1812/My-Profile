@@ -92,6 +92,7 @@ function stripRecordLead(sentence: string): string {
   const stripped = sentence
     .replace(/^(according to|based on) the record,\s*/i, "")
     .replace(/^the record notes that\s*/i, "")
+    .replace(/^the record says (?:that )?/i, "")
     .trim();
   return stripped ? stripped[0].toUpperCase() + stripped.slice(1) : "";
 }

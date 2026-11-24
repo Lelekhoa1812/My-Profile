@@ -102,6 +102,11 @@ describe("displayAnswer", () => {
     expect(displayAnswer([], raw)).toBe("CVA has a live app. A sale is not a production release.");
   });
 
+  it("keeps the page archive when the model says the record says it", () => {
+    const raw = '{"sentence": "The record says the visitor page lists the full public archive."}';
+    expect(displayAnswer([], raw)).toBe("The visitor page lists the full public archive.");
+  });
+
   it("drops a sentence that narrates the record and keeps the answer", () => {
     const text = dropRecordTalk(
       "Liam's job title is Senior AI Software Engineer. The record lists the current title as Senior AI Software Engineer. The page title field reads AI Software Engineer.",
