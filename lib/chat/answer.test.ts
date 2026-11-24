@@ -1132,6 +1132,15 @@ describe("displayAnswer", () => {
       "When did the VietDan cloud role start?",
     );
     expect(vietdanCloudStart).toContain("June 2022");
+    const vietdanCloudRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "At VietDan, what is cloud?") }],
+      "",
+      "At VietDan, what is cloud?",
+    );
+    expect(vietdanCloudRole).toContain("Cloud Software Engineer");
+    expect(vietdanCloudRole).toContain("June 2022");
+    expect(vietdanCloudRole).toContain("AWS IoT");
+    expect(vietdanCloudRole).not.toContain("Jetson");
     const medswinStart = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "When did MedSwin start?") }],
       "",

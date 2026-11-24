@@ -1860,6 +1860,7 @@ function codeLanguageAnswer(question: string, outputs: readonly Record<string, u
 function cloudAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (!/\bcloud\b/i.test(question) || /\b(role|when|start|started|did)\b/i.test(question) || /\b(estatefolio|cva|codoptic|roster|survee|quotient|adhd|writingjourney|acnt|free-router|medchat|sall-?e|skyledge|medviet|passport|stt-studio|golf)\b/i.test(question)) return "";
   const employer = namedEmployer(question);
+  if (employer === "vietdan") return "";
   const lines = sectionBlocks(outputs).flatMap((block) => {
     if (employer && !new RegExp(`\\b${employer}\\b`, "i").test(block)) return [];
     return plainSentences(block).filter((sentence) => sentence.split(/\s+/).length <= 18 && /\b(aws|azure)\b/i.test(sentence));
