@@ -128,6 +128,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(drift);
     }
   }
+  if (/\bqwen\b/i.test(question) && /\bchecks?\b/i.test(question)) {
+    const checks = sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bqwen/i.test(sentence) && /\bchecks\b/i.test(sentence));
+    if (checks) {
+      chosen.length = 0;
+      cap = 1;
+      push(checks);
+    }
+  }
   if (/\brecipes\b/i.test(question) && !/\b(draft|export|email)\b/i.test(question)) {
     const recipes = sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bthe recipes are\b/i.test(sentence));
     if (recipes) {
@@ -1001,10 +1009,11 @@ function toolDutyAnswer(question: string, outputs: readonly Record<string, unkno
   const name = raw?.toLowerCase();
   if (!raw || !name || ["the", "his", "her", "its", "this", "that"].includes(name)) return "";
   const token = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const named = new RegExp(`(?<![\\w-])${token}\\b`, "i");
+  const named = new RegExp(`(?<![\\w-])${token}(?![a-z])`, "i");
   const keep = (sentence: string) => {
     const length = sentence.split(/\s+/).length;
-    return named.test(sentence) && !/named tools include/i.test(sentence) && !/^repository:/i.test(sentence) && !/^public repositories/i.test(sentence) && length >= 4 && length <= 24;
+    const shortDuty = length === 3 && /\b(use|uses|used|checks)\b/i.test(sentence);
+    return named.test(sentence) && !/named tools include/i.test(sentence) && !/^repository:/i.test(sentence) && !/^public repositories/i.test(sentence) && (length >= 4 || shortDuty) && length <= 24;
   };
   const productLines = sectionBlocks(outputs).filter((block) => !/public repositories/i.test(block)).flatMap((block) => plainSentences(block).filter(keep));
   const archiveLines = sectionBlocks(outputs).filter((block) => /public repositories/i.test(block)).flatMap((block) => plainSentences(block).filter(keep));

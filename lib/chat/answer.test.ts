@@ -1616,6 +1616,21 @@ describe("displayAnswer", () => {
       "Where is CVA live?",
     );
     expect(cvaWhere).toContain("cva-mauve.vercel.app");
+    const qwenDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Qwen do?") }],
+      "",
+      "What does Qwen do?",
+    );
+    expect(qwenDuty).toContain("Vision uses Qwen-VL");
+    expect(qwenDuty).toContain("handwritten corrections");
+    expect(qwenDuty).not.toContain("Whisper");
+    const qwenCheck = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Qwen check?") }],
+      "",
+      "What does Qwen check?",
+    );
+    expect(qwenCheck).toContain("handwritten corrections");
+    expect(qwenCheck).not.toContain("Whisper");
     const fastapiDuty = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does FastAPI do?") }],
       "",
