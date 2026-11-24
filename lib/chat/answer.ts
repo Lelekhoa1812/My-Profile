@@ -173,6 +173,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bstack\b/i.test(question) && /\bpython\b/i.test(sentence)) return true;
   if (/\b(run|running|deploy)\b/i.test(question) && /\b(raspberry|jetson|aws|docker|fastapi)\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
+  if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\b(refuse|send)\b/i.test(question) && /\bdoes not send\b/i.test(sentence)) {
     if (/\bexport\b/i.test(question)) return /\bexport\b/i.test(sentence);
     if (/\bdraft\b/i.test(question)) return /\bdraft\b/i.test(sentence);

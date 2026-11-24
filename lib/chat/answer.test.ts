@@ -528,6 +528,18 @@ describe("displayAnswer", () => {
     expect(draft.split(/(?<=[.!])\s+/)[0]).toContain("does not send email");
     expect(hardware).toContain("Raspberry");
     expect(signals).toContain("10-signal");
+    const embeddings = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the mate-selection engine use for embeddings?") }],
+      "",
+      "What did the mate-selection engine use for embeddings?",
+    );
+    const ericsson = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Is the Ericsson build a named live customer app?") }],
+      "",
+      "Is the Ericsson build a named live customer app?",
+    );
+    expect(embeddings).toContain("64-dimensional");
+    expect(ericsson).toContain("not a named live customer app");
   });
 
   it("keeps the model sentence when a tool found a section", () => {
