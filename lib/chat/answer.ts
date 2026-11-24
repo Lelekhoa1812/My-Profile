@@ -953,6 +953,17 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(title);
     }
   }
+  if (/\barchitecture\b/i.test(question) && /\bmedswin\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const extension = sentences.find((sentence) => /\bextends the medswin architecture\b/i.test(sentence));
+    if (extension) {
+      chosen.length = 0;
+      cap = 2;
+      const label = sentences.find((sentence) => /^MedVietAI\.?$/i.test(sentence));
+      if (label) chosen.push(label.endsWith(".") ? label : `${label}.`);
+      push(extension);
+    }
+  }
   if (/\bdeliver/i.test(question) && !/\b(drone|medication|staged|foodflow)\b/i.test(question)) {
     const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bdeliver/i.test(sentence) && !exposesGap(sentence));
     if (lines.length > 0) {

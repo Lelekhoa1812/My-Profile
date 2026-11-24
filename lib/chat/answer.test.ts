@@ -999,6 +999,14 @@ describe("displayAnswer", () => {
     expect(delivered).toContain("medication-delivery");
     expect(delivered).toContain("delivery scheduling");
     expect(delivered).toContain("staged delivery");
+    const architecture = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the MedSwin architecture?") }],
+      "",
+      "What is the MedSwin architecture?",
+    );
+    expect(architecture).toContain("MedViet");
+    expect(architecture).toContain("extends the MedSwin architecture");
+    expect(architecture.split(/(?<=[.!])\s+/)[0]).not.toContain("BERTScore");
     const ensemble = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the pedigree engine include?") }],
       "",
