@@ -42,6 +42,7 @@ export function createProfileTools(record: ProfileRecord): ToolSet {
         if (asksForPlace(input.query)) return lookupFacts(facts, { key: "location" });
         if (/\bcity\b/i.test(input.query) && /\b(it|that)\b/i.test(input.query) && !namedEmployer(input.query)) return lookupFacts(facts, { key: "location" });
         if (asksForExperienceSpan(input.query)) return lookupFacts(facts, { key: "experience" });
+        if (/\bpage title\b/i.test(input.query)) return lookupFacts(facts, { key: "page_title" });
         if (asksForTitle(input.query)) return lookupFacts(facts, { key: "public_title" });
         if (/\bwho is (he|him)\b/i.test(input.query) && !namedEmployer(input.query)) {
           const rows = ["full_name", "also_known_as", "public_title"].flatMap((key) => {

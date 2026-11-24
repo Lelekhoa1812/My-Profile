@@ -259,6 +259,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: Boolean(percentIds?.length), ids: percentIds ?? [] },
     { when: Boolean(adjacent?.length), ids: adjacent ?? [] },
     { when: text.includes("axion") && /\brole\b/.test(text) && /\b(start|started|begin|began|when)\b/.test(text), ids: ["role-axion"] },
+    { when: text.includes("axion") && /\bwhen\b/.test(text) && /\b(start|started|begin|began)\b/.test(text) && !/\b(recipe|workflow)\b/.test(text), ids: ["role-axion"] },
     { when: text.includes("axion") && (text.includes("axis") || text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: /\b(build|built)\b/.test(text) && text.includes("axion") && !/\b(workflow|engine|recipe)\b/.test(text), ids: ["role-axion"] },
     { when: text.includes("axis") && (text.includes("write") || text.includes("preview") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },

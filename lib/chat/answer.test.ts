@@ -973,6 +973,13 @@ describe("displayAnswer", () => {
       "What is his current title?",
     );
     expect(currentTitle).toBe("AI Software Engineer");
+    const axionBegan = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "When did Axion start?") }],
+      "",
+      "When did Axion start?",
+    );
+    expect(axionBegan).toContain("July 2026");
+    expect(axionBegan).not.toContain("saved persona");
     const estatefolioIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is EstateFolio?") }],
       "",

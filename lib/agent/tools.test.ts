@@ -12,6 +12,15 @@ describe("profile tools", () => {
     expect(lookup.description).toContain("use search_sections instead");
   });
 
+  it("returns the page title when the question names the page title", async () => {
+    const tools = createProfileTools({ facts: profile.facts, sections: profile.sections, source: "file" });
+    const search = tools.search_sections as unknown as { execute: (input: { query: string }) => Promise<{ found: boolean; facts?: { label: string; value: string }[] }> };
+    const result = await search.execute({ query: "What page title does the site use?" });
+    expect(result.found).toBe(true);
+    expect(result.facts?.[0]?.label).toBe("Page title");
+    expect(result.facts?.[0]?.value).toBe("AI Software Engineer");
+  });
+
   it("returns the location fact when the question asks where he lives", async () => {
     const tools = createProfileTools({ facts: profile.facts, sections: profile.sections, source: "file" });
     const search = tools.search_sections as unknown as { execute: (input: { query: string }) => Promise<{ found: boolean; facts?: { value: string }[] }> };
