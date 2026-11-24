@@ -1459,6 +1459,92 @@ describe("displayAnswer", () => {
     );
     expect(enrollIt).toContain("enrollment");
     expect(enrollIt).toContain("attendance");
+    const citeIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it cite?") }],
+      "",
+      "What does it cite?",
+    );
+    expect(citeIt).toContain("citation-grounded");
+    expect(citeIt).toContain("citation checks");
+    expect(citeIt).not.toContain("5 million");
+    const explainIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it explain?") }],
+      "",
+      "What does it explain?",
+    );
+    expect(explainIt).toContain("explains the error");
+    expect(explainIt).toContain("LLM explanations");
+    const trainIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it train?") }],
+      "",
+      "What does it train?",
+    );
+    expect(trainIt).toContain("LoRA");
+    expect(trainIt).toContain("VietOCR");
+    const guardIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it guard?") }],
+      "",
+      "What does it guard?",
+    );
+    expect(guardIt).toContain("safety guardrails");
+    expect(guardIt).not.toContain("LoRA");
+    const embedIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it embed?") }],
+      "",
+      "What does it embed?",
+    );
+    expect(embedIt).toContain("pedigree embeddings");
+    const validateIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it validate?") }],
+      "",
+      "What does it validate?",
+    );
+    expect(validateIt).toContain("Validators check");
+    expect(validateIt).toContain("cross-validation");
+    expect(validateIt).toContain("validation");
+    const recogniseIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it recognise?") }],
+      "",
+      "What does it recognise?",
+    );
+    expect(recogniseIt).toContain("numeric recognition");
+    expect(recogniseIt).toContain("passport field recognition");
+    const recommendIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it recommend?") }],
+      "",
+      "What does it recommend?",
+    );
+    expect(recommendIt).toContain("energy recommendations");
+    const graphIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it graph?") }],
+      "",
+      "What does it graph?",
+    );
+    expect(graphIt).toContain("governed graph");
+    expect(graphIt).toContain("graph expansion");
+    expect(graphIt).toContain("spatio-temporal graph");
+    const scoreIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it score?") }],
+      "",
+      "What does it score?",
+    );
+    expect(scoreIt).toContain("scores and exports");
+    expect(scoreIt).toContain("scores role fit");
+    expect(scoreIt).toContain("scores a submission");
+    const traceIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it trace?") }],
+      "",
+      "What does it trace?",
+    );
+    expect(traceIt).toContain("OpenTelemetry");
+    expect(traceIt).toContain("shows traces");
+    const retrieveIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it retrieve?") }],
+      "",
+      "What does it retrieve?",
+    );
+    expect(retrieveIt).toContain("BM25");
+    expect(retrieveIt).toContain("clinical records");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",

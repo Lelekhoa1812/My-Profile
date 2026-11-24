@@ -1255,6 +1255,59 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       chosen.push(covered.endsWith(".") ? covered : `${covered}.`);
     }
   }
+  const keepSentences = (pattern: RegExp, limit: number) => {
+    const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => pattern.test(sentence) && !exposesGap(sentence));
+    const unique = [...new Set(lines)].slice(0, limit);
+    if (unique.length === 0) return;
+    chosen.length = 0;
+    cap = limit;
+    for (const sentence of unique) chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+  };
+  if (/\bcite/i.test(question) && !/\b(million|synthetic|cases)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/citation-grounded|citation checks/i, 2);
+  }
+  if (/\bexplain/i.test(question) && !/\b(pedigree|writingjourney|writing coach|ielts|llm)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/explains the error|LLM explanations/i, 2);
+  }
+  if (/\btrain/i.test(question) && !/\b(he|him|his|lab)\b/i.test(question) && !namedEmployer(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /LoRA/i.test(sentence) && /500,000/.test(sentence)),
+      sentences.find((sentence) => /trains VietOCR/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 0) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\bguard/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/safety guardrails/i, 1);
+  }
+  if (/\bembed/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/pedigree embeddings/i, 1);
+  }
+  if (/\bvalidat/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/Validators check|cross-validation|shows traces, confidence gates, and validation/i, 3);
+  }
+  if (/\brecogni/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/recognition/i, 1);
+  }
+  if (/\brecommend/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/recommendations/i, 1);
+  }
+  if (/\bgraph\b/i.test(question) && !/\b(ericsson|use|uses|used|for|forecast|hanoi|estatefolio|st-gnn)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/\bgraph/i, 5);
+  }
+  if (/\bscore\b/i.test(question) && !/\b(scored|scoring|bert|clara|recall|precision|survee|people|writingjourney|writing coach|cva|ielts)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/then scores and exports|scores role fit|scores a submission/i, 3);
+  }
+  if (/\btrace/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/cover the traces|shows traces/i, 2);
+  }
+  if (/\bretriev/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/Retrieval uses agentic chunking|Agentic retrieval covers clinical records/i, 2);
+  }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));
@@ -1769,6 +1822,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bforecast/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|read|reads|data|graph)\b/i.test(question)) return joined;
   if (/\bschedul/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bdraft/i.test(question) && !/\b(send|recipe|on|axis|drafted)\b/i.test(question) && !namedEmployer(question)) return joined;
+  if (/\b(cite|explain|train|guard|embed|validat|recogni|recommend|graph|score|trace|retriev)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;
