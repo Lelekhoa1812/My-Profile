@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = identityAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -124,6 +124,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\b(code|coding|programming)\b/i.test(question) && /\b(vietnamese|mandarin|fluent)\b/i.test(item.sentence)) continue;
     if (/the resume also uses the phrase/i.test(item.sentence) && !/\bphrase\b/i.test(question)) continue;
     if (orgLine && /\b(what is|tell me about)\b/i.test(question) && !/\borg\b/i.test(question) && /hugging face org is/i.test(item.sentence)) continue;
+    if (/\b(good at|strengths)\b/i.test(question) && /\blanguages:/i.test(item.sentence)) continue;
     if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\b(send|refuse)\b/i.test(question) && !/\b(send|email)\b/i.test(item.sentence) && !/\bdraft recipe\b/i.test(item.sentence)) continue;
@@ -381,6 +382,16 @@ function otherRepo(question: string, sentence: string): boolean {
   return named.length > 0 && asked.every((name) => !body.includes(name));
 }
 
+function codeLanguageAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\b(programming|coding)\b/i.test(question) || !/\blanguages?\b/i.test(question)) return "";
+  const sentence = sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((line) => /named tools include/i.test(line));
+  if (!sentence) return "";
+  const names = ["Python", "Java", "TypeScript", "C#", "SQL"].filter((name) => sentence.includes(name));
+  const last = names.at(-1);
+  if (names.length < 2 || !last) return "";
+  return `Named tools include ${names.slice(0, -1).join(", ")}, and ${last}.`;
+}
+
 function cloudAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (!/\bcloud\b/i.test(question) || namedEmployer(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => sentence.split(/\s+/).length <= 18 && /\b(aws|azure)\b/i.test(sentence)));
@@ -623,6 +634,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bship\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
   if (/\btext\b/i.test(question) && /\bfinbert\b/i.test(sentence)) return true;
   if (/\bmeasure\b/i.test(question) && /\b(drift|impute|quality)\b/i.test(sentence)) return true;
+  if (/\b(good at|strengths)\b/i.test(question) && /\bgroups the stack\b/i.test(sentence)) return true;
   if (/\binclude/i.test(question) && /\b(ensemble|dosage)\b/i.test(sentence)) return true;
   if (/\bdosage\b/i.test(question) && /\bdosage\b/i.test(sentence)) return true;
   if (/\blive app\b/i.test(question) && /\bonly named live app\b/i.test(sentence)) return true;

@@ -1296,6 +1296,21 @@ describe("displayAnswer", () => {
     );
     expect(studyBuddy).toContain("study assistant");
     expect(studyBuddy).not.toContain("Prophet");
+    const strengths = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is he good at?") }],
+      "",
+      "What is he good at?",
+    );
+    expect(strengths).toContain("machine learning");
+    expect(strengths).not.toContain("Mandarin");
+    const codeLanguages = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What programming languages does he use?") }],
+      "",
+      "What programming languages does he use?",
+    );
+    expect(codeLanguages).toContain("Python");
+    expect(codeLanguages).toContain("TypeScript");
+    expect(codeLanguages).not.toContain("Kubernetes");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",
