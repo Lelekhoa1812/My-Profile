@@ -2022,6 +2022,21 @@ describe("displayAnswer", () => {
     expect(artefactCut).toContain("50 percent");
     expect(artefactCut).not.toContain("40 percent");
     expect(artefactCut).not.toContain("BERTScore");
+    const prepared = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he prepare?") }],
+      "",
+      "What does he prepare?",
+    );
+    expect(prepared).toContain("artefact preparation");
+    expect(prepared).toContain("50 percent");
+    expect(prepared).not.toContain("vLLM");
+    const implemented = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he implement?") }],
+      "",
+      "What does he implement?",
+    );
+    expect(implemented).toContain("implementation");
+    expect(implemented).not.toContain("LangChain");
     const labLanguages = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What languages does the lab cover?") }],
       "",

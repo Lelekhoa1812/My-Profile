@@ -1269,6 +1269,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\bexplain/i.test(question) && !/\b(pedigree|writingjourney|writing coach|ielts|llm)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/explains the error|LLM explanations/i, 2);
   }
+  if (/\bprepar/i.test(question) && !namedEmployer(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /artefact preparation/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
   if (/\btrain/i.test(question) && !/\blab\b/i.test(question) && !namedEmployer(question) && (!/\b(he|him|his)\b/i.test(question) || /\b(use|uses|used|for)\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [

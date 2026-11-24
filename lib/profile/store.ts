@@ -703,6 +703,8 @@ function covers(text: string, term: string): boolean {
   if (term.endsWith("e") && term.length >= 6 && new RegExp(`\\b${term.slice(0, -1)}al\\b`).test(text)) return true;
   const stem = term.replace(/(?:ise|ize)$/, "");
   if (stem !== term && new RegExp(`\\b${stem}(?:ise|ize|isation|ization)\\b`).test(text)) return true;
+  if (term.length >= 6 && new RegExp(`\\b${term}ation\\b`).test(text)) return true;
+  if (term.endsWith("e") && term.length >= 6 && new RegExp(`\\b${term.slice(0, -1)}ation\\b`).test(text)) return true;
   return term.length >= 6 && new RegExp(`\\b${term}ion\\b`).test(text);
 }
 
