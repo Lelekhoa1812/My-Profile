@@ -242,7 +242,12 @@ function llmAnswer(question: string, outputs: readonly Record<string, unknown>[]
 }
 
 function withReleaseLimit(question: string, proof: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!proof.trim() || !/\b(production|live)\b/i.test(question) || /\bship\b/i.test(question)) return proof;
+  if (!proof.trim()) return proof;
+  if (/\bship\b/i.test(question) && !/deployed product/i.test(proof)) {
+    const limit = plainSentences(matchingBlock(outputs, question)).find((sentence) => /not a deployed product/i.test(sentence));
+    if (limit) return `${proof} ${limit}`.trim();
+  }
+  if (!/\b(production|live)\b/i.test(question) || /\bship\b/i.test(question)) return proof;
   if (/\bnot (?:a|for) a (?:production )?release\b/i.test(proof) || /\bonly named live app\b/i.test(proof)) return proof;
   if (!/\b(skyledge|roster|golf|writingjourney|writing coach)\b/i.test(question) && !/\b(sold|acquired)\b/i.test(proof)) return proof;
   const sentences = sectionBlocks(outputs).flatMap((block) => plainSentences(block));
@@ -351,6 +356,7 @@ function employmentPeriod(sentences: readonly string[]): string {
 function workSentence(sentences: readonly string[]): string | undefined {
   const content = sentences.filter((sentence) => !isLabel(sentence) && !employmentPeriod([sentence]) && sentence.split(/\s+/).length >= 4);
   return content.find((sentence) => /\b(led|trains|built|covers|owns)\b/i.test(sentence))
+    ?? content.find((sentence) => /\breads\b/i.test(sentence) && /\b(telemetry|meter|bandwidth|photos)\b/i.test(sentence))
     ?? content.find((sentence) => /\b(uses|use|used|percent|ocr)\b/i.test(sentence))
     ?? content[0];
 }

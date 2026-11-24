@@ -951,6 +951,19 @@ describe("displayAnswer", () => {
       "What is MongoDB used for?",
     );
     expect(mongoUse).toContain("Answers stay in MongoDB");
+    const ericssonWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Ericsson?") }],
+      "",
+      "What did he do at Ericsson?",
+    );
+    expect(ericssonWork).toContain("tower telemetry");
+    const quotientShip = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Quotient ship?") }],
+      "",
+      "What did Quotient ship?",
+    );
+    expect(quotientShip).toContain("brief");
+    expect(quotientShip).toContain("not a deployed product");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
