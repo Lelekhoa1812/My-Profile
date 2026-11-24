@@ -1347,6 +1347,15 @@ describe("displayAnswer", () => {
     );
     expect(authenticate).toContain("MSAL");
     expect(authenticate).toContain("customer data path");
+    expect(authenticate).not.toContain("December 2025");
+    const showIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it show?") }],
+      "",
+      "What does it show?",
+    );
+    expect(showIt).toContain("shows a preview");
+    expect(showIt).toContain("cockpit shows traces");
+    expect(showIt).not.toContain("July 2026");
     const execute = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it execute?") }],
       "",

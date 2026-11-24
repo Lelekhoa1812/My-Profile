@@ -1457,6 +1457,18 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bshows?\b/i.test(question) && !namedEmployer(question) && !/\b(cockpit|axis|preview|write)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /shows a preview/i.test(sentence)),
+      sentences.find((sentence) => /cockpit shows traces/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question) && !namedEmployer(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
@@ -2007,6 +2019,8 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bcover/i.test(question) && !namedEmployer(question) && !/\b(lab|clinical|foodflow|traces)\b/i.test(question)) return joined;
   if (/\binclud/i.test(question) && !namedEmployer(question) && !/\b(stack|scope|models|tools)\b/i.test(question)) return joined;
   if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question) && !namedEmployer(question)) return joined;
+  if (/\bshows?\b/i.test(question) && !namedEmployer(question) && !/\b(cockpit|axis|preview|write)\b/i.test(question)) return joined;
+  if (/\bauthenticat/i.test(question) && !namedEmployer(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;
