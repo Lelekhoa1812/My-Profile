@@ -1838,7 +1838,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
-  if (/\bpublic\b/i.test(question) && /\brepositor/i.test(question) && /\b(star|stars|user|users|revenue|count|counts)\b/i.test(question)) {
+  if (/\bpublic\b/i.test(question) && /\brepositor/i.test(question) && (/\b(star|stars|user|users|revenue|count|counts)\b/i.test(question) || /\bwhat (?:do|does)\b/i.test(question))) {
     const block = sectionBlocks(outputs).find((item) => /\bno production claim\b/i.test(item));
     const lines = block ? plainSentences(block) : [];
     if (lines.length > 1) {
@@ -1847,7 +1847,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
     }
   }
-  if (/\bhugging face\b/i.test(question) && /\bmodels\b/i.test(question) && /\b(accuracy|download|downloads)\b/i.test(question) && !/\bdatasets?\b/i.test(question)) {
+  if (/\bhugging face\b/i.test(question) && /\bmodels\b/i.test(question) && (/\b(accuracy|download|downloads)\b/i.test(question) || /\bwhat (?:do|does)\b/i.test(question)) && !/\bdatasets?\b/i.test(question)) {
     const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bthe names are\b/i.test(line));
     if (sentence) {
       chosen.length = 0;

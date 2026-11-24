@@ -5279,6 +5279,9 @@ describe("displayAnswer", () => {
       ["What revenue do the public repositories have?", "StudyBuddy", "revenue for these"],
       ["What accuracy do the Hugging Face models report?", "MNIST", "does not include"],
       ["What download count do the Hugging Face models have?", "graffiti detection", "most downloaded"],
+      ["What does Public repositories do?", "prompt-me", "star counts"],
+      ["What do the public repositories do?", "undercut", "star counts"],
+      ["What do the Hugging Face models do?", "MNIST", "does not include"],
     ];
     for (const [question, proof, avoid] of questions) {
       const answer = displayAnswer(
