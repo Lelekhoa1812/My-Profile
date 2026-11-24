@@ -933,6 +933,20 @@ describe("displayAnswer", () => {
     );
     expect(namPercent).toContain("Nam");
     expect(namPercent).not.toContain("35 percent");
+    const harryFounder = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who founded Harry the Hirer?") }],
+      "",
+      "Who founded Harry the Hirer?",
+    );
+    expect(harryFounder).toContain("Harry the Hirer");
+    expect(harryFounder).not.toContain("MedViet");
+    const harryPartners = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What partners does Harry have?") }],
+      "",
+      "What partners does Harry have?",
+    );
+    expect(harryPartners).toContain("Harry the Hirer");
+    expect(harryPartners).not.toContain("Nvidia");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
