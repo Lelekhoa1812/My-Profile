@@ -4204,6 +4204,8 @@ describe("displayAnswer", () => {
       "What does stt-studio do?",
     );
     expect(studio).toContain("faster-whisper");
+    expect(studio).toContain("not a packaged production app");
+    expect(studio).not.toContain("user count");
     const survee = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Survee do?") }],
       "",
@@ -4352,6 +4354,13 @@ describe("displayAnswer", () => {
     expect(quotientDoes).toContain("recorded meeting");
     expect(quotientDoes).toContain("points to the moment");
     expect(quotientDoes).toContain("held for review");
+    const quotientHolds = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Quotient hold?") }],
+      "",
+      "What does Quotient hold?",
+    );
+    expect(quotientHolds).toContain("held for review");
+    expect(quotientHolds).not.toContain("user count");
     expect(quotientDoes).toContain("not a deployed product");
     expect(quotientDoes).not.toContain("user count");
     const coachProduct = displayAnswer(
