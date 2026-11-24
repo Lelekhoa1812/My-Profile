@@ -709,6 +709,12 @@ describe("displayAnswer", () => {
       "What does Survee refuse to do?",
     );
     expect(docker.split(/(?<=[.!])\s+/)[0]).toContain("Docker");
+    const documents = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What reads the Mizco documents?") }],
+      "",
+      "What reads the Mizco documents?",
+    );
+    expect(documents).toContain("PDF");
     expect(coach).toContain("rewrite");
     expect(refuse).toContain("does not score");
     expect(validators).toContain("evidence");

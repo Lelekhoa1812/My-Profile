@@ -248,7 +248,7 @@ function siblingPeriod(outputs: readonly Record<string, unknown>[], blockSentenc
 function mentions(sentence: string, word: string): boolean {
   if (new RegExp(`\\b${word}(?:s|es|ed|ing)?\\b`, "i").test(sentence)) return true;
   if (word === "ocr" && /\b\w*ocr\b/i.test(sentence)) return true;
-  if (word.endsWith("s") && word.length > 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
+  if (word.endsWith("s") && word.length >= 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
   if (word.endsWith("e") && new RegExp(`\\b${word.slice(0, -1)}ed\\b`, "i").test(sentence)) return true;
   if (word.length >= 6 && new RegExp(`\\b${word}ion\\b`, "i").test(sentence)) return true;
   return word.length >= 8 && new RegExp(`\\b${word.slice(0, word.length - 3)}(?:ing|ed|es|ion|ten)\\b`, "i").test(sentence);
