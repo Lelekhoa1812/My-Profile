@@ -27,7 +27,7 @@
       "heading": "Axion workflow engine",
       "sourceType": "project",
       "aliases": ["startup outreach", "investor scouting", "portfolio reporting"],
-      "text": "Axion workflow engine. A governed graph platform in the Engine monorepo, separate from FoodFlow. The recipes are startup scouting, investor scouting, and portfolio reporting. Startup scouting searches a list and public profiles with Apollo, Seamless, Tavily, and web crawling, then scores and exports. That export does not send a message. Investor scouting builds a people list so a startup can look for investors. One recipe starts from a saved persona. Portfolio reporting writes company updates as versioned artifacts. The draft recipe does not send email. A separate recipe emails founders. The record does not call those recipes capital-markets products. Axis can draft on the same host. Axis does not own the Engine database or FoodFlow's data."
+      "text": "Axion workflow engine. A governed graph platform in the Engine monorepo, separate from FoodFlow. The recipes are startup scouting, investor scouting, and portfolio reporting. Startup scouting searches a list and public profiles with Apollo, Seamless, Tavily, and web crawling, then scores and exports. That export does not send a message. Investor scouting builds a people list so a startup can look for investors. One recipe starts from a saved persona. Portfolio reporting writes company updates as versioned artifacts. The draft recipe does not send email. A separate recipe emails founders. Those recipes are not capital-markets products. Axis can draft on the same host. Axis does not own the Engine database or FoodFlow's data."
     },
     {
       "sectionId": "project-shipped",
@@ -230,7 +230,7 @@
       "heading": "Ericsson 5G digital twin",
       "sourceType": "project",
       "aliases": ["Ericsson", "5G", "Swinburne"],
-      "text": "Ericsson 5G digital twin. The resume says Ericsson Vietnam and Swinburne funded this predictive-maintenance platform. It reads tower telemetry, forecasts bandwidth pressure, and detects degradation. The stack is C# .NET, MySQL, and ONNX Runtime. Forecasting uses a spatio-temporal graph model and a temporal fusion transformer. Anomaly detection uses an autoencoder. Drift monitoring uses the population stability index. The resume calls the build production-grade. The record does not name it as a live customer app, and it does not include a deployment count."
+      "text": "Ericsson 5G digital twin. The resume says Ericsson Vietnam and Swinburne funded this predictive-maintenance platform. The resume calls the build production-grade, and it is not a named live customer app. It reads tower telemetry, forecasts bandwidth pressure, and detects degradation. The stack is C# .NET, MySQL, and ONNX Runtime. Forecasting uses a spatio-temporal graph model and a temporal fusion transformer. Anomaly detection uses an autoencoder. Drift monitoring uses the population stability index. The record does not include a deployment count."
     },
     {
       "sectionId": "project-adhd",
@@ -279,7 +279,7 @@
       "heading": "Water-meter scanner",
       "sourceType": "project",
       "aliases": ["water-meter scanner", "Jetson"],
-      "text": "Water-meter scanner. ML work for VietDan JSC, December 2024 to February 2025. It reads meter photos so staff enter fewer readings. The resume records about 35 percent less manual meter processing, on more than 10,000 samples. The resume says the scanner was productionized. Deployment used Jetson and AWS. The record does not name a public app or a site count. Repository: Lelekhoa1812/Water-Meter-Scanner."
+      "text": "Water-meter scanner. ML work for VietDan JSC, December 2024 to February 2025. It reads meter photos so staff enter fewer readings. The resume records about 35 percent less manual meter processing, on more than 10,000 samples. The resume says the scanner was productionized, and it is not a named public app. Deployment used Jetson and AWS. The record does not include a site count. Repository: Lelekhoa1812/Water-Meter-Scanner."
     },
     {
       "sectionId": "project-passport",

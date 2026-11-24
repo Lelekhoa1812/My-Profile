@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import profile from "../../content/profile.json";
 import { displayAnswer, dropGapSentences, dropRecordTalk, dropSourceTail, holdAnswer, keptSentence, shownAnswer, turnToStore } from "./answer";
 
 describe("displayAnswer", () => {
@@ -203,6 +204,17 @@ describe("displayAnswer", () => {
     expect(detailed).toContain("10,000 samples");
     expect(detailed).toContain("Jetson");
     expect(detailed).not.toContain("person approves");
+  });
+
+  it("keeps the Ericsson live-app boundary when the model only names a gap", () => {
+    const section = profile.sections.find((item) => item.sectionId === "project-ericsson");
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: section?.text ?? "" }] } }],
+      "The record does not include a deployment count.",
+    );
+    expect(text).toContain("production-grade");
+    expect(text).toContain("not a named live customer app");
+    expect(text).not.toContain("deployment count");
   });
 
   it("does not give Mizco the Harry percent", () => {

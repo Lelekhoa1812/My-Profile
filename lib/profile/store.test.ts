@@ -274,7 +274,7 @@ describe("profile store", () => {
       expect(role.text).toContain("does not rename FoodFlow");
     }
     if (flow.found) {
-      expect(flow.text).toContain("does not call those recipes capital-markets products");
+      expect(flow.text).toContain("not capital-markets products");
       expect(flow.text).toContain("saved persona");
       expect(flow.text).toContain("does not send email");
       expect(flow.text).toContain("does not send a message");
@@ -333,7 +333,7 @@ describe("profile store", () => {
     if (result.found) {
       const section = result.sections.find((item) => item.sectionId === "project-ericsson");
       expect(section?.text).toContain("production-grade");
-      expect(section?.text).toContain("does not name it as a live customer app");
+      expect(section?.text).toContain("not a named live customer app");
     }
   });
 
@@ -343,7 +343,7 @@ describe("profile store", () => {
     if (result.found) {
       expect(result.sections[0]?.sectionId).toBe("project-meter");
       expect(result.sections[0]?.text).toContain("productionized");
-      expect(result.sections[0]?.text).toContain("does not name a public app");
+      expect(result.sections[0]?.text).toContain("not a named public app");
     }
   });
 
