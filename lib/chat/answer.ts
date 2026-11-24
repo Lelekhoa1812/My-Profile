@@ -198,7 +198,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\b64-dimensional\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bmate-selection\b/i.test(sentence)));
   }
-  if (/\bwhat is\b/i.test(question) && /\bharry\b/i.test(question) && !/\bpedigree\b/i.test(question)) {
+  if (/\bwhat is\b/i.test(question) && /\bharry\b/i.test(question) && !/\b(pedigree|uptime|pilot|percent|cut)\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\bled the ai work\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\b40 percent\b/i.test(sentence)));
@@ -1236,7 +1236,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bworkflow\b/i.test(question) && /\bgoverned graph platform\b/i.test(sentence)) return true;
   if (/\b(url|link)\b/i.test(question) && /\blive\b/i.test(question) && /vercel\.app/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bmizco\b/i.test(question) && /\binference uses\b/i.test(sentence)) return true;
-  if (/\bwhat is\b/i.test(question) && /\bharry\b/i.test(question) && !/\bpedigree\b/i.test(question) && /\bstack includes\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bharry\b/i.test(question) && !/\b(pedigree|uptime|pilot|percent|cut)\b/i.test(question) && /\bstack includes\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bpoptech\b/i.test(question) && /\bmodels include\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\binet\b/i.test(question) && /\bobsei\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bmedswin\b/i.test(question) && /\bswinburne-funded\b/i.test(sentence)) return true;

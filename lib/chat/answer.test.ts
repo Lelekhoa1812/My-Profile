@@ -2229,6 +2229,13 @@ describe("displayAnswer", () => {
     expect(skyledgeHardware).toContain("Raspberry Pi");
     expect(skyledgeHardware).toContain("OBD-II");
     expect(skyledgeHardware).not.toContain("15 percent");
+    const harryUptime = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the uptime at Harry?") }],
+      "",
+      "What is the uptime at Harry?",
+    );
+    expect(harryUptime.startsWith("About 40 percent")).toBe(true);
+    expect(harryUptime).toContain("99.9 percent");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
