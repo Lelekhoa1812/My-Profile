@@ -466,6 +466,19 @@ describe("displayAnswer", () => {
       "How many cases did the MedSwin lab curate?",
     );
     expect(cases).toContain("500,000");
+    const intro = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Introduce him.") }],
+      "",
+      "Introduce him.",
+    );
+    const availability = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Is he available for work?") }],
+      "",
+      "Is he available for work?",
+    );
+    expect(intro).toContain("AI Software Engineer");
+    expect(availability).toContain("July 2026");
+    expect(availability.toLowerCase()).not.toContain("available");
     expect(cases).not.toContain("5 million");
     const synthetic = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many synthetic cases does the MedSwin line cite?") }],
