@@ -1806,7 +1806,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
-  if (/\bwhat does\b/i.test(question) && /\bestatefolio\b/i.test(question) && /\bdo\b/i.test(question)) {
+  if (/\bwhat does\b/i.test(question) && /\bestatefolio\b/i.test(question) && /\bdrift\b/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bdrift detection is part of the pipeline\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
+  if (/\bwhat does\b/i.test(question) && /\bestatefolio\b/i.test(question) && /\bdo\b/i.test(question) && !/\b(drift|transformer|st-gnn|district|read|forecast)\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
       sentences.find((sentence) => /\bprice forecast\b/i.test(sentence)),

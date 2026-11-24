@@ -2290,6 +2290,14 @@ describe("displayAnswer", () => {
     expect(estatefolioDoes).toContain("ST-GNN");
     expect(estatefolioDoes).toContain("transformer");
     expect(estatefolioDoes).not.toContain("error rate");
+    const estateDrift = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does drift detection do at EstateFolio?") }],
+      "",
+      "What does drift detection do at EstateFolio?",
+    );
+    expect(estateDrift).toContain("part of the pipeline");
+    expect(estateDrift).not.toContain("ST-GNN");
+    expect(estateDrift).not.toContain("error rate");
     const estateRead = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the forecast read for estatefolio?") }],
       "",
