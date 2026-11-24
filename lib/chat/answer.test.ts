@@ -1052,6 +1052,13 @@ describe("displayAnswer", () => {
     expect(meterPercent).toContain("admin effort");
     expect(meterPercent).toContain("manual work");
     expect(meterPercent).toContain("meter");
+    const axionStart = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "When did the Axion role start?") }],
+      "",
+      "When did the Axion role start?",
+    );
+    expect(axionStart).toContain("July 2026");
+    expect(axionStart).not.toContain("recipe");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",
