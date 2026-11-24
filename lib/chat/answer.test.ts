@@ -2083,6 +2083,15 @@ describe("displayAnswer", () => {
     );
     expect(documentCount).toContain("8-million-document");
     expect(documentCount).not.toContain("passport");
+    const modelCount = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many models?") }],
+      "",
+      "How many models?",
+    );
+    expect(modelCount).toContain("MNIST");
+    expect(modelCount).toContain("graffiti detection");
+    expect(modelCount).not.toContain("Gemini");
+    expect(modelCount).not.toContain("does not include");
     const labLanguages = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What languages does the lab cover?") }],
       "",
