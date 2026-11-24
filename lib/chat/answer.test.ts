@@ -32,6 +32,18 @@ describe("displayAnswer", () => {
     expect(dropSourceTail(text, headings)).toBe("Axis does not own FoodFlow's database.");
   });
 
+  it("drops the same list when a full stop follows it", () => {
+    const headings = new Set(["axion solutions", "axion workflow engine"]);
+    const text = "Axis does not own FoodFlow's database. (Axion Solutions; Axion workflow engine).";
+    expect(dropSourceTail(text, headings)).toBe("Axis does not own FoodFlow's database.");
+  });
+
+  it("drops a trailing Sources line that only names sections", () => {
+    const headings = new Set(["axion solutions"]);
+    const text = "Axis waits for approval.\nSources: Axion Solutions.";
+    expect(dropSourceTail(text, headings)).toBe("Axis waits for approval.");
+  });
+
   it("keeps a real parenthesis that is not a section heading", () => {
     expect(dropSourceTail("He speaks English (fluent).", new Set(["skills"]))).toBe("He speaks English (fluent).");
   });

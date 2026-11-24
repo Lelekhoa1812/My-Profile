@@ -39,11 +39,19 @@ function sourceHeadings(outputs: readonly Record<string, unknown>[]): Set<string
   return names;
 }
 
+function citesHeadings(raw: string, headings: ReadonlySet<string>): boolean {
+  const parts = raw.split(/[;,]/).map((part) => part.trim().toLowerCase().replace(/[.!]+$/, "")).filter(Boolean);
+  return parts.length > 0 && parts.every((part) => headings.has(part));
+}
+
 export function dropSourceTail(text: string, headings: ReadonlySet<string>): string {
-  const trimmed = text.trim();
-  const match = trimmed.match(/\s+\(([^)]+)\)\s*$/);
-  if (!match || match.index === undefined || headings.size === 0) return trimmed;
-  const parts = match[1].split(";").map((part) => part.trim().toLowerCase()).filter(Boolean);
-  if (parts.length === 0 || !parts.every((part) => headings.has(part))) return trimmed;
+  let trimmed = text.trim();
+  if (headings.size === 0) return trimmed;
+  const sourcesLine = trimmed.match(/\n+sources:\s*(.+)\s*$/i);
+  if (sourcesLine && sourcesLine.index !== undefined && citesHeadings(sourcesLine[1], headings)) {
+    trimmed = trimmed.slice(0, sourcesLine.index).trim();
+  }
+  const match = trimmed.match(/\s+\(([^)]+)\)[.!]?\s*$/);
+  if (!match || match.index === undefined || !citesHeadings(match[1], headings)) return trimmed;
   return trimmed.slice(0, match.index).trim();
 }
