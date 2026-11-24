@@ -27,6 +27,7 @@ describe("profile store", () => {
     if (flow.found) {
       expect(flow.text).toContain("does not call those recipes capital-markets products");
       expect(flow.text).toContain("saved persona");
+      expect(flow.text).toContain("does not send email");
     }
   });
 
