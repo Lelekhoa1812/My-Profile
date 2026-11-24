@@ -155,9 +155,9 @@ function vectorAnswer(question: string, outputs: readonly Record<string, unknown
 function archiveAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (!/\barchive\b/i.test(question)) return "";
   const sentences = sectionBlocks(outputs).flatMap((block) => plainSentences(block));
-  const named = sentences.filter((sentence) => /\b(prophet|free-router|survee|prompt-me)\b/i.test(sentence));
+  const named = sentences.filter((sentence) => !/full public archive|selection only|star counts/i.test(sentence) && /\b(is|are|takes|turns|answers|refines)\b/i.test(sentence) && sentence.split(/\s+/).length <= 40);
   const page = sentences.find((sentence) => /full public archive/i.test(sentence));
-  const body = [...new Set(named)].slice(0, 4);
+  const body = [...new Set(named)];
   if (page && !body.includes(page)) body.push(page);
   return body.join(" ");
 }
