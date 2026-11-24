@@ -152,4 +152,20 @@ describe("withMemory", () => {
     expect(groundedQuestion([forecast, answer, follow], 2)).toContain("s&p");
     expect(groundedQuestion([harry, answer, follow], 2)).toBe("What queue does it use?");
   });
+
+  it("keeps a later product on a stack follow-up", () => {
+    const harry = { id: "u1", role: "user", parts: [{ type: "text", text: "What did he do at Harry?" }] } as UIMessage;
+    const survee = { id: "u2", role: "user", parts: [{ type: "text", text: "What is Survee?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "Recorded." }] } as UIMessage;
+    const follow = { id: "u3", role: "user", parts: [{ type: "text", text: "What stack does it use?" }] } as UIMessage;
+    expect(groundedQuestion([harry, answer, survee, answer, follow], 4)).toContain("survee");
+    expect(groundedQuestion([harry, answer, follow], 2)).toContain("harry");
+  });
+
+  it("keeps the previous employer on an authentication follow-up", () => {
+    const axion = { id: "u1", role: "user", parts: [{ type: "text", text: "What did he do at Axion?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "He owns the vision." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What authentication does it use?" }] } as UIMessage;
+    expect(groundedQuestion([axion, answer, follow], 2)).toContain("axion");
+  });
 });

@@ -44,7 +44,7 @@ function messageText(message: UIMessage): string {
   return message.parts.map((part) => part.type === "text" && "text" in part ? part.text : "").join(" ");
 }
 
-const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent|agents?|retrieval|ocr|measure|models?|score|database|bought|cut|live|deployed clinical|production app|forecast|queue)\b/i;
+const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent|agents?|retrieval|ocr|measure|models?|score|database|bought|cut|live|deployed clinical|production app|forecast|queue|authenticat\w*)\b/i;
 const NAMED_PRODUCT = /\b(golf|skyledge|roster|triage|survee|prophet|pedigree|writingjourney|medviet|clara|salle|meter|acnt|cva|medchat|stt-studio|estatefolio|s&p)\b/i;
 const SPOKEN_EMPLOYER: Record<string, string> = { "hai-au": "Hai Au", "nam-a": "Nam A", "tien-thanh": "Tien Thanh" };
 
@@ -70,14 +70,11 @@ export function groundedQuestion(messages: readonly UIMessage[], index: number):
     if (named.employer) return `${stem} at ${SPOKEN_EMPLOYER[named.employer] ?? named.employer}?`;
     return question;
   }
-  const prior = messages.slice(0, index).reverse().find((item) => item.role === "user" && namedEmployer(messageText(item)));
-  const employer = prior ? namedEmployer(messageText(prior)) : undefined;
-  if (!employer) {
-    const product = previousProduct(messages, index);
-    return product ? `${question.replace(/\?$/, "").trim()} for ${product}?` : question;
-  }
-  const spoken = SPOKEN_EMPLOYER[employer] ?? employer;
-  return `${question.replace(/\?$/, "").trim()} at ${spoken}?`;
+  const named = lastNamed(messages, index);
+  const stem = question.replace(/\?$/, "").trim();
+  if (named.product && named.productAt >= named.employerAt) return `${stem} for ${named.product}?`;
+  if (named.employer) return `${stem} at ${SPOKEN_EMPLOYER[named.employer] ?? named.employer}?`;
+  return question;
 }
 
 function lastNamed(messages: readonly UIMessage[], index: number): { employer?: string; employerAt: number; product?: string; productAt: number } {
