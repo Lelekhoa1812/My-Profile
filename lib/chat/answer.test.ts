@@ -178,6 +178,11 @@ describe("displayAnswer", () => {
       "The project does not list post-deployment metrics.",
     );
     expect(text).toBe("About 35 percent less manual meter processing, on more than 10,000 samples.");
+    const narrated = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "The resume records about 35 percent less manual meter processing, on more than 10,000 samples." }] } }],
+      "The record shows a 35 percent reduction across more than ten thousand samples.",
+    );
+    expect(narrated).toBe("About 35 percent less manual meter processing, on more than 10,000 samples.");
   });
 
   it("drops a modifier that only exists inside a longer record word", () => {

@@ -123,8 +123,7 @@ export function stripToolMarkup(text: string): string {
 export function dropRecordTalk(text: string): string {
   const sentences = text.trim().split(/(?<=[.!])\s+/).map(stripRecordLead).filter(Boolean);
   const kept = sentences.filter((sentence) => !narratesRecord(sentence));
-  const next = kept.join(" ").trim();
-  return next || text.trim();
+  return kept.join(" ").trim();
 }
 
 function stripRecordLead(sentence: string): string {
