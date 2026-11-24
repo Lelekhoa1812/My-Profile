@@ -83,9 +83,10 @@ export async function postNimChat(options: {
         const decision = options.pool.noteFailure(acquired.slot, model, response.status, retryAfter);
         options.pool.release(acquired.slot);
         if (decision.kind === "demote" || decision.kind === "reject") break;
-      } catch {
-        options.pool.noteFailure(acquired.slot, model, 408, null);
+      } catch (error) {
         options.pool.release(acquired.slot);
+        if (options.signal?.aborted || (error instanceof Error && error.name === "AbortError")) throw error;
+        options.pool.noteFailure(acquired.slot, model, 408, null);
       }
     }
   }

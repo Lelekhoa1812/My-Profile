@@ -52,6 +52,29 @@ describe("createPoolFetch", () => {
     }
   });
 
+  it("does not cool a key when the caller aborts", async () => {
+    const pool = new NimPool([KEY_A], () => 0, () => 0);
+    const controller = new AbortController();
+    controller.abort();
+    let calls = 0;
+    const original = globalThis.fetch;
+    globalThis.fetch = (async () => {
+      calls += 1;
+      throw new DOMException("The operation was aborted.", "AbortError");
+    }) as typeof fetch;
+    try {
+      await expect(createPoolFetch(pool)("https://integrate.api.nvidia.com/v1/chat/completions", {
+        method: "POST",
+        signal: controller.signal,
+        body: JSON.stringify({ messages: [] }),
+      })).rejects.toThrow(/abort/i);
+      expect(calls).toBe(1);
+      expect(pool.acquire("nvidia/nemotron-3-ultra-550b-a55b").ok).toBe(true);
+    } finally {
+      globalThis.fetch = original;
+    }
+  });
+
   it("stops after three upstream calls when every key is rate limited", async () => {
     const pool = new NimPool(["k1", "k2", "k3", "k4"], () => 0, () => 0);
     let calls = 0;

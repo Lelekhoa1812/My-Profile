@@ -50,9 +50,10 @@ export function createPoolFetch(pool: NimPool, models: readonly string[] = NIM_M
           await response.body?.cancel().catch(() => undefined);
           pool.release(acquired.slot);
           if (decision.kind === "demote" || decision.kind === "reject") break;
-        } catch {
-          pool.noteFailure(acquired.slot, model, 408, null);
+        } catch (error) {
           pool.release(acquired.slot);
+          if (init?.signal?.aborted || (error instanceof Error && error.name === "AbortError")) throw error;
+          pool.noteFailure(acquired.slot, model, 408, null);
         }
       }
     }
