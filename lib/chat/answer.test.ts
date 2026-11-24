@@ -709,6 +709,38 @@ describe("displayAnswer", () => {
       "What does Ericsson use to detect drift?",
     );
     expect(drift).toContain("population stability index");
+    const axisWrite = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Axis show before a write?") }],
+      "",
+      "What does Axis show before a write?",
+    );
+    expect(axisWrite).toContain("preview");
+    expect(axisWrite).not.toContain("github.com");
+    const uptime = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What uptime did the Harry services keep?") }],
+      "",
+      "What uptime did the Harry services keep?",
+    );
+    expect(uptime).toContain("99.9");
+    const filings = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the S&P work use for text?") }],
+      "",
+      "What does the S&P work use for text?",
+    );
+    expect(filings).toContain("FinBERT");
+    expect(filings).not.toContain("RFQ");
+    const shipped = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he ship to production?") }],
+      "",
+      "What does he ship to production?",
+    );
+    expect(shipped).toContain("CVA");
+    const degree = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is his degree?") }],
+      "",
+      "What is his degree?",
+    );
+    expect(degree).toContain("Swinburne");
     const rosterStack = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the roster app use?") }],
       "",

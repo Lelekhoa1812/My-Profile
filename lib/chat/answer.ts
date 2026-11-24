@@ -127,7 +127,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const withExtra = extra && !body.includes(extra) ? [...body, extra] : body;
   const timed = withIdentity(question, withPeriod(withExtra, blockSentences, outputs), blockSentences);
   const second = secondPeriod(outputs, blockSentences, question, timed);
-  return keptOffer(question, shown, second ? `${timed} ${second}` : timed);
+  return keptOffer(question, shown, withSchool(question, second ? `${timed} ${second}` : timed, blockSentences));
 }
 
 function employerNames(question: string, outputs: readonly Record<string, unknown>[]): string {
@@ -424,6 +424,9 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bspeech\b/i.test(question) && /\bwhisper\b/i.test(sentence)) return true;
   if (/\bforecast\b/i.test(question) && /\bforecast(?:s|ing)?\b/i.test(sentence)) return true;
   if (/\bdrift\b/i.test(question) && /\bstability\b/i.test(sentence)) return true;
+  if (/\buptime\b/i.test(question) && /\buptime\b/i.test(sentence)) return true;
+  if (/\bship\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
+  if (/\btext\b/i.test(question) && /\bfinbert\b/i.test(sentence)) return true;
   if (/\bdetect\b/i.test(question) && !/\bdrift\b/i.test(question) && /\bdetects?\b/i.test(sentence)) return true;
   if (/\barchive\b/i.test(question) && /\bprompt-me\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
@@ -448,6 +451,13 @@ function isDecision(question: string, sentence: string): boolean {
 
 function plainSentences(text: string): string[] {
   return text.split(/(?<=[.!])\s+/).map((sentence) => sentence.trim()).filter((sentence) => sentence && !exposesGap(sentence)).map(plainSentence).filter(Boolean);
+}
+
+function withSchool(question: string, answer: string, sentences: readonly string[]): string {
+  if (!/\b(degree|education|graduat)/i.test(question)) return answer;
+  const school = sentences.find((sentence) => /\buniversity\b/i.test(sentence));
+  if (!school || answer.toLowerCase().includes("swinburne")) return answer;
+  return `${school.replace(/\.$/, "")}. ${answer.trim()}`;
 }
 
 function separateAxis(text: string): string {
