@@ -173,7 +173,7 @@ function withIdentity(question: string, proof: string, blockSentences: readonly 
 
 function withPeriod(sentences: readonly string[], blockSentences: readonly string[], outputs: readonly Record<string, unknown>[] = []): string {
   const joined = sentences.join(" ");
-  if (/\b20\d{2}\b/.test(joined) || sentences.length >= 3) return joined;
+  if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;
 }
