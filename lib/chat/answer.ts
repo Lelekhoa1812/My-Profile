@@ -647,7 +647,7 @@ function plainSentences(text: string): string[] {
 }
 
 function withSchool(question: string, answer: string, sentences: readonly string[]): string {
-  if (!/\b(degree|education|graduat)/i.test(question)) return answer;
+  if (!/\b(degree|education|graduat|stud(?:y|ied|ies)|university|bachelor)/i.test(question)) return answer;
   const school = sentences.find((sentence) => /\buniversity\b/i.test(sentence));
   if (!school || answer.toLowerCase().includes("swinburne")) return answer;
   return `${school.replace(/\.$/, "")}. ${answer.trim()}`;

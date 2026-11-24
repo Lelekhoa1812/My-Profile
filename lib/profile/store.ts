@@ -234,6 +234,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     ? pool.filter((item) => item.section.sourceType === "role" && (item.body.includes(city) || item.title.includes(city))).map((item) => item.section.sectionId)
     : [];
   const sets = [
+    { when: /\b(now|currently)\b/.test(text) && /\b(work|working|doing)\b/.test(text) && !namedEmployer(text), ids: ["role-axion"] },
     { when: Boolean(between?.length), ids: between ?? [] },
     { when: Boolean(overlapping?.length), ids: overlapping ?? [] },
     { when: cityRoles.length > 0, ids: cityRoles },

@@ -1253,6 +1253,20 @@ describe("displayAnswer", () => {
       "What was his experience at Harry the Hirer?",
     );
     expect(harryExperience).toContain("event inventory");
+    const studied = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where did he study?") }],
+      "",
+      "Where did he study?",
+    );
+    expect(studied).toContain("Swinburne University of Technology");
+    expect(studied).toContain("Bachelor of Software Engineering");
+    const workingNow = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is he working on now?") }],
+      "",
+      "What is he working on now?",
+    );
+    expect(workingNow).toContain("Axis");
+    expect(workingNow).toContain("July 2026");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",
