@@ -2039,6 +2039,33 @@ describe("displayAnswer", () => {
       "What stack does the water meter use?",
     );
     expect(meterStack).toContain("Jetson");
+    const estateDb = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What database does EstateFolio use?") }],
+      "",
+      "What database does EstateFolio use?",
+    );
+    expect(estateDb).toContain("transformer");
+    expect(estateDb).not.toContain("MariaDB");
+    const cvaDb = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What database does CVA use?") }],
+      "",
+      "What database does CVA use?",
+    );
+    expect(cvaDb).toContain("career application agent");
+    expect(cvaDb).not.toContain("MariaDB");
+    const medchatDb = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What database does MedChat use?") }],
+      "",
+      "What database does MedChat use?",
+    );
+    expect(medchatDb).toContain("prototype");
+    expect(medchatDb).not.toContain("MariaDB");
+    const surveyDb = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What database does Survee use?") }],
+      "",
+      "What database does Survee use?",
+    );
+    expect(surveyDb).toContain("MongoDB");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],

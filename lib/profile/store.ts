@@ -190,6 +190,28 @@ function adjacentRoleIds(text: string) {
   return ids.length > 0 ? ids : undefined;
 }
 
+function askedProductSectionIds(text: string): string[] | undefined {
+  const named: Array<[RegExp, string]> = [
+    [/\bestatefolio\b/, "project-estatefolio"],
+    [/\bcva\b/, "project-cva"],
+    [/\bmedchat\b/, "project-medchat"],
+    [/\bsall-?e\b/, "project-salle"],
+    [/\bcodoptic\b/, "project-codoptic"],
+    [/\bgolf\b/, "project-golf"],
+    [/\bwritingjourney\b|\bwriting coach\b/, "project-writing"],
+    [/\badhd\b/, "project-adhd"],
+    [/\bquotient\b/, "project-quotient"],
+    [/\bfree-router\b/, "project-router"],
+    [/\bmedviet\b/, "project-medvietai"],
+    [/\bpassport\b/, "project-passport"],
+    [/\bstt-studio\b/, "project-stt"],
+    [/\bacnt\b/, "project-acnt"],
+    [/\bskyledge\b/, "project-skyledge"],
+  ];
+  const ids = named.flatMap(([test, id]) => (test.test(text) ? [id] : []));
+  return ids.length > 0 ? [...new Set(ids)] : undefined;
+}
+
 function productStackIds(text: string): string[] | undefined {
   if (!/\bstack\b/.test(text)) return undefined;
   const named: Array<[RegExp, string]> = [
@@ -376,7 +398,8 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bsurvee\b/.test(text) && /\bdatabases?\b/.test(text), ids: ["project-survee"] },
     { when: /\broster\b/.test(text) && /\bdatabases?\b/.test(text), ids: ["project-roster"] },
     { when: /\bprophet\b/.test(text) && /\bdatabases?\b/.test(text), ids: ["project-prophet"] },
-    { when: /\bdatabases?\b/.test(text) && /\b(use|uses|used)\b/.test(text) && !namedEmployer(text) && !/\bvector\b/.test(text), ids: ["project-roster", "project-survee", "project-prophet", "project-ericsson", "project-triage"] },
+    { when: /\bdatabases?\b/.test(text) && Boolean(askedProductSectionIds(text)?.length), ids: askedProductSectionIds(text) ?? [] },
+    { when: /\bdatabases?\b/.test(text) && /\b(use|uses|used)\b/.test(text) && !namedEmployer(text) && !/\bvector\b/.test(text) && !askedProductSectionIds(text), ids: ["project-roster", "project-survee", "project-prophet", "project-ericsson", "project-triage"] },
     { when: /\b(study|university|bachelor|degree|education)\b/.test(text) && !/\bresearch\b/.test(text), ids: ["education-swinburne"] },
     { when: /\b(production|live)\b/.test(text) && /\b(skyledge|roster|golf|writingjourney|writing coach)\b/.test(text) && !text.includes("ship"), ids: ["project-shipped", ...saleIds(text)] },
     { when: /\b(acquir\w*|sold|sell|sale|bought|buyer|purchase\w*)\b/.test(text), ids: saleIds(text) },
