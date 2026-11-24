@@ -147,6 +147,8 @@ function Answer({ turn, error, email, onClear, onContinue }: { turn: Turn; error
     }
     const measure = () => {
       const box = element.getBoundingClientRect();
+      const prose = element.querySelector<HTMLElement>("[data-prose]")?.getBoundingClientRect();
+      if (!prose) return;
       const next: Line[] = [];
       turn.sources.forEach((_, n) => {
         const card = element.querySelector<HTMLElement>(`[data-card="${n}"]`);
@@ -154,8 +156,8 @@ function Answer({ turn, error, email, onClear, onContinue }: { turn: Turn; error
         if (!card || !anchor) return;
         const c = card.getBoundingClientRect();
         const a = anchor.getBoundingClientRect();
-        if (c.left < a.right) return;
-        next.push({ x1: a.left + a.width / 2 - box.left, y1: a.bottom + 2 - box.top, x2: c.left - box.left, y2: c.top + c.height / 2 - box.top, n });
+        if (c.left < prose.right + 40) return;
+        next.push({ x1: prose.right + 16 + 8 * n - box.left, y1: a.top + a.height / 2 - box.top, x2: c.left - box.left, y2: c.top + c.height / 2 - box.top, n });
       });
       setLines(next);
     };
@@ -168,15 +170,13 @@ function Answer({ turn, error, email, onClear, onContinue }: { turn: Turn; error
     <div ref={root} className="constitute relative grid gap-8 xl:grid-cols-[minmax(0,1fr)_17rem] xl:gap-16">
       <svg aria-hidden className="pointer-events-none absolute inset-0 hidden h-full w-full overflow-visible xl:block">
         {lines.map((line) => {
-          const drop = line.y1 + 18 + 10 * line.n;
-          const path = `M${line.x1},${line.y1} V${drop} H${line.x2 - 28} V${line.y2} H${line.x2}`;
+          const elbow = line.x2 - 28 - 8 * line.n;
+          const path = `M${line.x1},${line.y1} H${elbow} V${line.y2} H${line.x2}`;
           return (
             <g key={line.n} className="text-white">
-              <circle cx={line.x1} cy={line.y1} r="2.5" fill="currentColor" />
+              <circle cx={line.x1} cy={line.y1} r="2" fill="currentColor" />
+              <text x={line.x1 - 3} y={line.y1 - 7} fill="currentColor" fillOpacity="0.6" fontSize="9" fontFamily="var(--font-jetbrains)">{line.n + 1}</text>
               <path d={path} fill="none" stroke="currentColor" strokeOpacity="0.55" strokeWidth="1" pathLength={1} className="draw" style={{ animationDelay: `${180 * line.n}ms` }} />
-              <text x={line.x2 - 24} y={line.y2 - 6} fill="currentColor" fillOpacity="0.5" fontSize="9" fontFamily="var(--font-jetbrains)">
-                {Math.round(line.x2)}·{Math.round(line.y2)}
-              </text>
             </g>
           );
         })}
@@ -192,7 +192,7 @@ function Answer({ turn, error, email, onClear, onContinue }: { turn: Turn; error
             ))}
           </ol>
         ) : null}
-        <p aria-live="polite" className="pretty measure mt-5 text-[clamp(1.125rem,1.6vw,1.3125rem)] font-light leading-[1.65] text-ink">
+        <p data-prose aria-live="polite" className="pretty measure mt-5 text-[clamp(1.125rem,1.6vw,1.3125rem)] font-light leading-[1.65] text-ink">
           {turn.reading && turn.steps.length === 0 ? <span className="text-white/55">Reading the record</span> : null}
           {segments.map((segment, index) =>
             segment.ref === undefined ? (

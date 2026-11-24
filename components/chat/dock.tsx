@@ -203,7 +203,7 @@ export function ChatDock({ questions }: { questions: string[] }) {
             ))}
             {error ? <p className="text-sm leading-relaxed text-white/72">The record did not answer this time. Ask again in a moment.</p> : null}
           </div>
-          <form onSubmit={onSubmit} className="flex items-center gap-2 border-t border-white/15 p-2 pl-4">
+          <form onSubmit={onSubmit} className="flex items-center gap-2 border-t border-white/15 p-2 pl-4 transition-colors focus-within:border-white/60 focus-within:bg-white/[0.04]">
             <label className="sr-only" htmlFor="dock-question">
               Question
             </label>
@@ -235,7 +235,7 @@ export function ChatDock({ questions }: { questions: string[] }) {
         onClick={onClick}
         aria-controls="ask-the-record"
         onKeyDown={onKeyDown}
-        className={`fixed z-40 grid cursor-grab touch-none place-items-center border text-ink transition-colors active:cursor-grabbing ${open ? "border-white bg-white text-black" : "border-white/45 bg-black/85 backdrop-blur hover:border-white"}`}
+        className={`fixed z-40 grid cursor-grab touch-none place-items-center border text-ink transition-colors active:cursor-grabbing ${open ? "border-white bg-white text-black [&_svg]:text-black" : "border-white/45 bg-black/85 backdrop-blur hover:border-white"}`}
         style={{ right: place.x, bottom: place.y, width: BUTTON, height: BUTTON }}
       >
         {open ? <X aria-hidden className="h-5 w-5" strokeWidth={1.5} /> : <MessagesSquare aria-hidden className="h-5 w-5" strokeWidth={1.5} />}
