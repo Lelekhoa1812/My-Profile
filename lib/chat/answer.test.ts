@@ -1016,6 +1016,20 @@ describe("displayAnswer", () => {
     );
     expect(promptMe).toContain("refines a prompt");
     expect(promptMe).not.toContain("StudyBuddy");
+    const medicalBot = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Medical-Chatbot?") }],
+      "",
+      "What is Medical-Chatbot?",
+    );
+    expect(medicalBot).toContain("medical questions");
+    expect(medicalBot).not.toContain("Prophet");
+    const harryRetrieve = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Harry retrieve with?") }],
+      "",
+      "What does Harry retrieve with?",
+    );
+    expect(harryRetrieve).toContain("BM25");
+    expect(harryRetrieve).not.toContain("Medical-Chatbot");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");

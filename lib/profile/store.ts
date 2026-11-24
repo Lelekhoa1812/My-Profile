@@ -399,6 +399,7 @@ function covers(text: string, term: string): boolean {
   if (word.test(text)) return true;
   if (term.startsWith("approv") && /\bapprov/.test(text)) return true;
   if (term.length >= 4 && new RegExp(`\\b${term}(?:v\\d+|-[a-z0-9]+)\\b`).test(text)) return true;
+  if (term.endsWith("e") && term.length >= 6 && new RegExp(`\\b${term.slice(0, -1)}al\\b`).test(text)) return true;
   return term.length >= 6 && new RegExp(`\\b${term}ion\\b`).test(text);
 }
 

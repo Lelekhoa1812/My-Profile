@@ -127,7 +127,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   if (/\bwhat is\b/i.test(question) && chosen.length > 0 && !chosen.some((sentence) => isDecision(question, sentence)) && chosen.every((sentence) => !/\b(is|are|led|uses|use|used|reads|covers|owns|built|turns|takes|trains|advises)\b/i.test(sentence))) {
     chosen.length = 0;
-    push(workSentence(blockSentences));
+    const asked = blockSentences.find((sentence) => askWords(question).some((word) => word.length >= 5 && mentions(sentence, word)) && /\b(is|are|led|uses|use|used|reads|covers|owns|answers|turns|takes|refines|trains)\b/i.test(sentence));
+    push(asked ?? workSentence(blockSentences));
     const employer = namedEmployer(question);
     if (employer) {
       for (const block of sectionBlocks(outputs)) {
@@ -432,6 +433,7 @@ function mentions(sentence: string, word: string): boolean {
   if (word.endsWith("s") && word.length >= 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
   if (word.endsWith("e") && new RegExp(`\\b${word.slice(0, -1)}ed\\b`, "i").test(sentence)) return true;
   if (word.length >= 6 && new RegExp(`\\b${word}ion\\b`, "i").test(sentence)) return true;
+  if (word.endsWith("e") && word.length >= 6 && new RegExp(`\\b${word.slice(0, -1)}al\\b`, "i").test(sentence)) return true;
   return word.length >= 8 && new RegExp(`\\b${word.slice(0, word.length - 3)}(?:ing|ed|es|ion|ten)\\b`, "i").test(sentence);
 }
 
