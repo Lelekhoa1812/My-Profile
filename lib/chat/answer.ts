@@ -63,7 +63,7 @@ function withSectionProof(answer: string, outputs: readonly Record<string, unkno
     .filter((sentence) => sentence && !exposesGap(sentence))
     .map(plainSentence)
     .filter((sentence) => sentence.split(/\s+/).length > 3 && !isLabel(sentence));
-  const technical = candidates.filter((sentence) => technicalProof(answer, sentence));
+  const technical = candidates.filter((sentence) => technicalProof(answer, sentence) && !otherProduct(answer, sentence));
   const extras = (technical.length > 0 ? technical : candidates.filter((sentence) => newProof(answer, sentence))).slice(0, 2);
   return [answer, ...extras].filter(Boolean).join(" ");
 }
@@ -77,6 +77,21 @@ function technicalProof(answer: string, sentence: string): boolean {
   const names = sentence.match(/\b[A-Z][A-Za-z0-9.+&-]{2,}\b/g) ?? [];
   const fresh = names.filter((name) => !LEAD_WORDS.has(name.toLowerCase()) && !hay.includes(name.toLowerCase()));
   return fresh.length >= 2;
+}
+
+function otherProduct(answer: string, sentence: string): boolean {
+  const left = namedProduct(answer);
+  const right = namedProduct(sentence);
+  return Boolean(left && right && left !== right);
+}
+
+function namedProduct(text: string): "axis" | "foodflow" | "harry" | "medswin" | undefined {
+  const value = text.toLowerCase();
+  if (value.includes("foodflow")) return "foodflow";
+  if (/\baxis\b/.test(value)) return "axis";
+  if (value.includes("harry") || value.includes("black caviar")) return "harry";
+  if (value.includes("medswin") || value.includes("bertscore")) return "medswin";
+  return undefined;
 }
 
 function newProof(answer: string, sentence: string): boolean {

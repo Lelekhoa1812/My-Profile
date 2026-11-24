@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import type { UIMessage } from "ai";
-import { withMemory } from "./memory";
+import { dropOtherEmployer, withMemory } from "./memory";
 
 const question = { id: "q", role: "user", parts: [{ type: "text", text: "What is his title?" }] } as UIMessage;
 
 describe("withMemory", () => {
   it("leaves the current page transcript alone", () => {
-    const assistant = { id: "a", role: "assistant", parts: [{ type: "text", text: "Senior AI Software Engineer." }] } as UIMessage;
+    const assistant = { id: "a", role: "assistant", parts: [{ type: "text", text: "AI Software Engineer." }] } as UIMessage;
     expect(withMemory([{ role: "user", text: "Earlier", at: "t" }], [question, assistant])).toEqual([question, assistant]);
   });
 
@@ -32,5 +32,20 @@ describe("withMemory", () => {
       [],
     );
     expect(messages.map((message) => message.role)).toEqual(["user", "assistant"]);
+  });
+
+  it("drops the previous employer when the new question names another", () => {
+    const medswin = { id: "u1", role: "user", parts: [{ type: "text", text: "At MedSwin, what BERTScore did the lab record?" }] } as UIMessage;
+    const score = { id: "a1", role: "assistant", parts: [{ type: "text", text: "The lab recorded 86 percent BERTScore." }] } as UIMessage;
+    const axion = { id: "u2", role: "user", parts: [{ type: "text", text: "At Axion, what does Axis show before a write?" }] } as UIMessage;
+    const kept = dropOtherEmployer([medswin, score, axion]);
+    expect(kept).toEqual([axion]);
+  });
+
+  it("keeps the same employer on a follow-up", () => {
+    const first = { id: "u1", role: "user", parts: [{ type: "text", text: "At Axion, what does Axis show before a write?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "Axis shows a preview." }] } as UIMessage;
+    const next = { id: "u2", role: "user", parts: [{ type: "text", text: "What engine does Axis use?" }] } as UIMessage;
+    expect(dropOtherEmployer([first, answer, next])).toEqual([first, answer, next]);
   });
 });

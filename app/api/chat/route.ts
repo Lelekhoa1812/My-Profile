@@ -14,7 +14,7 @@ import { identityCard } from "../../../lib/profile/card";
 import { loadProfile } from "../../../lib/profile/load";
 import { tailForModel } from "../../../lib/session/tail";
 import { loadStoredTurns } from "../../../lib/session/load";
-import { withMemory } from "../../../lib/session/memory";
+import { dropOtherEmployer, withMemory } from "../../../lib/session/memory";
 import { saveTraces } from "../../../lib/session/traces";
 import { appendTurns } from "../../../lib/session/turns";
 
@@ -72,7 +72,7 @@ export async function POST(request: Request): Promise<Response> {
     prepareStep: ({ stepNumber, steps }) => stepTools(stepNumber, steps),
   });
   const result = await agent.stream({
-    messages: tailForModel(await convertToModelMessages(withMemory(stored, messages))),
+    messages: tailForModel(await convertToModelMessages(dropOtherEmployer(withMemory(stored, messages)))),
     abortSignal: request.signal,
     timeout: { firstChunkMs: 20_000, chunkMs: 30_000, toolMs: 8_000, stepMs: 45_000, totalMs: 55_000 },
     onEnd: (event) => {

@@ -246,6 +246,12 @@ describe("displayAnswer", () => {
     expect(pedigree).toContain("Black Caviar");
     expect(pedigree).toContain("mate-selection");
     expect(pedigree).not.toContain("does not show");
+    const axis = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Axis shows a preview, and a person approves the write. FoodFlow keeps Sales, Purchasing, Inventory, and Finance. The engine uses LangChain and LangGraph." }] } }],
+      "Axis shows a preview.",
+    );
+    expect(axis).toContain("LangChain");
+    expect(axis).not.toContain("FoodFlow");
   });
 
   it("drops a modifier that only exists inside a longer record word", () => {
