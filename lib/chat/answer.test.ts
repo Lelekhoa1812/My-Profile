@@ -4769,6 +4769,14 @@ describe("displayAnswer", () => {
       "What forecast model does Prophet use?",
     );
     expect(prophet).toContain("TimesFM");
+    const prophetDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Prophet do?") }],
+      "",
+      "What does Prophet do?",
+    );
+    expect(prophetDoes).toContain("spreadsheet");
+    expect(prophetDoes).toContain("TimesFM");
+    expect(prophetDoes).not.toContain("user count");
     const anomaly = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Ericsson use for anomaly detection?") }],
       "",
