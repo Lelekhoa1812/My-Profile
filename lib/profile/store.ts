@@ -440,6 +440,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   if (terms.length === 0) return broadSections(visible.filter((item) => !sourceType || item.section.sourceType === sourceType));
   if (asksForPlace(query)) return { found: false as const };
   const asked = query.toLowerCase();
+  if (/\bcity\b/.test(asked) && /\b(it|that)\b/.test(asked) && !namedEmployer(asked)) return { found: false as const };
   if (/\b(papers|publish(?:ed)?)\b/.test(asked) && !/\b(quotient|statement|recording)\b/.test(asked)) return { found: false as const };
   const pinned = pinnedSections(visible, query);
   if (pinned) return pinned;

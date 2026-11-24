@@ -18,6 +18,10 @@ describe("profile tools", () => {
     const result = await search.execute({ query: "Where does he live?" });
     expect(result.found).toBe(true);
     expect(result.facts?.[0]?.value).toContain("Melbourne");
+    const city = await search.execute({ query: "What city was it?" });
+    expect(city.found).toBe(true);
+    expect(city.facts?.[0]?.value).toContain("Melbourne");
+    expect(JSON.stringify(city)).not.toContain("EstateFolio");
   });
 
   it("returns the email fact and leaves a workflow email question on the section", async () => {
