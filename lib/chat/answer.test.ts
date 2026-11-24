@@ -943,6 +943,19 @@ describe("displayAnswer", () => {
       "What is MSAL used for?",
     );
     expect(harryMsal).toContain("MSAL authentication");
+    const medswinRecord = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did MedSwin record?") }],
+      "",
+      "What did MedSwin record?",
+    );
+    expect(medswinRecord).toContain("86 percent BERTScore");
+    const labTrain = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the lab train?") }],
+      "",
+      "What did the lab train?",
+    );
+    expect(labTrain).toContain("LoRA");
+    expect(labTrain).toContain("500,000");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",
