@@ -2108,7 +2108,7 @@ function deploymentAnswer(question: string, outputs: readonly Record<string, unk
 
 function databaseAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (/\bvector\b/i.test(question)) return "";
-  if (/\b(foodflow|axis)\b/i.test(question) && /\bdatabases?\b/i.test(question)) {
+  if (/\b(foodflow|axis)\b/i.test(question) && (/\bdatabases?\b/i.test(question) || (/\bdata\b/i.test(question) && /\bown/i.test(question)))) {
     const owned = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bdoes not own\b/i.test(sentence) && /\b(database|data)\b/i.test(sentence)));
     if (owned.length > 0) return [...new Set(owned)].slice(0, 2).join(" ");
   }

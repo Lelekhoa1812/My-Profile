@@ -1824,6 +1824,15 @@ describe("displayAnswer", () => {
     expect(notLive).toContain("only named live app");
     expect(notLive).not.toContain("not for a release");
     expect(notLive).not.toContain("deployment count");
+    const axisData = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Does Axis own FoodFlow data?") }],
+      "",
+      "Does Axis own FoodFlow data?",
+    );
+    expect(axisData).toContain("does not own FoodFlow's database");
+    expect(axisData).toContain("FoodFlow's data");
+    expect(axisData).not.toContain("AI vision");
+    expect(axisData).not.toContain("July 2026");
     const versionIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it version?") }],
       "",
