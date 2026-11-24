@@ -191,6 +191,9 @@ describe("profile store", () => {
     expect(write.found && write.sections[0]?.text).toContain("BERTScore");
     expect(research.found && research.sections.some((section) => section.sectionId === "role-swinburne-research")).toBe(true);
     expect(earlier.found && earlier.sections[0]?.sectionId).toBe("role-harry-pedigree");
+    const prior = searchSections(profile.sections, "What did he do before Harry the Hirer?");
+    expect(prior.found && prior.sections[0]?.sectionId).toBe("role-aitc");
+    expect(prior.found && prior.sections.some((section) => section.sectionId === "role-harry-pedigree")).toBe(false);
     const axion = searchSections(profile.sections, "What LangGraph engine does he run at Axion?");
     const harry = searchSections(profile.sections, "What agents did he use at Harry?");
     expect(axion.found && axion.sections.some((section) => section.sectionId === "role-harry-senior")).toBe(false);
