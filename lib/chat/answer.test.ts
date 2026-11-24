@@ -2083,6 +2083,14 @@ describe("displayAnswer", () => {
     );
     expect(medswinRole).toContain("Swinburne-funded");
     expect(medswinRole).toContain("86 percent");
+    const harryIdentity = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Harry the Hirer?") }],
+      "",
+      "What is Harry the Hirer?",
+    );
+    expect(harryIdentity).toContain("Azure");
+    expect(harryIdentity).toContain("40 percent");
+    expect(harryIdentity).toContain("event inventory");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",
