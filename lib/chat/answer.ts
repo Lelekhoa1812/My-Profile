@@ -174,6 +174,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\bcomputer vision\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bperception uses\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bhai[\s-]?au\b/i.test(question)) {
+    cap = 3;
+    const sold = blockSentences.find((sentence) => /\bhai au group\b/i.test(sentence));
+    if (sold) {
+      chosen.length = 0;
+      push(sold);
+      push(blockSentences.find((sentence) => /\benrollment\b/i.test(sentence)));
+    }
+  }
   if (/\bwhat is\b/i.test(question) && /\bha manager\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\benrollment\b/i.test(sentence)));
@@ -997,7 +1006,7 @@ function codeLanguageAnswer(question: string, outputs: readonly Record<string, u
 }
 
 function cloudAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\bcloud\b/i.test(question) || /\b(estatefolio|cva|codoptic|roster|survee|quotient|adhd|writingjourney|acnt|free-router|medchat|sall-?e|skyledge|medviet|passport|stt-studio|golf)\b/i.test(question)) return "";
+  if (!/\bcloud\b/i.test(question) || /\b(role|when|start|started|did)\b/i.test(question) || /\b(estatefolio|cva|codoptic|roster|survee|quotient|adhd|writingjourney|acnt|free-router|medchat|sall-?e|skyledge|medviet|passport|stt-studio|golf)\b/i.test(question)) return "";
   const employer = namedEmployer(question);
   const lines = sectionBlocks(outputs).flatMap((block) => {
     if (employer && !new RegExp(`\\b${employer}\\b`, "i").test(block)) return [];

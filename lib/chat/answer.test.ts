@@ -843,6 +843,20 @@ describe("displayAnswer", () => {
       "What is the golf scanner efficiency gain?",
     );
     expect(golfGainLead.startsWith("About 15 percent")).toBe(true);
+    const haiAuIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Academy?") }],
+      "",
+      "What is Hai Au Academy?",
+    );
+    expect(haiAuIs).toContain("HA Manager");
+    expect(haiAuIs).toContain("Hai Au Group");
+    expect(haiAuIs).not.toContain("IELTS");
+    const vietdanCloudStart = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "When did the VietDan cloud role start?") }],
+      "",
+      "When did the VietDan cloud role start?",
+    );
+    expect(vietdanCloudStart).toContain("June 2022");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
