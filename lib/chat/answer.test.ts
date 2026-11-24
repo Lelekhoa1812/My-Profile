@@ -2371,6 +2371,14 @@ describe("displayAnswer", () => {
     expect(codopticIs.startsWith("Open-source coding agent.") || codopticIs.includes("Open-source coding agent.")).toBe(true);
     expect(codopticIs).toContain("DSL diagrams");
     expect(codopticIs).toContain("generate or review code");
+    const codopticDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Codoptic do?") }],
+      "",
+      "What does Codoptic do?",
+    );
+    expect(codopticDoes).toContain("Open-source coding agent");
+    expect(codopticDoes).toContain("generate or review code");
+    expect(codopticDoes).toContain("DSL diagrams");
     const meterProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the water-meter scanner?") }],
       "",

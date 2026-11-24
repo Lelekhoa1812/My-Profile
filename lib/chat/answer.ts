@@ -1701,6 +1701,19 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bwhat does\b/i.test(question) && /\bcodoptic\b/i.test(question) && /\bdo\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\bopen-source coding agent\b/i.test(sentence)),
+      sentences.find((sentence) => /\bgenerate or review code\b/i.test(sentence)),
+      sentences.find((sentence) => /\binteractive dsl\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bwhat does\b/i.test(question) && /\bquotient\b/i.test(question) && /\bdo\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
