@@ -1847,6 +1847,20 @@ describe("displayAnswer", () => {
     expect(overlapsLab).toContain("Mizco");
     expect(overlapsLab).toContain("Teqar");
     expect(overlapsLab).toContain("August 2025");
+    const currentOverlap = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What roles overlap?") }],
+      "",
+      "What roles overlap?",
+    );
+    expect(currentOverlap).toContain("Teqar");
+    expect(currentOverlap).toContain("Axion");
+    const axionTogether = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at the same time as Axion?") }],
+      "",
+      "What did he do at the same time as Axion?",
+    );
+    expect(axionTogether).toContain("Teqar");
+    expect(axionTogether).not.toContain("same host");
     const betweenRoles = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do between Mizco and Axion?") }],
       "",

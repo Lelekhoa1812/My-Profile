@@ -134,8 +134,12 @@ function spanMonths(value: number): number {
 }
 
 function overlappingRoleIds(text: string): string[] | undefined {
-  if (!/\boverlaps?\b/.test(text)) return undefined;
+  if (!/\boverlaps?\b/.test(text) && !/\bsame time\b/.test(text)) return undefined;
   const named = ROLE_SPANS.filter((span) => text.includes(span.key) && !span.nested);
+  if (named.length === 0 && /\broles?\b/.test(text)) {
+    const current = ROLE_SPANS.find((span) => span.key === "axion");
+    if (current) named.push(current);
+  }
   if (named.length !== 1) return undefined;
   const anchor = named[0];
   if (!anchor) return undefined;
