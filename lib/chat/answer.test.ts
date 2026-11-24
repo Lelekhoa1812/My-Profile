@@ -663,6 +663,27 @@ describe("displayAnswer", () => {
       "Did he work at Harry and MedSwin at the same time?",
     );
     expect(overlap).toContain("Harry");
+    const bothJobs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at both Axion and Harry?") }],
+      "",
+      "What did he do at both Axion and Harry?",
+    );
+    expect(bothJobs).toContain("Axis");
+    expect(bothJobs).toContain("led");
+    const namBoth = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did both Nam A roles cover?") }],
+      "",
+      "What did both Nam A roles cover?",
+    );
+    expect(namBoth).toContain("VietOCR");
+    expect(namBoth).toContain("REST");
+    const pedigreePlace = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where was the pedigree project based?") }],
+      "",
+      "Where was the pedigree project based?",
+    );
+    expect(pedigreePlace).toContain("Melbourne");
+    expect(pedigreePlace).toContain("Black Caviar");
     expect(overlap).toContain("December 2025");
     expect(overlap).toContain("August 2025");
     expect(archive.toLowerCase()).toContain("free-router");

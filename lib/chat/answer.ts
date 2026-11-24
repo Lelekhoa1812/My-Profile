@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs);
+  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -150,6 +150,34 @@ function vectorAnswer(question: string, outputs: readonly Record<string, unknown
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(pgvector|faiss)\b/i.test(sentence)));
   const short = lines.filter((sentence) => sentence.split(/\s+/).length <= 24);
   return [...new Set(short.length > 0 ? short : lines)].slice(0, 2).join(" ");
+}
+
+function bothWorkAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bboth\b/i.test(question)) return "";
+  const lines: string[] = [];
+  for (const output of outputs) {
+    if (!Array.isArray(output.sections)) continue;
+    for (const section of output.sections) {
+      if (typeof section !== "object" || section === null || !("text" in section) || typeof section.text !== "string" || section.sourceType !== "role") continue;
+      const work = workSentence(plainSentences(section.text));
+      if (!work) continue;
+      const label = "heading" in section ? String(section.heading).replace(/\.$/, "") : "";
+      const named = label.split(",")[0]?.toLowerCase() ?? "";
+      const line = named && !work.toLowerCase().includes(named) ? `${label}. ${work}` : work;
+      if (!lines.includes(line)) lines.push(line);
+    }
+  }
+  return lines.slice(0, 3).join(" ");
+}
+
+function placeAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bwhere\b/i.test(question) || !/\b(based|located)\b/i.test(question)) return "";
+  if (!/\b(project|product|role)\b/i.test(question) && !namedEmployer(question)) return "";
+  const sentences = sectionBlocks(outputs).flatMap((block) => plainSentences(block));
+  const city = sentences.find((sentence) => /\b(melbourne|perth|binh duong|ho chi minh)\b/i.test(sentence));
+  const work = sentences.find((sentence) => /\bpedigree\b/i.test(question) && /\b(mate-selection|black caviar)\b/i.test(sentence))
+    ?? sentences.find((sentence) => /\b(engine|platform|led|owns|built)\b/i.test(sentence));
+  return [city, work].filter((sentence): sentence is string => Boolean(sentence)).join(" ");
 }
 
 function sameTimeAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {

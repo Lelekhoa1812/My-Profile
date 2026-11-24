@@ -147,6 +147,21 @@ function adjacentRoleIds(text: string) {
 function pinnedSections(pool: readonly { section: ProfileSection; title: string; body: string }[], query: string) {
   const text = query.toLowerCase();
   const namedRoles = EMPLOYERS.filter((item) => item.test.test(text));
+  if (/\bboth\b/.test(text) && namedRoles.length === 1) {
+    const roles = pool.filter((item) => item.section.sourceType === "role" && namedRoles[0]?.section(item.section.sectionId, item.title));
+    if (roles.length >= 2) {
+      return {
+        found: true as const,
+        sections: roles.map((hit) => ({
+          sectionId: hit.section.sectionId,
+          heading: hit.section.heading,
+          sourceType: hit.section.sourceType,
+          text: hit.section.text,
+          match: "keyword" as const,
+        })),
+      };
+    }
+  }
   if (namedRoles.length >= 2 && /\b(same time|overlap|both)\b/.test(text)) {
     const roles = pool.filter((item) => item.section.sourceType === "role" && namedRoles.some((employer) => employer.section(item.section.sectionId, item.title)));
     if (roles.length >= 2) {
@@ -187,6 +202,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bstack\b/.test(text) && !namedEmployer(text), ids: ["skills"] },
     { when: /\bwater[-\s]?meter\b/.test(text) && /\b(sample|measur\w*|productionized|result|model|cut|percent)\b/.test(text), ids: ["project-meter", "role-vietdan-ml"] },
     { when: text.includes("harry") && (text.includes("pedigree") || text.includes("earlier") || (text.includes("before") && !/\bbefore (?:harry|the hirer)\b/.test(text))), ids: ["role-harry-pedigree", "role-harry-senior"] },
+    { when: /\bpedigree\b/.test(text) && /\b(based|located)\b/.test(text), ids: ["role-harry-senior", "role-harry-pedigree"] },
     { when: text.includes("live") && (text.includes("sale") || text.includes("sales") || text.includes("customer")) && !namedEmployer(text), ids: ["project-shipped", "project-cva"] },
     { when: text.includes("ship") && text.includes("production"), ids: ["project-shipped", "project-cva"] },
     { when: text.includes("measure") && text.includes("live"), ids: ["project-meter", "project-cva", "project-shipped"] },
@@ -337,7 +353,7 @@ export function asksForName(query: string): "full_name" | "also_known_as" | unde
 
 export function asksForPlace(query: string): boolean {
   const text = query.toLowerCase();
-  if (/\b(model|app|production|ship|deploy)\b/.test(text)) return false;
+  if (/\b(model|app|production|ship|deploy|project|product|role)\b/.test(text) || namedEmployer(text)) return false;
   return /\bwhere\b/.test(text) && /\b(live|lives|living|based|located)\b/.test(text);
 }
 
