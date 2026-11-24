@@ -313,9 +313,12 @@ function bothWorkAnswer(question: string, outputs: readonly Record<string, unkno
 
 function placeAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (!/\bwhere\b/i.test(question) || !/\b(based|located|live|lives|living)\b/i.test(question) || /\b(app|production|release)\b/i.test(question)) return "";
-  if (!/\b(project|product|role)\b/i.test(question) && !namedEmployer(question)) return "";
   const sentences = sectionBlocks(outputs).flatMap((block) => plainSentences(block));
-  const city = sentences.find((sentence) => /\b(melbourne|perth|binh duong|ho chi minh)\b/i.test(sentence));
+  const datedCity = sentences.find((sentence) => /\b20\d{2}\b/.test(sentence) && /\b(melbourne|perth|binh duong|ho chi minh)\b/i.test(sentence));
+  const period = sentences.find((sentence) => /\b20\d{2}\b/.test(sentence) && /\bto\b/i.test(sentence));
+  if (!datedCity && !period) return "";
+  if (!datedCity && !/\b(project|product|role)\b/i.test(question) && !namedEmployer(question)) return "";
+  const city = datedCity ?? period;
   const work = sentences.find((sentence) => /\bpedigree\b/i.test(question) && /\b(mate-selection|black caviar)\b/i.test(sentence))
     ?? sentences.find((sentence) => /\bled\b/i.test(sentence))
     ?? sentences.find((sentence) => /\b(engine|platform|owns|built)\b/i.test(sentence));

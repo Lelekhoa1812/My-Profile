@@ -435,7 +435,9 @@ export function asksForName(query: string): "full_name" | "also_known_as" | unde
 export function asksForPlace(query: string): boolean {
   const text = query.toLowerCase();
   if (/\b(model|app|production|ship|deploy|project|product|role)\b/.test(text) || namedEmployer(text)) return false;
-  return /\bwhere\b/.test(text) && /\b(live|lives|living|based|located)\b/.test(text);
+  if (!/\bwhere\b/.test(text) || !/\b(live|lives|living|based|located)\b/.test(text)) return false;
+  const rest = text.split(/[^a-z0-9]+/).filter((word) => word.length >= 4 && !["where", "live", "lives", "living", "based", "located", "does", "did", "during", "while", "right"].includes(word));
+  return rest.length === 0;
 }
 
 function distinctiveCount(

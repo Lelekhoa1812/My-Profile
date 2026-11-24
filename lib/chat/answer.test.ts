@@ -1075,6 +1075,21 @@ describe("displayAnswer", () => {
     );
     expect(harryCity.startsWith("Melbourne")).toBe(true);
     expect(harryCity).not.toContain("mate-selection");
+    const labCity = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where did he live at Swinburne research?") }],
+      "",
+      "Where did he live at Swinburne research?",
+    );
+    expect(labCity.startsWith("Researcher at Swinburne")).toBe(true);
+    expect(labCity).toContain("Melbourne");
+    expect(labCity).toContain("August 2025");
+    const pytheraCity = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where did he live at Pythera?") }],
+      "",
+      "Where did he live at Pythera?",
+    );
+    expect(pytheraCity).toContain("January 2025");
+    expect(pytheraCity).not.toContain("175 Hospital");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",
