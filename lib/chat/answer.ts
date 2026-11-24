@@ -46,7 +46,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
     .map((part) => part.output)
     .filter((output): output is Record<string, unknown> => typeof output === "object" && output !== null);
   if (outputs.some((output) => output.reason === "unavailable")) return holdAnswer();
-  const primary = primaryOutputs(outputs);
+  const primary = primaryOutputs(outputs, question);
   let text = dropGapSentences(dropSourceTail(
     dropRecordTalk(stripMarkdown(sentenceFromModel(stripToolMarkup(modelText)))),
     sourceHeadings(outputs),
@@ -361,11 +361,26 @@ function hasSectionText(output: Record<string, unknown>): boolean {
   return Array.isArray(output.sections) && output.sections.some((section) => typeof section === "object" && section !== null && "text" in section && typeof section.text === "string" && section.text.trim().length > 0);
 }
 
-function primaryOutputs(outputs: readonly Record<string, unknown>[]): Record<string, unknown>[] {
+function primaryOutputs(outputs: readonly Record<string, unknown>[], question = ""): Record<string, unknown>[] {
   const withText = outputs.filter(hasSectionText);
+  const employer = namedEmployer(question);
+  if (employer) {
+    const matched = withText.filter((output) => employerMentioned(employer, outputText(output)));
+    if (matched.length > 0) return matched;
+  }
   if (withText.length > 0) return [withText[0]];
   const facts = outputs.filter((output) => Array.isArray(output.facts) && output.facts.length > 0);
   return facts.length > 0 ? facts : [...outputs];
+}
+
+function outputText(output: Record<string, unknown>): string {
+  const parts: string[] = [];
+  if (typeof output.text === "string") parts.push(output.text);
+  if (!Array.isArray(output.sections)) return parts.join(" ");
+  for (const section of output.sections) {
+    if (typeof section === "object" && section !== null && "text" in section && typeof section.text === "string") parts.push(section.text);
+  }
+  return parts.join(" ");
 }
 
 function evidenceBlocks(outputs: readonly Record<string, unknown>[]): string[] {

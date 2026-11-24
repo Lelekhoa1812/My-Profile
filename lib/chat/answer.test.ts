@@ -219,6 +219,19 @@ describe("displayAnswer", () => {
     expect(text).not.toContain("Ericsson");
   });
 
+  it("uses the later search when the question names that employer", () => {
+    const text = displayAnswer(
+      [
+        { type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Axion Solutions. Axis calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write." }] } },
+        { type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Harry the Hirer, Senior AI Engineer. The resume records about 40 percent less repetitive lookup and drafting in targeted pilot workflows." }] } },
+      ],
+      "Axis shows a preview.",
+      "At Harry the Hirer, what did the pilot cut?",
+    );
+    expect(text).toContain("40 percent");
+    expect(text).not.toContain("FoodFlow");
+  });
+
   it("adds the preview when a long write answer leaves it out", () => {
     const axion = profile.sections.find((item) => item.sectionId === "role-axion");
     const text = displayAnswer(
