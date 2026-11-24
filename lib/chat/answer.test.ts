@@ -4228,6 +4228,16 @@ describe("displayAnswer", () => {
     expect(quotientProduct).toContain("moment");
     expect(quotientProduct).toContain("held for review");
     expect(quotientProduct).toContain("not a deployed product");
+    const quotientDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Quotient do?") }],
+      "",
+      "What does Quotient do?",
+    );
+    expect(quotientDoes).toContain("recorded meeting");
+    expect(quotientDoes).toContain("points to the moment");
+    expect(quotientDoes).toContain("held for review");
+    expect(quotientDoes).toContain("not a deployed product");
+    expect(quotientDoes).not.toContain("user count");
     const coachProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is WritingJourney?") }],
       "",
