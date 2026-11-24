@@ -283,6 +283,13 @@ export function asksForSpokenLanguages(query: string): boolean {
   return /\b(speak|speaks|spoken|fluent|mandarin)\b/.test(text);
 }
 
+export function asksForName(query: string): "full_name" | "also_known_as" | undefined {
+  const text = query.toLowerCase();
+  if (/\b(also called|known as)\b/.test(text)) return "also_known_as";
+  if (/\b(his|her) name\b/.test(text) && !/\b(product|model|file|company|employer)\b/.test(text)) return "full_name";
+  return undefined;
+}
+
 export function asksForPlace(query: string): boolean {
   const text = query.toLowerCase();
   if (/\b(model|app|production|ship|deploy)\b/.test(text)) return false;

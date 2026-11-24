@@ -29,6 +29,12 @@ describe("profile tools", () => {
     expect(email.found).toBe(true);
     expect(email.facts?.[0]?.label).toBe("Email");
     expect(email.facts?.[0]?.value).toContain("@");
+    const name = await search.execute({ query: "What is his name?" });
+    expect(name.found).toBe(true);
+    expect(name.facts?.[0]?.value).toContain("Dang Khoa");
+    const called = await search.execute({ query: "What is he also called?" });
+    expect(called.found).toBe(true);
+    expect(called.facts?.[0]?.value).toContain("Liam");
     const workflow = await search.execute({ query: "Does the workflow send email?" });
     expect(workflow.found).toBe(true);
     expect(workflow.sections?.some((section) => section.sectionId === "project-axion-workflows")).toBe(true);
