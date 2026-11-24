@@ -662,6 +662,7 @@ describe("displayAnswer", () => {
       "",
       "Did he work at Harry and MedSwin at the same time?",
     );
+    expect(overlap).toContain("Harry");
     expect(overlap).toContain("December 2025");
     expect(overlap).toContain("August 2025");
     expect(archive.toLowerCase()).toContain("free-router");

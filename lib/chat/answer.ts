@@ -154,8 +154,20 @@ function vectorAnswer(question: string, outputs: readonly Record<string, unknown
 
 function sameTimeAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (!/\b(same time|overlap)\b/i.test(question)) return "";
-  const periods = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b20\d{2}\b.*\b(20\d{2}|present)\b/.test(sentence) && sentence.split(/\s+/).length <= 18));
-  return [...new Set(periods)].slice(0, 3).join(" ");
+  const lines: string[] = [];
+  for (const output of outputs) {
+    if (!Array.isArray(output.sections)) continue;
+    for (const section of output.sections) {
+      if (typeof section !== "object" || section === null || !("text" in section) || typeof section.text !== "string") continue;
+      const period = plainSentences(section.text).find((sentence) => /\b20\d{2}\b.*\b(20\d{2}|present)\b/.test(sentence) && sentence.split(/\s+/).length <= 18);
+      if (!period) continue;
+      const label = "heading" in section ? String(section.heading).replace(/\.$/, "") : "";
+      const named = label.split(",")[0]?.toLowerCase() ?? "";
+      const line = named && !period.toLowerCase().includes(named) ? `${label}. ${period}` : period;
+      if (!lines.includes(line)) lines.push(line);
+    }
+  }
+  return lines.slice(0, 3).join(" ");
 }
 
 function archiveAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
