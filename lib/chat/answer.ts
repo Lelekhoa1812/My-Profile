@@ -813,6 +813,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bmizco\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && /\binference uses\b/i.test(sentence)) return true;
   if (/\binet\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && /\bobsei\b/i.test(sentence)) return true;
   if (/\bteqar\b/i.test(question) && /\b(use|uses|used|scope)\b/i.test(question) && /\bscope includes\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bestatefolio\b/i.test(question) && /\bprice forecast\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bsall-?e\b/i.test(question) && /\boceanic garbage\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\b(download|rank)\b/i.test(question) && /\bmost downloaded\b/i.test(sentence)) return true;
@@ -1055,7 +1057,7 @@ function sectionBlocks(outputs: readonly Record<string, unknown>[]): string[] {
 }
 
 function plainSentence(sentence: string): string {
-  const plain = sentence.replace(/^The resume (?:records|says) (?:that )?/i, "").trim();
+  const plain = sentence.replace(/^The resume (?:records|says|describes) (?:that )?/i, "").trim();
   return plain ? plain[0].toUpperCase() + plain.slice(1) : "";
 }
 

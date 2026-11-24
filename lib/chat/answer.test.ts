@@ -931,6 +931,19 @@ describe("displayAnswer", () => {
     );
     expect(axionRoleWork).toContain("preview");
     expect(axionRoleWork).toContain("approve");
+    const estatefolioIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is EstateFolio?") }],
+      "",
+      "What is EstateFolio?",
+    );
+    expect(estatefolioIs).toContain("price forecast");
+    expect(estatefolioIs).toContain("Ho Chi Minh City");
+    const salleIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Sall-e?") }],
+      "",
+      "What is Sall-e?",
+    );
+    expect(salleIs).toContain("oceanic garbage");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
