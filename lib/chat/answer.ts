@@ -2016,6 +2016,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bbuild/i.test(question) && !namedEmployer(question) && !/\b(lab|5g)\b/i.test(question)) return joined;
   if (/\bextract/i.test(question) && !namedEmployer(question)) return joined;
+  if (/\bdocuments?\b/i.test(question) && !namedEmployer(question) && !/\b(read|reranker|how many)\b/i.test(question)) return joined;
   if (/\bcover/i.test(question) && !namedEmployer(question) && !/\b(lab|clinical|foodflow|traces)\b/i.test(question)) return joined;
   if (/\binclud/i.test(question) && !namedEmployer(question) && !/\b(stack|scope|models|tools)\b/i.test(question)) return joined;
   if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question) && !namedEmployer(question)) return joined;

@@ -1820,6 +1820,7 @@ describe("displayAnswer", () => {
     );
     expect(documentIt).toContain("document extraction");
     expect(documentIt).toContain("remittance documents");
+    expect(documentIt).not.toContain("December 2025");
     const presentIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it present?") }],
       "",
