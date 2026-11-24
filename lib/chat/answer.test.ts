@@ -4094,6 +4094,9 @@ describe("displayAnswer", () => {
       "What does Survee do?",
     );
     expect(survee).toContain("questionnaire");
+    expect(survee).toContain("MongoDB");
+    expect(survee).toContain("does not score people");
+    expect(survee).not.toContain("user count");
     const modelCards = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Hugging Face models do?") }],
       "",
