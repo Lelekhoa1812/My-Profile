@@ -175,7 +175,7 @@ export const lanes: { id: Lane; label: string }[] = [
 ];
 
 export const roles: Role[] = [
-  { id: "axion", sectionId: "role-axion", employer: "Axion Solutions", title: "AI Software Engineer", place: null, start: "2026-07", end: null, lane: "full-time", outcome: "Searches for startups and investors, then drafts the portfolio update.", proof: null, overlap: null },
+  { id: "axion", sectionId: "role-axion", employer: "Axion Solutions", title: "Senior AI Software Engineer", place: null, start: "2026-07", end: null, lane: "full-time", outcome: "Searches for startups and investors, then drafts the portfolio update.", proof: null, overlap: null },
   { id: "teqar", sectionId: "role-teqar", employer: "Teqar", title: "AI Development Consultant", place: "Perth", start: "2025-05", end: null, lane: "consulting", outcome: "Shows each client where AI fits their work, then writes the plan to build it.", proof: null, overlap: null },
   { id: "harry-senior", sectionId: "role-harry-senior", employer: "Harry the Hirer", title: "Senior AI Engineer", place: "Melbourne", start: "2025-12", end: "2026-07", lane: "full-time", outcome: "Gave event planners answers they could check on stock, logistics, and documents.", proof: "Lookup and drafting in the pilot fell about 40%.", overlap: null },
   { id: "swinburne-research", sectionId: "role-swinburne-research", employer: "Swinburne University", title: "Researcher", place: "Melbourne", start: "2025-08", end: "2026-07", lane: "research", outcome: "Led a five-person lab that answered clinical questions.", proof: "The answers reached 86% BERTScore on MedMCQA, PubMedQA, and MedQuAD.", overlap: null },
