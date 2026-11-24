@@ -1350,6 +1350,13 @@ describe("displayAnswer", () => {
     );
     expect(axionBuild).toContain("LangChain");
     expect(axionBuild).not.toContain("investor scouting");
+    const poptechBuild = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at PopTech?") }],
+      "",
+      "What did he build at PopTech?",
+    );
+    expect(poptechBuild).toContain("TFT");
+    expect(poptechBuild).toContain("XGBoost");
     const labBuild = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
       "",
