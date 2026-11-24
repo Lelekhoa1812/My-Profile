@@ -1009,7 +1009,9 @@ function toolDutyAnswer(question: string, outputs: readonly Record<string, unkno
   const name = raw?.toLowerCase();
   if (!raw || !name || ["the", "his", "her", "its", "this", "that"].includes(name)) return "";
   const token = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const named = new RegExp(`(?<![\\w-])${token}(?![a-z])`, "i");
+  const named = name === "react"
+    ? /(?<![\w-])React(?![a-zA-Z])/
+    : new RegExp(`(?<![\\w-])${token}(?![a-z])`, "i");
   const keep = (sentence: string) => {
     const length = sentence.split(/\s+/).length;
     const shortDuty = length === 3 && /\b(use|uses|used|checks)\b/i.test(sentence);
@@ -1020,7 +1022,7 @@ function toolDutyAnswer(question: string, outputs: readonly Record<string, unkno
   const lines = productLines.length > 0 ? [...productLines, ...archiveLines] : archiveLines;
   const productMentions = sectionBlocks(outputs).some((block) => !/public repositories/i.test(block) && named.test(block));
   const distinct = [...new Set(lines)].filter((line, _, all) => !all.some((other) => other !== line && other.includes(line.replace(/\.$/, ""))));
-  if (distinct.length > 0 && (productLines.length > 0 || !productMentions)) return distinct.slice(0, 3).join(" ");
+  if (distinct.length > 0 && (productLines.length > 0 || !productMentions)) return distinct.slice(0, 5).join(" ");
   const listed = sectionBlocks(outputs).some((block) => /named tools include/i.test(block) && named.test(block));
   return listed ? `Named tools include ${raw}.` : "";
 }

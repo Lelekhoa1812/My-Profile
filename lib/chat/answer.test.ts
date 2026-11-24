@@ -1652,6 +1652,16 @@ describe("displayAnswer", () => {
       "What does FastAPI do?",
     );
     expect(fastapiDuty).toContain("FastAPI streaming");
+    expect(fastapiDuty).toContain("Raspberry Pi");
+    expect(fastapiDuty).toContain("faster-whisper");
+    const reactDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does React do?") }],
+      "",
+      "What does React do?",
+    );
+    expect(reactDuty).toContain("React Native");
+    expect(reactDuty).toContain("React page");
+    expect(reactDuty).not.toContain("ReAct");
     const qwenUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Qwen used for?") }],
       "",
