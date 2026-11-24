@@ -116,6 +116,12 @@ describe("profile store", () => {
     if (fastapi.found) expect(fastapi.sections[0]?.sectionId).toBe("role-harry-senior");
     if (docker.found) expect(docker.sections.map((section) => section.sectionId)).toEqual(["role-harry-senior", "role-alta"]);
     if (kubernetes.found) expect(kubernetes.sections[0]?.sectionId).toBe("role-alta");
+    const kafka = searchSections(profile.sections, "What did he build with Kafka?");
+    expect(kafka.found).toBe(true);
+    if (kafka.found) {
+      expect(kafka.sections.some((section) => section.text.includes("Kafka"))).toBe(true);
+      expect(kafka.sections[0]?.sectionId).not.toBe("project-axion-workflows");
+    }
   });
 
   it("answers a pedigree leakage question from the pedigree role", () => {

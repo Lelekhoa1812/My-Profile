@@ -1786,7 +1786,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
     }
   }
-  if (/\bbuild/i.test(question) && !/\bagents?\b/i.test(question) && !namedEmployer(question) && !/\b(lab|5g|axion|mizco|poptech|fastapi|docker|kubernetes)\b/i.test(question)) {
+  if (/\bbuild/i.test(question) && !/\bwith\b/i.test(question) && !/\bagents?\b/i.test(question) && !namedEmployer(question) && !/\b(lab|5g|axion|mizco|poptech|fastapi|docker|kubernetes)\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
       sentences.find((sentence) => /builds a people list/i.test(sentence)),

@@ -2872,6 +2872,27 @@ describe("displayAnswer", () => {
     expect(kubernetesBuild).toContain("Kubernetes");
     expect(kubernetesBuild).toContain("CI/CD");
     expect(kubernetesBuild).not.toContain("people list");
+    const kafkaBuild = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build with Kafka?") }],
+      "",
+      "What did he build with Kafka?",
+    );
+    expect(kafkaBuild).toContain("Kafka");
+    expect(kafkaBuild).not.toContain("people list");
+    const loraBuild = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build with LoRA?") }],
+      "",
+      "What did he build with LoRA?",
+    );
+    expect(loraBuild).toContain("LoRA");
+    expect(loraBuild).not.toContain("people list");
+    const whisperBuild = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build with Whisper?") }],
+      "",
+      "What did he build with Whisper?",
+    );
+    expect(whisperBuild).toContain("Whisper");
+    expect(whisperBuild).not.toContain("people list");
     const pythonUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use Python for?") }],
       "",
