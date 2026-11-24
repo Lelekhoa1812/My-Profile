@@ -1018,7 +1018,7 @@ function toolUseAnswer(question: string, outputs: readonly Record<string, unknow
 function whisperAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (!/\bwhisper\b/i.test(question) || /\b(triage|speech|stt|studio)\b/i.test(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bwhisper\b/i.test(sentence) && sentence.split(/\s+/).length <= 24));
-  return [...new Set(lines)].slice(0, 2).join(" ");
+  return [...new Set(lines)].slice(0, 3).join(" ");
 }
 
 function percentFigureAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {

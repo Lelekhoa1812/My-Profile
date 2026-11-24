@@ -1585,6 +1585,8 @@ describe("displayAnswer", () => {
     );
     expect(whisper.toLowerCase()).toContain("whisper");
     expect(whisper).toContain("Speech uses Whisper");
+    expect(whisper).toContain("faster-whisper");
+    expect(whisper).toContain("local Whisper inference");
     const qwenUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Qwen used for?") }],
       "",
