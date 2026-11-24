@@ -117,8 +117,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\bperception uses\b/i.test(sentence)));
   }
   if (/\bwhat is\b/i.test(question) && /\bgolf\b/i.test(question)) {
-    cap = 3;
+    cap = 4;
     push(blockSentences.find((sentence) => /\byolov8\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bvietocr\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\b15 percent efficiency\b/i.test(sentence)));
   }
   if (/\bwhat is\b/i.test(question) && /\broster\b/i.test(question)) {
@@ -226,9 +227,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\bperson approves\b/i.test(sentence)));
   }
   if (/\bwhat is\b/i.test(question) && /\bskyledge\b/i.test(question)) {
-    cap = 3;
+    cap = 4;
     push(blockSentences.find((sentence) => /\bacquired\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bfault prediction\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\braspberry pi\b/i.test(sentence)));
   }
   if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question)) {
     push(blockSentences.find((sentence) => /\b(jetson|aws)\b/i.test(sentence) && /\b(deploy|deployment|used)\b/i.test(sentence)));

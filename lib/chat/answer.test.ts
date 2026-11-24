@@ -956,6 +956,7 @@ describe("displayAnswer", () => {
     expect(golfIs).toContain("VHandicap");
     expect(golfIs).toContain("YOLOv8");
     expect(golfIs).toContain("15 percent");
+    expect(golfIs).toContain("VietOCR");
     const rosterIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Roster management?") }],
       "",
@@ -977,6 +978,7 @@ describe("displayAnswer", () => {
     );
     expect(skyledgeProduct).toContain("OBD-II");
     expect(skyledgeProduct).toContain("SkyLedge Kenya");
+    expect(skyledgeProduct).toContain("FastAPI");
     const meterProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the water-meter scanner?") }],
       "",
