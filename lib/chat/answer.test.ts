@@ -1518,6 +1518,16 @@ describe("displayAnswer", () => {
     );
     expect(trainIt).toContain("LoRA");
     expect(trainIt).toContain("VietOCR");
+    expect(trainIt).toContain("combinatorial purged");
+    const trainingUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What training does he use?") }],
+      "",
+      "What training does he use?",
+    );
+    expect(trainingUse).toContain("LoRA");
+    expect(trainingUse).toContain("combinatorial purged");
+    expect(trainingUse).toContain("VietOCR");
+    expect(trainingUse).not.toContain("August 2025");
     const guardIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it guard?") }],
       "",

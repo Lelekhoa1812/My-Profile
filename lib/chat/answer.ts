@@ -1269,10 +1269,11 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\bexplain/i.test(question) && !/\b(pedigree|writingjourney|writing coach|ielts|llm)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/explains the error|LLM explanations/i, 2);
   }
-  if (/\btrain/i.test(question) && !/\b(he|him|his|lab)\b/i.test(question) && !namedEmployer(question)) {
+  if (/\btrain/i.test(question) && !/\blab\b/i.test(question) && !namedEmployer(question) && (!/\b(he|him|his)\b/i.test(question) || /\b(use|uses|used|for)\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
       sentences.find((sentence) => /LoRA/i.test(sentence) && /500,000/.test(sentence)),
+      sentences.find((sentence) => /combinatorial purged/i.test(sentence)),
       sentences.find((sentence) => /trains VietOCR/i.test(sentence)),
     ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
     if (lines.length > 0) {
@@ -2046,6 +2047,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bschedul/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bdraft/i.test(question) && !/\b(send|recipe|on|axis|drafted)\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bretriev/i.test(question) && !namedEmployer(question)) return joined;
+  if (/\btraining\b/i.test(question) && !namedEmployer(question) && !/\blab\b/i.test(question)) return joined;
   if (/\b(cite|explain|train|guard|embed|validat\w*|recogni|recommend|graph|score|trace|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv\w*|rank|track|own|rout|turn|check|gate|version|call|remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
   if (/\bagents?\b/i.test(question) && /\b(build|built)\b/i.test(question)) return joined;
   if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !namedEmployer(question)) return joined;
