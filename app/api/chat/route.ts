@@ -2,6 +2,7 @@ import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import type { UpdateFilter } from "mongodb";
 import { convertToModelMessages, isStepCount, ToolLoopAgent, type UIMessage } from "ai";
 import { keptSentence } from "../../../lib/chat/answer";
+import { visitorCookie } from "../../../lib/session/cookie";
 import { instructionPrefix } from "../../../lib/agent/instructions";
 import { createProfileTools } from "../../../lib/agent/tools";
 import { loadNimKeys } from "../../../lib/nim/keys";
@@ -70,7 +71,7 @@ export async function POST(request: Request): Promise<Response> {
     },
   });
   return result.toUIMessageStreamResponse({
-    headers: visitor.setCookie ? { "set-cookie": visitorCookie(visitor.id) } : undefined,
+    headers: visitor.setCookie ? { "set-cookie": visitorCookie(visitor.id, new URL(request.url).protocol === "https:") } : undefined,
   });
 }
 
@@ -79,10 +80,6 @@ function readVisitor(request: Request): { id: string; setCookie: boolean } {
   const match = cookie.match(/(?:^|;\s*)visitor=([A-Za-z0-9_-]{16,80})/);
   if (match) return { id: match[1], setCookie: false };
   return { id: crypto.randomUUID().replaceAll("-", ""), setCookie: true };
-}
-
-function visitorCookie(id: string): string {
-  return `visitor=${id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=31536000`;
 }
 
 function cleanId(value: string | undefined): string | undefined {

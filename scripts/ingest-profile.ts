@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { MongoClient } from "mongodb";
 import profile from "../content/profile.json" with { type: "json" };
+import { idsToRetire } from "../lib/profile/retire";
 
 function loadEnvFile(path: string): void {
   const text = readFileSync(path, "utf8");
@@ -52,6 +53,12 @@ async function main(): Promise<void> {
         { upsert: true },
       );
     }
+    const storedFacts = await facts.distinct("key", { visibility: "public" });
+    const retireFacts = idsToRetire(storedFacts.filter((key): key is string => typeof key === "string"), profile.facts.map((fact) => fact.key));
+    if (retireFacts.length > 0) await facts.deleteMany({ key: { $in: retireFacts }, visibility: "public" });
+    const storedSections = await chunks.distinct("sectionId", { visibility: "public" });
+    const retireSections = idsToRetire(storedSections.filter((id): id is string => typeof id === "string"), profile.sections.map((section) => section.sectionId));
+    if (retireSections.length > 0) await chunks.deleteMany({ sectionId: { $in: retireSections }, visibility: "public" });
     const factCount = await facts.countDocuments({ visibility: "public" });
     const chunkCount = await chunks.countDocuments({ visibility: "public" });
     console.log(`Ingested ${factCount} facts and ${chunkCount} sections`);
