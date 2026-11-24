@@ -88,7 +88,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   for (const item of ranked) push(item.sentence);
   const body = chosen.length > 0
     ? chosen
-    : blockSentences.filter((sentence) => !isLabel(sentence) && !exposesGap(sentence)).slice(0, 2);
+    : blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence)).slice(0, 2);
   return keptOffer(question, shown, withIdentity(question, withPeriod(body, blockSentences), blockSentences));
 }
 
@@ -175,6 +175,9 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\b(poptech|electricity)\b/i.test(question) && /\btft\b/i.test(sentence)) return true;
+  if (/\b(use|used|stack|operate|operates)\b/i.test(question) && /\bthe stack is\b/i.test(sentence)) return true;
+  if (/\btraces?\b/i.test(question) && /\btraces?\b/i.test(sentence)) return true;
+  if (/\b(reduce|reduced|reduction|less)\b/i.test(question) && /\bpercent\b/i.test(sentence)) return true;
   if (/\b(refuse|send)\b/i.test(question) && /\bdoes not send\b/i.test(sentence)) {
     if (/\bexport\b/i.test(question)) return /\bexport\b/i.test(sentence);
     if (/\bdraft\b/i.test(question)) return /\bdraft\b/i.test(sentence);
@@ -242,7 +245,17 @@ function periodSentence(answer: string, block: string): string {
 }
 
 function isLabel(sentence: string): boolean {
+  if (isToolList(sentence)) return false;
   return sentence.replace(/[.]+$/, "").split(/\s+/).filter((word) => /^[a-z]{4,}/.test(word)).length === 0;
+}
+
+function isToolList(sentence: string): boolean {
+  const parts = sentence.split(",").map((part) => part.trim()).filter(Boolean);
+  return parts.length >= 3 && parts.every((part) => /^(?:and\s+)?[A-Z0-9]/.test(part));
+}
+
+function dateOnly(sentence: string): boolean {
+  return /^(january|february|march|april|may|june|july|august|september|october|november|december)\b/i.test(sentence) && sentence.split(/\s+/).length <= 8;
 }
 
 function technicalProof(answer: string, sentence: string): boolean {

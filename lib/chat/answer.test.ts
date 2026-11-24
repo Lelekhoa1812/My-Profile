@@ -550,6 +550,30 @@ describe("displayAnswer", () => {
       "What student platform did Hai Au sell?",
     );
     expect(poptech).toContain("TFT");
+    const alta = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Alta Media operate?") }],
+      "",
+      "What did Alta Media operate?",
+    );
+    const inet = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did iNet use for the news pipeline?") }],
+      "",
+      "What did iNet use for the news pipeline?",
+    );
+    const traces = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Axis use for traces?") }],
+      "",
+      "What does Axis use for traces?",
+    );
+    const meter = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the water meter reduce?") }],
+      "",
+      "What did the water meter reduce?",
+    );
+    expect(alta).toContain("Kubernetes");
+    expect(inet).toContain("Obsei");
+    expect(traces).toContain("LangSmith");
+    expect(meter).toContain("35 percent");
     expect(manager).toContain("HA Manager");
     expect(ericsson).toContain("not a named live customer app");
   });
