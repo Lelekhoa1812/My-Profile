@@ -770,6 +770,14 @@ describe("displayAnswer", () => {
     );
     expect(founderMail).toContain("emails founders");
     expect(founderMail).not.toContain("does not send email");
+    const founderInbox = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who receives the founder email?") }],
+      "",
+      "Who receives the founder email?",
+    );
+    expect(founderInbox).toContain("emails founders");
+    expect(founderInbox).not.toContain("MedViet");
+    expect(founderInbox).not.toContain("July 2026");
     const uncertain = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What reviews uncertain output?") }],
       "",

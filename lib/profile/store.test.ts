@@ -97,6 +97,12 @@ describe("profile store", () => {
     }
   });
 
+  it("answers a founder-email question from the workflow recipe", () => {
+    const result = searchSections(profile.sections, "Who receives the founder email?");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections[0]?.sectionId).toBe("project-axion-workflows");
+  });
+
   it("answers a named-live-app question from the Ericsson twin and the live app", () => {
     const result = searchSections(profile.sections, "What is not a named live app?");
     expect(result.found).toBe(true);

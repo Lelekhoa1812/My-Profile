@@ -448,6 +448,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bhow many\b/.test(text) && /\b(people|teams?)\b/.test(text) && !namedEmployer(text), ids: ["role-swinburne-research", "role-poptech", "project-skyledge", "project-salle"] },
     { when: /\b(train|trained|training)\b/.test(text) && /\b(he|him|his|lab)\b/.test(text) && !/\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: /\btrain/.test(text) && /\b(do|does|what)\b/.test(text) && !/\blab\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text) && (!/\b(he|him|his)\b/.test(text) || /\b(use|uses|used|for)\b/.test(text)), ids: ["role-swinburne-research", "project-medswin", "project-passport", "project-sp500"] },
+    { when: /\bfounder\b/.test(text) && /\bemail/.test(text), ids: ["project-axion-workflows"] },
     { when: /\b(founder|founded)\b/.test(text) && !namedEmployer(text), ids: ["project-medvietai"] },
     { when: /\bmedviet\b/.test(text), ids: ["project-medvietai"] },
     { when: /\bpartners?\b/.test(text) && !namedEmployer(text), ids: ["role-aitc"] },
