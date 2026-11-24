@@ -651,7 +651,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(corpus);
     }
   }
-  if (/\bskyledge\b/i.test(question) && /\b(servicing|cost)\b/i.test(question)) {
+  if (/\bskyledge\b/i.test(question) && /\b(servicing|cost|estimate)\b/i.test(question) && !/\bsave\b/i.test(question)) {
     cap = 2;
     const estimate = blockSentences.find((sentence) => /\bservicing-cost\b/i.test(sentence));
     if (estimate) {
@@ -1881,6 +1881,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bcva\b/i.test(question) && /\b(remember|memory)\b/i.test(question) && !/\bwhat is\b/i.test(question) && !/\bdo\b/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bprofile memory\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
   if (/\bwhat does\b/i.test(question) && /\bcva\b/i.test(question) && /\bdo\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
@@ -1934,7 +1942,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
-    if (/\bwhat does\b/i.test(question)) {
+    if (/\bwhat does\b/i.test(question) && !/\b(estimate|servicing|cost|save)\b/i.test(question)) {
       const lines = [
         sentences.find((sentence) => /\bOBD-II\b/.test(sentence)),
         sentences.find((sentence) => /\bfault prediction\b/i.test(sentence)),

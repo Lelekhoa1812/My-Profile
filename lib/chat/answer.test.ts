@@ -1862,6 +1862,21 @@ describe("displayAnswer", () => {
       "What does it remember?",
     );
     expect(rememberIt).toContain("profile memory");
+    const cvaMemory = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does CVA remember?") }],
+      "",
+      "What does CVA remember?",
+    );
+    expect(cvaMemory).toContain("profile memory");
+    expect(cvaMemory).not.toContain("career application");
+    const skyledgeEstimates = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does SkyLedge estimate?") }],
+      "",
+      "What does SkyLedge estimate?",
+    );
+    expect(skyledgeEstimates).toContain("15 percent");
+    expect(skyledgeEstimates).toContain("servicing-cost");
+    expect(skyledgeEstimates).not.toContain("OBD-II");
     const leadIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he lead?") }],
       "",
