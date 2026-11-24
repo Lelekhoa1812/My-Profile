@@ -106,6 +106,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(workSentence(blockSentences));
     push(blockSentences.find((sentence) => /\bextends\b/i.test(sentence)));
   } else push(picked);
+  if (/\bwhat is\b/i.test(question) && /\bestatefolio\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\btransformer reads\b/i.test(sentence)));
+  }
+  if (/\bwhat is\b/i.test(question) && /\bsall-?e\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\bcomputer vision\b/i.test(sentence)));
+  }
   if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question)) {
     push(blockSentences.find((sentence) => /\b(jetson|aws)\b/i.test(sentence) && /\b(deploy|deployment|used)\b/i.test(sentence)));
   }

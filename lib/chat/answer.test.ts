@@ -938,12 +938,14 @@ describe("displayAnswer", () => {
     );
     expect(estatefolioIs).toContain("price forecast");
     expect(estatefolioIs).toContain("Ho Chi Minh City");
+    expect(estatefolioIs).toContain("transformer");
     const salleIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Sall-e?") }],
       "",
       "What is Sall-e?",
     );
     expect(salleIs).toContain("oceanic garbage");
+    expect(salleIs).toContain("computer vision");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
