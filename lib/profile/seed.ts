@@ -10,10 +10,13 @@ export async function seedProfile(db: Db): Promise<void> {
   const facts = db.collection("profile_facts");
   const chunks = db.collection("chunks");
   const sessions = db.collection("sessions");
+  const traces = db.collection("tool_traces");
   await facts.createIndex({ key: 1 }, { unique: true });
   await chunks.createIndex({ sectionId: 1 }, { unique: true });
   await sessions.createIndex({ threadId: 1 }, { unique: true });
   await sessions.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+  await traces.createIndex({ threadId: 1, calledAt: -1 });
+  await traces.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });
   const now = new Date();
   for (const fact of profile.facts) {
     await facts.updateOne({ key: fact.key }, { $set: { ...fact, visibility: "public", updatedAt: now } }, { upsert: true });
