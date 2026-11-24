@@ -905,6 +905,13 @@ describe("displayAnswer", () => {
       "What did he use at iNet?",
     );
     expect(inetTools).toContain("Obsei");
+    const teqarScope = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he use at Teqar?") }],
+      "",
+      "What did he use at Teqar?",
+    );
+    expect(teqarScope).toContain("analytics");
+    expect(teqarScope).toContain("vision quality checks");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
