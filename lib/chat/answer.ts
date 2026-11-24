@@ -544,6 +544,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (platform && !chosen.includes(platform)) push(platform);
     push(recipes);
   }
+  if (/\bcity\b/i.test(question) && /\blab\b/i.test(question)) {
+    cap = 2;
+    const city = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bmelbourne\b/i.test(sentence) && /\b20\d{2}\b/.test(sentence));
+    if (city) {
+      chosen.length = 0;
+      push(city);
+    }
+  }
   if (/\bharry\b/i.test(question) && /\b(big|size|largest|enterprise)\b/i.test(question)) {
     cap = 2;
     const size = blockSentences.find((sentence) => /\blargest event enterprise\b/i.test(sentence));

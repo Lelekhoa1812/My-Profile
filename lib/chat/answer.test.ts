@@ -1398,6 +1398,7 @@ describe("displayAnswer", () => {
       "",
       "What city is the lab in?",
     );
+    expect(labPlace.startsWith("Researcher at Swinburne")).toBe(true);
     expect(labPlace).toContain("Melbourne");
     expect(labPlace).not.toContain("Ho Chi Minh");
     const harryPercent = displayAnswer(
