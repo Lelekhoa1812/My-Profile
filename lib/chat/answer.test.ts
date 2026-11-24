@@ -3346,6 +3346,13 @@ describe("displayAnswer", () => {
       "What does Axis not own?",
     );
     expect(axisNotOwn).toContain("does not own FoodFlow");
+    const foodflowNot = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is FoodFlow not?") }],
+      "",
+      "What is FoodFlow not?",
+    );
+    expect(foodflowNot).toContain("not for a release");
+    expect(foodflowNot.split(/(?<=[.!])\s+/).find((sentence) => /\bfoodflow\b/i.test(sentence)) ?? "").toContain("not for a release");
     expect(axisNotOwn).toContain("Engine database");
     expect(axisNotOwn.split(/(?<=[.!])\s+/).find((sentence) => /\bown/i.test(sentence)) ?? "").toContain("does not own");
     expect(hardware).toContain("Raspberry");

@@ -777,6 +777,17 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(data);
     }
   }
+  if (/\bfoodflow\b/i.test(question) && /\bnot\b/i.test(question) && !/\b(production|release|database|own)\b/i.test(question)) {
+    const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const release = lines.find((sentence) => /\bnot for a release\b/i.test(sentence));
+    if (release) {
+      chosen.length = 0;
+      cap = 3;
+      push(release);
+      push(lines.find((sentence) => /\bdoes not rename\b/i.test(sentence)));
+      push(lines.find((sentence) => /\bdoes not own foodflow/i.test(sentence)));
+    }
+  }
   if (/\bnot\b/i.test(question) && /\bown/i.test(question)) {
     const limits = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bdoes not own\b/i.test(sentence));
     if (limits.length > 0) {
