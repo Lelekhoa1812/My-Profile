@@ -1,7 +1,7 @@
 import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import type { ProfileRecord } from "../profile/load";
-import { asksForExperienceSpan, asksForPlace, contactLookupKey, listSections, lookupFacts, readSection, searchSections } from "../profile/store";
+import { asksForExperienceSpan, asksForPlace, asksForSpokenLanguages, contactLookupKey, listSections, lookupFacts, readSection, searchSections } from "../profile/store";
 
 const kind = z.enum(["identity", "role", "link", "date", "skill", "education"]).optional();
 
@@ -39,6 +39,15 @@ export function createProfileTools(record: ProfileRecord): ToolSet {
         if (key) return lookupFacts(facts, { key });
         if (asksForPlace(input.query)) return lookupFacts(facts, { key: "location" });
         if (asksForExperienceSpan(input.query)) return lookupFacts(facts, { key: "experience" });
+        if (asksForSpokenLanguages(input.query)) {
+          const spoken = lookupFacts(facts, { key: "languages" });
+          if (spoken.found) {
+            return {
+              found: true as const,
+              sections: [{ sectionId: "skills", heading: "Languages", sourceType: "skills", text: spoken.facts.map((fact) => fact.value).join(" "), match: "keyword" as const }],
+            };
+          }
+        }
         return searchSections(sections, input.query, input.sourceType);
       },
     }),

@@ -47,4 +47,15 @@ describe("profile tools", () => {
     expect(harry.found).toBe(true);
     expect(harry.sections?.some((section) => section.sectionId === "role-harry-senior")).toBe(true);
   });
+
+  it("returns the spoken languages and leaves a code question on the skills section", async () => {
+    const tools = createProfileTools({ facts: profile.facts, sections: profile.sections, source: "file" });
+    const search = tools.search_sections as unknown as {
+      execute: (input: { query: string }) => Promise<{ found: boolean; sections?: { text: string; sectionId: string }[] }>;
+    };
+    const spoken = await search.execute({ query: "What languages does he speak?" });
+    expect(spoken.sections?.[0]?.text).toContain("Mandarin");
+    expect(spoken.sections?.[0]?.text).toContain("Vietnamese");
+    expect(spoken.sections?.[0]?.text).not.toContain("Python");
+  });
 });

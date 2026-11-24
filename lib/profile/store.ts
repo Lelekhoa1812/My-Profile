@@ -220,6 +220,12 @@ export function asksForExperienceSpan(query: string): boolean {
   return /\b(years|year|span|many|total)\b/.test(text);
 }
 
+export function asksForSpokenLanguages(query: string): boolean {
+  const text = query.toLowerCase();
+  if (/\b(python|java|typescript|stack|programming|code|codes)\b/.test(text)) return false;
+  return /\b(speak|speaks|spoken|fluent|mandarin)\b/.test(text);
+}
+
 export function asksForPlace(query: string): boolean {
   const text = query.toLowerCase();
   if (/\b(model|app|production|ship|deploy)\b/.test(text)) return false;
