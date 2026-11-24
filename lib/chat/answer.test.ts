@@ -2323,6 +2323,15 @@ describe("displayAnswer", () => {
     expect(cvaProduct).toContain("person approves");
     expect(cvaProduct).toContain("profile memory");
     expect(cvaProduct).toContain("cva-mauve.vercel.app");
+    const cvaDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does CVA do?") }],
+      "",
+      "What does CVA do?",
+    );
+    expect(cvaDoes).toContain("career application agent");
+    expect(cvaDoes).toContain("cover letter");
+    expect(cvaDoes).toContain("person approves");
+    expect(cvaDoes).toContain("profile memory");
     const skyledgeProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is SkyLedge?") }],
       "",
