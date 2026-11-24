@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs);
+  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -150,6 +150,16 @@ function vectorAnswer(question: string, outputs: readonly Record<string, unknown
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(pgvector|faiss)\b/i.test(sentence)));
   const short = lines.filter((sentence) => sentence.split(/\s+/).length <= 24);
   return [...new Set(short.length > 0 ? short : lines)].slice(0, 2).join(" ");
+}
+
+function archiveAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\barchive\b/i.test(question)) return "";
+  const sentences = sectionBlocks(outputs).flatMap((block) => plainSentences(block));
+  const named = sentences.filter((sentence) => /\b(prophet|free-router|survee|prompt-me)\b/i.test(sentence));
+  const page = sentences.find((sentence) => /full public archive/i.test(sentence));
+  const body = [...new Set(named)].slice(0, 4);
+  if (page && !body.includes(page)) body.push(page);
+  return body.join(" ");
 }
 
 function modelAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {

@@ -645,6 +645,8 @@ describe("displayAnswer", () => {
     );
     expect(archive).toContain("prompt-me");
     expect(archive).toContain("StudyBuddy");
+    expect(archive).toContain("Prophet");
+    expect(archive.toLowerCase()).toContain("free-router");
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],
