@@ -114,6 +114,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (!chosen.some((sentence) => /\b(led|built|uses|used|owned|owns|covers|percent|python|ocr)\b/i.test(sentence))) {
       push(workSentence(blockSentences));
     }
+    const action = blockSentences.find((sentence) => /\b(scores|drafts|detect|reads|localise|localize)\b/i.test(sentence));
+    if (action && !chosen.some((sentence) => /\b(scores|drafts|detect|reads|localise|localize)\b/i.test(sentence))) push(action);
   }
   for (const item of ranked) {
     const exact = words.some((word) => new RegExp(`\\b${word}\\b`, "i").test(item.sentence));

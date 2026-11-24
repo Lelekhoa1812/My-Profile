@@ -1085,6 +1085,24 @@ describe("displayAnswer", () => {
       "Tell me about the S&P 500 forecast.",
     );
     expect(spAbout).toContain("FinBERT");
+    const cvaWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at CVA?") }],
+      "",
+      "What did he do at CVA?",
+    );
+    expect(cvaWork).toContain("drafts a CV");
+    const writingWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at WritingJourney?") }],
+      "",
+      "What did he do at WritingJourney?",
+    );
+    expect(writingWork).toContain("scores a submission");
+    const salleWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Sall-e?") }],
+      "",
+      "What did he do at Sall-e?",
+    );
+    expect(salleWork).toContain("localise");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
