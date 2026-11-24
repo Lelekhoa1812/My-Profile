@@ -356,6 +356,7 @@ function matchingBlock(outputs: readonly Record<string, unknown>[], question: st
     if (!employer && /\b(sold|sell|products)\b/i.test(question) && /named live or sold work/i.test(block)) score += 20;
     if (/\bocr\b/i.test(question) && !employer && !/\b(meter|water|harry|golf|passport|nam)\b/i.test(question) && /\b(vietocr|paddleocr)\b/i.test(block)) score += 15;
     if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && /\bsame host\b/i.test(block)) score += 12;
+    if (/\blive app\b/i.test(question) && /\bonly named live app\b/i.test(block)) score += 12;
     if (/\bmj industrial\b/i.test(question) && /\bmj industrial\b/i.test(block)) score += 12;
     if (!chronological && titledInQuestion(question, block)) score += 8;
     if (countedFact(question, sentences, words)) score += 12;
@@ -534,6 +535,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bship\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
   if (/\btext\b/i.test(question) && /\bfinbert\b/i.test(sentence)) return true;
   if (/\binclude/i.test(question) && /\b(ensemble|dosage)\b/i.test(sentence)) return true;
+  if (/\bdosage\b/i.test(question) && /\bdosage\b/i.test(sentence)) return true;
+  if (/\blive app\b/i.test(question) && /\bonly named live app\b/i.test(sentence)) return true;
   if (/\bverif/i.test(question) && /\bvalidators check\b/i.test(sentence)) return true;
   if (/\bvision\b/i.test(question) && !/\bmodel\b/i.test(question) && /\bopencv\b/i.test(sentence)) return true;
   if (/\bhardware\b/i.test(question) && /\bjetson\b/i.test(sentence)) return true;

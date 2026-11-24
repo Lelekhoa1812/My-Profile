@@ -1161,6 +1161,18 @@ describe("displayAnswer", () => {
     );
     expect(engineDatabase).toContain("does not own the Engine database");
     expect(engineDatabase).not.toContain("governed graph");
+    const dosage = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Does the pedigree engine use Dosage Theory?") }],
+      "",
+      "Does the pedigree engine use Dosage Theory?",
+    );
+    expect(dosage).toContain("Dosage Theory");
+    const liveApp = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Is CVA the only named live app?") }],
+      "",
+      "Is CVA the only named live app?",
+    );
+    expect(liveApp).toContain("only named live app");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",
