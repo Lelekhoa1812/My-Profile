@@ -3160,6 +3160,15 @@ describe("displayAnswer", () => {
       "What is PopTech?",
     );
     expect(poptechRole).toContain("electricity");
+    const poptechDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does PopTech do?") }],
+      "",
+      "What does PopTech do?",
+    );
+    expect(poptechDoes).toContain("electricity forecasting");
+    expect(poptechDoes).toContain("sensor quality");
+    expect(poptechDoes).toContain("XGBoost");
+    expect(poptechDoes).toContain("DQN");
     const poptechModelList = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models did PopTech use?") }],
       "",
