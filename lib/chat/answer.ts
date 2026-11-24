@@ -374,7 +374,7 @@ function percentFigureAnswer(question: string, outputs: readonly Record<string, 
 }
 
 function measureAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\b(measure|cut)\b/i.test(question) || namedEmployer(question) || /\b(live|pilot|uptime|bert|golf|meter|scanner|recall|precision)\b/i.test(question)) return "";
+  if (!/\b(measure|measured|cut)\b/i.test(question) || namedEmployer(question) || /\b(live|pilot|uptime|bert|golf|meter|scanner|recall|precision)\b/i.test(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bpercent\b/i.test(sentence) && sentence.split(/\s+/).length <= 28));
   return [...new Set(lines)].slice(0, 3).join(" ");
 }
@@ -709,6 +709,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bhandwriting\b/i.test(question) && !/\bvision\b/i.test(question) && /\bhandwriting uses\b/i.test(sentence)) return true;
   if (/\baccounting\b/i.test(question) && /\baccounting assistant\b/i.test(sentence)) return true;
   if (/\b(train|trained|training)\b/i.test(question) && /\bfine-tuning used\b/i.test(sentence)) return true;
+  if (/\bdeployed\b/i.test(question) && /\bjetson\b/i.test(sentence)) return true;
+  if (/\b(founder|founded)\b/i.test(question) && /\bfounder\b/i.test(sentence)) return true;
   if (/\bmeasure\b/i.test(question) && /\b(drift|impute|quality)\b/i.test(sentence)) return true;
   if (/\befficiency\b/i.test(question) && /\befficiency\b/i.test(sentence)) return true;
   if (/\b(good at|strengths)\b/i.test(question) && /\bgroups the stack\b/i.test(sentence)) return true;

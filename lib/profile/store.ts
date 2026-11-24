@@ -244,6 +244,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     : [];
   const sets = [
     { when: /\b(now|currently)\b/.test(text) && /\b(work|working|doing)\b/.test(text) && !namedEmployer(text), ids: ["role-axion"] },
+    { when: /\bdeployed\b/.test(text) && !namedEmployer(text) && !/\b(medchat|foodflow|quotient)\b/.test(text), ids: ["project-meter", "role-alta"] },
     { when: /\bdeploy(?:ment|ing)?\b/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["project-meter", "role-alta"] },
     { when: /\bcloud\b/.test(text) && /\b(platform|platforms|use|uses|used)\b/.test(text) && !namedEmployer(text), ids: ["role-alta", "skills"] },
     { when: Boolean(between?.length), ids: between ?? [] },
@@ -277,7 +278,9 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("ship") && text.includes("production"), ids: ["project-shipped", "project-cva"] },
     { when: /\blive app\b/.test(text) || /\bonly named live\b/.test(text), ids: ["project-shipped", "project-cva"] },
     { when: text.includes("measure") && text.includes("live"), ids: ["project-meter", "project-cva", "project-shipped"] },
-    { when: /\b(measure|cut)\b/.test(text) && !namedEmployer(text) && !/\b(live|pilot|uptime|bert|golf|meter|scanner|recall|precision)\b/.test(text), ids: ["role-harry-senior", "role-mizco", "role-swinburne-research"] },
+    { when: /\b(measure|measured|cut)\b/.test(text) && !namedEmployer(text) && !/\b(live|pilot|uptime|bert|golf|meter|scanner|recall|precision)\b/.test(text), ids: ["role-harry-senior", "role-mizco", "role-swinburne-research"] },
+    { when: /\b(train|trained|training)\b/.test(text) && /\b(he|him|his|lab)\b/.test(text) && !namedEmployer(text), ids: ["role-swinburne-research", "project-medswin"] },
+    { when: /\b(founder|founded)\b/.test(text), ids: ["project-medvietai"] },
     { when: /\bwater[\s-]?meter\b/.test(text) && /\b(production|exclude|claim|hardware|run|runs)\b/.test(text), ids: ["project-meter"] },
     { when: text.includes("person") && (text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-cva", "project-writing"] },
     { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },

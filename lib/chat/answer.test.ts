@@ -1097,6 +1097,31 @@ describe("displayAnswer", () => {
     );
     expect(shippedList).toContain("CVA");
     expect(shippedList).toContain("live app");
+    const measuredWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he measured?") }],
+      "",
+      "What has he measured?",
+    );
+    expect(measuredWork).toContain("40 percent");
+    expect(measuredWork).toContain("86 percent");
+    const trainedWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he trained?") }],
+      "",
+      "What has he trained?",
+    );
+    expect(trainedWork).toContain("LoRA");
+    const deployedWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he deployed?") }],
+      "",
+      "What has he deployed?",
+    );
+    expect(deployedWork).toContain("Jetson");
+    const foundedWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he founded?") }],
+      "",
+      "What has he founded?",
+    );
+    expect(foundedWork).toContain("founder");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",
