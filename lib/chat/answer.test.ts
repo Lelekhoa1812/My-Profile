@@ -883,6 +883,22 @@ describe("displayAnswer", () => {
       "What does Axis draft on?",
     );
     expect(host).toContain("same host");
+    const bareMeasure = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he measure?") }],
+      "",
+      "What did he measure?",
+    );
+    expect(bareMeasure).toContain("40 percent");
+    expect(bareMeasure).toContain("50 percent");
+    expect(bareMeasure).toContain("86 percent");
+    expect(bareMeasure).not.toContain("Named tools");
+    const bareCut = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he cut?") }],
+      "",
+      "What did he cut?",
+    );
+    expect(bareCut).toContain("40 percent");
+    expect(bareCut).not.toContain("Named tools");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(

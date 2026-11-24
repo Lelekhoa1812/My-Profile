@@ -211,6 +211,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("live") && (text.includes("sale") || text.includes("sales") || text.includes("customer")) && !namedEmployer(text), ids: ["project-shipped", "project-cva"] },
     { when: text.includes("ship") && text.includes("production"), ids: ["project-shipped", "project-cva"] },
     { when: text.includes("measure") && text.includes("live"), ids: ["project-meter", "project-cva", "project-shipped"] },
+    { when: /\b(measure|cut)\b/.test(text) && !namedEmployer(text) && !/\b(live|pilot|uptime|bert|golf|meter|scanner|recall|precision)\b/.test(text), ids: ["role-harry-senior", "role-mizco", "role-swinburne-research"] },
     { when: /\bwater[\s-]?meter\b/.test(text) && /\b(production|exclude|claim|hardware|run|runs)\b/.test(text), ids: ["project-meter"] },
     { when: text.includes("person") && (text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-cva", "project-writing"] },
     { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },
