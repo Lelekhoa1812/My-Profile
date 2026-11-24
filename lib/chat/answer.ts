@@ -774,7 +774,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(founders);
     }
   }
-  if (/\breviews uncertain\b/i.test(question) || /\buncertain output\b/i.test(question)) {
+  if (/\bcockpit\b/i.test(question)) {
+    const cockpit = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bcockpit shows traces\b/i.test(sentence));
+    if (cockpit) {
+      chosen.length = 0;
+      cap = 1;
+      push(cockpit);
+    }
+  }
+  if (/\breviews uncertain\b/i.test(question) || /\buncertain output\b/i.test(question) || (/\buncertain\b/i.test(question) && /\bmizco\b/i.test(question))) {
     const review = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\breviews uncertain output\b/i.test(sentence));
     if (review) {
       chosen.length = 0;

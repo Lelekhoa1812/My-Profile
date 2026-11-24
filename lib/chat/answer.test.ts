@@ -773,6 +773,14 @@ describe("displayAnswer", () => {
       "What reviews uncertain output?",
     );
     expect(uncertain).toContain("person reviews uncertain output");
+    const cockpit = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "At Mizco, what is the cockpit?") }],
+      "",
+      "At Mizco, what is the cockpit?",
+    );
+    expect(cockpit).toContain("cockpit shows traces");
+    expect(cockpit).toContain("confidence gates");
+    expect(cockpit).not.toContain("vLLM");
     const fleet = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is fleet maintenance?") }],
       "",
