@@ -1079,6 +1079,12 @@ describe("displayAnswer", () => {
       "Tell me about the Ericsson 5G digital twin.",
     );
     expect(ericssonAbout).toContain("tower telemetry");
+    const spAbout = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Tell me about the S&P 500 forecast.") }],
+      "",
+      "Tell me about the S&P 500 forecast.",
+    );
+    expect(spAbout).toContain("FinBERT");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");

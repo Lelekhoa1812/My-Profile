@@ -152,9 +152,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of uses) push(sentence);
     }
   }
-  const body = chosen.length > 0
-    ? chosen
-    : blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence)).slice(0, 2);
+  const openSentences = blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence));
+  const workSentences = openSentences.filter((sentence) => /\b(uses|use|led|reads|covers|owns|turns|trains|answers)\b/i.test(sentence));
+  const body = chosen.length > 0 ? chosen : (workSentences.length > 0 ? workSentences : openSentences).slice(0, 2);
   const extra = siblingWork(outputs, blockSentences, question);
   const withExtra = extra && !body.includes(extra) ? [...body, extra] : body;
   const timed = withIdentity(question, withPeriod(withExtra, blockSentences, outputs), blockSentences);
@@ -506,7 +506,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwater[\s-]?meter\b/i.test(question) && /\bnamed public app\b/i.test(sentence)) return true;
   if (/\brank\b/i.test(question) && /\branking\b/i.test(sentence)) return true;
   if (/\bspeech\b/i.test(question) && /\bwhisper\b/i.test(sentence)) return true;
-  if (/\bforecast\b/i.test(question) && /\bforecast(?:s|ing)?\b/i.test(sentence)) return true;
+  if (/\bforecast\b/i.test(question) && /\bforecast(?:s|ing)?\b/i.test(sentence) && sentence.split(/\s+/).length > 4) return true;
   if (/\bdrift\b/i.test(question) && /\bstability\b/i.test(sentence)) return true;
   if (/\buptime\b/i.test(question) && /\buptime\b/i.test(sentence)) return true;
   if (/\bship\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
