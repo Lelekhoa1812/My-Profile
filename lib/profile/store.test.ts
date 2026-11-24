@@ -166,6 +166,9 @@ describe("profile store", () => {
     const golf = searchSections(profile.sections, "What did the golf app sell to?");
     expect(golf.found && golf.sections[0]?.sectionId).toBe("project-golf");
     expect(golf.found && golf.sections[0]?.text).toContain("VHandicap");
+    const academy = searchSections(profile.sections, "What student platform did Hai Au sell?");
+    expect(academy.found && academy.sections[0]?.sectionId).toBe("role-hai-au");
+    expect(academy.found && academy.sections[0]?.text).toContain("HA Manager");
     const ericsson = searchSections(profile.sections, "Is the Ericsson build a named live customer app?");
     expect(ericsson.found && ericsson.sections[0]?.sectionId).toBe("project-ericsson");
     expect(ericsson.found && ericsson.sections[0]?.text).toContain("not a named live customer app");

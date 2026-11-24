@@ -193,6 +193,7 @@ function saleIds(text: string): string[] {
   ];
   const chosen = named.flatMap(([test, id]) => (test.test(text) ? [id] : []));
   if (chosen.length > 0) return chosen;
+  if (/\bhai[\s-]?au\b/.test(text) && /\b(student|platform|manager|enrollment)\b/.test(text)) return ["role-hai-au"];
   return ["project-shipped", "project-skyledge", "project-writing", "project-roster", "project-golf"];
 }
 

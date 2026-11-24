@@ -539,6 +539,18 @@ describe("displayAnswer", () => {
       "Is the Ericsson build a named live customer app?",
     );
     expect(embeddings).toContain("64-dimensional");
+    const poptech = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did PopTech use for the electricity forecast?") }],
+      "",
+      "What did PopTech use for the electricity forecast?",
+    );
+    const manager = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What student platform did Hai Au sell?") }],
+      "",
+      "What student platform did Hai Au sell?",
+    );
+    expect(poptech).toContain("TFT");
+    expect(manager).toContain("HA Manager");
     expect(ericsson).toContain("not a named live customer app");
   });
 
