@@ -753,6 +753,24 @@ describe("displayAnswer", () => {
       "What does the pedigree engine include?",
     );
     expect(ensemble).toContain("Dosage");
+    const verifier = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the verifier check at Harry?") }],
+      "",
+      "What does the verifier check at Harry?",
+    );
+    expect(verifier).toContain("evidence");
+    const namVision = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Nam A use for vision?") }],
+      "",
+      "What did Nam A use for vision?",
+    );
+    expect(namVision).toContain("OpenCV");
+    const meterHardware = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What hardware runs the water meter?") }],
+      "",
+      "What hardware runs the water meter?",
+    );
+    expect(meterHardware).toContain("Jetson");
     const rosterStack = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the roster app use?") }],
       "",

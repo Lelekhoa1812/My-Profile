@@ -429,6 +429,9 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bship\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
   if (/\btext\b/i.test(question) && /\bfinbert\b/i.test(sentence)) return true;
   if (/\binclude/i.test(question) && /\b(ensemble|dosage)\b/i.test(sentence)) return true;
+  if (/\bverif/i.test(question) && /\bvalidators check\b/i.test(sentence)) return true;
+  if (/\bvision\b/i.test(question) && !/\bmodel\b/i.test(question) && /\bopencv\b/i.test(sentence)) return true;
+  if (/\bhardware\b/i.test(question) && /\bjetson\b/i.test(sentence)) return true;
   if (/\bdetect\b/i.test(question) && !/\bdrift\b/i.test(question) && /\bdetects?\b/i.test(sentence)) return true;
   if (/\barchive\b/i.test(question) && /\bprompt-me\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
