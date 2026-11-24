@@ -2329,6 +2329,14 @@ describe("displayAnswer", () => {
       "What does iNet summarise?",
     );
     expect(summary).toContain("sentiment");
+    const summarised = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he summarise?") }],
+      "",
+      "What does he summarise?",
+    );
+    expect(summarised).toContain("summarisation");
+    expect(summarised).toContain("sentiment");
+    expect(summarised).not.toContain("LangChain");
     const vertx = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the Nam A software role use besides REST?") }],
       "",

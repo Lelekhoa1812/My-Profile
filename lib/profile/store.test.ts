@@ -398,6 +398,12 @@ describe("profile store", () => {
     expect(searchSections(profile.sections, "What does he use Terraform for?")).toEqual({ found: false });
   });
 
+  it("matches a summary question to the recorded spelling", () => {
+    const result = searchSections(profile.sections, "What does he summarize?");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections[0]?.sectionId).toBe("role-inet");
+  });
+
   it("finds the FoodFlow section from a paraphrase of the ERP", () => {
     const result = searchSections(profile.sections, "food distribution ERP");
     expect(result.found).toBe(true);
