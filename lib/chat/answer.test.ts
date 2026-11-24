@@ -638,6 +638,13 @@ describe("displayAnswer", () => {
       "What does PopTech forecast?",
     );
     expect(popForecast).toContain("electricity");
+    const archive = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the public archive include?") }],
+      "",
+      "What does the public archive include?",
+    );
+    expect(archive).toContain("prompt-me");
+    expect(archive).toContain("StudyBuddy");
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],
