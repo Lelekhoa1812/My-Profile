@@ -24,7 +24,10 @@ describe("profile store", () => {
       expect(role.text.indexOf("FoodFlow")).toBeLessThan(role.text.indexOf("capital-markets"));
       expect(role.text).toContain("does not rename FoodFlow");
     }
-    if (flow.found) expect(flow.text).toContain("does not call those recipes capital-markets products");
+    if (flow.found) {
+      expect(flow.text).toContain("does not call those recipes capital-markets products");
+      expect(flow.text).toContain("saved persona");
+    }
   });
 
   it("reads a section by its heading as well as its id", () => {
