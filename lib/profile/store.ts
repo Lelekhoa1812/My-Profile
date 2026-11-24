@@ -759,7 +759,12 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
     if (leftNamed !== rightNamed) return rightNamed - leftNamed;
     return right.score - left.score;
   }).filter((hit) => {
-    if (hit.section.sectionId.includes("pedigree") && /\b(harry|hirer)\b/.test(asked) && !/\bpedigree\b/.test(asked)) return false;
+    const pedigreeOnly = terms.some((term) => {
+      if (term.length < 5 || GENERIC_TERMS.has(term)) return false;
+      const owners = pool.filter((item) => covers(item.title, term) || covers(item.body, term));
+      return owners.length === 1 && owners[0]?.section.sectionId.includes("pedigree");
+    });
+    if (hit.section.sectionId.includes("pedigree") && /\b(harry|hirer)\b/.test(asked) && !/\bpedigree\b/.test(asked) && !pedigreeOnly) return false;
     const owner = sectionEmployer(hit.section);
     return !employer || !owner || owner === employer;
   });

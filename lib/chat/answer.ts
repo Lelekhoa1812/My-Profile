@@ -864,7 +864,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(ensemble);
     }
   }
-  if (/\bblack caviar\b/i.test(question)) {
+  if (/\b(black caviar|thoroughbred)\b/i.test(question)) {
     const lineage = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bblack caviar\b/i.test(sentence));
     if (lineage) {
       chosen.length = 0;

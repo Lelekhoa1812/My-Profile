@@ -1028,6 +1028,13 @@ describe("displayAnswer", () => {
     );
     expect(academy).toContain("Hai Au Academy");
     expect(academy).toContain("enrollment");
+    const thoroughbred = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "At Harry, what is thoroughbred?") }],
+      "",
+      "At Harry, what is thoroughbred?",
+    );
+    expect(thoroughbred).toContain("Thoroughbred");
+    expect(thoroughbred).toContain("Black Caviar");
     const ensemble = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the pedigree engine include?") }],
       "",
