@@ -126,7 +126,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (orgLine && /\b(what is|tell me about)\b/i.test(question) && !/\borg\b/i.test(question) && /hugging face org is/i.test(item.sentence)) continue;
     if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
-    if (/\bdraft recipe\b/i.test(question) && /\bsend\b/i.test(question) && !/\b(send|email)\b/i.test(item.sentence) && !/\bdraft recipe\b/i.test(item.sentence)) continue;
+    if (/\bdraft recipe\b/i.test(question) && /\b(send|refuse)\b/i.test(question) && !/\b(send|email)\b/i.test(item.sentence) && !/\bdraft recipe\b/i.test(item.sentence)) continue;
+    if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && !/\b(send|refuse)\b/i.test(question) && /\bdoes not send\b/i.test(item.sentence)) continue;
     if (/\bexport\b/i.test(question) && !/\bdraft\b/i.test(question) && /\bdraft recipe does not send\b/i.test(item.sentence)) continue;
     if (picked && item.score < 2 && !exact) continue;
     if (!picked && unique && item.score < 2 && !exact && answered) continue;
@@ -352,7 +353,7 @@ function matchingBlock(outputs: readonly Record<string, unknown>[], question: st
     if (employer && !chronological && employerMentioned(employer, block)) score += 8;
     if (!employer && /\b(sold|sell|products)\b/i.test(question) && /named live or sold work/i.test(block)) score += 20;
     if (/\bocr\b/i.test(question) && !employer && !/\b(meter|water|harry|golf|passport|nam)\b/i.test(question) && /\b(vietocr|paddleocr)\b/i.test(block)) score += 15;
-    if (/\bdraft on\b/i.test(question) && /\bsame host\b/i.test(block)) score += 12;
+    if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && /\bsame host\b/i.test(block)) score += 12;
     if (/\bmj industrial\b/i.test(question) && /\bmj industrial\b/i.test(block)) score += 12;
     if (!chronological && titledInQuestion(question, block)) score += 8;
     if (countedFact(question, sentences, words)) score += 12;
@@ -508,7 +509,8 @@ function isDecision(question: string, sentence: string): boolean {
     const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 4 && !["does", "that", "this", "what", "with"].includes(word));
     return words.some((word) => mentions(sentence, word));
   }
-  if (/\bown/i.test(question) && /\bown(?:s|ed)\b/i.test(sentence)) return true;
+  if (/\bown/i.test(question) && /\bdatabase\b/i.test(question) && /\bdoes not own\b/i.test(sentence)) return true;
+  if (/\bown/i.test(question) && !/\bdatabase\b/i.test(question) && /\bown(?:s|ed)\b/i.test(sentence)) return true;
   if (/\bfund/i.test(question) && /\bsponsor/i.test(sentence)) return true;
   if (/\bexplain/i.test(question) && /\bexplanations?\b/i.test(sentence)) return true;
   if (/\b(sell|sold|buyer|buy|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
@@ -540,7 +542,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\blab\b/i.test(question) && /\brecord/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bmodels were\b/i.test(question) && /\bdownloaded\b/i.test(sentence)) return true;
-  if (/\bdraft on\b/i.test(question) && /\bsame host\b/i.test(sentence)) return true;
+  if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && /\bsame host\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence)) {
     const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 5 && !["cases", "people", "using", "about"].includes(word));

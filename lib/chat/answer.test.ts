@@ -1138,6 +1138,20 @@ describe("displayAnswer", () => {
     expect(draftSend).not.toContain("export does not");
     expect(draftSend).not.toContain("persona");
     expect(draftSend).not.toContain("same host");
+    const draftOn = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where does Axis draft?") }],
+      "",
+      "Where does Axis draft?",
+    );
+    expect(draftOn).toContain("same host");
+    expect(draftOn).not.toContain("does not send");
+    const ownsDatabase = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Does Axis own FoodFlow's database?") }],
+      "",
+      "Does Axis own FoodFlow's database?",
+    );
+    expect(ownsDatabase).toContain("does not own");
+    expect(ownsDatabase).not.toContain("AI vision");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",
