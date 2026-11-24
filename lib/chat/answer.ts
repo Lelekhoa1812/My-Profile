@@ -348,9 +348,9 @@ function sameTimeAnswer(question: string, outputs: readonly Record<string, unkno
 function toolUseAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   const name = question.match(/\bwhat is ([a-z0-9.+#-]{2,}) used for\b/i)?.[1];
   if (!name) return "";
-  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => new RegExp(`\\b${name}\\b`, "i").test(sentence) && sentence.split(/\s+/).length <= 28));
-  const unique = [...new Set(lines)];
-  return unique.length < 2 ? "" : unique.slice(0, 3).join(" ");
+  const token = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => new RegExp(`\\b${token}(?:v\\d+|-[a-z0-9]+)?\\b`, "i").test(sentence) && sentence.split(/\s+/).length <= 28));
+  return [...new Set(lines)].slice(0, 3).join(" ");
 }
 
 function whisperAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {

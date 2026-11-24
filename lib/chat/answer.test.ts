@@ -924,13 +924,32 @@ describe("displayAnswer", () => {
       "",
       "What is Qwen used for?",
     );
-    expect(qwenUse).toContain("Qwen");
+    expect(qwenUse).toContain("Qwen-VL");
+    const golfQwen = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Qwen2.5-VL used for?") }],
+      "",
+      "What is Qwen2.5-VL used for?",
+    );
+    expect(golfQwen).toContain("handwritten corrections");
+    const poptechDqn = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is DQN used for?") }],
+      "",
+      "What is DQN used for?",
+    );
+    expect(poptechDqn).toContain("DQN");
+    const harryMsal = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is MSAL used for?") }],
+      "",
+      "What is MSAL used for?",
+    );
+    expect(harryMsal).toContain("MSAL authentication");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",
       "What is YOLO used for?",
     );
-    expect(yoloUse).toContain("YOLO");
+    expect(yoloUse).toContain("YOLOv8");
+    expect(yoloUse).not.toContain("VietOCR");
     const fastApi = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is FastAPI used for?") }],
       "",
