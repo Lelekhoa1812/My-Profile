@@ -1669,6 +1669,13 @@ describe("displayAnswer", () => {
     );
     expect(reactTool).toContain("ReAct tool calling");
     expect(reactTool).not.toContain("React Native");
+    const mnistDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does MNIST do?") }],
+      "",
+      "What does MNIST do?",
+    );
+    expect(mnistDuty).toContain("Handwriting uses MNIST and CTC");
+    expect(mnistDuty).not.toContain("graffiti");
     const qwenUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Qwen used for?") }],
       "",
