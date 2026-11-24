@@ -188,7 +188,7 @@
       "heading": "SkyLedge fleet maintenance",
       "sourceType": "project",
       "aliases": ["OBD", "capstone", "SkyLedge"],
-      "text": "SkyLedge fleet maintenance. Liam led a four-person capstone team on an OBD-II platform. The resume says SkyLedge Kenya acquired it. The build uses Raspberry Pi telemetry, FastAPI, and fault-prediction models. The servicing-cost figure is an estimate of about 15 percent."
+      "text": "SkyLedge fleet maintenance. Liam led a four-person capstone team on an OBD-II platform. The resume says SkyLedge Kenya acquired it. Telemetry comes from a Raspberry Pi into FastAPI. Fault prediction uses K-means, XGBoost, Random Forest, and LSTM. The servicing-cost figure is an estimate of about 15 percent."
     },
     {
       "sectionId": "project-salle",
@@ -230,7 +230,7 @@
       "heading": "Ericsson 5G digital twin",
       "sourceType": "project",
       "aliases": ["Ericsson", "5G", "Swinburne"],
-      "text": "Ericsson 5G digital twin. The resume says Ericsson Vietnam and Swinburne funded this predictive-maintenance platform. It reads tower telemetry, forecasts bandwidth pressure, and detects degradation. The resume calls the build production-grade. The record does not name it as a live customer app, and it does not include a deployment count."
+      "text": "Ericsson 5G digital twin. The resume says Ericsson Vietnam and Swinburne funded this predictive-maintenance platform. It reads tower telemetry, forecasts bandwidth pressure, and detects degradation. The stack is C# .NET, MySQL, and ONNX Runtime. Forecasting uses a spatio-temporal graph model and a temporal fusion transformer. Anomaly detection uses an autoencoder. Drift monitoring uses the population stability index. The resume calls the build production-grade. The record does not name it as a live customer app, and it does not include a deployment count."
     },
     {
       "sectionId": "project-adhd",
@@ -293,35 +293,35 @@
       "heading": "free-router",
       "sourceType": "project",
       "aliases": ["OpenAI-compatible router", "OpenRouter"],
-      "text": "free-router. An OpenAI-compatible router for Gemini, OpenRouter, and Nvidia NIM. Repository: Lelekhoa1812/free-router. The record does not include a user count."
+      "text": "free-router. A self-hosted OpenAI-compatible gateway. The repository names Google AI Studio, Nvidia NIM, OpenRouter, and Mistral among the providers. It is a Next.js service. Repository: Lelekhoa1812/free-router. The record does not include a user count."
     },
     {
       "sectionId": "project-stt",
       "heading": "stt-studio",
       "sourceType": "project",
       "aliases": ["Whisper", "speech to text"],
-      "text": "stt-studio. Local inference for Whisper speech to text. Repository: Lelekhoa1812/stt-studio. The record does not include a user count."
+      "text": "stt-studio. A local speech-to-text workspace for a Mac. A FastAPI service runs faster-whisper, and a React page reviews the transcript. The repository calls it a development project, not a packaged production app. Repository: Lelekhoa1812/stt-studio. The record does not include a user count."
     },
     {
       "sectionId": "project-prophet",
       "heading": "Prophet",
       "sourceType": "project",
       "aliases": ["time-series agent"],
-      "text": "Prophet. A time-series agent that forecasts from a series. Repository: Lelekhoa1812/prophet. The record does not include an accuracy figure or a user count."
+      "text": "Prophet. A research prototype that answers a spreadsheet question in plain language and keeps the steps behind each number. Forecasts use TimesFM. The store is SQLite. Repository: Lelekhoa1812/prophet. The record does not include an accuracy figure or a user count."
     },
     {
       "sectionId": "project-survee",
       "heading": "Survee",
       "sourceType": "project",
       "aliases": ["survey"],
-      "text": "Survee. An agentic tool that runs a survey. Repository: Lelekhoa1812/survee. The record does not include a user count."
+      "text": "Survee. A host-run interview tool, previously called KQA. A person uploads an HTML questionnaire and sends a private link. Answers stay in MongoDB. It does not score people. Repository: Lelekhoa1812/survee. The record does not include a user count."
     },
     {
       "sectionId": "project-quotient",
       "heading": "Quotient",
       "sourceType": "project",
       "aliases": ["meeting notes"],
-      "text": "Quotient. A meeting note taker. Repository: Lelekhoa1812/Quotient. The record does not include a user count."
+      "text": "Quotient. It turns a recorded meeting into a brief. Each published statement points to the moment in the recording. A statement it cannot confirm is held for review. The repository calls it a local pre-release, not a deployed product. Repository: Lelekhoa1812/Quotient. The record does not include a user count."
     },
     {
       "sectionId": "project-acnt",
