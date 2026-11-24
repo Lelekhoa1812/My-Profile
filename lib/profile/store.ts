@@ -358,7 +358,8 @@ function narrowToDistinctiveLead<T extends { title: string; body: string }>(hits
 function covers(text: string, term: string): boolean {
   const word = new RegExp(`\\b${term}(?:s|es|ed|d|ing)?\\b`);
   if (word.test(text)) return true;
-  return term.startsWith("approv") && /\bapprov/.test(text);
+  if (term.startsWith("approv") && /\bapprov/.test(text)) return true;
+  return term.length >= 6 && new RegExp(`\\b${term}ion\\b`).test(text);
 }
 
 const FACT_ONLY_TERMS = new Set([

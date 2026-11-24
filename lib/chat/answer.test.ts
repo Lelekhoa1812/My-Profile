@@ -602,6 +602,18 @@ describe("displayAnswer", () => {
       "Is the roster app live?",
     );
     expect(rosterLive).toContain("only named live app");
+    const faults = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How does SkyLedge predict faults?") }],
+      "",
+      "How does SkyLedge predict faults?",
+    );
+    expect(faults).toContain("K-means");
+    const ranking = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How does the pedigree engine rank horses?") }],
+      "",
+      "How does the pedigree engine rank horses?",
+    );
+    expect(ranking).toContain("ranking");
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],
