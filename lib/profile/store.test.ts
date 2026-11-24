@@ -160,6 +160,9 @@ describe("profile store", () => {
       expect(ids[0]).toBe("project-shipped");
       expect(ids).toContain("project-skyledge");
     }
+    const skyledge = searchSections(profile.sections, "Who acquired the SkyLedge project?");
+    expect(skyledge.found && skyledge.sections[0]?.sectionId).toBe("project-skyledge");
+    expect(skyledge.found && skyledge.sections[0]?.text).toContain("Kenya");
     const sold = searchSections(profile.sections, "Which products were sold?");
     expect(sold.found).toBe(true);
     if (sold.found) {
@@ -370,6 +373,19 @@ describe("profile store", () => {
       expect(hit?.text).toContain("four-person");
       expect(hit?.text).toContain("estimate of about 15 percent");
     }
+  });
+
+  it("opens the S&P drift check before the PopTech sensor check", () => {
+    const result = searchSections(profile.sections, "What drift check does the S&P project use?");
+    expect(result.found && result.sections[0]?.sectionId).toBe("project-sp500");
+    expect(result.found && result.sections[0]?.text).toContain("retrain");
+  });
+
+  it("opens the CVA approval before the archive card", () => {
+    const result = searchSections(withArchive(profile.sections), "What does CVA wait for before a write?");
+    expect(result.found && result.sections[0]?.sectionId).toBe("project-cva");
+    expect(result.found && result.sections[0]?.text).toContain("a person approves it");
+    expect(result.found && result.sections.some((section) => section.sectionId.startsWith("archive-"))).toBe(false);
   });
 
   it("finds the S&P forecast without treating it as a published return", () => {

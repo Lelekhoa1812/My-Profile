@@ -127,7 +127,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },
     { when: text.includes("work") && text.includes("now"), ids: ["role-axion", "project-cva"] },
     { when: /\b(study|university|bachelor|degree)\b/.test(text) && !/\bresearch\b/.test(text), ids: ["education-swinburne"] },
-    { when: /\b(acquir\w*|sold)\b/.test(text), ids: ["project-shipped", "project-skyledge", "project-writing", "project-roster", "project-golf"] },
+    { when: /\b(acquir\w*|sold)\b/.test(text), ids: saleIds(text) },
   ];
   const match = sets.find((item) => item.when);
   if (!match) return undefined;
@@ -146,6 +146,18 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
       match: "keyword" as const,
     })),
   };
+}
+
+function saleIds(text: string): string[] {
+  const named: Array<[RegExp, string]> = [
+    [/\bskyledge\b/, "project-skyledge"],
+    [/\broster\b/, "project-roster"],
+    [/\bgolf\b/, "project-golf"],
+    [/\bwritingjourney\b|\bwriting coach\b/, "project-writing"],
+  ];
+  const chosen = named.flatMap(([test, id]) => (test.test(text) ? [id] : []));
+  if (chosen.length > 0) return chosen;
+  return ["project-shipped", "project-skyledge", "project-writing", "project-roster", "project-golf"];
 }
 
 function broadSections(pool: readonly { section: ProfileSection; title: string; body: string }[]) {
@@ -262,7 +274,7 @@ const STOP_WORDS = new Set([
 ]);
 
 export function searchSections(sections: readonly ProfileSection[], query: string, sourceType?: string) {
-  const terms = [...new Set(query.toLowerCase().split(/[^a-z0-9]+/))]
+  const terms = [...new Set(query.toLowerCase().split(/[^a-z0-9&]+/))]
     .filter((term) => term.length > 2 && !STOP_WORDS.has(term));
   const visible = sections
     .filter((section) => (section.visibility ?? "public") === "public")
@@ -300,6 +312,12 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       hits.unshift({ section: current.section, title: current.title, score: Number.POSITIVE_INFINITY, matched: terms.length });
     }
   }
+  for (const item of pool) {
+    const heading = item.section.heading.toLowerCase();
+    if (item.section.sectionId.startsWith("archive-") || heading.length < 3 || !terms.includes(heading)) continue;
+    if (hits.some((hit) => hit.section.sectionId === item.section.sectionId)) continue;
+    hits.push({ section: item.section, title: item.title, score: Number.POSITIVE_INFINITY, matched: terms.length });
+  }
   const complete = hits.filter((hit) => terms.every((term) => hit.title.includes(term)));
   const namedProfile = hits.filter((hit) => !hit.section.sectionId.startsWith("archive-") && terms.some((term) => hit.section.heading.toLowerCase().includes(term)));
   const poolHits = complete.length > 0 ? [...complete] : [...hits];
@@ -320,7 +338,13 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
     const owner = sectionEmployer(hit.section);
     return !employer || !owner || owner === employer;
   });
-  const top = ranked.slice(0, 3);
+  const exactHeadings = new Set(ranked.flatMap((hit) => {
+    const heading = hit.section.heading.toLowerCase();
+    return !hit.section.sectionId.startsWith("archive-") && terms.includes(heading) ? [heading] : [];
+  }));
+  const titleOnly = terms.length === 1 && exactHeadings.has(terms[0] ?? "");
+  const withoutArchiveCopy = titleOnly ? ranked : ranked.filter((hit) => !(hit.section.sectionId.startsWith("archive-") && exactHeadings.has(hit.section.heading.toLowerCase())));
+  const top = withoutArchiveCopy.slice(0, 3);
   if (top.length === 0) return { found: false as const };
   return {
     found: true as const,
