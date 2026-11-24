@@ -203,5 +203,9 @@ describe("withMemory", () => {
     const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "Where was it deployed?" }] } as UIMessage;
     expect(groundedQuestion([ericsson, answer, follow], 2)).toContain("ericsson");
     expect(groundedQuestion([follow], 0)).toBe("Where was it deployed?");
+    const reads = { id: "u3", role: "user", parts: [{ type: "text", text: "What does it read?" }] } as UIMessage;
+    const reranker = { id: "u4", role: "user", parts: [{ type: "text", text: "How many documents does the reranker read?" }] } as UIMessage;
+    expect(groundedQuestion([ericsson, answer, reads], 2)).toContain("ericsson");
+    expect(groundedQuestion([ericsson, answer, reranker], 2)).toBe("How many documents does the reranker read?");
   });
 });
