@@ -392,6 +392,9 @@ describe("profile store", () => {
     expect(hai.found && hai.sections.some((section) => section.sectionId === "role-axion")).toBe(false);
     const stack = searchSections(profile.sections, "What is in his stack?");
     expect(stack.found && stack.sections[0]?.sectionId).toBe("skills");
+    const labStack = searchSections(profile.sections, "What stack does Swinburne research use?");
+    expect(labStack.found && labStack.sections[0]?.sectionId).toBe("role-swinburne-research");
+    expect(labStack.found && labStack.sections.some((section) => section.sectionId === "skills")).toBe(false);
     expect(stack.found && stack.sections[0]?.text).toContain("Python");
     const harryStack = searchSections(profile.sections, "What is in his stack at Harry the Hirer?");
     expect(harryStack.found && harryStack.sections[0]?.sectionId).toBe("role-harry-senior");

@@ -5282,6 +5282,30 @@ describe("displayAnswer", () => {
     expect(medswin).not.toContain("synthetic passport set");
   });
 
+  it("answers a named lab stack from the lab, not the skills catalogue", () => {
+    const lab = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does Swinburne research use?") }],
+      "",
+      "What stack does Swinburne research use?",
+    );
+    expect(lab).toContain("LoRA");
+    expect(lab).toContain("specialist medical agents");
+    expect(lab).not.toContain("Named tools include");
+    const nam = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does Nam A Bank use?") }],
+      "",
+      "What stack does Nam A Bank use?",
+    );
+    expect(nam).toContain("REST");
+    expect(nam).toContain("OpenCV");
+    const skills = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is in his stack?") }],
+      "",
+      "What is in his stack?",
+    );
+    expect(skills).toContain("Named tools include");
+  });
+
   it("keeps the recorded figure on a what-is question and a tell-me-about question", () => {
     const questions = [
       ["What is Swinburne research?", "clinical AI lab", "86 percent"],

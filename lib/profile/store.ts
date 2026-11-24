@@ -449,6 +449,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bdocker\b/.test(text) && /\b(build|built)\b/.test(text) && !namedEmployer(text), ids: ["role-harry-senior", "role-alta"] },
     { when: /\bkubernetes\b/.test(text) && /\b(build|built)\b/.test(text) && !namedEmployer(text), ids: ["role-alta"] },
     { when: /\bbuild/.test(text) && /\b(do|does|did|what|has)\b/.test(text) && !/\bwith\b/.test(text) && !/\bagents?\b/.test(text) && !/\b(lab|5g|fastapi|docker|kubernetes)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["project-axion-workflows", "role-swinburne-research", "project-medswin"] },
+    { when: /\bstack\b/.test(text) && /\b(swinburne|the research|the lab)\b/.test(text) && !/\b(he|his)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: /\bstack\b/.test(text) && !namedEmployer(text) && !/\b(roster|golf|skyledge|survee|prophet|triage|writing|coach|meter|cva|salle|sall-e|estatefolio|codoptic)\b/.test(text), ids: ["skills"] },
     { when: /\bnamed public app\b/.test(text), ids: ["project-meter"] },
     { when: /\bwater[-\s]?meter\b/.test(text) && /\b(sample|measur\w*|productionized|result|model|cut|percent)\b/.test(text), ids: ["project-meter", "role-vietdan-ml"] },

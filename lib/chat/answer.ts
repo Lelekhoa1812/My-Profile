@@ -2668,6 +2668,8 @@ function productStackAnswer(question: string, outputs: readonly Record<string, u
   if (/\bskyledge\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(raspberry pi|fault prediction)\b/i.test(sentence)).slice(0, 2).join(" ");
   if (/\badhd\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(nvidia nim|voice or text)\b/i.test(sentence)).slice(0, 2).join(" ");
   if (/\bwater[\s-]?meter\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(jetson|meter photos)\b/i.test(sentence)).slice(0, 2).join(" ");
+  if (/\bnam a\b/i.test(question)) return [...new Set(sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(services use rest|pipelines use opencv)\b/i.test(sentence)))].slice(0, 2).join(" ");
+  if (/\b(swinburne|the research|the lab)\b/i.test(question) && !/\b(he|his)\b/i.test(question)) return [...new Set(sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(fine-tuning used|specialist medical agents)\b/i.test(sentence) && !/named tools include/i.test(sentence)))].slice(0, 2).join(" ");
   return "";
 }
 
