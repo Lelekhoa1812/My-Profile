@@ -4587,6 +4587,15 @@ describe("displayAnswer", () => {
     );
     expect(exportSend).toContain("export does not send");
     expect(exportSend).not.toContain("draft recipe");
+    const engineExport = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the engine export?") }],
+      "",
+      "What does the engine export?",
+    );
+    expect(engineExport).toContain("export does not send");
+    expect(engineExport).toContain("Apollo");
+    expect(engineExport).not.toContain("draft recipe");
+    expect(engineExport).not.toContain("emails founders");
     expect(medvietAbout).not.toMatch(/^The Hugging Face org is MedVietAI/);
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");

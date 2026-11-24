@@ -281,6 +281,18 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(blockSentences.find((sentence) => /\bapollo\b/i.test(sentence)));
     }
   }
+  if (/\bexport\b/i.test(question) && !/\b(draft|recipe)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\bexport does not send\b/i.test(sentence)),
+      sentences.find((sentence) => /\bapollo\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 0) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bwhat is\b/i.test(question) && /\b(axion|axis)\b/i.test(question) && !/\bworkflow\b/i.test(question)) {
     cap = 5;
     const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block));
