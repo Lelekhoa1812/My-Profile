@@ -58,13 +58,25 @@ function separateAxis(text: string): string {
 function withSectionProof(answer: string, outputs: readonly Record<string, unknown>[]): string {
   const block = sectionBlocks(outputs)[0];
   if (!block) return answer;
-  const extras = block.split(/(?<=[.!])\s+/)
+  const candidates = block.split(/(?<=[.!])\s+/)
     .map((sentence) => sentence.trim())
     .filter((sentence) => sentence && !exposesGap(sentence))
     .map(plainSentence)
-    .filter((sentence) => sentence.split(/\s+/).length > 3 && newProof(answer, sentence))
-    .slice(0, 2);
+    .filter((sentence) => sentence.split(/\s+/).length > 3 && !isLabel(sentence));
+  const technical = candidates.filter((sentence) => technicalProof(answer, sentence));
+  const extras = (technical.length > 0 ? technical : candidates.filter((sentence) => newProof(answer, sentence))).slice(0, 2);
   return [answer, ...extras].filter(Boolean).join(" ");
+}
+
+function isLabel(sentence: string): boolean {
+  return sentence.replace(/[.]+$/, "").split(/\s+/).filter((word) => /^[a-z]{4,}/.test(word)).length === 0;
+}
+
+function technicalProof(answer: string, sentence: string): boolean {
+  const hay = answer.toLowerCase();
+  const names = sentence.match(/\b[A-Z][A-Za-z0-9.+&-]{2,}\b/g) ?? [];
+  const fresh = names.filter((name) => !LEAD_WORDS.has(name.toLowerCase()) && !hay.includes(name.toLowerCase()));
+  return fresh.length >= 2;
 }
 
 function newProof(answer: string, sentence: string): boolean {

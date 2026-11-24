@@ -232,6 +232,13 @@ describe("displayAnswer", () => {
     expect(meter).toContain("35 percent");
     expect(meter).toContain("VietDan");
     expect(meter).toContain("Jetson");
+    const harry = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Harry the Hirer, Senior AI Engineer. Melbourne, December 2025 to July 2026. The resume records about 40 percent less repetitive lookup and drafting. A multi-agent layer uses Planner, Retriever, Verifier, Critic, and Tool-Executor agents. Retrieval uses BM25 and HNSW hybrid search." }] } }],
+      "The targeted pilot cut repetitive lookup and drafting by about 40 percent.",
+    );
+    expect(harry).toContain("40 percent");
+    expect(harry).toContain("Planner");
+    expect(harry).not.toMatch(/^Melbourne/);
   });
 
   it("drops a modifier that only exists inside a longer record word", () => {
