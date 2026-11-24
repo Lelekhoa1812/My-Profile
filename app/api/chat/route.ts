@@ -14,6 +14,7 @@ import { loadProfile } from "../../../lib/profile/load";
 import { tailForModel } from "../../../lib/session/tail";
 import { loadStoredTurns } from "../../../lib/session/load";
 import { withMemory } from "../../../lib/session/memory";
+import { saveTraces } from "../../../lib/session/traces";
 import { appendTurns } from "../../../lib/session/turns";
 
 export const runtime = "nodejs";
@@ -78,6 +79,11 @@ export async function POST(request: Request): Promise<Response> {
     timeout: { firstChunkMs: 20_000, chunkMs: 30_000, toolMs: 8_000, stepMs: 45_000, totalMs: 55_000 },
     onEnd: (event) => {
       const sentence = turnToStore(request.signal.aborted, event.toolResults.map((result) => result.output), event.text ?? "");
+      void saveTraces(threadId, event.toolResults.map((result) => ({
+        toolName: result.toolName,
+        input: result.input,
+        output: result.output,
+      })));
       if (!sentence) return;
       void saveTurn(threadId, visitor.id, question, sentence).catch((error: unknown) => {
         const name = error instanceof Error ? error.name : "Error";
