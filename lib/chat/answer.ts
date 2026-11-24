@@ -115,7 +115,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => isToolList(sentence)));
     const work = workSentence(blockSentences);
     const archiveLabel = Boolean(work && /^Public repositories\.$/i.test(work) && !/\b(archive|repositor|public)\b/i.test(question));
-    if (!/\b(draft recipe|investor scouting)\b/i.test(question) && !(/\bengine\b/i.test(question) && /\bown/.test(question)) && !archiveLabel && !chosen.some((sentence) => /\b(led|built|uses|used|owned|owns|covers|percent|python|ocr)\b/i.test(sentence))) {
+    const namedDuty = Boolean(picked && /\b(reranker|orchestrator)\b/i.test(question) && /\breranker feeds the orchestrator\b/i.test(picked));
+    if (!namedDuty && !/\b(draft recipe|investor scouting)\b/i.test(question) && !(/\bengine\b/i.test(question) && /\bown/.test(question)) && !archiveLabel && !chosen.some((sentence) => /\b(led|built|uses|used|owned|owns|covers|percent|python|ocr)\b/i.test(sentence))) {
       push(work);
     }
     const action = blockSentences.find((sentence) => /\b(scores|drafts|detect|reads|localise|localize)\b/i.test(sentence));
@@ -149,6 +150,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\binvestor scouting\b/i.test(question) && !/\binvestor scouting\b/i.test(item.sentence)) continue;
     if (/\bengine\b/i.test(question) && /\bown/.test(question) && !/\bengine database\b/i.test(item.sentence)) continue;
     if (/^Public repositories\.$/i.test(item.sentence) && !/\b(archive|repositor|public)\b/i.test(question)) continue;
+    if (/\breranker\b/i.test(question) && !/\borchestrator\b/i.test(question) && /\bled a clinical\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\b(send|refuse)\b/i.test(question) && !/\b(send|email)\b/i.test(item.sentence) && !/\bdraft recipe\b/i.test(item.sentence)) continue;
     if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && !/\b(send|refuse)\b/i.test(question) && /\bdoes not send\b/i.test(item.sentence)) continue;
     if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && !/\b(own|database)\b/i.test(question) && /\bdoes not own\b/i.test(item.sentence)) continue;
@@ -766,7 +768,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\b(ship|ships|shipped|shipping)\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
   if (/\btext\b/i.test(question) && /\bfinbert\b/i.test(sentence)) return true;
   if (/\bagents?\b/i.test(question) && /\blab\b/i.test(question) && /\bspecialist medical agents\b/i.test(sentence)) return true;
-  if (/\borchestrator\b/i.test(question) && /\breranker feeds the orchestrator\b/i.test(sentence)) return true;
+  if (/\b(reranker|orchestrator)\b/i.test(question) && /\breranker feeds the orchestrator\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\b(download|rank)\b/i.test(question) && /\bmost downloaded\b/i.test(sentence)) return true;
   if (/\bcva\b/i.test(question) && /\blive\b/i.test(question) && !/\bonly named\b/i.test(question) && /cva-mauve/i.test(sentence)) return true;

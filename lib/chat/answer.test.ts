@@ -795,6 +795,7 @@ describe("displayAnswer", () => {
     );
     expect(rerankerDuty.startsWith("An 8-million-document")).toBe(true);
     expect(rerankerDuty).not.toContain("Swinburne research");
+    expect(rerankerDuty).not.toContain("five people");
     const namVision = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Nam A use for vision?") }],
       "",
