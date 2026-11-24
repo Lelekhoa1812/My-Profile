@@ -7,6 +7,12 @@ describe("displayAnswer", () => {
     expect(text).toBe("His title is Senior AI Software Engineer.");
   });
 
+  it("turns markdown into a plain sentence", () => {
+    const text = displayAnswer([], "**Axion Solutions** ships FoodFlow.\n- CVA has a live app.");
+    expect(text).toBe("Axion Solutions ships FoodFlow. CVA has a live app.");
+    expect(text).not.toContain("**");
+  });
+
   it("hides a tool call that leaked into the sentence", () => {
     const leaked = `<tool_call> <function=search_sections> <parameter=query> Harry the Hirer
 </parameter> <parameter=sourceType> role </parameter> </function> </tool_call>`;

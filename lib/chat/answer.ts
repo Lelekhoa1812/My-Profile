@@ -28,7 +28,18 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
     .filter((output): output is Record<string, unknown> => typeof output === "object" && output !== null);
   if (outputs.some((output) => output.reason === "unavailable")) return UNREAD;
   if (outputs.length > 0 && outputs.every((output) => output.found === false)) return SILENCE;
-  return dropSourceTail(dropRecordTalk(sentenceFromModel(stripToolMarkup(modelText))), sourceHeadings(outputs));
+  return dropSourceTail(dropRecordTalk(stripMarkdown(sentenceFromModel(stripToolMarkup(modelText)))), sourceHeadings(outputs));
+}
+
+export function stripMarkdown(text: string): string {
+  return text
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/__([^_]+)__/g, "$1")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/(?:^|\s)-\s+/g, " ")
+    .replace(/(?:^|\s)\*\s+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 export function sentenceFromModel(text: string): string {
@@ -58,7 +69,7 @@ export function stripToolMarkup(text: string): string {
   return withoutBlocks
     .split("\n")
     .filter((line) => !/tool_call|function\s*=|parameter\s*=/i.test(line))
-    .join(" ")
+    .join("\n")
     .replace(/\s+/g, " ")
     .trim();
 }
