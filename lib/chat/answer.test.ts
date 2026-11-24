@@ -3340,6 +3340,14 @@ describe("displayAnswer", () => {
     );
     expect(draftWillNot.split(/(?<=[.!])\s+/)[0]).toContain("does not send email");
     expect(draftWillNot).not.toContain("does not send a message");
+    const axisNotOwn = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Axis not own?") }],
+      "",
+      "What does Axis not own?",
+    );
+    expect(axisNotOwn).toContain("does not own FoodFlow");
+    expect(axisNotOwn).toContain("Engine database");
+    expect(axisNotOwn.split(/(?<=[.!])\s+/).find((sentence) => /\bown/i.test(sentence)) ?? "").toContain("does not own");
     expect(hardware).toContain("Raspberry");
     expect(signals).toContain("10-signal");
     const engineSignals = displayAnswer(

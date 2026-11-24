@@ -777,6 +777,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(data);
     }
   }
+  if (/\bnot\b/i.test(question) && /\bown/i.test(question)) {
+    const limits = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bdoes not own\b/i.test(sentence));
+    if (limits.length > 0) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of limits.slice(0, 2)) push(sentence);
+    }
+  }
   if (/\btitle\b/i.test(question) && namedEmployer(question)) {
     cap = 2;
     const title = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\b(engineer|lead|researcher|founder)\b/i.test(sentence) && sentence.split(/\s+/).length <= 16);
@@ -1375,6 +1383,7 @@ function isDecision(question: string, sentence: string): boolean {
     const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 4 && !["does", "that", "this", "what", "with"].includes(word));
     return words.some((word) => mentions(sentence, word));
   }
+  if (/\bnot\b/i.test(question) && /\bown/i.test(question) && /\bdoes not own\b/i.test(sentence)) return true;
   if (/\bown/i.test(question) && /\bdatabase\b/i.test(question) && /\bdoes not own\b/i.test(sentence)) return true;
   if (/\bown/i.test(question) && !/\bdatabase\b/i.test(question) && /\bown(?:s|ed)\b/i.test(sentence)) return true;
   if (/\bfund/i.test(question) && /\bsponsor/i.test(sentence)) return true;
