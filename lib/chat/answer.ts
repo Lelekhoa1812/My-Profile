@@ -91,7 +91,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const orgLine = blockSentences.some((sentence) => /hugging face org is/i.test(sentence));
   const chosen: string[] = [];
   const push = (sentence?: string) => {
-    const named = sentence ? namedSubject(sentence, blockSentences) : "";
+    const named = sentence ? namedSubject(focusClause(question, sentence), blockSentences) : "";
     if (!named || chosen.includes(named) || chosen.length >= 2) return;
     if (/the resume also uses the phrase/i.test(named) && !/\bphrase\b/i.test(question)) return;
     const shortFact = named.split(/\s+/).length >= 3 && /\b(use|uses|run|runs|led|cut)\b/.test(named) && words.some((word) => word.length >= 4 && mentions(named, word));
@@ -435,6 +435,15 @@ function mentions(sentence: string, word: string): boolean {
   return word.length >= 8 && new RegExp(`\\b${word.slice(0, word.length - 3)}(?:ing|ed|es|ion|ten)\\b`, "i").test(sentence);
 }
 
+function focusClause(question: string, sentence: string): string {
+  if (/\b(archive|repositor|public)\b/i.test(question) || !/no production claim/i.test(sentence)) return sentence;
+  const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 4);
+  const hit = sentence.split(/,\s+(?:and\s+)?/).find((part) => words.some((word) => part.toLowerCase().includes(word)));
+  if (!hit) return sentence;
+  const clause = hit.replace(/^.*?:\s*/, "").replace(/\.$/, "").trim();
+  return clause ? `Also public, with no production claim. ${clause[0].toUpperCase()}${clause.slice(1)}.` : sentence;
+}
+
 function askWords(question: string): string[] {
   const words = [...new Set(question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 3 && !ASK_STOP.has(word)))];
   const dropWork = /\b(available|summarise|summarize)\b/i.test(question) || (/\bwork\b/i.test(question) && /\bnow\b/i.test(question));
@@ -463,6 +472,7 @@ function isDecision(question: string, sentence: string): boolean {
     const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 4 && !["does", "that", "this", "what", "with"].includes(word));
     return words.some((word) => mentions(sentence, word));
   }
+  if (/\bown/i.test(question) && /\bown(?:s|ed)\b/i.test(sentence)) return true;
   if (/\b(sell|sold|buyer|buy|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
   if (/\bvhandicap\b/i.test(question) && /\bvhandicap\b/i.test(sentence)) return true;
   if (/\bmj industrial\b/i.test(question) && /\bmj industrial\b/i.test(sentence)) return true;

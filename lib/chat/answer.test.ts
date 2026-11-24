@@ -1003,6 +1003,19 @@ describe("displayAnswer", () => {
     );
     expect(pythera).toContain("Clara");
     expect(pythera).toContain("400,000");
+    const owned = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he own at AITC?") }],
+      "",
+      "What did he own at AITC?",
+    );
+    expect(owned).toContain("ingestion");
+    const promptMe = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does prompt-me refine?") }],
+      "",
+      "What does prompt-me refine?",
+    );
+    expect(promptMe).toContain("refines a prompt");
+    expect(promptMe).not.toContain("StudyBuddy");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
