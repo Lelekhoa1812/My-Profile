@@ -215,6 +215,7 @@ describe("profile store", () => {
     const hanoi = searchSections(profile.sections, "What graph does the Hanoi forecast use?");
     expect(hanoi.found && hanoi.sections[0]?.sectionId).toBe("project-estatefolio");
     expect(hanoi.found && hanoi.sections[0]?.text).toContain("ST-GNN");
+    expect(hanoi.found && hanoi.sections.some((section) => section.sectionId === "project-sp500")).toBe(false);
     const pilot = searchSections(profile.sections, "What did the pilot cut?");
     expect(pilot.found && pilot.sections[0]?.sectionId).toBe("role-harry-senior");
     expect(pilot.found && pilot.sections[0]?.text).toContain("40 percent");

@@ -263,6 +263,17 @@ const GENERIC_TERMS = new Set([
   "using", "work", "works", "write", "writes",
 ]);
 
+function narrowToDistinctiveLead<T extends { title: string; body: string }>(hits: readonly T[], terms: readonly string[]): T[] {
+  const lead = hits[0];
+  if (!lead || hits.length < 2) return [...hits];
+  const onlyLead = terms.some((term) => {
+    if (term.length < 5 || GENERIC_TERMS.has(term)) return false;
+    const inLead = covers(lead.title, term) || covers(lead.body, term);
+    return inLead && hits.slice(1).every((hit) => !covers(hit.title, term) && !covers(hit.body, term));
+  });
+  return onlyLead ? [lead] : [...hits];
+}
+
 function covers(text: string, term: string): boolean {
   const word = new RegExp(`\\b${term}(?:s|es|ed|d|ing)?\\b`);
   if (word.test(text)) return true;
@@ -370,7 +381,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   }));
   const titleOnly = terms.length === 1 && exactHeadings.has(terms[0] ?? "");
   const withoutArchiveCopy = titleOnly ? ranked : ranked.filter((hit) => !(hit.section.sectionId.startsWith("archive-") && exactHeadings.has(hit.section.heading.toLowerCase())));
-  const top = withoutArchiveCopy.slice(0, 3);
+  const top = narrowToDistinctiveLead(withoutArchiveCopy.slice(0, 3), terms);
   if (top.length === 0) return { found: false as const };
   return {
     found: true as const,
