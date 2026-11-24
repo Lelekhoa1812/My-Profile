@@ -1059,6 +1059,15 @@ describe("displayAnswer", () => {
     );
     expect(axionStart).toContain("July 2026");
     expect(axionStart).not.toContain("recipe");
+    const title = displayAnswer(
+      [
+        { type: "tool-search_sections", state: "output-available", output: { found: true, facts: [{ label: "Current title", value: "AI Software Engineer" }, { label: "Page title", value: "AI Software Engineer" }] } },
+        { type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is his title?") },
+      ],
+      "",
+      "What is his title?",
+    );
+    expect(title).toBe("AI Software Engineer");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",

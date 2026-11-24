@@ -1,7 +1,7 @@
 import { employerMentioned, namedEmployer } from "../profile/store";
 
 const MISS_TOOLS = ["lookup_fact", "search_sections", "read_section"] as const;
-const CLOSED_LABELS = new Set(["Email", "Phone", "Location", "Name", "Also called", "Degree", "Experience", "LinkedIn", "GitHub", "Hugging Face"]);
+const CLOSED_LABELS = new Set(["Email", "Phone", "Location", "Name", "Also called", "Degree", "Experience", "LinkedIn", "GitHub", "Hugging Face", "Current title", "Page title"]);
 
 export type ToolStep = {
   toolResults?: readonly { output?: unknown }[];

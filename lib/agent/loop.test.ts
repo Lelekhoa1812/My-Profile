@@ -19,14 +19,14 @@ describe("stepTools", () => {
     expect(choice).toEqual({ toolChoice: "required", activeTools: ["search_sections"] });
   });
 
-  it("reads the job when the lookup returns only the page title", () => {
+  it("stops when the lookup returns the title", () => {
     const choice = stepTools(1, [{
       toolResults: [
         { output: { found: true, facts: [{ label: "Current title", value: "AI Software Engineer" }, { label: "Page title", value: "AI Software Engineer" }] } },
         { output: { found: false } },
       ],
     }]);
-    expect(choice).toEqual({ toolChoice: "required", activeTools: ["search_sections"] });
+    expect(choice).toEqual({ toolChoice: "none", activeTools: [] });
   });
 
   it("searches the record when a skill fact is not the job", () => {

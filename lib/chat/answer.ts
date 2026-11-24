@@ -326,8 +326,8 @@ function identityAnswer(question: string, outputs: readonly Record<string, unkno
   if (!asked) return "";
   const values = outputs.flatMap((output) => Array.isArray(output.facts) ? output.facts : [])
     .flatMap((fact) => typeof fact === "object" && fact !== null && "value" in fact && typeof fact.value === "string" ? [fact.value] : []);
-  if (values.length === 0 || outputs.some(hasSectionText)) return "";
-  return values.join(". ");
+  if (values.length === 0 || (outputs.some(hasSectionText) && !asksForTitle(question))) return "";
+  return [...new Set(values)].join(". ");
 }
 
 function sameTimeAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
