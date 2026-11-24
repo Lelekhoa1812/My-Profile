@@ -454,7 +454,10 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
   if (chosen.length === 0) return undefined;
   const employerId = namedEmployer(query);
   const acrossRoles = /\b(before|after|between|same time|overlap)\b/.test(text);
+  const products = askedProductSectionIds(text);
+  const exceptProduct = /\b(besides|except|apart from|other than)\b/.test(text);
   if (!acrossRoles && employerId && !chosen.some((hit) => employerMentioned(employerId, `${hit.section.sectionId} ${hit.section.heading} ${hit.title} ${hit.body}`))) return undefined;
+  if (!acrossRoles && !exceptProduct && products && !chosen.some((hit) => products.includes(hit.section.sectionId))) return undefined;
   return {
     found: true as const,
     sections: chosen.map((hit) => ({
@@ -786,9 +789,19 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       })),
     };
   }
+  const exceptProduct = /\b(besides|except|apart from|other than)\b/.test(asked);
+  const bareHeading = terms.length === 1 && pool.some((item) => item.section.heading.toLowerCase() === terms[0]);
+  const archiveHeading = pool.some((item) => item.section.sectionId.startsWith("archive-") && item.section.heading.toLowerCase() === asked.trim());
+  const products = !acrossRoles && !exceptProduct && !bareHeading && !archiveHeading ? askedProductSectionIds(asked) : undefined;
+  const productHits = products?.flatMap((sectionId) => {
+    const hit = pool.find((item) => item.section.sectionId === sectionId);
+    return hit ? [hit] : [];
+  }) ?? [];
+  const matched = products ? kept.filter((hit) => products.includes(hit.section.sectionId)) : kept;
+  const finalHits = products && productHits.length > 0 ? (matched.length > 0 ? matched : productHits) : kept;
   return {
     found: true as const,
-    sections: kept.map((hit) => ({
+    sections: finalHits.map((hit) => ({
       sectionId: hit.section.sectionId,
       heading: hit.section.heading,
       sourceType: hit.section.sourceType,

@@ -223,6 +223,10 @@ describe("profile store", () => {
     expect(axionWhisper.found && axionWhisper.sections[0]?.sectionId).toBe("role-axion");
     const vietdanKafka = searchSections(profile.sections, "At VietDan, what does he use for kafka?");
     expect(vietdanKafka.found && vietdanKafka.sections.every((section) => section.sectionId.includes("vietdan"))).toBe(true);
+    const rosterForecast = searchSections(profile.sections, "What does it forecast for the roster app?");
+    expect(rosterForecast.found && rosterForecast.sections.every((section) => section.sectionId === "project-roster")).toBe(true);
+    const studioDraft = searchSections(profile.sections, "What does it draft for stt-studio?");
+    expect(studioDraft.found && studioDraft.sections[0]?.sectionId).toBe("project-stt");
     expect(prior.found && prior.sections.some((section) => section.sectionId === "role-harry-pedigree")).toBe(false);
     const beforeAxion = searchSections(profile.sections, "What did he do before Axion?");
     const afterHarry = searchSections(profile.sections, "What did he do after Harry the Hirer?");
