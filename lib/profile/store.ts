@@ -352,6 +352,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bci\s*\/\s*cd\b/.test(text) || (/\b(ci|cd)\b/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text)), ids: ["role-alta"] },
     { when: /\bha\b/.test(text) && !/\bhai\b/.test(text) && !/\bmanager\b/.test(text) && !namedEmployer(text), ids: ["role-hai-au"] },
     { when: /\bmj\b/.test(text) && !namedEmployer(text), ids: ["project-roster"] },
+    { when: /\bmanag/.test(text) && /\b(do|does|did|what|who)\b/.test(text) && !/\b(manager|roster|hai|employment)\b/.test(text) && !namedEmployer(text), ids: ["role-hai-au", "project-roster"] },
     { when: /c#/.test(text) && !namedEmployer(text), ids: ["project-ericsson", "skills"] },
     { when: /\bml\b/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text) && !/\b(pedigree|poptech|harry)\b/.test(text), ids: ["skills"] },
     { when: /\bwhat is\b/.test(text) && /\bcv\b/.test(text) && !/\b(his|resume)\b/.test(text), ids: ["project-cva"] },

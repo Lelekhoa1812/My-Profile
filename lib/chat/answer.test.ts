@@ -2037,6 +2037,15 @@ describe("displayAnswer", () => {
     );
     expect(implemented).toContain("implementation");
     expect(implemented).not.toContain("LangChain");
+    const managed = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he manage?") }],
+      "",
+      "What does he manage?",
+    );
+    expect(managed).toContain("HA Manager");
+    expect(managed).toContain("rostering");
+    expect(managed).not.toContain("does not list");
+    expect(managed).not.toContain("August 2025");
     const labLanguages = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What languages does the lab cover?") }],
       "",

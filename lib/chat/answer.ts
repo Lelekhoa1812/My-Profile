@@ -1269,6 +1269,18 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\bexplain/i.test(question) && !/\b(pedigree|writingjourney|writing coach|ielts|llm)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/explains the error|LLM explanations/i, 2);
   }
+  if (/\bmanag/i.test(question) && !/\b(manager|roster|hai|employment)\b/i.test(question) && !namedEmployer(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /HA Manager/i.test(sentence)),
+      sentences.find((sentence) => /rostering/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bprepar/i.test(question) && !namedEmployer(question)) {
     const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /artefact preparation/i.test(line));
     if (sentence) {
@@ -2056,6 +2068,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bdraft/i.test(question) && !/\b(send|recipe|on|axis|drafted)\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bretriev/i.test(question) && !namedEmployer(question)) return joined;
   if (/\btraining\b/i.test(question) && !namedEmployer(question) && !/\blab\b/i.test(question)) return joined;
+  if (/\bmanag/i.test(question) && !namedEmployer(question) && !/\bmanager\b/i.test(question)) return joined;
   if (/\b(cite|explain|train|guard|embed|validat\w*|recogni|recommend|graph|score|trace|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv\w*|rank|track|own|rout|turn|check|gate|version|call|remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
   if (/\bagents?\b/i.test(question) && /\b(build|built)\b/i.test(question)) return joined;
   if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !namedEmployer(question)) return joined;
