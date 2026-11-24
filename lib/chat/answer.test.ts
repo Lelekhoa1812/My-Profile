@@ -206,6 +206,16 @@ describe("displayAnswer", () => {
     expect(detailed).not.toContain("person approves");
   });
 
+  it("replaces a denial of the pilot figure with the recorded cut", () => {
+    const harry = profile.sections.find((item) => item.sectionId === "role-harry-senior");
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: harry?.text ?? "" }] } }],
+      "No pilot or cut metric is recorded for Liam's work.",
+    );
+    expect(text).toContain("40 percent");
+    expect(text).not.toContain("No pilot");
+  });
+
   it("adds the pilot figure when a short Harry answer omits it", () => {
     const harry = profile.sections.find((item) => item.sectionId === "role-harry-senior");
     const text = displayAnswer(

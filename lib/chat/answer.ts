@@ -291,7 +291,7 @@ export function certifySentences(text: string, evidence: string, blocks: readonl
 
 function keptSentenceForm(sentence: string, hay: string, pools: readonly string[]): string {
   if (/liam will answer/i.test(sentence) || /i am liam's portfolio assistant/i.test(sentence)) return sentence;
-  if (!quantitiesInEvidence(sentence, hay) || !numbersShareOneBlock(sentence, pools)) return "";
+  if (!quantitiesInEvidence(sentence, hay) || !numbersShareOneBlock(sentence, pools) || deniesMeasuredFigure(sentence, hay)) return "";
   const named = namesInEvidence(sentence, hay) ? sentence : sentenceWithoutUnknownNames(sentence, hay);
   const grounded = withoutJoinedModifier(named, hay);
   if (!grounded || !namesInEvidence(grounded, hay)) return "";
@@ -317,6 +317,11 @@ function sentenceWithoutUnknownNames(sentence: string, hay: string): string {
     if (index === 0 && LEAD_WORDS.has(raw.toLowerCase())) return true;
     return hay.includes(raw.toLowerCase());
   }).join(" ").replace(/\s+/g, " ").trim();
+}
+
+function deniesMeasuredFigure(sentence: string, evidence: string): boolean {
+  if (!/\b(percent|million)\b/i.test(evidence)) return false;
+  return /\b(no|not|nothing|without)\b/i.test(sentence) && /\b(metric|figure|percent|pilot|recorded|record)\b/i.test(sentence);
 }
 
 function numbersShareOneBlock(sentence: string, pools: readonly string[]): boolean {
