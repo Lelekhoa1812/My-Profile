@@ -148,7 +148,8 @@ function employerNames(question: string, outputs: readonly Record<string, unknow
 function vectorAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (!/\bvector\b/i.test(question) || !/\bdatabases?\b/i.test(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(pgvector|faiss)\b/i.test(sentence)));
-  return [...new Set(lines)].slice(0, 2).join(" ");
+  const short = lines.filter((sentence) => sentence.split(/\s+/).length <= 24);
+  return [...new Set(short.length > 0 ? short : lines)].slice(0, 2).join(" ");
 }
 
 function llmAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
