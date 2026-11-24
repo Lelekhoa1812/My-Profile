@@ -820,6 +820,7 @@ function archiveAnswer(question: string, outputs: readonly Record<string, unknow
 
 function modelAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (/\b(speech|whisper|vision|forecast)\b/i.test(question)) return "";
+  if (/\b(estatefolio|cva|codoptic|roster|survee|quotient|adhd|writingjourney|writing coach|acnt|free-router|medchat|sall-?e|skyledge|medviet|passport|stt-studio)\b/i.test(question)) return "";
   if (/\bmodels?\b/i.test(question) && /\bpedigree\b/i.test(question)) {
     const ensemble = sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bensemble\b/i.test(sentence));
     if (ensemble) return ensemble;

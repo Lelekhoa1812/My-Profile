@@ -2066,6 +2066,28 @@ describe("displayAnswer", () => {
       "What database does Survee use?",
     );
     expect(surveyDb).toContain("MongoDB");
+    const estateModels = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does EstateFolio use?") }],
+      "",
+      "What models does EstateFolio use?",
+    );
+    expect(estateModels).toContain("ST-GNN");
+    expect(estateModels).not.toContain("TimesFM");
+    expect(estateModels).not.toContain("Gemini");
+    const cvaModels = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does CVA use?") }],
+      "",
+      "What models does CVA use?",
+    );
+    expect(cvaModels).toContain("planner");
+    expect(cvaModels).not.toContain("TimesFM");
+    const openModels = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does he use?") }],
+      "",
+      "What models does he use?",
+    );
+    expect(openModels).toContain("Gemini");
+    expect(openModels).toContain("TimesFM");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
