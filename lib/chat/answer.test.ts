@@ -425,6 +425,12 @@ describe("displayAnswer", () => {
     expect(medswinSearch).toContain("five-person lab");
     expect(medswinSearch).toContain("July 2026");
     expect(medswinSearch).not.toContain("clinical records");
+    const cases = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many cases did the MedSwin lab curate?") }],
+      "",
+      "How many cases did the MedSwin lab curate?",
+    );
+    expect(cases).toContain("500,000");
     expect(medswinText).toContain("MedMCQA");
     expect(medswinText).not.toContain("5 million");
     expect(medswinText).not.toContain("most downloaded");

@@ -95,6 +95,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   for (const item of ranked) {
     const exact = words.some((word) => new RegExp(`\\b${word}\\b`, "i").test(item.sentence));
+    if (decision && /\bhow many\b/i.test(question) && /\b\d/.test(item.sentence)) continue;
     if (decision && item.score < 2 && !exact) continue;
     push(item.sentence);
   }
@@ -102,6 +103,11 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     ? chosen
     : blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence)).slice(0, 2);
   return keptOffer(question, shown, withIdentity(question, withPeriod(body, blockSentences, outputs), blockSentences));
+}
+
+function countedFact(question: string, sentences: readonly string[], words: readonly string[]): boolean {
+  if (!/\bhow many\b/i.test(question)) return false;
+  return sentences.some((sentence) => /\b\d/.test(sentence) && words.some((word) => mentions(sentence, word)));
 }
 
 function titledInQuestion(question: string, block: string): boolean {
@@ -121,6 +127,7 @@ function matchingBlock(outputs: readonly Record<string, unknown>[], question: st
     let score = sentences.reduce((best, sentence) => Math.max(best, askScore(question, sentence, words)), 0);
     if (employer && !chronological && employerMentioned(employer, block)) score += 8;
     if (!chronological && titledInQuestion(question, block)) score += 8;
+    if (countedFact(question, sentences, words)) score += 12;
     if (score > bestScore) {
       best = block;
       bestScore = score;
@@ -212,6 +219,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\b(run|running|deploy)\b/i.test(question) && /\b(raspberry|jetson|aws|docker|fastapi)\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
+  if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence) && question.toLowerCase().split(/[^a-z0-9]+/).some((word) => word.length >= 5 && mentions(sentence, word))) return true;
   if (/\b(poptech|electricity)\b/i.test(question) && /\btft\b/i.test(sentence)) return true;
   if (/\b(use|used|operate|operates)\b/i.test(question) && (/\bthe stack is\b/i.test(sentence) || isToolList(sentence))) return true;
   if (/\brepositor(?:y|ies)\b/i.test(question) && /\brepositor(?:y|ies)\b/i.test(sentence)) return true;
