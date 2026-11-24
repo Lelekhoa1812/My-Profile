@@ -5282,6 +5282,32 @@ describe("displayAnswer", () => {
     expect(medswin).not.toContain("synthetic passport set");
   });
 
+  it("keeps the recorded figure on a what-is question and a tell-me-about question", () => {
+    const questions = [
+      ["What is Swinburne research?", "clinical AI lab", "86 percent"],
+      ["Tell me about MedSwin.", "specialist medical agents", "86 percent"],
+      ["What is VietDan?", "VietDan", "35 percent"],
+      ["Tell me about Golf scorecard scanner.", "YOLOv8", "Sold to VHandicap"],
+      ["Tell me about Water-meter scanner.", "meter photos", "35 percent"],
+    ];
+    for (const [question, work, proof] of questions) {
+      const answer = displayAnswer(
+        [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, question) }],
+        "",
+        question,
+      );
+      expect(answer, question).toContain(work);
+      expect(answer, question).toContain(proof);
+    }
+    const dataset = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the golf scorecard dataset?") }],
+      "",
+      "What is the golf scorecard dataset?",
+    );
+    expect(dataset).toContain("Public datasets");
+    expect(dataset).not.toContain("VHandicap");
+  });
+
   it("keeps the recorded figure when the question asks what the work does", () => {
     const questions = [
       ["What does Harry the Hirer do?", "event inventory", "40 percent"],

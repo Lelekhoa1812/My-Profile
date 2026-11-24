@@ -2853,13 +2853,23 @@ function askedOnlyHere(question: string, current: string, other: string): boolea
 }
 
 function dutyOutcome(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/^what does (?!he\b|his\b|the\b|it\b|this\b|that\b).+ do\??$/i.test(question.trim())) return "";
-  const words = question.toLowerCase().replace(/[^a-z0-9 ]/g, " ").split(/\s+/).filter((word) => word.length > 3 && word !== "what" && word !== "does");
-  for (const block of sectionBlocks(outputs)) {
-    const text = block.toLowerCase();
-    if (words.length > 0 && !words.some((word) => text.includes(word))) continue;
-    const sentence = plainSentences(block).find((line) => /\b(\d[\d,.]* percent|sold to)\b/i.test(line) && !/\bestimate\b|servicing-cost/i.test(line) && !exposesGap(line));
-    if (sentence) return sentence.endsWith(".") ? sentence : `${sentence}.`;
+  const asked = question.trim();
+  const whatDoes = /^what does (?!he\b|his\b|the\b|it\b|this\b|that\b).+ do\??$/i.test(asked);
+  const whatIs = /^what is (?!the\b|a\b|an\b|his\b|her\b|he\b).+\??$/i.test(asked);
+  const about = /^tell me about (?!the\b|a\b|an\b|his\b).+\.?$/i.test(asked);
+  if ((!whatDoes && !whatIs && !about) || /\b(dataset|forecast|recipe|export)\b/i.test(asked)) return "";
+  const stop = new Set(["what", "does", "tell", "about"]);
+  const words = asked.toLowerCase().replace(/[^a-z0-9 ]/g, " ").split(/\s+/).filter((word) => word.length > 3 && !stop.has(word));
+  for (const output of outputs) {
+    if (!Array.isArray(output.sections)) continue;
+    for (const section of output.sections) {
+      if (typeof section !== "object" || section === null || typeof section.text !== "string") continue;
+      const heading = "heading" in section ? String(section.heading).toLowerCase() : "";
+      const label = `${heading} ${plainSentences(section.text)[0]?.toLowerCase() ?? ""}`;
+      if (words.length > 0 && !words.some((word) => label.includes(word))) continue;
+      const sentence = plainSentences(section.text).find((line) => /\b(\d[\d,.]* percent|sold to)\b/i.test(line) && !/\bestimate\b|servicing-cost/i.test(line) && !exposesGap(line));
+      if (sentence) return sentence.endsWith(".") ? sentence : `${sentence}.`;
+    }
   }
   return "";
 }
