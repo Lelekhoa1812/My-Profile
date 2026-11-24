@@ -766,6 +766,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(limit);
     }
   }
+  if (/\bopenai\b/i.test(question) && !/\bazure openai\b/i.test(question)) {
+    const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bopenai\b/i.test(sentence) && !exposesGap(sentence) && sentence.split(/\s+/).length <= 28);
+    if (lines.length > 0) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines.slice(0, 2)) push(sentence);
+    }
+  }
   if (/\b(openrouter|mistral|google ai studio)\b/i.test(question) && !/\bfree-router\b/i.test(question)) {
     const providers = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bproviders\b/i.test(sentence) && /\b(openrouter|mistral)\b/i.test(sentence));
     if (providers) {

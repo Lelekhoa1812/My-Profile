@@ -706,6 +706,14 @@ describe("displayAnswer", () => {
     );
     expect(azureOpenAI).toContain("Azure OpenAI");
     expect(azureOpenAI).not.toContain("40 percent");
+    const openAIIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is OpenAI?") }],
+      "",
+      "What is OpenAI?",
+    );
+    expect(openAIIs).toContain("Azure OpenAI");
+    expect(openAIIs).toContain("OpenAI-compatible");
+    expect(openAIIs).not.toContain("Next.js");
     const webCrawl = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is web crawling?") }],
       "",
