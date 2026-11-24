@@ -1121,6 +1121,13 @@ describe("displayAnswer", () => {
       "Tell me about MedVietAI.",
     );
     expect(medvietAbout).toContain("founder");
+    const workflow = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Tell me about the Axion workflow engine.") }],
+      "",
+      "Tell me about the Axion workflow engine.",
+    );
+    expect(workflow).toContain("startup scouting");
+    expect(workflow).not.toContain("AI Software Engineer");
     expect(medvietAbout).not.toMatch(/^The Hugging Face org is MedVietAI/);
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");

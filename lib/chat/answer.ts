@@ -154,6 +154,12 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of uses) push(sentence);
     }
   }
+  const recipes = blockSentences.find((sentence) => /\brecipes are\b/i.test(sentence));
+  if (recipes && /\b(workflow|engine)\b/i.test(question) && !chosen.some((sentence) => /recipes are/i.test(sentence))) {
+    const title = chosen.findIndex((sentence) => sentence.split(/\s+/).length <= 4);
+    if (title >= 0) chosen.splice(title, 1);
+    push(recipes);
+  }
   const openSentences = blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence));
   const workSentences = openSentences.filter((sentence) => /\b(uses|use|led|reads|covers|owns|turns|trains|answers)\b/i.test(sentence));
   const body = chosen.length > 0 ? chosen : (workSentences.length > 0 ? workSentences : openSentences).slice(0, 2);
@@ -439,7 +445,7 @@ function siblingPeriod(outputs: readonly Record<string, unknown>[], blockSentenc
     if (sentences.join(" ") === current) continue;
     if (!names.some((name) => new RegExp(`\\b${name}\\b`, "i").test(block))) continue;
     const period = employmentPeriod(sentences);
-    if (period) return period;
+    if (period && !(/\bsoftware engineer\b/i.test(period) && !/\bsoftware engineer\b/i.test(current))) return period;
   }
   return "";
 }
