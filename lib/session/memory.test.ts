@@ -179,6 +179,17 @@ describe("withMemory", () => {
     expect(groundedQuestion([pedigree, answer, follow], 2)).toContain("pedigree");
   });
 
+  it("keeps a write follow-up on CVA", () => {
+    const cva = { id: "u1", role: "user", parts: [{ type: "text", text: "What is CVA?" }] } as UIMessage;
+    const golf = { id: "u2", role: "user", parts: [{ type: "text", text: "What is the golf scanner?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "Recorded." }] } as UIMessage;
+    const write = { id: "u3", role: "user", parts: [{ type: "text", text: "What does it write?" }] } as UIMessage;
+    const refused = { id: "u4", role: "user", parts: [{ type: "text", text: "What will it not write?" }] } as UIMessage;
+    expect(groundedQuestion([cva, answer, write], 2)).toContain("cva");
+    expect(groundedQuestion([golf, answer, write], 2)).toBe("What does it write?");
+    expect(groundedQuestion([cva, answer, refused], 2)).toBe("What will it not write?");
+  });
+
   it("keeps the previous subject on a show or draft follow-up", () => {
     const mizco = { id: "u1", role: "user", parts: [{ type: "text", text: "What did he do at Mizco?" }] } as UIMessage;
     const cva = { id: "u2", role: "user", parts: [{ type: "text", text: "What is CVA?" }] } as UIMessage;
