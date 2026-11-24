@@ -857,6 +857,19 @@ describe("displayAnswer", () => {
       "What does the golf scanner use for digits?",
     );
     expect(digits).toContain("MNIST");
+    const labRecord = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the lab record?") }],
+      "",
+      "What did the lab record?",
+    );
+    expect(labRecord).toContain("BERTScore");
+    const bothCases = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many cases?") }],
+      "",
+      "How many cases?",
+    );
+    expect(bothCases).toContain("500,000");
+    expect(bothCases).toContain("5 million");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(

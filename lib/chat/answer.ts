@@ -111,7 +111,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   for (const item of ranked) {
     const exact = words.some((word) => new RegExp(`\\b${word}\\b`, "i").test(item.sentence));
-    if (picked && /\bhow many\b/i.test(question) && /\b\d/.test(item.sentence)) continue;
+    if (picked && /\bhow many\b/i.test(question) && /\b(synthetic|curated)\b/i.test(question) && /\b\d/.test(item.sentence)) continue;
     const answered = words.some((word) => !new RegExp(`\\b${word}\\b`, "i").test(item.sentence) && mentions(item.sentence, word) && chosen.some((sentence) => new RegExp(`\\b${word}\\b`, "i").test(sentence)));
     if (/\b(code|coding|programming)\b/i.test(question) && /\b(vietnamese|mandarin|fluent)\b/i.test(item.sentence)) continue;
     if (/the resume also uses the phrase/i.test(item.sentence) && !/\bphrase\b/i.test(question)) continue;
@@ -441,6 +441,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bdetect\b/i.test(question) && !/\bdrift\b/i.test(question) && /\bdetects?\b/i.test(sentence)) return true;
   if (/\barchive\b/i.test(question) && /\bprompt-me\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
+  if (/\blab\b/i.test(question) && /\brecord/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence)) {
     const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 5 && !["cases", "people", "using", "about"].includes(word));
