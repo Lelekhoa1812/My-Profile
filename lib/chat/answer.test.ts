@@ -1369,6 +1369,23 @@ describe("displayAnswer", () => {
     );
     expect(produce).toContain("business module");
     expect(produce).toContain("not for a release");
+    const hostedModels = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where are the models hosted?") }],
+      "",
+      "Where are the models hosted?",
+    );
+    expect(hostedModels).toContain("hosts the models");
+    expect(hostedModels).not.toContain("self-hosted");
+    expect(hostedModels).not.toContain("same host");
+    const hosts = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it host?") }],
+      "",
+      "What does it host?",
+    );
+    expect(hosts).toContain("same host");
+    expect(hosts).toContain("hosts the models");
+    expect(hosts).toContain("self-hosted");
+    expect(hosts).not.toContain("host-run");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",

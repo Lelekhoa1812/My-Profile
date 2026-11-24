@@ -1136,6 +1136,27 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       }
     }
   }
+  if (/\bmodels?\b/i.test(question) && /\bhost(?:s|ed|ing)?\b/i.test(question) && !/\bself-hosted\b/i.test(question) && !/\baxis\b/i.test(question)) {
+    const modelHost = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /hosts the models/i.test(sentence));
+    if (modelHost) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(modelHost.endsWith(".") ? modelHost : `${modelHost}.`);
+    }
+  }
+  if (/\bhost(?:s|ed|ing)?\b/i.test(question) && !/\bmodels?\b/i.test(question) && !/\bself-hosted\b/i.test(question) && !/\baxis\b/i.test(question) && !/\bhost-run\b/i.test(question) && !/\bsurvee\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /same host/i.test(sentence)),
+      sentences.find((sentence) => /hosts the models/i.test(sentence)),
+      sentences.find((sentence) => /self-hosted OpenAI-compatible gateway/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length >= 2) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));
