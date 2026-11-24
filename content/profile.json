@@ -270,8 +270,8 @@
       "sectionId": "project-hf-models",
       "heading": "Hugging Face models",
       "sourceType": "project",
-      "aliases": ["khoaliamle", "MNIST", "passport"],
-      "text": "Hugging Face models. Public model cards on huggingface.co/khoaliamle. The names are MNIST numeric recognition, a CTC MNIST model, graffiti detection, Vietnamese passport field recognition, an S&P 500 series, water-meter segmentation, rust detection, garbage detection, garbage classification, driver behaviour from OBD, and fuel efficiency from OBD. The record does not include an accuracy, a dataset size, or a deployment claim for these models."
+      "aliases": ["khoaliamle", "MNIST", "passport", "datasets"],
+      "text": "Hugging Face models. Public model cards on huggingface.co/khoaliamle. The names are MNIST numeric recognition, a CTC MNIST model, graffiti detection, Vietnamese passport field recognition, an S&P 500 series, water-meter segmentation, rust detection, garbage detection, garbage classification, driver behaviour from OBD, and fuel efficiency from OBD. Public datasets on the same account include a synthetic passport set, a garbage-classification set, a Vietnamese golf scorecard set, and medical question sets. A public Space is not a production release. The record does not include an accuracy, a dataset size, or a download count for these models or datasets."
     },
     {
       "sectionId": "project-meter",

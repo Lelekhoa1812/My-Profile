@@ -15,6 +15,17 @@ describe("profile store", () => {
     if (result.found) expect(result.facts[0]?.value).toBe("Senior AI Software Engineer");
   });
 
+  it("names public datasets and does not call a Space a release", () => {
+    const result = searchSections(profile.sections, "Hugging Face datasets");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections[0]?.sectionId).toBe("project-hf-models");
+      expect(result.sections[0]?.text).toContain("synthetic passport set");
+      expect(result.sections[0]?.text).toContain("A public Space is not a production release.");
+      expect(result.sections[0]?.text).not.toContain("1,373");
+    }
+  });
+
   it("names prompt-me without a production claim", () => {
     const result = searchSections(profile.sections, "What is prompt-me?");
     expect(result.found).toBe(true);
