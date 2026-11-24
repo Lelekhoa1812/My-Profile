@@ -1166,6 +1166,20 @@ describe("displayAnswer", () => {
     expect(vietdanCloudRole).toContain("June 2022");
     expect(vietdanCloudRole).toContain("AWS IoT");
     expect(vietdanCloudRole).not.toContain("Jetson");
+    const vietdanCloudUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What cloud does VietDan use?") }],
+      "",
+      "What cloud does VietDan use?",
+    );
+    expect(vietdanCloudUse).toContain("AWS IoT");
+    expect(vietdanCloudUse).not.toContain("Jetson");
+    const foodflowModels = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does FoodFlow use?") }],
+      "",
+      "What models does FoodFlow use?",
+    );
+    expect(foodflowModels).toContain("multi-tenant");
+    expect(foodflowModels).not.toContain("not for a release");
     const beforeMeter = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at VietDan before the meter work?") }],
       "",

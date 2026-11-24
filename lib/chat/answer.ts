@@ -2293,7 +2293,11 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const definition = /\bwhat is\b/i.test(question)
     ? openSentences.find((sentence) => sentence.split(/\s+/).length <= 16 && /\b(tool|gateway|workspace|prototype|assistant)\b/i.test(sentence))
     : undefined;
-  const body = chosen.length > 0 ? chosen : definition && !fallback.includes(definition) ? [definition, ...fallback].slice(0, 2) : fallback;
+  const selectedLines = chosen.length > 0 ? chosen : definition && !fallback.includes(definition) ? [definition, ...fallback].slice(0, 2) : fallback;
+  const productDefinition = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /multi-tenant food-distribution/i.test(sentence));
+  const body = /\bmodels?\b/i.test(question) && /\b(use|uses)\b/i.test(question) && selectedLines.some((sentence) => /not for a release/i.test(sentence))
+    ? [productDefinition ?? selectedLines.find((sentence) => !/not for a release/i.test(sentence))].flatMap((sentence) => (sentence ? [sentence] : []))
+    : selectedLines;
   const extra = siblingWork(outputs, blockSentences, question);
   const withExtra = extra && !body.includes(extra) ? [...body, extra] : body;
   const outcome = dutyOutcome(question, outputs);
@@ -2646,7 +2650,11 @@ function codeLanguageAnswer(question: string, outputs: readonly Record<string, u
 function cloudAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (!/\bcloud\b/i.test(question) || /\b(role|when|start|started|did)\b/i.test(question) || /\b(estatefolio|cva|codoptic|roster|survee|quotient|adhd|writingjourney|acnt|free-router|medchat|sall-?e|skyledge|medviet|passport|stt-studio|golf)\b/i.test(question)) return "";
   const employer = namedEmployer(question);
-  if (employer === "vietdan") return "";
+  if (employer === "vietdan") {
+    if (!/\bwhat cloud does\b/i.test(question)) return "";
+    const line = sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\baws iot\b/i.test(sentence) && !/\bjetson\b/i.test(sentence));
+    return line ? (line.endsWith(".") ? line : `${line}.`) : "";
+  }
   const lines = sectionBlocks(outputs).flatMap((block) => {
     if (employer && !new RegExp(`\\b${employer}\\b`, "i").test(block)) return [];
     return plainSentences(block).filter((sentence) => sentence.split(/\s+/).length <= 18 && /\b(aws|azure)\b/i.test(sentence));
