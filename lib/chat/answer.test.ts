@@ -4136,6 +4136,9 @@ describe("displayAnswer", () => {
     );
     expect(router).toContain("OpenRouter");
     expect(router).toContain("Mistral");
+    expect(router).toContain("OpenAI-compatible");
+    expect(router).toContain("Next.js");
+    expect(router).not.toContain("user count");
     const studio = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does stt-studio do?") }],
       "",
