@@ -2031,6 +2031,23 @@ describe("displayAnswer", () => {
     expect(pedigreeTools).toContain("matrix factorization");
     expect(pedigreeTools).toContain("64-dimensional");
     expect(pedigreeTools).not.toContain("40 percent");
+    const axisProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Axis?") }],
+      "",
+      "What is Axis?",
+    );
+    expect(axisProduct).toContain("separate product");
+    expect(axisProduct).toContain("preview");
+    expect(axisProduct).toContain("approve");
+    expect(axisProduct).toContain("does not own");
+    const axionProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Axion?") }],
+      "",
+      "What is Axion?",
+    );
+    expect(axionProduct).toContain("approve");
+    expect(axionProduct).toContain("does not own");
+    expect(axionProduct).toContain("AI vision");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",
