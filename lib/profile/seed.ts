@@ -1,9 +1,18 @@
+import { createHash } from "node:crypto";
 import type { Db } from "mongodb";
 import profile from "../../content/profile.json";
 import { idsToRetire } from "./retire";
 
 export function needsSeed(factCount: number, sectionCount: number): boolean {
   return factCount === 0 || sectionCount === 0;
+}
+
+export function profileHash(): string {
+  return createHash("sha256").update(JSON.stringify({ facts: profile.facts, sections: profile.sections })).digest("hex");
+}
+
+export function needsRefresh(factCount: number, sectionCount: number, storedHash: string | null, currentHash: string): boolean {
+  return needsSeed(factCount, sectionCount) || storedHash !== currentHash;
 }
 
 export async function seedProfile(db: Db): Promise<void> {
@@ -40,6 +49,11 @@ export async function seedProfile(db: Db): Promise<void> {
     profile.sections.map((section) => section.sectionId),
   );
   if (retireSections.length > 0) await chunks.deleteMany({ sectionId: { $in: retireSections }, visibility: "public" });
+  await db.collection("profile_meta").updateOne(
+    { key: "content" },
+    { $set: { hash: profileHash(), updatedAt: now } },
+    { upsert: true },
+  );
   try {
     await chunks.createIndex({ heading: "text", text: "text", aliases: "text" }, { name: "chunks_text" });
   } catch (error) {

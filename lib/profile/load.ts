@@ -1,6 +1,6 @@
 import profile from "../../content/profile.json";
 import { getDb, markMongoDown, mongoIsQuiet } from "../db/client";
-import { needsSeed, seedProfile } from "./seed";
+import { needsRefresh, profileHash, seedProfile } from "./seed";
 import type { ProfileFact, ProfileSection } from "./store";
 
 export type ProfileRecord = {
@@ -15,7 +15,8 @@ export async function loadProfile(): Promise<ProfileRecord> {
     const db = getDb();
     let facts = await db.collection<ProfileFact>("profile_facts").find({ visibility: "public" }).toArray();
     let sections = await db.collection<ProfileSection>("chunks").find({ visibility: "public" }).toArray();
-    if (needsSeed(facts.length, sections.length)) {
+    const stored = await db.collection<{ hash?: string }>("profile_meta").findOne({ key: "content" });
+    if (needsRefresh(facts.length, sections.length, stored?.hash ?? null, profileHash())) {
       await seedProfile(db);
       facts = await db.collection<ProfileFact>("profile_facts").find({ visibility: "public" }).toArray();
       sections = await db.collection<ProfileSection>("chunks").find({ visibility: "public" }).toArray();
