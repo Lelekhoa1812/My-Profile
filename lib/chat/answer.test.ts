@@ -3280,6 +3280,14 @@ describe("displayAnswer", () => {
     );
     expect(bm25).toContain("BM25");
     expect(bm25).not.toContain("mate-selection");
+    const bm25Is = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "At Harry, what is BM25?") }],
+      "",
+      "At Harry, what is BM25?",
+    );
+    expect(bm25Is).toContain("BM25");
+    expect(bm25Is).toContain("HNSW");
+    expect(bm25Is).not.toContain("Azure OpenAI");
     const mcp = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does MCP do at Harry?") }],
       "",
