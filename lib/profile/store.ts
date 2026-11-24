@@ -27,6 +27,7 @@ const FACT_LABELS: Record<string, string> = {
   page_title: "Page title",
   degree: "Degree",
   languages: "Languages",
+  experience_span: "Experience",
 };
 
 export function factLabel(key: string): string {
@@ -39,6 +40,7 @@ const FACT_KEY_ALIASES: Record<string, readonly string[]> = {
   title: ["public_title", "page_title"],
   job: ["public_title"],
   name: ["full_name"],
+  experience: ["experience_span"],
 };
 
 function factKeys(key: string): string[] {

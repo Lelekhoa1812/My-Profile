@@ -3,6 +3,16 @@ import profile from "../../content/profile.json";
 import { listSections, lookupFacts, readSection, searchSections } from "./store";
 
 describe("profile store", () => {
+  it("attributes the experience span to the resume summary", () => {
+    const result = lookupFacts(profile.facts, { key: "experience" });
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.facts[0]?.value).toContain("resume summary");
+      expect(result.facts[0]?.value).toContain("4 years");
+      expect(result.facts[0]?.value).toContain("3 years");
+    }
+  });
+
   it("returns a resume contact fact by key", () => {
     const result = lookupFacts(profile.facts, { key: "email" });
     expect(result.found).toBe(true);

@@ -11,7 +11,8 @@
     {"key": "public_title", "kind": "identity", "value": "Senior AI Software Engineer", "visibility": "public"},
     {"key": "page_title", "kind": "identity", "value": "AI Software Engineer", "visibility": "public"},
     {"key": "degree", "kind": "education", "value": "Bachelor of Software Engineering, Swinburne University of Technology, 2022–2025", "visibility": "public"},
-    {"key": "languages", "kind": "skill", "value": "Vietnamese (native), English (fluent), Mandarin (intermediate)", "visibility": "public"}
+    {"key": "languages", "kind": "skill", "value": "Vietnamese (native), English (fluent), Mandarin (intermediate)", "visibility": "public"},
+    {"key": "experience_span", "kind": "identity", "value": "The resume summary says 4 years of software engineering experience and 3 years of AI and machine-learning delivery.", "visibility": "public"}
   ],
   "sections": [
     {
