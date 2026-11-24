@@ -982,6 +982,20 @@ describe("displayAnswer", () => {
       "Is CVA live?",
     );
     expect(cvaLive).toContain("cva-mauve.vercel.app");
+    const handwriting = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the golf scanner do with handwriting?") }],
+      "",
+      "What does the golf scanner do with handwriting?",
+    );
+    expect(handwriting).toContain("MNIST");
+    expect(handwriting).not.toContain("VHandicap");
+    const accounting = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the accounting assistant use?") }],
+      "",
+      "What does the accounting assistant use?",
+    );
+    expect(accounting).toContain("OpenCollective");
+    expect(accounting).not.toContain("ADHD");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",
