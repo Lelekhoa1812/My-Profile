@@ -4777,6 +4777,15 @@ describe("displayAnswer", () => {
     expect(prophetDoes).toContain("spreadsheet");
     expect(prophetDoes).toContain("TimesFM");
     expect(prophetDoes).not.toContain("user count");
+    const ericssonDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Ericsson do?") }],
+      "",
+      "What does Ericsson do?",
+    );
+    expect(ericssonDoes).toContain("tower telemetry");
+    expect(ericssonDoes).toContain("detects degradation");
+    expect(ericssonDoes).toContain("Swinburne funded");
+    expect(ericssonDoes).not.toContain("deployment count");
     const anomaly = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Ericsson use for anomaly detection?") }],
       "",
