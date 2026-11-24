@@ -207,6 +207,8 @@ function askedProductSectionIds(text: string): string[] | undefined {
     [/\bstt-studio\b/, "project-stt"],
     [/\bacnt\b/, "project-acnt"],
     [/\bskyledge\b/, "project-skyledge"],
+    [/\bsurvee\b/, "project-survee"],
+    [/\broster\b/, "project-roster"],
   ];
   const ids = named.flatMap(([test, id]) => (test.test(text) ? [id] : []));
   return ids.length > 0 ? [...new Set(ids)] : undefined;

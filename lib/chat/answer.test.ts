@@ -870,6 +870,20 @@ describe("displayAnswer", () => {
       "When did Nam A start?",
     );
     expect(namStart.startsWith("Nam Á Bank, Software Engineer, April 2023")).toBe(true);
+    const surveeModelUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does Survee use?") }],
+      "",
+      "What models does Survee use?",
+    );
+    expect(surveeModelUse).toContain("MongoDB");
+    expect(surveeModelUse).not.toContain("Gemini");
+    const rosterModelUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the roster app use?") }],
+      "",
+      "What models does the roster app use?",
+    );
+    expect(rosterModelUse).toContain("Kotlin");
+    expect(rosterModelUse).not.toContain("Gemini");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
