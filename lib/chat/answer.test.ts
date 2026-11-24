@@ -720,6 +720,22 @@ describe("displayAnswer", () => {
     );
     expect(raspberryIs).toContain("Raspberry Pi");
     expect(raspberryIs).toContain("FastAPI");
+    const personaIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is a saved persona?") }],
+      "",
+      "What is a saved persona?",
+    );
+    expect(personaIs).toContain("saved persona");
+    expect(personaIs).toContain("recipe");
+    const lstmIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is an LSTM used for here?") }],
+      "",
+      "What is an LSTM used for here?",
+    );
+    expect(lstmIs).toContain("LSTM");
+    expect(lstmIs).toContain("K-means");
+    expect(lstmIs).not.toContain("LoRA");
+    expect(lstmIs).not.toContain("MedSwin");
     const nimUsed = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Nvidia NIM used for?") }],
       "",

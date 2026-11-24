@@ -774,6 +774,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(providers);
     }
   }
+  if (/\blstms?\b/i.test(question)) {
+    const forecast = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\blstms?\b/i.test(sentence));
+    if (forecast) {
+      chosen.length = 0;
+      cap = 1;
+      push(forecast);
+    }
+  }
   if (/\bst-gnn\b/i.test(question)) {
     const graph = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bst-gnn\b/i.test(sentence));
     if (graph) {
@@ -871,7 +879,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(title);
     }
   }
-  const askedTool = question.match(/^what is ([a-z0-9.+#-]{2,}(?:\s+[a-z0-9.+#-]{2,}){0,2})\??$/i)?.[1];
+  const askedTool = question.match(/^what is (?:an?\s+|the\s+)?([a-z0-9.+#-]{2,}(?:\s+[a-z0-9.+#-]{2,}){0,2})\??$/i)?.[1];
   if (askedTool) {
     const pattern = askedTool.split(/\s+/).map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("\\s+");
     const named = askedTool === "ReAct"
@@ -1349,6 +1357,9 @@ function specificQuestion(question: string): boolean {
 function withIdentity(question: string, proof: string, blockSentences: readonly string[]): string {
   const opening = blockSentences[0];
   if (!opening || !proof.trim()) return proof;
+  const proofLead = proof.split(/(?<=[.!])\s+/)[0]?.replace(/\.$/, "") ?? "";
+  const openingName = opening.replace(/[.]+$/, "").trim();
+  if (proofLead && openingName && !question.toLowerCase().includes(openingName.toLowerCase()) && !blockSentences.some((sentence) => sentence.includes(proofLead))) return proof;
   if (/^Public repositories\.?$/i.test(opening) && !/\b(archive|repositor|public)\b/i.test(question)) return proof;
   if (/^Shipped work\.?$/i.test(opening) && /\bfoodflow\b/i.test(proof) && /\bnot for a release\b/i.test(proof)) return proof;
   const chronological = /\b(before|after)\b/i.test(question);
