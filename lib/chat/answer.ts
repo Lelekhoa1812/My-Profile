@@ -416,8 +416,13 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(blockSentences.find((sentence) => /\binference uses\b/i.test(sentence)));
     }
     if (/\bwhat did he do\b/i.test(question) && /\bpoptech\b/i.test(question)) {
-      cap = 3;
+      cap = 4;
+      push(blockSentences.find((sentence) => /\bsensor quality\b/i.test(sentence)));
       push(blockSentences.find((sentence) => /\bmodels include\b/i.test(sentence)));
+    }
+    if (/\bwhat did he do\b/i.test(question) && /\b(pythera|clara)\b/i.test(question)) {
+      cap = 4;
+      push(blockSentences.find((sentence) => /\b175 hospital\b/i.test(sentence)));
     }
     if (/\bwhat did he do\b/i.test(question) && /\binet\b/i.test(question)) {
       cap = 3;

@@ -2254,6 +2254,15 @@ describe("displayAnswer", () => {
       "What did he do at PopTech?",
     );
     expect(poptechWork).toContain("TFT");
+    expect(poptechWork).toContain("sensor quality");
+    const pytheraWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Pythera?") }],
+      "",
+      "What did he do at Pythera?",
+    );
+    expect(pytheraWork).toContain("175 Hospital");
+    expect(pytheraWork).toContain("400,000");
+    expect(pytheraWork).not.toContain("sole author");
     const inetWork = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at iNet?") }],
       "",
