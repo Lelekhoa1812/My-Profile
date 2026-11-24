@@ -2331,6 +2331,15 @@ describe("displayAnswer", () => {
     expect(skyledgeProduct).toContain("OBD-II");
     expect(skyledgeProduct).toContain("SkyLedge Kenya");
     expect(skyledgeProduct).toContain("FastAPI");
+    const skyledgeDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does SkyLedge do?") }],
+      "",
+      "What does SkyLedge do?",
+    );
+    expect(skyledgeDoes).toContain("OBD-II");
+    expect(skyledgeDoes).toContain("Fault prediction");
+    expect(skyledgeDoes).toContain("FastAPI");
+    expect(skyledgeDoes).not.toContain("acquired");
     const medchatLimit = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is MedChat?") }],
       "",

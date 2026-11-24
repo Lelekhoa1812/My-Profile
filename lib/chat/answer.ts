@@ -1703,14 +1703,27 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
-    const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));
-    if (label && !chosen.some((sentence) => /\bfleet maintenance\b/i.test(sentence))) {
-      chosen.unshift(label.endsWith(".") ? label : `${label}.`);
-      if (chosen.length === 1) {
-        const platform = sentences.find((sentence) => /\bOBD-II\b/.test(sentence));
-        const fault = sentences.find((sentence) => /\bfault prediction\b/i.test(sentence));
-        if (platform) chosen.push(platform);
-        if (fault) chosen.push(fault);
+    if (/\bwhat does\b/i.test(question)) {
+      const lines = [
+        sentences.find((sentence) => /\bOBD-II\b/.test(sentence)),
+        sentences.find((sentence) => /\bfault prediction\b/i.test(sentence)),
+        sentences.find((sentence) => /\braspberry pi\b/i.test(sentence)),
+      ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+      if (lines.length > 1) {
+        chosen.length = 0;
+        cap = 3;
+        for (const sentence of lines) chosen.push(sentence);
+      }
+    } else {
+      const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));
+      if (label && !chosen.some((sentence) => /\bfleet maintenance\b/i.test(sentence))) {
+        chosen.unshift(label.endsWith(".") ? label : `${label}.`);
+        if (chosen.length === 1) {
+          const platform = sentences.find((sentence) => /\bOBD-II\b/.test(sentence));
+          const fault = sentences.find((sentence) => /\bfault prediction\b/i.test(sentence));
+          if (platform) chosen.push(platform);
+          if (fault) chosen.push(fault);
+        }
       }
     }
   }
@@ -1913,6 +1926,7 @@ function sameTimeAnswer(question: string, outputs: readonly Record<string, unkno
 }
 
 function toolDutyAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (/\bskyledge\b/i.test(question)) return "";
   if (/\buse fastapi for\b/i.test(question)) return toolDutyAnswer("What does FastAPI do?", outputs);
   const used = question.match(/\bwhat does he use ([a-z0-9.+#-]{2,}) for\b/i)?.[1];
   if (used && !/^(aws|ocr)$/i.test(used)) return toolDutyAnswer(`What does ${used} do?`, outputs);
