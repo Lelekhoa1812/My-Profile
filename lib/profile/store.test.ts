@@ -59,6 +59,12 @@ describe("profile store", () => {
     if (result.found) expect(result.sectionId).toBe("role-axion");
   });
 
+  it("does not publish a download count for the Sall-e dataset", () => {
+    const section = readSection(profile.sections, "Sall-e");
+    expect(section.found).toBe(true);
+    if (section.found) expect(section.text).not.toMatch(/\d[\d,]* downloads/);
+  });
+
   it("reads one section from a unique heading phrase", () => {
     const hyphen = readSection(profile.sections, "shipped-work");
     expect(hyphen.found).toBe(true);

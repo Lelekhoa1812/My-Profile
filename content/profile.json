@@ -194,7 +194,7 @@
       "heading": "Sall-e",
       "sourceType": "project",
       "aliases": ["ocean garbage"],
-      "text": "Sall-e. Autonomous robot for oceanic garbage collection. The resume says Liam led a software team of five. Repository: Lelekhoa1812/Sall-e."
+      "text": "Sall-e. Autonomous robot for oceanic garbage collection. The resume says Liam led a software team of five. Repository: Lelekhoa1812/Sall-e. The record does not include a download count for the garbage-classification dataset."
     },
     {
       "sectionId": "project-golf",
@@ -250,7 +250,7 @@
       "heading": "S&P 500 forecast",
       "sourceType": "project",
       "aliases": ["FinBERT", "portfolio", "Kafka"],
-      "text": "S&P 500 forecast. The resume describes a multi-horizon system. It uses temporal fusion transformers, graph networks, FinBERT on news and SEC filings, and a reinforcement-learning agent for portfolio execution. The data path uses Apache Kafka. The record does not include a return figure."
+      "text": "S&P 500 forecast. The resume describes a multi-horizon system. It uses temporal fusion transformers, graph networks, FinBERT on news and SEC filings, and a reinforcement-learning agent for portfolio execution. The data path uses Apache Kafka. Public repository: Lelekhoa1812/S-P500_Prediction_Model. The record does not include a return figure."
     },
     {
       "sectionId": "project-estatefolio",
@@ -272,6 +272,62 @@
       "sourceType": "project",
       "aliases": ["khoaliamle", "MNIST", "passport"],
       "text": "Hugging Face models. Public model cards on huggingface.co/khoaliamle. The names are MNIST numeric recognition, a CTC MNIST model, graffiti detection, Vietnamese passport field recognition, an S&P 500 series, water-meter segmentation, rust detection, garbage detection, garbage classification, driver behaviour from OBD, and fuel efficiency from OBD. The record does not include an accuracy, a dataset size, or a deployment claim for these models."
+    },
+    {
+      "sectionId": "project-meter",
+      "heading": "Water-meter scanner",
+      "sourceType": "project",
+      "aliases": ["water-meter scanner", "Jetson"],
+      "text": "Water-meter scanner. ML work for VietDan JSC, December 2024 to February 2025. It reads meter photos so staff enter fewer readings. The resume records about 35 percent less manual meter processing, on more than 10,000 samples. Deployment used Jetson and AWS. Repository: Lelekhoa1812/Water-Meter-Scanner."
+    },
+    {
+      "sectionId": "project-passport",
+      "heading": "Passport OCR",
+      "sourceType": "project",
+      "aliases": ["synthetic passport", "VietOCR"],
+      "text": "Passport OCR. Nam A Bank work, December 2024 to May 2025, for passport and remittance documents. The public repository trains VietOCR on synthetic passports. The synthetic passport dataset has 1,373 downloads. Repository: Lelekhoa1812/Vietnamese-Passport-OCR-Project-with-VietOCR."
+    },
+    {
+      "sectionId": "project-router",
+      "heading": "free-router",
+      "sourceType": "project",
+      "aliases": ["OpenAI-compatible router", "OpenRouter"],
+      "text": "free-router. An OpenAI-compatible router for Gemini, OpenRouter, and Nvidia NIM. Repository: Lelekhoa1812/free-router. The record does not include a user count."
+    },
+    {
+      "sectionId": "project-stt",
+      "heading": "stt-studio",
+      "sourceType": "project",
+      "aliases": ["Whisper", "speech to text"],
+      "text": "stt-studio. Local inference for Whisper speech to text. Repository: Lelekhoa1812/stt-studio. The record does not include a user count."
+    },
+    {
+      "sectionId": "project-prophet",
+      "heading": "Prophet",
+      "sourceType": "project",
+      "aliases": ["time-series agent"],
+      "text": "Prophet. A time-series agent that forecasts from a series. Repository: Lelekhoa1812/prophet. The record does not include an accuracy figure or a user count."
+    },
+    {
+      "sectionId": "project-survee",
+      "heading": "Survee",
+      "sourceType": "project",
+      "aliases": ["survey"],
+      "text": "Survee. An agentic tool that runs a survey. Repository: Lelekhoa1812/survee. The record does not include a user count."
+    },
+    {
+      "sectionId": "project-quotient",
+      "heading": "Quotient",
+      "sourceType": "project",
+      "aliases": ["meeting notes"],
+      "text": "Quotient. A meeting note taker. Repository: Lelekhoa1812/Quotient. The record does not include a user count."
+    },
+    {
+      "sectionId": "project-acnt",
+      "heading": "Acnt-MCP",
+      "sourceType": "project",
+      "aliases": ["accounting assistant", "OpenCollective"],
+      "text": "Acnt-MCP. An accounting assistant over OpenCollective and exchange-rate data. Repository: Lelekhoa1812/Acnt-MCP. The record does not include a user count."
     },
     {
       "sectionId": "skills",
