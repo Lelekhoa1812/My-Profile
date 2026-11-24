@@ -83,6 +83,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       return owners.length === 1 && owners[0] ? [{ word, sentence: owners[0] }] : [];
     })
     .sort((left, right) => right.word.length - left.word.length)[0]?.sentence;
+  const picked = decision && unique && unique !== decision && /\bthe stack is\b/i.test(decision) ? unique : decision;
   const chosen: string[] = [];
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(sentence, blockSentences) : "";
@@ -91,8 +92,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (named.split(/\s+/).length < 4 && !isDecision(question, named) && !shortFact) return;
     chosen.push(named);
   };
-  push(decision);
-  if (!decision) push(unique);
+  push(picked);
+  if (!picked) push(unique);
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   if (/\b(do|did|build|built|work|role)\b/i.test(question)) {
     push(blockSentences.find((sentence) => isToolList(sentence)));
@@ -102,8 +103,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   for (const item of ranked) {
     const exact = words.some((word) => new RegExp(`\\b${word}\\b`, "i").test(item.sentence));
-    if (decision && /\bhow many\b/i.test(question) && /\b\d/.test(item.sentence)) continue;
-    if (decision && item.score < 2 && !exact) continue;
+    if (picked && /\bhow many\b/i.test(question) && /\b\d/.test(item.sentence)) continue;
+    if (picked && item.score < 2 && !exact) continue;
     push(item.sentence);
   }
   const body = chosen.length > 0

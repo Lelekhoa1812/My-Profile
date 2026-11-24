@@ -721,6 +721,12 @@ describe("displayAnswer", () => {
       "What forecast model does Prophet use?",
     );
     expect(prophet).toContain("TimesFM");
+    const anomaly = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Ericsson use for anomaly detection?") }],
+      "",
+      "What does Ericsson use for anomaly detection?",
+    );
+    expect(anomaly.split(/(?<=[.!])\s+/)[0]).toContain("autoencoder");
     expect(coach).toContain("rewrite");
     expect(refuse).toContain("does not score");
     expect(validators).toContain("evidence");
