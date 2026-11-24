@@ -851,6 +851,14 @@ describe("displayAnswer", () => {
     );
     expect(manualWork).toContain("manual work");
     expect(manualWork).not.toContain("40 percent");
+    const artefactCut = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What was the artefact preparation cut?") }],
+      "",
+      "What was the artefact preparation cut?",
+    );
+    expect(artefactCut).toContain("50 percent");
+    expect(artefactCut).not.toContain("40 percent");
+    expect(artefactCut).not.toContain("BERTScore");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
