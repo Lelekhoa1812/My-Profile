@@ -550,6 +550,9 @@ describe("displayAnswer", () => {
       "What OCR does he use?",
     );
     expect(ocr).toContain("VietOCR");
+    expect(ocr).toContain("Water-meter OCR");
+    expect(ocr).toContain("NLP, and OCR");
+    expect(ocr).not.toContain("December 2024");
     const education = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is his education?") }],
       "",

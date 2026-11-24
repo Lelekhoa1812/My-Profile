@@ -361,6 +361,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bllms?\b/.test(text) && /\bfor\b/.test(text) && /\b(use|uses|used)\b/.test(text) && !namedEmployer(text) && !/\b(vietnamese|medical|clara|pythera)\b/.test(text) && !askedProductSectionIds(text), ids: ["role-harry-pedigree", "role-poptech", "role-inet", "project-triage"] },
     { when: /\bcloud\b/.test(text) && /\b(platform|platforms|use|uses|used)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-alta", "skills", "role-vietdan-cloud"] },
     { when: /\baws\b/.test(text) && /\b(use|uses|used|for|what)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-vietdan-cloud", "role-vietdan-ml", "role-alta"] },
+    { when: /\bocr\b/.test(text) && /\b(use|uses|used|for|what)\b/.test(text) && !/\b(scorecard|golf)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["project-passport", "role-nam-a-ai", "role-harry-senior", "role-vietdan-ml", "role-aitc"] },
     { when: Boolean(between?.length), ids: between ?? [] },
     { when: Boolean(overlapping?.length), ids: overlapping ?? [] },
     { when: Boolean(ended?.length), ids: ended ?? [] },

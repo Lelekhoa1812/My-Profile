@@ -1269,6 +1269,20 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\bexplain/i.test(question) && !/\b(pedigree|writingjourney|writing coach|ielts|llm)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/explains the error|LLM explanations/i, 2);
   }
+  if (/\bocr\b/i.test(question) && /\b(use|uses|used|for)\b/i.test(question) && !/\b(scorecard|golf)\b/i.test(question) && !namedEmployer(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /VietOCR/i.test(sentence)),
+      sentences.find((sentence) => /Water-meter OCR/i.test(sentence)),
+      sentences.find((sentence) => /NLP, and OCR/i.test(sentence)),
+      /\bfor\b/i.test(question) ? sentences.find((sentence) => /document extraction/i.test(sentence)) : undefined,
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 4;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\baws\b/i.test(question) && /\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
@@ -2137,6 +2151,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bhow many\b/i.test(question) && /\b(people|teams?)\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bhow many\b/i.test(question) && /\bmodels?\b/i.test(question) && !namedEmployer(question) && !/\b(triage|golf|prophet|pedigree|poptech|ericsson|clara|medswin)\b/i.test(question)) return joined;
   if (/\baws\b/i.test(question) && /\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) return joined;
+  if (/\bocr\b/i.test(question) && /\b(use|uses|used|for)\b/i.test(question) && !/\b(scorecard|golf)\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\b(cite|explain|train|guard|embed|validat\w*|recogni|recommend|graph|score|trace|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv\w*|rank|track|own|rout|turn|check|gate|version|call|remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
   if (/\bagents?\b/i.test(question) && /\b(build|built)\b/i.test(question)) return joined;
   if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !namedEmployer(question)) return joined;
