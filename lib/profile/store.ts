@@ -184,7 +184,13 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
     }
   }
   const complete = hits.filter((hit) => terms.every((term) => hit.title.includes(term)));
-  const top = (complete.length > 0 ? complete : hits).slice(0, 3);
+  const exactHeading = query.trim().toLowerCase();
+  const top = (complete.length > 0 ? complete : hits).slice().sort((left, right) => {
+    const leftExact = left.section.heading.toLowerCase() === exactHeading ? 1 : 0;
+    const rightExact = right.section.heading.toLowerCase() === exactHeading ? 1 : 0;
+    if (leftExact !== rightExact) return rightExact - leftExact;
+    return right.score - left.score;
+  }).slice(0, 3);
   if (top.length === 0) return { found: false as const };
   return {
     found: true as const,
