@@ -28,7 +28,16 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
     .filter((output): output is Record<string, unknown> => typeof output === "object" && output !== null);
   if (outputs.some((output) => output.reason === "unavailable")) return UNREAD;
   if (outputs.length > 0 && outputs.every((output) => output.found === false)) return SILENCE;
-  return dropSourceTail(dropRecordTalk(modelText), sourceHeadings(outputs));
+  return dropSourceTail(dropRecordTalk(stripToolMarkup(modelText)), sourceHeadings(outputs));
+}
+
+function stripToolMarkup(text: string): string {
+  const stripped = text
+    .replace(/<tool_call>[\s\S]*?<\/tool_call>/gi, " ")
+    .replace(/<\/?(?:function|parameter)(?:=[^>\n]*)?>/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return stripped;
 }
 
 export function dropRecordTalk(text: string): string {

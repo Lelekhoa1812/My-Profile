@@ -9,6 +9,18 @@ describe("profile store", () => {
     if (result.found) expect(result.facts[0]?.value).toBe("liamkl.work@gmail.com");
   });
 
+  it("resolves the current title when the key and the kind are both off", () => {
+    const result = lookupFacts(profile.facts, { key: "current_title", kind: "role" });
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.facts[0]?.value).toBe("Senior AI Software Engineer");
+  });
+
+  it("finds the current role when the question asks for the title", () => {
+    const result = searchSections(profile.sections, "current title", "role");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections[0]?.sectionId).toBe("role-axion");
+  });
+
   it("keeps the public title on the current resume role", () => {
     const result = lookupFacts(profile.facts, { key: "public_title" });
     expect(result.found).toBe(true);

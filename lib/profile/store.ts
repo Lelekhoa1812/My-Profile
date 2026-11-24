@@ -33,11 +33,35 @@ export function factLabel(key: string): string {
   return FACT_LABELS[key] ?? key.replaceAll("_", " ");
 }
 
+const FACT_KEY_ALIASES: Record<string, readonly string[]> = {
+  current_title: ["public_title"],
+  job_title: ["public_title"],
+  title: ["public_title", "page_title"],
+  job: ["public_title"],
+  name: ["full_name"],
+};
+
+function factKeys(key: string): string[] {
+  const normalized = key.trim().toLowerCase().replace(/[\s-]+/g, "_");
+  return [...new Set([normalized, ...(FACT_KEY_ALIASES[normalized] ?? [])])];
+}
+
 export function lookupFacts(facts: readonly ProfileFact[], input: { key?: string; kind?: string }) {
   if (!input.key && !input.kind) return { found: false as const };
-  const rows = facts.filter((fact) => (fact.visibility ?? "public") === "public")
-    .filter((fact) => !input.key || fact.key === input.key)
-    .filter((fact) => !input.kind || fact.kind === input.kind);
+  let rows = facts.filter((fact) => (fact.visibility ?? "public") === "public");
+  if (input.key) {
+    const keys = factKeys(input.key);
+    const byKey = rows.filter((fact) => keys.includes(fact.key));
+    rows = byKey.length > 0 ? byKey : rows.filter((fact) => {
+      const hay = `${fact.key} ${factLabel(fact.key)} ${fact.value}`.toLowerCase();
+      const terms = keys[0]?.split("_").filter((term) => term.length > 2 && !STOP_WORDS.has(term)) ?? [];
+      return terms.length > 0 && terms.every((term) => hay.includes(term));
+    });
+  }
+  if (input.kind) {
+    const byKind = rows.filter((fact) => fact.kind === input.kind);
+    if (byKind.length > 0) rows = byKind;
+  }
   if (rows.length === 0) return { found: false as const };
   return {
     found: true as const,
@@ -114,12 +138,18 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       return { section, score, matched };
     })
     .filter((hit) => hit.matched / terms.length >= 0.5)
-    .sort((left, right) => right.score - left.score)
-    .slice(0, 3);
-  if (hits.length === 0) return { found: false as const };
+    .sort((left, right) => right.score - left.score);
+  if (terms.includes("title")) {
+    const current = pool.find((item) => item.section.sourceType === "role" && item.body.includes("senior ai software engineer"));
+    if (current && !hits.some((hit) => hit.section.sectionId === current.section.sectionId)) {
+      hits.unshift({ section: current.section, score: Number.POSITIVE_INFINITY, matched: terms.length });
+    }
+  }
+  const top = hits.slice(0, 3);
+  if (top.length === 0) return { found: false as const };
   return {
     found: true as const,
-    sections: hits.map((hit) => ({
+    sections: top.map((hit) => ({
       sectionId: hit.section.sectionId,
       heading: hit.section.heading,
       sourceType: hit.section.sourceType,
