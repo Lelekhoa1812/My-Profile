@@ -1099,6 +1099,27 @@ describe("displayAnswer", () => {
     );
     expect(traceUse).toContain("LangSmith");
     expect(traceUse).toContain("confidence gates");
+    const purposeAgents = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for agents?") }],
+      "",
+      "What does he use for agents?",
+    );
+    expect(purposeAgents).toContain("Tool-Executor");
+    expect(purposeAgents).toContain("specialist medical agents");
+    const listedAgents = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What agents does he use?") }],
+      "",
+      "What agents does he use?",
+    );
+    expect(listedAgents).toContain("Tool-Executor");
+    expect(listedAgents).toContain("specialist medical agents");
+    const orchestratorUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for orchestration?") }],
+      "",
+      "What does he use for orchestration?",
+    );
+    expect(orchestratorUse).toContain("reasoning orchestrator");
+    expect(orchestratorUse).toContain("8-million-document");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],

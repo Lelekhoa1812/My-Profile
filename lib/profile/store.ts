@@ -330,6 +330,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\b(programming|coding)\b/.test(text) && /\blanguages?\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["skills"] },
     { when: (/\bcloud\b/.test(text) || /\bvectors?\b/.test(text) || /\bqueue\b/.test(text) || /\bpercent\b/.test(text) || /\b(founder|founded|partners?)\b/.test(text)) && employerRoles.length > 0 && !askedProductSectionIds(text) && !/\bwater[\s-]?meter\b/.test(text), ids: employerRoles },
     { when: /\bqueue\b/.test(text) && Boolean(askedProductSectionIds(text)?.length), ids: askedProductSectionIds(text) ?? [] },
+    { when: /\borchestrat/.test(text) && !namedEmployer(text), ids: ["project-medswin", "role-swinburne-research"] },
     { when: /\bcloud\b/.test(text) && /\b(platform|platforms|use|uses|used)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-alta", "skills"] },
     { when: Boolean(between?.length), ids: between ?? [] },
     { when: Boolean(overlapping?.length), ids: overlapping ?? [] },
