@@ -123,6 +123,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     cap = 3;
     push(blockSentences.find((sentence) => /\bkotlin\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bwater[\s-]?meter\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\b35 percent\b/i.test(sentence) && /\bmeter\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question)) {
     cap = 3;
     push(blockSentences.find((sentence) => /\bcareer application agent\b/i.test(sentence)));

@@ -975,6 +975,14 @@ describe("displayAnswer", () => {
     );
     expect(skyledgeProduct).toContain("OBD-II");
     expect(skyledgeProduct).toContain("SkyLedge Kenya");
+    const meterProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the water-meter scanner?") }],
+      "",
+      "What is the water-meter scanner?",
+    );
+    expect(meterProduct).toContain("35 percent");
+    expect(meterProduct).toContain("10,000");
+    expect(meterProduct).toContain("productionized");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
