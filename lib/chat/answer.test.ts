@@ -2055,6 +2055,16 @@ describe("displayAnswer", () => {
     expect(claraAccurate).toContain("92 percent");
     expect(claraAccurate).toContain("400,000");
     expect(claraAccurate).not.toContain("sole author");
+    const caseCounts = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many cases?") }],
+      "",
+      "How many cases?",
+    );
+    expect(caseCounts).toContain("500,000");
+    expect(caseCounts).toContain("5 million synthetic");
+    expect(caseCounts).toContain("400,000");
+    expect(caseCounts).not.toContain("August 2025");
+    expect(caseCounts).not.toContain("not the same count");
     const labLanguages = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What languages does the lab cover?") }],
       "",

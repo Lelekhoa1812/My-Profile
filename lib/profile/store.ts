@@ -437,6 +437,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bartefact preparation\b/.test(text), ids: ["role-mizco"] },
     { when: /\bpedigree\b/.test(text) && /\b(measure|measured)\b/.test(text), ids: ["role-harry-pedigree"] },
     { when: /\b(measure|measured|cut)\b/.test(text) && !namedEmployer(text) && !/\b(live|pilot|uptime|bert|golf|meter|scanner|recall|precision)\b/.test(text) && !askedProductSectionIds(text), ids: ["role-harry-senior", "role-mizco", "role-swinburne-research"] },
+    { when: /\bcases?\b/.test(text) && /\b(how many|what)\b/.test(text) && !/\b(medswin|lab|synthetic|clara|curate|passport|difference)\b/.test(text) && !namedEmployer(text), ids: ["role-swinburne-research", "role-pythera"] },
     { when: /\b(train|trained|training)\b/.test(text) && /\b(he|him|his|lab)\b/.test(text) && !/\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: /\btrain/.test(text) && /\b(do|does|what)\b/.test(text) && !/\blab\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text) && (!/\b(he|him|his)\b/.test(text) || /\b(use|uses|used|for)\b/.test(text)), ids: ["role-swinburne-research", "project-medswin", "project-passport", "project-sp500"] },
     { when: /\b(founder|founded)\b/.test(text) && !namedEmployer(text), ids: ["project-medvietai"] },
