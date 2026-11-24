@@ -17,7 +17,7 @@ describe("instructionPrefix", () => {
     expect(text).toContain("Never write a tool call in the answer.");
     expect(text).not.toContain("proofs from the record");
     expect(text).toContain("Answer only what was asked.");
-    expect(text).toContain("Name a repository only when the tool result contains that name.");
+    expect(text).toContain("Name a repository only when the record or the tool result contains that name.");
     expect(text).toContain("The current title is the job.");
     expect(text).toContain("The page title is the short label on the visitor page.");
     expect(text).toContain("Do not say that a sold or acquired product reached production.");
