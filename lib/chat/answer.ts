@@ -94,7 +94,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   for (const item of ranked) {
-    if (decision && item.score < 2) continue;
+    const exact = words.some((word) => new RegExp(`\\b${word}\\b`, "i").test(item.sentence));
+    if (decision && item.score < 2 && !exact) continue;
     push(item.sentence);
   }
   const body = chosen.length > 0

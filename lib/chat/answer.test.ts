@@ -422,6 +422,7 @@ describe("displayAnswer", () => {
       "At MedSwin, what BERTScore did the lab record?",
     );
     expect(medswinSearch).toContain("86 percent");
+    expect(medswinSearch).toContain("five-person lab");
     expect(medswinSearch).toContain("July 2026");
     expect(medswinSearch).not.toContain("clinical records");
     expect(medswinText).toContain("MedMCQA");
