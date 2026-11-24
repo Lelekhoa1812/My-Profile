@@ -1385,6 +1385,19 @@ describe("displayAnswer", () => {
     );
     expect(kernel).toContain("ensemble");
     expect(kernel).toContain("Kernel");
+    const nicking = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Bayesian nicking?") }],
+      "",
+      "What is Bayesian nicking?",
+    );
+    expect(nicking).toContain("Bayesian nicking");
+    expect(nicking).toContain("ensemble");
+    const confidence = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is a confidence gate?") }],
+      "",
+      "What is a confidence gate?",
+    );
+    expect(confidence).toContain("confidence");
     const labBuild = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
       "",
