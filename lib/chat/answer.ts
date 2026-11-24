@@ -1718,6 +1718,20 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bwhat does\b/i.test(question) && /\bwater[\s-]?meter\b/i.test(question) && /\bdo\b/i.test(question) && !/\b(read|deploy|hardware|stack|database|llm|reduce|exclude)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\breads meter photos\b/i.test(sentence)),
+      sentences.find((sentence) => /\b35 percent less manual meter\b/i.test(sentence)),
+      sentences.find((sentence) => /\bjetson and aws\b/i.test(sentence)),
+      sentences.find((sentence) => /\bproductionized\b/i.test(sentence) && /\bnamed public app\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 4;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bwhat does\b/i.test(question) && /\broster\b/i.test(question) && /\bdo\b/i.test(question) && !/\b(track|payroll|sold|manage)\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [

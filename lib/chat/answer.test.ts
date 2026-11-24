@@ -4790,6 +4790,17 @@ describe("displayAnswer", () => {
       "What does the water meter read?",
     );
     expect(meterReads).toContain("It reads meter photos");
+    const meterDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the water meter scanner do?") }],
+      "",
+      "What does the water meter scanner do?",
+    );
+    expect(meterDoes).toContain("meter photos");
+    expect(meterDoes).toContain("35 percent");
+    expect(meterDoes).toContain("10,000 samples");
+    expect(meterDoes).toContain("Jetson");
+    expect(meterDoes).toContain("not a named public app");
+    expect(meterDoes).not.toContain("site count");
     expect(meterReads).not.toContain("not a named public app");
     const meterWhere = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where was the water meter deployed?") }],
