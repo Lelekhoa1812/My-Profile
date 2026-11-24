@@ -7,6 +7,11 @@ describe("displayAnswer", () => {
     expect(text).toBe("His title is Senior AI Software Engineer.");
   });
 
+  it("reads a sentence field that follows a lead-in", () => {
+    const text = displayAnswer([], 'Answer: {"sentence": "CVA is the only named live app."}');
+    expect(text).toBe("CVA is the only named live app.");
+  });
+
   it("turns markdown into a plain sentence", () => {
     const text = displayAnswer([], "**Axion Solutions** ships FoodFlow.\n- CVA has a live app.");
     expect(text).toBe("Axion Solutions ships FoodFlow. CVA has a live app.");

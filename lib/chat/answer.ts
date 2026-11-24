@@ -44,20 +44,28 @@ export function stripMarkdown(text: string): string {
 
 export function sentenceFromModel(text: string): string {
   const trimmed = text.trim();
-  if (!trimmed.startsWith("{")) return trimmed;
-  try {
-    const parsed = JSON.parse(trimmed) as { sentence?: unknown };
-    if (typeof parsed.sentence === "string") return parsed.sentence.trim();
-  } catch {
-    const match = trimmed.match(/^\{\s*"sentence"\s*:\s*"((?:\\.|[^"\\])*)/);
-    if (!match) return trimmed.startsWith('{"sentence"') ? "" : trimmed;
+  if (trimmed.startsWith("{")) {
     try {
-      return JSON.parse(`"${match[1]}"`) as string;
+      const parsed = JSON.parse(trimmed) as { sentence?: unknown };
+      if (typeof parsed.sentence === "string") return parsed.sentence.trim();
     } catch {
-      return match[1];
+      // A stream can hold a partial sentence object.
     }
   }
+  const closed = trimmed.match(/\{\s*"sentence"\s*:\s*"((?:\\.|[^"\\])*)"/);
+  if (closed) return decodeSentence(closed[1]);
+  const open = trimmed.match(/\{\s*"sentence"\s*:\s*"((?:\\.|[^"\\])*)/);
+  if (open) return decodeSentence(open[1]);
+  if (trimmed.startsWith('{"sentence"')) return "";
   return trimmed;
+}
+
+function decodeSentence(value: string): string {
+  try {
+    return (JSON.parse(`"${value}"`) as string).trim();
+  } catch {
+    return value.trim();
+  }
 }
 
 export function stripToolMarkup(text: string): string {
