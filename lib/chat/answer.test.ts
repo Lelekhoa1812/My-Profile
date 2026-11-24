@@ -2622,6 +2622,15 @@ describe("displayAnswer", () => {
     expect(fastapiDuty).toContain("FastAPI streaming");
     expect(fastapiDuty).toContain("Raspberry Pi");
     expect(fastapiDuty).toContain("faster-whisper");
+    const fastapiUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use FastAPI for?") }],
+      "",
+      "What does he use FastAPI for?",
+    );
+    expect(fastapiUse).toContain("FastAPI streaming");
+    expect(fastapiUse).toContain("Raspberry Pi");
+    expect(fastapiUse).toContain("faster-whisper");
+    expect(fastapiUse).not.toContain("November 2025");
     const reactDuty = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does React do?") }],
       "",
