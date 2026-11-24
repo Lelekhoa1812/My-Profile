@@ -19,4 +19,18 @@ describe("profile tools", () => {
     expect(result.found).toBe(true);
     expect(result.facts?.[0]?.value).toContain("Melbourne");
   });
+
+  it("returns the email fact and leaves a workflow email question on the section", async () => {
+    const tools = createProfileTools({ facts: profile.facts, sections: profile.sections, source: "file" });
+    const search = tools.search_sections as unknown as {
+      execute: (input: { query: string }) => Promise<{ found: boolean; facts?: { label: string; value: string }[]; sections?: { sectionId: string }[] }>;
+    };
+    const email = await search.execute({ query: "What is his email?" });
+    expect(email.found).toBe(true);
+    expect(email.facts?.[0]?.label).toBe("Email");
+    expect(email.facts?.[0]?.value).toContain("@");
+    const workflow = await search.execute({ query: "Does the workflow send email?" });
+    expect(workflow.found).toBe(true);
+    expect(workflow.sections?.some((section) => section.sectionId === "project-axion-workflows")).toBe(true);
+  });
 });

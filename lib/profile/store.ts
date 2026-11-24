@@ -191,6 +191,19 @@ const FACT_ONLY_TERMS = new Set([
   "email", "phone", "number", "mobile", "location", "address", "degree", "linkedin", "github", "huggingface",
 ]);
 
+export function contactLookupKey(query: string): string | undefined {
+  const terms = [...new Set(query.toLowerCase().split(/[^a-z0-9]+/))].filter((term) => term.length > 2 && !STOP_WORDS.has(term));
+  if (terms.length === 0 || !terms.every((term) => FACT_ONLY_TERMS.has(term))) return undefined;
+  if (terms.includes("email")) return "email";
+  if (terms.includes("phone") || terms.includes("mobile")) return "phone";
+  if (terms.includes("linkedin")) return "linkedin";
+  if (terms.includes("github")) return "github";
+  if (terms.includes("huggingface")) return "huggingface";
+  if (terms.includes("location") || terms.includes("address")) return "location";
+  if (terms.includes("degree")) return "degree";
+  return undefined;
+}
+
 const STOP_WORDS = new Set([
   "the", "and", "for", "with", "what", "which", "who", "where", "when", "why", "how", "does", "did", "can",
   "has", "have", "had", "was", "were", "are", "his", "him", "liam", "about", "tell", "that", "this", "from",
