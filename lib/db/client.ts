@@ -6,8 +6,14 @@ export function mongoIsQuiet(): boolean {
   return Date.now() < (globalForMongo.mongoQuietUntil ?? 0);
 }
 
-export function markMongoDown(): void {
-  globalForMongo.mongoQuietUntil = Date.now() + 60_000;
+export const MONGO_QUIET_MS = 10 * 60 * 1000;
+
+export function markMongoDown(now = Date.now()): void {
+  globalForMongo.mongoQuietUntil = now + MONGO_QUIET_MS;
+}
+
+export function resetMongoQuiet(): void {
+  globalForMongo.mongoQuietUntil = 0;
 }
 
 export function getMongoClient(): MongoClient {
