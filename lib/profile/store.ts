@@ -147,17 +147,18 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
         if (!inTitle && !body.includes(term)) return total;
         return total + (weight.get(term) ?? 0) * (inTitle ? 2 : 1);
       }, 0);
-      return { section, score, matched };
+      return { section, title, score, matched };
     })
     .filter((hit) => hit.matched / terms.length >= 0.5)
     .sort((left, right) => right.score - left.score);
   if (terms.includes("title") && !namesAnotherRole(pool, terms)) {
     const current = pool.find((item) => item.section.sourceType === "role" && item.body.includes("senior ai software engineer"));
     if (current && !hits.some((hit) => hit.section.sectionId === current.section.sectionId)) {
-      hits.unshift({ section: current.section, score: Number.POSITIVE_INFINITY, matched: terms.length });
+      hits.unshift({ section: current.section, title: current.title, score: Number.POSITIVE_INFINITY, matched: terms.length });
     }
   }
-  const top = hits.slice(0, 3);
+  const complete = hits.filter((hit) => terms.every((term) => hit.title.includes(term)));
+  const top = (complete.length > 0 ? complete : hits).slice(0, 3);
   if (top.length === 0) return { found: false as const };
   return {
     found: true as const,
