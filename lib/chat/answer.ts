@@ -766,6 +766,22 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(limit);
     }
   }
+  if (/\bemails founders\b/i.test(question) || (/\brecipe\b/i.test(question) && /\bemail/i.test(question) && !/\bdraft\b/i.test(question))) {
+    const founders = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bemails founders\b/i.test(sentence));
+    if (founders) {
+      chosen.length = 0;
+      cap = 1;
+      push(founders);
+    }
+  }
+  if (/\breviews uncertain\b/i.test(question) || /\buncertain output\b/i.test(question)) {
+    const review = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\breviews uncertain output\b/i.test(sentence));
+    if (review) {
+      chosen.length = 0;
+      cap = 1;
+      push(review);
+    }
+  }
   if (/\bhandwritten corrections\b/i.test(question)) {
     const corrections = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bhandwritten corrections\b/i.test(sentence));
     if (corrections) {

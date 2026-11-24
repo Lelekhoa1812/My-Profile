@@ -760,6 +760,19 @@ describe("displayAnswer", () => {
     );
     expect(handwritten).toContain("Qwen2.5-VL");
     expect(handwritten).toContain("handwritten corrections");
+    const founderMail = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What emails founders?") }],
+      "",
+      "What emails founders?",
+    );
+    expect(founderMail).toContain("emails founders");
+    expect(founderMail).not.toContain("does not send email");
+    const uncertain = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What reviews uncertain output?") }],
+      "",
+      "What reviews uncertain output?",
+    );
+    expect(uncertain).toContain("person reviews uncertain output");
     const webCrawl = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is web crawling?") }],
       "",
