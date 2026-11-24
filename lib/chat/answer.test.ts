@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import profile from "../../content/profile.json";
+import { searchSections } from "../profile/store";
 import { displayAnswer, dropGapSentences, dropRecordTalk, dropSourceTail, holdAnswer, keptSentence, shownAnswer, turnToStore } from "./answer";
 
 describe("displayAnswer", () => {
@@ -447,6 +448,26 @@ describe("displayAnswer", () => {
     );
     expect(broad).toContain("CVA");
     expect(broad).toContain("Would you like the live app?");
+    const before = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do before Axion?") }],
+      "",
+      "What did he do before Axion?",
+    );
+    const after = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do after Harry the Hirer?") }],
+      "",
+      "What did he do after Harry the Hirer?",
+    );
+    const survey = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the survey tool store answers in?") }],
+      "",
+      "What does the survey tool store answers in?",
+    );
+    expect(before.split(/(?<=[.!])\s+/)[0]).toContain("Harry the Hirer");
+    expect(after).toContain("Axion");
+    expect(survey.split(/(?<=[.!])\s+/)[0]).toBe("Survee.");
+    expect(survey).toContain("MongoDB");
+    expect(survey).not.toContain("Medical-Chatbot");
   });
 
   it("keeps the model sentence when a tool found a section", () => {

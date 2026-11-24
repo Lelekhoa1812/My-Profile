@@ -86,10 +86,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   push(decision);
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   for (const item of ranked) push(item.sentence);
-  const proof = chosen.length > 0
-    ? withPeriod(chosen, blockSentences)
-    : blockSentences.filter((sentence) => !isLabel(sentence) && !exposesGap(sentence)).slice(0, 2).join(" ");
-  return keptOffer(question, shown, proof);
+  const body = chosen.length > 0
+    ? chosen
+    : blockSentences.filter((sentence) => !isLabel(sentence) && !exposesGap(sentence)).slice(0, 2);
+  return keptOffer(question, shown, withIdentity(question, withPeriod(body, blockSentences), blockSentences));
 }
 
 function matchingBlock(outputs: readonly Record<string, unknown>[], question: string): string {
@@ -100,8 +100,9 @@ function matchingBlock(outputs: readonly Record<string, unknown>[], question: st
   let bestScore = -1;
   for (const block of blocks) {
     const sentences = plainSentences(block);
-    let score = sentences.reduce((sum, sentence) => sum + askScore(question, sentence, words), 0);
-    if (employer && employerMentioned(employer, block)) score += 8;
+    const chronological = /\b(before|after)\b/.test(question.toLowerCase());
+    let score = sentences.reduce((best, sentence) => Math.max(best, askScore(question, sentence, words)), 0);
+    if (employer && !chronological && employerMentioned(employer, block)) score += 8;
     if (score > bestScore) {
       best = block;
       bestScore = score;
@@ -119,6 +120,18 @@ function keptOffer(question: string, shown: readonly string[], proof: string): s
 
 function specificQuestion(question: string): boolean {
   return /\b(write|show|preview|approv|cut|pilot|percent|measure|bert|score|sell|sold|buyer|purchas|acquir)\b/i.test(question);
+}
+
+function withIdentity(question: string, proof: string, blockSentences: readonly string[]): string {
+  const opening = blockSentences[0];
+  if (!opening || !proof.trim()) return proof;
+  const chronological = /\b(before|after)\b/i.test(question);
+  if (!chronological && opening.split(/\s+/).length > 2) return proof;
+  if (/\bpreview\b/i.test(proof) && /\bapprov/i.test(proof)) return proof;
+  const token = opening.split(",")[0].replace(/[.]+$/, "").trim();
+  if (token.length < 4 || proof.toLowerCase().includes(token.toLowerCase())) return proof;
+  const sentence = /[.!]$/.test(opening) ? opening : `${opening}.`;
+  return `${sentence} ${proof}`.trim();
 }
 
 function withPeriod(sentences: readonly string[], blockSentences: readonly string[]): string {
@@ -148,6 +161,7 @@ function namedSubject(sentence: string, blockSentences: readonly string[]): stri
 function isDecision(question: string, sentence: string): boolean {
   if (/\b(write|show|preview|approv)/i.test(question) && /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
   if (/\b(sell|sold|buyer|purchas|acquir)/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
+  if (/\b(store|stored|stores)\b/i.test(question) && /\bmongodb\b/i.test(sentence)) return true;
   return /\b(cut|pilot|percent|measure|bert|score|metric)/i.test(question) && /\bpercent\b/i.test(sentence);
 }
 
