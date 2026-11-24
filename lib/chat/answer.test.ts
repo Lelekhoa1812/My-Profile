@@ -1997,6 +1997,15 @@ describe("displayAnswer", () => {
     expect(adhdProduct).toContain("Nvidia NIM");
     expect(adhdProduct).toContain("voice or text");
     expect(adhdProduct).not.toContain("user count");
+    const twinProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the Ericsson 5G digital twin?") }],
+      "",
+      "What is the Ericsson 5G digital twin?",
+    );
+    expect(twinProduct).toContain("predictive-maintenance");
+    expect(twinProduct).toContain("tower telemetry");
+    expect(twinProduct).toContain("not a named live");
+    expect(twinProduct).toContain("C#");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",
