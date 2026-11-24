@@ -953,6 +953,19 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(title);
     }
   }
+  if (/\bacademy\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const label = sentences.find((sentence) => /\bhai au academy\b/i.test(sentence));
+    if (label && !chosen.some((sentence) => /\bhai au academy\b/i.test(sentence))) {
+      chosen.unshift(label.endsWith(".") ? label : `${label}.`);
+      if (chosen.length === 1) {
+        const manager = sentences.find((sentence) => /\bHA Manager\b/.test(sentence));
+        const work = sentences.find((sentence) => /\benrollment\b/i.test(sentence));
+        if (manager) chosen.push(manager);
+        if (work) push(work);
+      }
+    }
+  }
   if (/\bopen-source coding\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const label = sentences.find((sentence) => /\bopen-source coding agent\b/i.test(sentence));

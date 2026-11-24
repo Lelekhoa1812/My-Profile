@@ -1021,6 +1021,13 @@ describe("displayAnswer", () => {
     );
     expect(clinicalAgents).toContain("multi-agent clinical");
     expect(clinicalAgents).toContain("five-person lab");
+    const academy = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Academy?") }],
+      "",
+      "What is Hai Au Academy?",
+    );
+    expect(academy).toContain("Hai Au Academy");
+    expect(academy).toContain("enrollment");
     const ensemble = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the pedigree engine include?") }],
       "",
