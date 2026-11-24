@@ -250,10 +250,18 @@ function distinctiveCount(
   terms: readonly string[],
 ): number {
   return terms.filter((term) => {
+    if (GENERIC_TERMS.has(term)) return false;
     const owners = group.filter((item) => covers(item.title, term) || covers(item.body, term));
     return owners.length === 1 && owners[0]?.section.sectionId === hit.section.sectionId;
   }).length;
 }
+
+const GENERIC_TERMS = new Set([
+  "answer", "answers", "build", "built", "code", "data", "hold", "holds", "keep", "keeps",
+  "make", "makes", "model", "models", "platform", "read", "reads", "run", "runs", "show",
+  "shows", "store", "stored", "stores", "system", "tool", "tools", "used", "user", "users",
+  "using", "work", "works", "write", "writes",
+]);
 
 function covers(text: string, term: string): boolean {
   const word = new RegExp(`\\b${term}(?:s|es|ed|d|ing)?\\b`);

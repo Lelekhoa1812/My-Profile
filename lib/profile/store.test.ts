@@ -209,6 +209,9 @@ describe("profile store", () => {
     expect(hai.found && hai.sections[0]?.sectionId).toBe("role-hai-au");
     expect(hai.found && hai.sections.some((section) => section.sectionId === "role-harry-senior")).toBe(false);
     expect(hai.found && hai.sections.some((section) => section.sectionId === "role-axion")).toBe(false);
+    const survey = searchSections(profile.sections, "What does the survey tool store answers in?");
+    expect(survey.found && survey.sections[0]?.sectionId).toBe("project-survee");
+    expect(survey.found && survey.sections[0]?.text).toContain("MongoDB");
     const hanoi = searchSections(profile.sections, "What graph does the Hanoi forecast use?");
     expect(hanoi.found && hanoi.sections[0]?.sectionId).toBe("project-estatefolio");
     expect(hanoi.found && hanoi.sections[0]?.text).toContain("ST-GNN");
