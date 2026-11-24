@@ -1981,6 +1981,14 @@ describe("displayAnswer", () => {
     expect(coachProduct).toContain("Hai Au");
     expect(coachProduct).toContain("scores a submission");
     expect(coachProduct).toContain("stays in control");
+    const forecastProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the S&P 500 forecast?") }],
+      "",
+      "What is the S&P 500 forecast?",
+    );
+    expect(forecastProduct).toContain("multi-horizon");
+    expect(forecastProduct).toContain("FinBERT");
+    expect(forecastProduct).toContain("Kafka");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",
