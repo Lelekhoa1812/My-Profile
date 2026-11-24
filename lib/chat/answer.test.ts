@@ -2639,6 +2639,15 @@ describe("displayAnswer", () => {
     expect(pythonUse).toContain("Named tools include Python");
     expect(pythonUse).not.toContain("Java");
     expect(pythonUse).not.toContain("does not name");
+    const separateFrom = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is separate from FoodFlow?") }],
+      "",
+      "What is separate from FoodFlow?",
+    );
+    expect(separateFrom).toContain("separate product");
+    expect(separateFrom).toContain("separate from FoodFlow");
+    expect(separateFrom).not.toContain("emails founders");
+    expect(separateFrom).not.toContain("July 2026");
     const reactDuty = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does React do?") }],
       "",
