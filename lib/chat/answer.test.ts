@@ -727,6 +727,14 @@ describe("displayAnswer", () => {
       "What does Ericsson use for anomaly detection?",
     );
     expect(anomaly.split(/(?<=[.!])\s+/)[0]).toContain("autoencoder");
+    const measured = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he measure after a model is live?") }],
+      "",
+      "What does he measure after a model is live?",
+    );
+    expect(measured).toContain("35 percent");
+    expect(measured).toContain("10,000");
+    expect(measured).toContain("Jetson");
     expect(coach).toContain("rewrite");
     expect(refuse).toContain("does not score");
     expect(validators).toContain("evidence");

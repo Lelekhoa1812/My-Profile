@@ -93,6 +93,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     chosen.push(named);
   };
   push(picked);
+  if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question)) {
+    push(blockSentences.find((sentence) => /\b(jetson|aws)\b/i.test(sentence) && /\b(deploy|deployment|used)\b/i.test(sentence)));
+  }
   if (!picked) push(unique);
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   if (/\b(do|did|build|built|work|role)\b/i.test(question)) {
