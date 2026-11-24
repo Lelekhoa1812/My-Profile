@@ -792,6 +792,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\badmin effort\b/i.test(question) && /\badmin effort\b/i.test(sentence)) return true;
   if (/\bmanual work\b/i.test(question) && /\bmanual work\b/i.test(sentence)) return true;
   if (/\bartefact preparation\b/i.test(question) && /\bartefact preparation\b/i.test(sentence)) return true;
+  if (/\blanguages?\b/i.test(question) && /\blab\b/i.test(question) && /\bclinical records and pubmed\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\b(download|rank)\b/i.test(question) && /\bmost downloaded\b/i.test(sentence)) return true;

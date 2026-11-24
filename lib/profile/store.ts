@@ -269,6 +269,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bsall-?e\b/.test(text) && /\b(plan|detect|robot|waste|classif)/.test(text), ids: ["project-salle"] },
     { when: text.includes("harry") && (text.includes("pilot") || text.includes("cut")), ids: ["role-harry-senior"] },
     { when: (text.includes("medswin") || text.includes("bertscore")) && /\b(bertscore|lab|score)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
+    { when: /\blanguages?\b/.test(text) && /\blab\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: text.includes("mizco"), ids: ["role-mizco"] },
     { when: /\broster\b/.test(text) && /\bstack\b/.test(text), ids: ["project-roster"] },
     { when: /\bstack\b/.test(text) && !namedEmployer(text) && !/\b(roster|golf|skyledge|survee|prophet|triage|writing|coach|meter)\b/.test(text), ids: ["skills"] },

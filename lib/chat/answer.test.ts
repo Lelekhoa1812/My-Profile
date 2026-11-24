@@ -859,6 +859,13 @@ describe("displayAnswer", () => {
     expect(artefactCut).toContain("50 percent");
     expect(artefactCut).not.toContain("40 percent");
     expect(artefactCut).not.toContain("BERTScore");
+    const labLanguages = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What languages does the lab cover?") }],
+      "",
+      "What languages does the lab cover?",
+    );
+    expect(labLanguages).toContain("PubMed");
+    expect(labLanguages).not.toContain("Mandarin");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
