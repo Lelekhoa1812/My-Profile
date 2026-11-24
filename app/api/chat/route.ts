@@ -27,6 +27,16 @@ const nim = () => createOpenAICompatible({
   fetch: createPoolFetch(getNimPool()),
 });
 
+export async function GET(request: Request): Promise<Response> {
+  const visitor = readVisitor(request);
+  const secure = new URL(request.url).protocol === "https:";
+  const turns = visitor.setCookie ? [] : await loadStoredTurns(visitor.id, visitor.id);
+  return Response.json(
+    { turns: turns.map((turn) => ({ role: turn.role, text: turn.text })) },
+    { headers: visitor.setCookie ? { "set-cookie": visitorCookie(visitor.id, secure) } : undefined },
+  );
+}
+
 export async function POST(request: Request): Promise<Response> {
   let payload: { messages?: UIMessage[]; threadId?: string };
   try {

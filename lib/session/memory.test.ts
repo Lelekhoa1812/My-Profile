@@ -22,4 +22,15 @@ describe("withMemory", () => {
     expect(messages[1].parts[0]).toMatchObject({ text: "Axion Solutions." });
     expect(messages[2]).toBe(question);
   });
+
+  it("rebuilds the panel from stored turns", () => {
+    const messages = withMemory(
+      [
+        { role: "user", text: "Where does he work?", at: "t1" },
+        { role: "assistant", text: "Axion Solutions.", at: "t2" },
+      ],
+      [],
+    );
+    expect(messages.map((message) => message.role)).toEqual(["user", "assistant"]);
+  });
 });

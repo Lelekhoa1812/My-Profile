@@ -5,6 +5,7 @@ import { DefaultChatTransport, type UIMessage } from "ai";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { displayAnswer, shownAnswer } from "@/lib/chat/answer";
 import { sourcesFromParts, type Source } from "@/lib/chat/sources";
+import { withMemory } from "@/lib/session/memory";
 
 export type Turn = { id: string; question: string; answer: string; sources: Source[]; steps: string[]; done: boolean; reading: boolean };
 
@@ -53,6 +54,24 @@ export function RecordChatProvider({ children }: { children: ReactNode }) {
     },
     [busy, clearError, sendMessage],
   );
+
+  useEffect(() => {
+    let cancel = false;
+    void fetch("/api/chat")
+      .then(async (response) => {
+        if (!response.ok || cancel) return;
+        const body = (await response.json()) as { turns?: { role: "user" | "assistant"; text: string }[] };
+        if (cancel || chat.messages.length > 0 || !body.turns?.length) return;
+        chat.messages = withMemory(
+          body.turns.map((turn) => ({ role: turn.role, text: turn.text, at: "" })),
+          [],
+        );
+      })
+      .catch(() => undefined);
+    return () => {
+      cancel = true;
+    };
+  }, [chat]);
 
   const lastAnswer = [...messages].reverse().find((message) => message.role === "assistant");
   const ids = lastAnswer ? sourcesFromParts(lastAnswer.parts).map((source) => source.sectionId) : [];
