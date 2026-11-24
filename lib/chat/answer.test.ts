@@ -919,6 +919,18 @@ describe("displayAnswer", () => {
     );
     expect(whisper.toLowerCase()).toContain("whisper");
     expect(whisper).toContain("Speech uses Whisper");
+    const qwenUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Qwen used for?") }],
+      "",
+      "What is Qwen used for?",
+    );
+    expect(qwenUse).toContain("Qwen");
+    const yoloUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
+      "",
+      "What is YOLO used for?",
+    );
+    expect(yoloUse).toContain("YOLO");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(

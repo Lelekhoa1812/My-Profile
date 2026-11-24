@@ -81,7 +81,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     .sort((left, right) => right.score - left.score);
   const decision = countedSentence(question, blockSentences, words) ?? runSentence(question, blockSentences) ?? blockSentences.find((sentence) => isDecision(question, sentence));
   const unique = words
-    .filter((word) => word.length >= 5)
+    .filter((word) => word.length >= 4)
     .flatMap((word) => {
       const owners = blockSentences.filter((sentence) => mentions(sentence, word));
       return owners.length === 1 && owners[0] ? [{ word, sentence: owners[0] }] : [];
@@ -93,7 +93,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     const named = sentence ? namedSubject(sentence, blockSentences) : "";
     if (!named || chosen.includes(named) || chosen.length >= 2) return;
     if (/the resume also uses the phrase/i.test(named) && !/\bphrase\b/i.test(question)) return;
-    const shortFact = named.split(/\s+/).length >= 3 && /\b(use|uses|run|runs|led|cut)\b/.test(named) && words.some((word) => word.length >= 5 && mentions(named, word));
+    const shortFact = named.split(/\s+/).length >= 3 && /\b(use|uses|run|runs|led|cut)\b/.test(named) && words.some((word) => word.length >= 4 && mentions(named, word));
     if (named.split(/\s+/).length < 4 && !isDecision(question, named) && !shortFact) return;
     chosen.push(named);
   };
@@ -396,6 +396,7 @@ function mentions(sentence: string, word: string): boolean {
   if (word === "deliver" && /\bdelivery\b/i.test(sentence)) return true;
   if ((word === "summarise" || word === "summarize") && /\bsummaris(?:ation|ation)\b/i.test(sentence)) return true;
   if (word === "plan" && /\bplanning\b/i.test(sentence)) return true;
+  if (word.length >= 4 && new RegExp(`\\b${word}(?:v\\d+|-[a-z0-9]+)\\b`, "i").test(sentence)) return true;
   if (word.endsWith("s") && word.length >= 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
   if (word.endsWith("e") && new RegExp(`\\b${word.slice(0, -1)}ed\\b`, "i").test(sentence)) return true;
   if (word.length >= 6 && new RegExp(`\\b${word}ion\\b`, "i").test(sentence)) return true;
