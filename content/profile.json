@@ -8,7 +8,7 @@
     {"key": "linkedin", "kind": "link", "value": "https://www.linkedin.com/in/dang-khoa-le-96a6332a8", "visibility": "public"},
     {"key": "github", "kind": "link", "value": "https://github.com/Lelekhoa1812", "visibility": "public"},
     {"key": "huggingface", "kind": "link", "value": "https://huggingface.co/khoaliamle", "visibility": "public"},
-    {"key": "public_title", "kind": "identity", "value": "AI and Software Engineer", "visibility": "public"},
+    {"key": "public_title", "kind": "identity", "value": "Senior AI Software Engineer", "visibility": "public"},
     {"key": "degree", "kind": "education", "value": "Bachelor of Software Engineering, Swinburne University of Technology, 2022–2025", "visibility": "public"},
     {"key": "languages", "kind": "skill", "value": "Vietnamese (native), English (fluent), Mandarin (intermediate)", "visibility": "public"}
   ],
