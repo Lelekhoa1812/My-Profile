@@ -163,9 +163,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\btransformer reads\b/i.test(sentence)));
   }
   if (/\bwhat is\b/i.test(question) && /\bsall-?e\b/i.test(question)) {
-    cap = 4;
+    cap = 5;
+    push(blockSentences.find((sentence) => /\bsoftware team of five\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bcomputer vision\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bperception uses\b/i.test(sentence)));
+  }
+  if (/\bwhat is\b/i.test(question) && /\bmedviet\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\bnational data association\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bemr-based monitoring\b/i.test(sentence)));
   }
   if (/\bwhat is\b/i.test(question) && /\bgolf\b/i.test(question)) {
     cap = 4;
@@ -436,6 +442,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\b(url|link)\b/i.test(question) && /\blive\b/i.test(question) && /\bnamed live or sold\b/i.test(item.sentence)) continue;
     if (/\bwhat is\b/i.test(question) && /\bericsson\b/i.test(question) && /\bdeployment count\b/i.test(item.sentence)) continue;
     if (/\bwhat is\b/i.test(question) && /\bmedswin\b/i.test(question) && /\bnot re-counted\b/i.test(item.sentence)) continue;
+    if (/\bwhat is\b/i.test(question) && /\bsall-?e\b/i.test(question) && /\bdownload count\b/i.test(item.sentence)) continue;
     if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && !/\b(draft recipe|emails founders|can draft)\b/i.test(item.sentence)) continue;

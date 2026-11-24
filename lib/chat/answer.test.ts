@@ -1002,8 +1002,10 @@ describe("displayAnswer", () => {
       "What is Sall-e?",
     );
     expect(salleIs).toContain("oceanic garbage");
+    expect(salleIs).toContain("software team of five");
     expect(salleIs).toContain("computer vision");
     expect(salleIs).toContain("Transformer");
+    expect(salleIs).not.toContain("download count");
     const golfIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the golf scorecard scanner?") }],
       "",
@@ -1938,6 +1940,8 @@ describe("displayAnswer", () => {
     );
     expect(medvietIs).toContain("Vietnamese medical language model");
     expect(medvietIs).toContain("MedSwin");
+    expect(medvietIs).toContain("National Data Association");
+    expect(medvietIs).toContain("EMR-based monitoring");
     const namJava = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do in the Nam A software role?") }],
       "",
