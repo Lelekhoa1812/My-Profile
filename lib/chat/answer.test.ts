@@ -2157,6 +2157,14 @@ describe("displayAnswer", () => {
     );
     expect(meterDatabase).toContain("meter photos");
     expect(meterDatabase).not.toContain("MariaDB");
+    const besidesCva = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he ship besides CVA?") }],
+      "",
+      "What does he ship besides CVA?",
+    );
+    expect(besidesCva).toContain("HA Manager was sold");
+    expect(besidesCva).toContain("SkyLedge was acquired");
+    expect(besidesCva).not.toContain("The record does not say");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
