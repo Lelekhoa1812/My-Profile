@@ -2,6 +2,7 @@
 
 import { ArrowDownRight, CornerDownLeft, MessagesSquare, X } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type KeyboardEvent, type PointerEvent } from "react";
+import { snapToSide } from "@/lib/chat/place";
 import { toTurns, useRecordChat } from "./record-chat";
 
 const STORAGE_KEY = "profile.chat.place";
@@ -96,9 +97,7 @@ export function ChatDock({ questions }: { questions: string[] }) {
     drag.current = null;
     if (!active?.moved) return;
     suppressClick.current = true;
-    const current = placeRef.current;
-    const onLeft = window.innerWidth - current.x - BUTTON / 2 < window.innerWidth / 2;
-    persist({ x: onLeft ? window.innerWidth - BUTTON - 24 : 24, y: current.y });
+    persist(snapToSide(placeRef.current, window.innerWidth, BUTTON));
   }
 
   function onClick() {
