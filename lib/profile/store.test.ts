@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import profile from "../../content/profile.json";
+import { withArchive } from "./archive";
 import { listSections, lookupFacts, readSection, searchSections } from "./store";
 
 describe("profile store", () => {
@@ -185,6 +186,10 @@ describe("profile store", () => {
     const harry = searchSections(profile.sections, "What agents did he use at Harry?");
     expect(axion.found && axion.sections.some((section) => section.sectionId === "role-harry-senior")).toBe(false);
     expect(harry.found && harry.sections.some((section) => section.sectionId === "role-swinburne-research")).toBe(false);
+    const salle = searchSections(withArchive(profile.sections), "What did Sall-e detect?");
+    const roster = searchSections(withArchive(profile.sections), "What did the roster app use for payroll?");
+    expect(salle.found && salle.sections[0]?.sectionId).toBe("project-salle");
+    expect(roster.found && roster.sections[0]?.sectionId).toBe("project-roster");
   });
 
   it("opens the degree when the question asks where he studied", () => {

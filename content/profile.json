@@ -195,7 +195,7 @@
       "heading": "Sall-e",
       "sourceType": "project",
       "aliases": ["ocean garbage"],
-      "text": "Sall-e. Autonomous robot for oceanic garbage collection. The resume says Liam led a software team of five. Repository: Lelekhoa1812/Sall-e. The record does not include a download count for the garbage-classification dataset."
+      "text": "Sall-e. Autonomous robot for oceanic garbage collection. The resume says Liam led a software team of five. The robot uses computer vision, sensor fusion, and navigation to detect and localise waste. Perception uses CNN and Transformer models, with object tracking and route planning. Repository: Lelekhoa1812/Sall-e. The record does not include a download count for the garbage-classification dataset."
     },
     {
       "sectionId": "project-golf",
@@ -223,7 +223,7 @@
       "heading": "Roster management",
       "sourceType": "project",
       "aliases": ["MJ Industrial"],
-      "text": "Roster management. The resume says this product was sold to MJ Industrial Australia. Repository: Lelekhoa1812/RosterManagement. The resume does not list a separate Android employment at MJ Industrial."
+      "text": "Roster management. The resume says this product was sold to MJ Industrial Australia. It is a Kotlin Android app with a Node.js backend and a MariaDB database for rostering, payroll, shift tracking, and payment processing at a Melbourne warehouse. Repository: Lelekhoa1812/RosterManagement. The resume does not list a separate Android employment at MJ Industrial."
     },
     {
       "sectionId": "project-ericsson",

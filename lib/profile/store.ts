@@ -284,12 +284,20 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
     }
   }
   const complete = hits.filter((hit) => terms.every((term) => hit.title.includes(term)));
+  const namedProfile = hits.filter((hit) => !hit.section.sectionId.startsWith("archive-") && terms.some((term) => hit.section.heading.toLowerCase().includes(term)));
+  const poolHits = complete.length > 0 ? [...complete] : [...hits];
+  for (const hit of namedProfile) {
+    if (!poolHits.some((item) => item.section.sectionId === hit.section.sectionId)) poolHits.push(hit);
+  }
   const exactHeading = query.trim().toLowerCase();
   const employer = namedEmployer(query);
-  const ranked = (complete.length > 0 ? complete : hits).slice().sort((left, right) => {
+  const ranked = poolHits.sort((left, right) => {
     const leftExact = left.section.heading.toLowerCase() === exactHeading ? 1 : 0;
     const rightExact = right.section.heading.toLowerCase() === exactHeading ? 1 : 0;
     if (leftExact !== rightExact) return rightExact - leftExact;
+    const leftNamed = !left.section.sectionId.startsWith("archive-") && terms.some((term) => left.section.heading.toLowerCase().includes(term)) ? 1 : 0;
+    const rightNamed = !right.section.sectionId.startsWith("archive-") && terms.some((term) => right.section.heading.toLowerCase().includes(term)) ? 1 : 0;
+    if (leftNamed !== rightNamed) return rightNamed - leftNamed;
     return right.score - left.score;
   }).filter((hit) => {
     const owner = sectionEmployer(hit.section);
