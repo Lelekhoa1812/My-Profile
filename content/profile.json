@@ -285,7 +285,7 @@
       "heading": "Passport OCR",
       "sourceType": "project",
       "aliases": ["synthetic passport", "VietOCR"],
-      "text": "Passport OCR. Nam A Bank work, December 2024 to May 2025, for passport and remittance documents. The public repository trains VietOCR on synthetic passports. The synthetic passport dataset has 1,373 downloads. Repository: Lelekhoa1812/Vietnamese-Passport-OCR-Project-with-VietOCR."
+      "text": "Passport OCR. Nam A Bank work, December 2024 to May 2025, for passport and remittance documents. The public repository trains VietOCR on synthetic passports. The record does not include a download count for the synthetic passport dataset. Repository: Lelekhoa1812/Vietnamese-Passport-OCR-Project-with-VietOCR."
     },
     {
       "sectionId": "project-router",
