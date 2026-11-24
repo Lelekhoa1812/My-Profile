@@ -81,8 +81,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     .sort((left, right) => right.score - left.score);
   const decision = countedSentence(question, blockSentences, words) ?? runSentence(question, blockSentences) ?? blockSentences.find((sentence) => isDecision(question, sentence));
   const employerKey = namedEmployer(question)?.toLowerCase() ?? "";
+  const shorts = new Set((question.match(/\b[A-Z]{3}\b/g) ?? []).map((word) => word.toLowerCase()));
   const unique = words
-    .filter((word) => word.length >= 4)
+    .filter((word) => word.length >= 4 || shorts.has(word))
     .flatMap((word) => {
       const owners = blockSentences.filter((sentence) => mentions(sentence, word));
       return owners.length === 1 && owners[0] ? [{ word, sentence: owners[0] }] : [];
@@ -545,7 +546,8 @@ function secondPeriod(outputs: readonly Record<string, unknown>[], blockSentence
 }
 
 function askedOnlyHere(question: string, current: string, other: string): boolean {
-  return askWords(question).some((word) => word.length >= 4 && word !== namedEmployer(question)?.toLowerCase() && mentions(current, word) && !mentions(other, word));
+  const shorts = new Set((question.match(/\b[A-Z]{3}\b/g) ?? []).map((word) => word.toLowerCase()));
+  return askWords(question).some((word) => (word.length >= 4 || shorts.has(word)) && word !== namedEmployer(question)?.toLowerCase() && mentions(current, word) && !mentions(other, word));
 }
 
 function siblingWork(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string): string {

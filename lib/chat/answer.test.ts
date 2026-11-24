@@ -1371,6 +1371,13 @@ describe("displayAnswer", () => {
     );
     expect(bm25).toContain("BM25");
     expect(bm25).not.toContain("mate-selection");
+    const mcp = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does MCP do at Harry?") }],
+      "",
+      "What does MCP do at Harry?",
+    );
+    expect(mcp).toContain("MCP");
+    expect(mcp).not.toContain("mate-selection");
     const labBuild = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
       "",
