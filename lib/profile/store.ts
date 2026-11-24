@@ -452,6 +452,9 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     return hit ? [hit] : [];
   });
   if (chosen.length === 0) return undefined;
+  const employerId = namedEmployer(query);
+  const acrossRoles = /\b(before|after|between|same time|overlap)\b/.test(text);
+  if (!acrossRoles && employerId && !chosen.some((hit) => employerMentioned(employerId, `${hit.section.sectionId} ${hit.section.heading} ${hit.title} ${hit.body}`))) return undefined;
   return {
     found: true as const,
     sections: chosen.map((hit) => ({
@@ -763,7 +766,10 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   const titleOnly = terms.length === 1 && exactHeadings.has(terms[0] ?? "");
   const withoutArchiveCopy = titleOnly ? ranked : ranked.filter((hit) => !(hit.section.sectionId.startsWith("archive-") && exactHeadings.has(hit.section.heading.toLowerCase())));
   const top = narrowToDistinctiveLead(withoutArchiveCopy.slice(0, 3), terms);
-  if (top.length === 0) {
+  const acrossRoles = /\b(before|after|between|same time|overlap)\b/.test(asked);
+  const related = employer && !acrossRoles ? top.filter((hit) => employerMentioned(employer, `${hit.section.sectionId} ${hit.section.heading} ${hit.title} ${hit.body}`)) : top;
+  const kept = !employer || acrossRoles || related.length > 0 ? (employer && !acrossRoles ? related : top) : [];
+  if (kept.length === 0) {
     const askedEmployer = EMPLOYERS.find((item) => item.id === employer);
     const roles = askedEmployer
       ? pool.filter((item) => item.section.sourceType === "role" && askedEmployer.section(item.section.sectionId, item.title) && (asked.includes("pedigree") || !item.section.sectionId.includes("pedigree"))).slice(0, 2)
@@ -782,7 +788,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   }
   return {
     found: true as const,
-    sections: top.map((hit) => ({
+    sections: kept.map((hit) => ({
       sectionId: hit.section.sectionId,
       heading: hit.section.heading,
       sourceType: hit.section.sourceType,
