@@ -363,15 +363,21 @@ function sameTimeAnswer(question: string, outputs: readonly Record<string, unkno
   return lines.slice(0, 4).join(" ");
 }
 
-const SKILL_ALIASES = new Set(["python", "kubernetes", "langgraph", "nim", "kafka", "agentforce", "mlflow", "pgvector"]);
-
 function toolDutyAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   const raw = question.match(/\bwhat does ([a-z0-9.+#-]{2,}) do\b/i)?.[1];
   const name = raw?.toLowerCase();
-  if (!raw || !name || !SKILL_ALIASES.has(name)) return "";
-  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => new RegExp(`\\b${name}\\b`, "i").test(sentence) && !/named tools include/i.test(sentence) && sentence.split(/\s+/).length <= 24));
+  if (!raw || !name || ["the", "his", "her", "its", "this", "that"].includes(name)) return "";
+  const token = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const named = new RegExp(`\\b${token}\\b`, "i");
+  const blocks = sectionBlocks(outputs);
+  const productBlocks = blocks.filter((block) => !/public repositories/i.test(block));
+  const source = productBlocks.some((block) => named.test(block)) ? productBlocks : blocks;
+  const lines = source.flatMap((block) => plainSentences(block).filter((sentence) => {
+    const length = sentence.split(/\s+/).length;
+    return named.test(sentence) && !/named tools include/i.test(sentence) && !/^repository:/i.test(sentence) && length >= 5 && length <= 24;
+  }));
   if (lines.length > 0) return [...new Set(lines)].slice(0, 2).join(" ");
-  const listed = sectionBlocks(outputs).some((block) => /named tools include/i.test(block) && new RegExp(`\\b${name}\\b`, "i").test(block));
+  const listed = source.some((block) => /named tools include/i.test(block) && named.test(block));
   return listed ? `Named tools include ${raw}.` : "";
 }
 

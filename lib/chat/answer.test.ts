@@ -810,6 +810,13 @@ describe("displayAnswer", () => {
     );
     expect(pgvectorDuty).toContain("pgvector");
     expect(pgvectorDuty).not.toContain("TypeScript");
+    const llamaIndexDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does LlamaIndex do?") }],
+      "",
+      "What does LlamaIndex do?",
+    );
+    expect(llamaIndexDuty).toContain("LlamaIndex");
+    expect(llamaIndexDuty).not.toContain("TypeScript");
     const namVision = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Nam A use for vision?") }],
       "",
