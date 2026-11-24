@@ -123,6 +123,13 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     cap = 3;
     push(blockSentences.find((sentence) => /\bkotlin\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bsurvee\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\bhost-run interview\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\buploads an html\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\banswers stay in mongodb\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bdoes not score\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bwater[\s-]?meter\b/i.test(question)) {
     cap = 3;
     push(blockSentences.find((sentence) => /\b35 percent\b/i.test(sentence) && /\bmeter\b/i.test(sentence)));
@@ -851,6 +858,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\broster\b/i.test(question) && /\bsold to mj industrial\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bskyledge\b/i.test(question) && /\bobd-ii\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question) && /\bcareer application agent\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bsurvee\b/i.test(question) && /\bhost-run interview\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\b(download|rank)\b/i.test(question) && /\bmost downloaded\b/i.test(sentence)) return true;

@@ -983,6 +983,15 @@ describe("displayAnswer", () => {
     expect(meterProduct).toContain("35 percent");
     expect(meterProduct).toContain("10,000");
     expect(meterProduct).toContain("productionized");
+    const surveeProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Survee?") }],
+      "",
+      "What is Survee?",
+    );
+    expect(surveeProduct).toContain("host-run interview");
+    expect(surveeProduct).toContain("private link");
+    expect(surveeProduct).toContain("does not score");
+    expect(surveeProduct).toContain("MongoDB");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
