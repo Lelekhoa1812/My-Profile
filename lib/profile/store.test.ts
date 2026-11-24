@@ -69,6 +69,15 @@ describe("profile store", () => {
     if (agentforce.found) expect(agentforce.sections.some((section) => section.sectionId === "skills")).toBe(true);
   });
 
+  it("finds MLflow and pgvector from the resume skills list", () => {
+    const mlflow = searchSections(profile.sections, "does he use MLflow");
+    const vectors = searchSections(profile.sections, "does he use pgvector");
+    expect(mlflow.found).toBe(true);
+    expect(vectors.found).toBe(true);
+    if (mlflow.found) expect(mlflow.sections.some((section) => section.sectionId === "skills")).toBe(true);
+    if (vectors.found) expect(vectors.sections.some((section) => section.sectionId === "skills")).toBe(true);
+  });
+
   it("finds Kubernetes in the skills section", () => {
     const result = searchSections(profile.sections, "does he use Kubernetes");
     expect(result.found).toBe(true);

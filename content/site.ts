@@ -163,7 +163,7 @@ export const cases: Case[] = [
     stack: ["LoRA/QLoRA", "Distillation", "Agentic RAG", "EMR/EHR", "PubMed", "Hugging Face"],
     flow: [
       { label: "Orchestrator" },
-      { label: "Specialist agents", note: "diagnostics · pharmacology · triage" },
+      { label: "Specialists", note: "diagnostics · pharmacology · triage" },
       { label: "Reranker", note: "8M documents" },
       { label: "Cited answer", gate: true },
     ],
@@ -223,7 +223,7 @@ export const research = {
 
 export const skills: { group: string; items: string[] }[] = [
   { group: "Agents and LLMOps", items: ["LangGraph", "LangChain", "LangSmith", "LlamaIndex", "MCP", "Tool calling", "Human approval", "Evals"] },
-  { group: "Retrieval and document AI", items: ["RAG", "BM25", "HNSW", "Reranking", "OCR/IDP", "VLMs", "Constrained JSON", "YOLO"] },
-  { group: "Cloud and serving", items: ["Azure AI Foundry", "Azure OpenAI", "AWS Bedrock", "SageMaker", "Salesforce Agentforce", "Nvidia NIM", "Docker", "Kubernetes", "Kafka"] },
+  { group: "Retrieval and document AI", items: ["RAG", "BM25", "HNSW", "pgvector", "Reranking", "OCR/IDP", "VLMs", "Constrained JSON", "YOLO"] },
+  { group: "Cloud and serving", items: ["Azure AI Foundry", "Azure OpenAI", "AWS Bedrock", "SageMaker", "Salesforce Agentforce", "Nvidia NIM", "Docker", "Kubernetes", "Kafka", "MLflow"] },
   { group: "Software and applied ML", items: ["Python", "TypeScript", "Java", "FastAPI", "Next.js", "React", "LoRA/QLoRA", "XGBoost"] },
 ];

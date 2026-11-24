@@ -269,8 +269,8 @@
       "sectionId": "skills",
       "heading": "Skills",
       "sourceType": "skills",
-      "aliases": ["Python", "Kubernetes", "LangGraph", "NIM", "Kafka", "Agentforce"],
-      "text": "Skills. Languages: Vietnamese native, English fluent, Mandarin intermediate. The resume groups the stack as agents, retrieval, cloud platforms, software, machine learning, and document AI. Named tools include Python, Java, TypeScript, C#, SQL, React, Next.js, Vue, Node.js, FastAPI, LangChain, LangGraph, LangSmith, LlamaIndex, MCP, Azure AI Foundry, AWS Bedrock, SageMaker, Nvidia NIM, vLLM, Docker, Kubernetes, LoRA, OCR, Salesforce Agentforce, and Kafka."
+      "aliases": ["Python", "Kubernetes", "LangGraph", "NIM", "Kafka", "Agentforce", "MLflow", "pgvector"],
+      "text": "Skills. Languages: Vietnamese native, English fluent, Mandarin intermediate. The resume groups the stack as agents, retrieval, cloud platforms, software, machine learning, and document AI. Named tools include Python, Java, TypeScript, C#, SQL, React, Next.js, Vue, Node.js, FastAPI, LangChain, LangGraph, LangSmith, LlamaIndex, MCP, Azure AI Foundry, Azure OpenAI, AWS Bedrock, SageMaker, Nvidia NIM, vLLM, Docker, Kubernetes, LoRA, OCR, Salesforce Agentforce, Kafka, MLflow, and pgvector."
     }
   ]
 }
