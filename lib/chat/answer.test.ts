@@ -1443,6 +1443,13 @@ describe("displayAnswer", () => {
     expect(golfModels).toContain("YOLOv8");
     expect(golfModels).toContain("MNIST");
     expect(golfModels).toContain("Qwen2.5-VL");
+    const insideHarry = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Does the pedigree project sit inside the Harry role?") }],
+      "",
+      "Does the pedigree project sit inside the Harry role?",
+    );
+    expect(insideHarry).toContain("March 2026");
+    expect(insideHarry).toContain("December 2025");
     const labBuild = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
       "",

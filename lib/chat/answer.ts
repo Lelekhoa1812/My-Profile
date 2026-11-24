@@ -265,7 +265,7 @@ function firstRoleAnswer(question: string, outputs: readonly Record<string, unkn
 }
 
 function beforePeriodsAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\bwas\b/i.test(question) || !/\bbefore\b/i.test(question)) return "";
+  if (!((/\bwas\b/i.test(question) && /\bbefore\b/i.test(question)) || /\binside\b/i.test(question))) return "";
   const rows = rolePeriods(outputs);
   if (rows.length < 2) return "";
   return rows.slice(0, 2).map((row) => `${row.heading}. ${row.period}`).join(" ");
