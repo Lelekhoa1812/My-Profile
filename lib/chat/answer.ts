@@ -111,6 +111,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\btransformer reads\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bst-gnn\b/i.test(sentence)));
   }
+  if (/\bforecast\b/i.test(question) && /\bread\b/i.test(question) && /\bestatefolio\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\btransformer reads\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bsall-?e\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\bcomputer vision\b/i.test(sentence)));

@@ -982,6 +982,13 @@ describe("displayAnswer", () => {
     expect(estatefolioIs).toContain("Ho Chi Minh City");
     expect(estatefolioIs).toContain("transformer");
     expect(estatefolioIs).toContain("ST-GNN");
+    const estateRead = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the forecast read for estatefolio?") }],
+      "",
+      "What does the forecast read for estatefolio?",
+    );
+    expect(estateRead).toContain("listing text");
+    expect(estateRead).not.toContain("tower telemetry");
     const salleIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Sall-e?") }],
       "",

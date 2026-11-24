@@ -134,4 +134,13 @@ describe("withMemory", () => {
     expect(groundedQuestion([studio, answer, { id: "f2", role: "user", parts: [{ type: "text", text: "Is it a production app?" }] } as UIMessage], 2)).toContain("stt-studio");
     expect(groundedQuestion([harry, answer, { id: "f3", role: "user", parts: [{ type: "text", text: "What does he ship to production?" }] } as UIMessage], 2)).toBe("What does he ship to production?");
   });
+
+  it("names EstateFolio on a forecast follow-up", () => {
+    const estate = { id: "u1", role: "user", parts: [{ type: "text", text: "What is EstateFolio?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "A price forecast." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What does the forecast read?" }] } as UIMessage;
+    const harry = { id: "u3", role: "user", parts: [{ type: "text", text: "What did he do at Harry?" }] } as UIMessage;
+    expect(groundedQuestion([estate, answer, follow], 2)).toContain("estatefolio");
+    expect(groundedQuestion([harry, answer, follow], 2)).toBe("What does the forecast read?");
+  });
 });
