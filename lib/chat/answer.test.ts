@@ -844,6 +844,13 @@ describe("displayAnswer", () => {
     );
     expect(adminEffort).toContain("35 percent");
     expect(adminEffort).not.toContain("40 percent");
+    const manualWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What was the manual work cut?") }],
+      "",
+      "What was the manual work cut?",
+    );
+    expect(manualWork).toContain("manual work");
+    expect(manualWork).not.toContain("40 percent");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
