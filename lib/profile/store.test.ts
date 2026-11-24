@@ -45,6 +45,12 @@ describe("profile store", () => {
     if (result.found) expect(result.sections.some((section) => section.sectionId === "project-writing")).toBe(true);
   });
 
+  it("finds the MedVietAI sponsor named on the resume", () => {
+    const result = searchSections(profile.sections, "National Data Association sponsor");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections.some((section) => section.sectionId === "project-medvietai")).toBe(true);
+  });
+
   it("finds the S&P forecast without treating it as a published return", () => {
     const result = searchSections(profile.sections, "S&P 500 stock forecast");
     expect(result.found).toBe(true);
