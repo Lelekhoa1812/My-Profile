@@ -2236,6 +2236,18 @@ describe("displayAnswer", () => {
     );
     expect(harryUptime.startsWith("About 40 percent")).toBe(true);
     expect(harryUptime).toContain("99.9 percent");
+    const triageDataset = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What dataset does triage use?") }],
+      "",
+      "What dataset does triage use?",
+    );
+    expect(triageDataset.startsWith("The triage data is MIMIC-IV")).toBe(true);
+    const labCorpus = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What corpus does the lab use?") }],
+      "",
+      "What corpus does the lab use?",
+    );
+    expect(labCorpus).toContain("clinical records and PubMed");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],

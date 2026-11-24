@@ -544,6 +544,22 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (platform && !chosen.includes(platform)) push(platform);
     push(recipes);
   }
+  if (/\bdatasets?\b/i.test(question) && /\btriage\b/i.test(question)) {
+    cap = 2;
+    const data = blockSentences.find((sentence) => /\bmimic-iv\b/i.test(sentence));
+    if (data) {
+      chosen.length = 0;
+      push(data);
+    }
+  }
+  if (/\bcorpus\b/i.test(question) && /\blab\b/i.test(question)) {
+    cap = 2;
+    const corpus = blockSentences.find((sentence) => /\bclinical records and pubmed\b/i.test(sentence));
+    if (corpus) {
+      chosen.length = 0;
+      push(corpus);
+    }
+  }
   if (/\bhardware\b/i.test(question) && /\bskyledge\b/i.test(question)) {
     cap = 3;
     const board = blockSentences.find((sentence) => /\braspberry pi\b/i.test(sentence));
