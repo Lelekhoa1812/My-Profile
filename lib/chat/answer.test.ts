@@ -753,6 +753,13 @@ describe("displayAnswer", () => {
       "What approval gates govern Axion execution?",
     );
     expect(gates).toContain("audit trails");
+    const notOwn = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Axis not own?") }],
+      "",
+      "What does Axis not own?",
+    );
+    expect(notOwn).toContain("does not own");
+    expect(notOwn).toContain("database");
     expect(gates).not.toContain("message drafting");
     expect(langsmith).not.toContain("delivery scheduling");
     expect(afterHarry).toContain("Axis");
