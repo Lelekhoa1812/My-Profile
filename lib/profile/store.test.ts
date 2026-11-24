@@ -172,6 +172,8 @@ describe("profile store", () => {
       ["What is the passport dataset?", "synthetic passport set"],
       ["What is the garbage classification dataset?", "garbage-classification set"],
       ["What public datasets are on the same account?", "medical question sets"],
+      ["How many downloads does the passport dataset have?", "synthetic passport set"],
+      ["How many downloads does the garbage classification dataset have?", "garbage-classification set"],
     ];
     for (const [question, proof] of questions) {
       const result = searchSections(profile.sections, question);

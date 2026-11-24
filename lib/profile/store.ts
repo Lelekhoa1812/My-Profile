@@ -195,9 +195,11 @@ function statesDataset(body: string): boolean {
   return /\bdatasets?\b/.test(kept.join(" "));
 }
 
+const DATASET_METRIC_TERMS = new Set(["many", "much", "download", "downloads", "count", "counts", "accuracy", "user", "users", "star", "stars", "error", "rate", "return", "size", "revenue", "figure", "figures", "number", "numbers", "outcome", "report", "reports", "reported"]);
+
 function statedDatasetSections<T extends { section: ProfileSection; title: string; body: string }>(pool: readonly T[], asked: string, terms: readonly string[]): T[] | undefined {
   if (!/\bdatasets?\b/.test(asked) || /\blab\b/.test(asked)) return undefined;
-  const content = terms.filter((term) => !/^datasets?$/.test(term));
+  const content = terms.filter((term) => !/^datasets?$/.test(term) && !DATASET_METRIC_TERMS.has(term));
   const hits = pool.filter((hit) => statesDataset(hit.body) && content.every((term) => covers(hit.title, term) || covers(hit.body, term)));
   return hits.length > 0 ? hits : undefined;
 }

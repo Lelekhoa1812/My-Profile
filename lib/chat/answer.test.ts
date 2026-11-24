@@ -5251,6 +5251,8 @@ describe("displayAnswer", () => {
       ["What is the passport dataset?", "synthetic passport set", "VietOCR"],
       ["What is the garbage classification dataset?", "garbage-classification set", "oceanic"],
       ["What public datasets are on the same account?", "medical question sets", "download count"],
+      ["How many downloads does the passport dataset have?", "synthetic passport set", "VietOCR"],
+      ["How many downloads does the garbage classification dataset have?", "garbage-classification set", "oceanic"],
     ];
     for (const [question, proof, avoid] of questions) {
       const answer = displayAnswer(
