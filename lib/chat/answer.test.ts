@@ -1399,6 +1399,18 @@ describe("displayAnswer", () => {
       "What city is the lab in?",
     );
     expect(labPlace.startsWith("Researcher at Swinburne")).toBe(true);
+    const skyledgeEstimate = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the SkyLedge servicing cost?") }],
+      "",
+      "What is the SkyLedge servicing cost?",
+    );
+    expect(skyledgeEstimate).toContain("estimate of about 15 percent");
+    const skyledgeAbout = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is SkyLedge?") }],
+      "",
+      "What is SkyLedge?",
+    );
+    expect(skyledgeAbout).not.toContain("servicing-cost");
     expect(labPlace).toContain("Melbourne");
     expect(labPlace).not.toContain("Ho Chi Minh");
     const harryPercent = displayAnswer(

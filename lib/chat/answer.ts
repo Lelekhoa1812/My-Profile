@@ -608,6 +608,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(corpus);
     }
   }
+  if (/\bskyledge\b/i.test(question) && /\b(servicing|cost)\b/i.test(question)) {
+    cap = 2;
+    const estimate = blockSentences.find((sentence) => /\bservicing-cost\b/i.test(sentence));
+    if (estimate) {
+      chosen.length = 0;
+      push(estimate);
+    }
+  }
   if (/\bhardware\b/i.test(question) && /\bskyledge\b/i.test(question)) {
     cap = 3;
     const board = blockSentences.find((sentence) => /\braspberry pi\b/i.test(sentence));
