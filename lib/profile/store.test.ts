@@ -60,6 +60,10 @@ describe("profile store", () => {
   });
 
   it("reads one section from a unique heading phrase", () => {
+    const hyphen = readSection(profile.sections, "shipped-work");
+    expect(hyphen.found).toBe(true);
+    if (hyphen.found) expect(hyphen.sectionId).toBe("project-shipped");
+    expect(readSection(profile.sections, "axon-workflow-engine").found).toBe(false);
     const result = readSection(profile.sections, "workflow engine");
     expect(result.found).toBe(true);
     if (result.found) expect(result.sectionId).toBe("project-axion-workflows");

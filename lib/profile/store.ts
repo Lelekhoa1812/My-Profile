@@ -84,10 +84,12 @@ export function listSections(sections: readonly ProfileSection[], sourceType?: s
 
 export function readSection(sections: readonly ProfileSection[], sectionId: string) {
   const wanted = sectionId.trim().toLowerCase();
+  const phrase = wanted.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
   const visible = sections.filter((item) => (item.visibility ?? "public") === "public");
   const section = visible.find((item) => item.sectionId === sectionId)
     ?? visible.find((item) => item.heading.toLowerCase() === wanted || item.sectionId.toLowerCase() === wanted)
-    ?? uniqueHeading(visible, wanted);
+    ?? uniqueHeading(visible, wanted)
+    ?? (phrase === wanted ? undefined : uniqueHeading(visible, phrase));
   if (!section) return { found: false as const };
   return {
     found: true as const,
