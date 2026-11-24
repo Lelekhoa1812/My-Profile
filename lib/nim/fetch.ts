@@ -1,6 +1,8 @@
 import { NIM_CHAT_URL } from "./models";
 import type { NimPool } from "./pool";
 
+export const NIM_MAX_UPSTREAM_CALLS = 3;
+
 export type ChatBody = Record<string, unknown>;
 
 export type NimCall = {
@@ -32,11 +34,14 @@ export async function postNimChat(options: {
 }): Promise<NimCall> {
   const fetchImpl = options.fetchImpl ?? fetch;
   let lastStatus = 503;
-  for (const model of options.models) {
-    if (options.pool.isModelDemoted(model)) continue;
-    for (let attempt = 0; attempt < Math.max(1, options.pool.size); attempt += 1) {
+  let calls = 0;
+  for (const [index, model] of options.models.entries()) {
+    if (calls >= NIM_MAX_UPSTREAM_CALLS || options.pool.isModelDemoted(model)) continue;
+    const keyCap = index === 0 ? 2 : 1;
+    for (let attempt = 0; attempt < keyCap && calls < NIM_MAX_UPSTREAM_CALLS; attempt += 1) {
       const acquired = options.pool.acquire(model);
       if (!acquired.ok) break;
+      calls += 1;
       try {
         const response = await fetchImpl(NIM_CHAT_URL, {
           method: "POST",

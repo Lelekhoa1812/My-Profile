@@ -25,7 +25,7 @@
       "heading": "Axion workflow engine",
       "sourceType": "project",
       "aliases": ["startup outreach", "investor scouting", "portfolio reporting"],
-      "text": "Axion workflow engine. A governed graph platform in the Engine monorepo. Published workflows cover startup outreach, investor scouting and persona search, and portfolio reporting. Outreach moves from a list to people search, review, and drafted email. Investor flows label personas and build lists. Portfolio reporting uses research nodes and founder email sequences. Named workers include workflow, connector, ai, axis, crawler, parser, report, and sync. Axis assists drafting on the same host. It does not own workflow run state."
+      "text": "Axion workflow engine. A governed graph platform in the Engine monorepo, separate from FoodFlow. The recipes include startup scouting, investor scouting, and portfolio reporting. Startup scouting searches a list and public profiles, then scores and exports. Investor scouting builds a people list. Portfolio reporting drafts company updates and founder email. Axis drafts on the same host. It does not own the Engine database or FoodFlow's data."
     },
     {
       "sectionId": "role-harry-senior",

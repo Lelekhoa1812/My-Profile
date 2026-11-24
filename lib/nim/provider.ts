@@ -1,6 +1,6 @@
 import { loadNimKeys } from "./keys";
 import { NIM_MODELS } from "./models";
-import { wireBody, type ChatBody } from "./fetch";
+import { NIM_MAX_UPSTREAM_CALLS, wireBody, type ChatBody } from "./fetch";
 import { NimPool } from "./pool";
 
 const globalForPool = globalThis as unknown as { nimPool?: NimPool };
@@ -24,11 +24,14 @@ export function createPoolFetch(pool: NimPool, models: readonly string[] = NIM_M
     const preferred = typeof original.model === "string" ? original.model : models[0];
     const order = [preferred, ...models.filter((model) => model !== preferred)];
     let lastStatus = 503;
-    for (const model of order) {
-      if (pool.isModelDemoted(model)) continue;
-      for (let attempt = 0; attempt < Math.max(1, pool.size); attempt += 1) {
+    let calls = 0;
+    for (const [index, model] of order.entries()) {
+      if (calls >= NIM_MAX_UPSTREAM_CALLS || pool.isModelDemoted(model)) continue;
+      const keyCap = index === 0 ? 2 : 1;
+      for (let attempt = 0; attempt < keyCap && calls < NIM_MAX_UPSTREAM_CALLS; attempt += 1) {
         const acquired = pool.acquire(model);
         if (!acquired.ok) break;
+        calls += 1;
         const headers = new Headers(init?.headers);
         headers.set("authorization", `Bearer ${pool.secretFor(acquired.slot)}`);
         try {

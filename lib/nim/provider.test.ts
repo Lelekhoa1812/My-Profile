@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { NIM_MAX_UPSTREAM_CALLS } from "./fetch";
 import { createPoolFetch } from "./provider";
 import { NimPool } from "./pool";
 
@@ -29,6 +30,27 @@ describe("createPoolFetch", () => {
       expect(seen[0]).toBe(`Bearer ${KEY_A}`);
       expect(seen[1]).toBe(`Bearer ${KEY_B}`);
       await response.body?.cancel();
+    } finally {
+      globalThis.fetch = original;
+    }
+  });
+
+  it("stops after three upstream calls when every key is rate limited", async () => {
+    const pool = new NimPool(["k1", "k2", "k3", "k4"], () => 0, () => 0);
+    let calls = 0;
+    const original = globalThis.fetch;
+    globalThis.fetch = (async () => {
+      calls += 1;
+      return new Response("{}", { status: 429, headers: { "retry-after": "1" } });
+    }) as typeof fetch;
+    try {
+      const response = await createPoolFetch(pool, ["model-a", "model-b"])("https://integrate.api.nvidia.com/v1/chat/completions", {
+        method: "POST",
+        body: JSON.stringify({ messages: [] }),
+      });
+      expect(response.status).toBe(429);
+      expect(calls).toBe(NIM_MAX_UPSTREAM_CALLS);
+      expect(JSON.stringify({ calls })).not.toContain("k1");
     } finally {
       globalThis.fetch = original;
     }
