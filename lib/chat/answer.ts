@@ -361,7 +361,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bproduction\b/i.test(question) && !/\bship\b/i.test(question) && /\bnot (?:a|for) a release\b/i.test(sentence)) return true;
   if (/\brank\b/i.test(question) && /\branking\b/i.test(sentence)) return true;
   if (/\bspeech\b/i.test(question) && /\bwhisper\b/i.test(sentence)) return true;
-  if (/\bforecast\b/i.test(question) && /\bforecasts?\b/i.test(sentence)) return true;
+  if (/\bforecast\b/i.test(question) && /\bforecast(?:s|ing)?\b/i.test(sentence)) return true;
+  if (/\bdetect\b/i.test(question) && /\bdetects?\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence) && question.toLowerCase().split(/[^a-z0-9]+/).some((word) => word.length >= 5 && mentions(sentence, word))) return true;

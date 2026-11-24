@@ -626,6 +626,18 @@ describe("displayAnswer", () => {
       "What does Ericsson forecast?",
     );
     expect(bandwidth).toContain("bandwidth");
+    const detects = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Ericsson detect?") }],
+      "",
+      "What does Ericsson detect?",
+    );
+    expect(detects).toContain("degradation");
+    const popForecast = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does PopTech forecast?") }],
+      "",
+      "What does PopTech forecast?",
+    );
+    expect(popForecast).toContain("electricity");
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],
