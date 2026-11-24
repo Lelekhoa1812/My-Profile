@@ -7,5 +7,7 @@ describe("profile tools", () => {
     const read = tools.read_section as { description?: string };
     expect(read.description).toContain("Do not invent an id.");
     expect(read.description).toContain("Shipped work");
+    const lookup = tools.lookup_fact as { description?: string };
+    expect(lookup.description).toContain("use search_sections instead");
   });
 });

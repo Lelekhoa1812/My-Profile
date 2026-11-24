@@ -10,7 +10,7 @@ export function createProfileTools(record: ProfileRecord): ToolSet {
   const sections = record.sections;
   return {
     lookup_fact: tool({
-      description: "Read one exact public fact such as a name, email, phone, link, date, or skill. Use this before stating a contact detail or a date.",
+      description: "Read one exact public fact such as a name, email, phone, link, date, or skill. Use this before stating a contact detail or a date. For a title at a named past employer, use search_sections instead.",
       inputSchema: z.object({ key: z.string().optional(), kind }).refine((input) => Boolean(input.key || input.kind), {
         message: "Provide a key or a kind.",
       }),
