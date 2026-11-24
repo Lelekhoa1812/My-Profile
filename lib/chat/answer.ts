@@ -379,6 +379,7 @@ function siblingPeriod(outputs: readonly Record<string, unknown>[], blockSentenc
 function mentions(sentence: string, word: string): boolean {
   if (new RegExp(`\\b${word}(?:s|es|ed|ing)?\\b`, "i").test(sentence)) return true;
   if (word === "ocr" && /\b\w*ocr\b/i.test(sentence)) return true;
+  if (word === "deliver" && /\bdelivery\b/i.test(sentence)) return true;
   if (word.endsWith("s") && word.length >= 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
   if (word.endsWith("e") && new RegExp(`\\b${word.slice(0, -1)}ed\\b`, "i").test(sentence)) return true;
   if (word.length >= 6 && new RegExp(`\\b${word}ion\\b`, "i").test(sentence)) return true;
@@ -427,6 +428,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\buptime\b/i.test(question) && /\buptime\b/i.test(sentence)) return true;
   if (/\bship\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
   if (/\btext\b/i.test(question) && /\bfinbert\b/i.test(sentence)) return true;
+  if (/\binclude/i.test(question) && /\b(ensemble|dosage)\b/i.test(sentence)) return true;
   if (/\bdetect\b/i.test(question) && !/\bdrift\b/i.test(question) && /\bdetects?\b/i.test(sentence)) return true;
   if (/\barchive\b/i.test(question) && /\bprompt-me\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;

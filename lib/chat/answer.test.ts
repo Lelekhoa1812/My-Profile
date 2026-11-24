@@ -741,6 +741,18 @@ describe("displayAnswer", () => {
       "What is his degree?",
     );
     expect(degree).toContain("Swinburne");
+    const delivery = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does triage deliver?") }],
+      "",
+      "What does triage deliver?",
+    );
+    expect(delivery).toContain("drone");
+    const ensemble = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the pedigree engine include?") }],
+      "",
+      "What does the pedigree engine include?",
+    );
+    expect(ensemble).toContain("Dosage");
     const rosterStack = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the roster app use?") }],
       "",
