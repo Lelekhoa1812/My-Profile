@@ -202,6 +202,10 @@ describe("profile store", () => {
     const ericsson = searchSections(profile.sections, "What stack does the Ericsson digital twin use?");
     expect(prophet.found && prophet.sections[0]?.text).toContain("TimesFM");
     expect(ericsson.found && ericsson.sections[0]?.text).toContain("ONNX");
+    const hai = searchSections(profile.sections, "What percent did Hai Au cut?");
+    expect(hai.found && hai.sections[0]?.sectionId).toBe("role-hai-au");
+    expect(hai.found && hai.sections.some((section) => section.sectionId === "role-harry-senior")).toBe(false);
+    expect(hai.found && hai.sections.some((section) => section.sectionId === "role-axion")).toBe(false);
   });
 
   it("opens the degree when the question asks where he studied", () => {

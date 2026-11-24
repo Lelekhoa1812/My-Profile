@@ -184,23 +184,34 @@ function uniqueAlias(sections: readonly ProfileSection[], wanted: string): Profi
   return hits.length === 1 ? hits[0] : undefined;
 }
 
-export function namedEmployer(text: string): "axion" | "harry" | "medswin" | "mizco" | undefined {
+const EMPLOYERS: ReadonlyArray<{ id: string; test: RegExp; section: (id: string, title: string) => boolean }> = [
+  { id: "axion", test: /\b(axion|axis|foodflow)\b/, section: (id, title) => id.includes("axion") || title.includes("foodflow") },
+  { id: "harry", test: /\bharry\b|black caviar/, section: (id) => id.includes("harry") },
+  { id: "medswin", test: /\bmedswin\b|\bbertscore\b/, section: (id) => id.includes("medswin") || id === "role-swinburne-research" },
+  { id: "mizco", test: /\bmizco\b/, section: (id) => id.includes("mizco") },
+  { id: "hai-au", test: /\bhai[\s-]?au\b/, section: (id) => id.includes("hai-au") },
+  { id: "pythera", test: /\b(pythera|clara)\b/, section: (id) => id.includes("pythera") },
+  { id: "vietdan", test: /\bvietdan\b/, section: (id) => id.includes("vietdan") },
+  { id: "nam-a", test: /\bnam\s*a\b/, section: (id) => id.includes("nam-a") },
+  { id: "poptech", test: /\bpoptech\b/, section: (id) => id.includes("poptech") },
+  { id: "ericsson", test: /\bericsson\b/, section: (id) => id.includes("ericsson") },
+  { id: "skyledge", test: /\bskyledge\b/, section: (id) => id.includes("skyledge") },
+  { id: "teqar", test: /\bteqar\b/, section: (id) => id.includes("teqar") },
+  { id: "aitc", test: /\baitc\b/, section: (id) => id.includes("aitc") },
+  { id: "inet", test: /\binet\b/, section: (id) => id.includes("inet") },
+  { id: "alta", test: /\balta\b/, section: (id) => id.includes("alta") },
+  { id: "tien-thanh", test: /\btien thanh\b/, section: (id) => id.includes("tien-thanh") },
+];
+
+export function namedEmployer(text: string): string | undefined {
   const value = text.toLowerCase();
-  if (/\b(axion|axis|foodflow)\b/.test(value)) return "axion";
-  if (/\bharry\b/.test(value) || value.includes("black caviar")) return "harry";
-  if (/\bmedswin\b/.test(value) || value.includes("bertscore")) return "medswin";
-  if (/\bmizco\b/.test(value)) return "mizco";
-  return undefined;
+  return EMPLOYERS.find((item) => item.test.test(value))?.id;
 }
 
-function sectionEmployer(section: ProfileSection): ReturnType<typeof namedEmployer> {
+function sectionEmployer(section: ProfileSection): string | undefined {
   const id = section.sectionId.toLowerCase();
   const title = `${section.heading} ${(section.aliases ?? []).join(" ")}`.toLowerCase();
-  if (id.includes("axion") || title.includes("foodflow")) return "axion";
-  if (id.includes("harry")) return "harry";
-  if (id.includes("medswin") || id === "role-swinburne-research") return "medswin";
-  if (id.includes("mizco")) return "mizco";
-  return undefined;
+  return EMPLOYERS.find((item) => item.section(id, title))?.id;
 }
 
 export function asksForExperienceSpan(query: string): boolean {
