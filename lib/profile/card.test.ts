@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import profile from "../../content/profile.json";
 import { withArchive } from "./archive";
-import { recordCard } from "./card";
+import { identityCard, recordCard } from "./card";
 
 describe("recordCard", () => {
   it("places the public record in one block and leaves out an absent employer", () => {
@@ -18,6 +18,16 @@ describe("recordCard", () => {
     expect(card).toContain("## Hugging Face models");
     expect(card).not.toContain("Initech");
     expect(card).not.toContain("Headings:");
+  });
+
+  it("puts only the identity lines in the prompt", () => {
+    const card = identityCard(profile.facts);
+    expect(card).toContain("Name: Dang Khoa Le");
+    expect(card).toContain("Also called: Liam Le");
+    expect(card).toContain("Current title: AI Software Engineer");
+    expect(card).not.toContain("FoodFlow");
+    expect(card).not.toContain("@");
+    expect(card).not.toContain("##");
   });
 
   it("leaves the full archive out of the prompt", () => {

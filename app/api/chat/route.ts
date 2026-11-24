@@ -10,7 +10,7 @@ import { createProfileTools } from "../../../lib/agent/tools";
 import { emptyNimSlots, loadNimKeys } from "../../../lib/nim/keys";
 import { NIM_MODELS } from "../../../lib/nim/models";
 import { createPoolFetch, getNimPool } from "../../../lib/nim/provider";
-import { recordCard } from "../../../lib/profile/card";
+import { identityCard } from "../../../lib/profile/card";
 import { loadProfile } from "../../../lib/profile/load";
 import { tailForModel } from "../../../lib/session/tail";
 import { loadStoredTurns } from "../../../lib/session/load";
@@ -63,7 +63,7 @@ export async function POST(request: Request): Promise<Response> {
   const question = lastUserText(messages);
   const agent = new ToolLoopAgent({
     model: nim().chatModel(NIM_MODELS[0]),
-    instructions: `${instructionPrefix()}\n\n<record>\n${recordCard(record.facts, record.sections)}\n</record>`,
+    instructions: `${instructionPrefix()}\n\n<record>\n${identityCard(record.facts)}\n</record>`,
     tools: createProfileTools(record),
     stopWhen: isStepCount(3),
     maxRetries: 0,

@@ -50,12 +50,43 @@ describe("displayAnswer", () => {
     expect(text).toBe("Liam is an AI Software Engineer.");
   });
 
-  it("drops an ungrounded quantity and keeps a single-digit span when the lookup misses", () => {
+  it("drops an ungrounded quantity when the lookup misses", () => {
     const text = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: { found: false } }],
       "The resume summary says 4 years of software engineering experience. He cut review by 40%.",
     );
+    expect(text).toBe(holdAnswer());
+    expect(text).not.toContain("4");
+    expect(text).not.toContain("40%");
+  });
+
+  it("keeps a figure the tool returned and drops a figure it did not", () => {
+    const text = displayAnswer(
+      [{
+        type: "tool-lookup_fact",
+        state: "output-available",
+        output: {
+          found: true,
+          facts: [{ label: "Experience", value: "The resume summary says 4 years of software engineering experience and 3 years of AI and machine-learning delivery." }],
+        },
+      }],
+      "The resume summary says 4 years of software engineering experience. He cut review by 40%.",
+    );
     expect(text).toBe("The resume summary says 4 years of software engineering experience.");
+    expect(text).not.toContain("40%");
+  });
+
+  it("drops an employer the tool text does not name", () => {
+    const text = displayAnswer(
+      [{
+        type: "tool-read_section",
+        state: "output-available",
+        output: { found: true, heading: "Axion Solutions", text: "Axion Solutions. AI Software Engineer. FoodFlow is the system of record." },
+      }],
+      "FoodFlow is the system of record. He worked at Initech.",
+    );
+    expect(text).toBe("FoodFlow is the system of record.");
+    expect(text).not.toContain("Initech");
   });
 
   it("uses the hold sentence when the store could not be read", () => {
@@ -111,7 +142,7 @@ describe("displayAnswer", () => {
 
   it("uses the tool headings when it drops the source tail", () => {
     const text = displayAnswer(
-      [{ type: "tool-read_section", state: "output-available", output: { found: true, heading: "Axion Solutions" } }],
+      [{ type: "tool-read_section", state: "output-available", output: { found: true, heading: "Axion Solutions", text: "Axis waits for approval." } }],
       "Axis waits for approval. (Axion Solutions)",
     );
     expect(text).toBe("Axis waits for approval.");
@@ -140,7 +171,7 @@ describe("displayAnswer", () => {
 
   it("keeps the model sentence when a tool found a section", () => {
     const text = displayAnswer(
-      [{ type: "tool-read_section", state: "output-available", output: { found: true, sectionId: "role-axion" } }],
+      [{ type: "tool-read_section", state: "output-available", output: { found: true, sectionId: "role-axion", text: "Axion Solutions. AI Software Engineer." } }],
       "Liam is a AI Software Engineer at Axion Solutions.",
     );
     expect(text).toBe("Liam is a AI Software Engineer at Axion Solutions.");

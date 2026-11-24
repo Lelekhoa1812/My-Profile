@@ -4,6 +4,15 @@ function isPublic(visibility?: string): boolean {
   return (visibility ?? "public") === "public";
 }
 
+const IDENTITY_KEYS = ["full_name", "also_known_as", "public_title", "page_title"] as const;
+
+export function identityCard(facts: readonly ProfileFact[]): string {
+  return IDENTITY_KEYS.flatMap((key) => {
+    const fact = facts.find((item) => item.key === key && isPublic(item.visibility));
+    return fact ? [`${factLabel(key)}: ${fact.value}`] : [];
+  }).join("\n");
+}
+
 export function recordCard(facts: readonly ProfileFact[], sections: readonly ProfileSection[]): string {
   const publicFacts = facts.filter((fact) => isPublic(fact.visibility));
   const publicSections = sections.filter((section) => isPublic(section.visibility) && !section.sectionId.startsWith("archive-"));

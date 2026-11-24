@@ -40,13 +40,13 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
     .map((part) => part.output)
     .filter((output): output is Record<string, unknown> => typeof output === "object" && output !== null);
   if (outputs.some((output) => output.reason === "unavailable")) return holdAnswer();
-  const missed = outputs.length > 0 && outputs.every((output) => output.found === false);
   let text = dropGapSentences(dropSourceTail(
     dropRecordTalk(stripMarkdown(sentenceFromModel(stripToolMarkup(modelText)))),
     sourceHeadings(outputs),
   ));
-  if (missed) text = dropUngroundedQuantities(text);
-  if (missed && !text.trim()) return holdAnswer();
+  const cleaned = text;
+  if (outputs.length > 0 && cleaned.trim()) text = certifySentences(cleaned, evidenceCorpus(outputs));
+  if (outputs.length > 0 && cleaned.trim() && !text.trim()) return holdAnswer();
   return text;
 }
 
@@ -127,12 +127,71 @@ export function dropGapSentences(text: string): string {
   return text.trim().split(/(?<=[.!])\s+/).filter((sentence) => sentence && !exposesGap(sentence)).join(" ").trim();
 }
 
-function dropUngroundedQuantities(text: string): string {
-  return text.trim().split(/(?<=[.!])\s+/).filter((sentence) => sentence && !hasUngroundedQuantity(sentence)).join(" ").trim();
+const LEAD_WORDS = new Set(["the", "a", "an", "he", "his", "her", "this", "that", "ask", "liam", "dang"]);
+const CONTENT_STOP = new Set(["that", "this", "with", "from", "have", "what", "when", "where", "which", "about", "their", "there"]);
+
+export function evidenceCorpus(outputs: readonly Record<string, unknown>[]): string {
+  const identity = ["full_name", "also_known_as", "public_title", "page_title"].map(factValue).filter(Boolean);
+  return [...identity, collectStrings(outputs)].filter(Boolean).join("\n");
 }
 
-function hasUngroundedQuantity(sentence: string): boolean {
-  return /\d+\s*%/.test(sentence) || /\d+\s*percent/i.test(sentence) || /\b\d{2,}\b/.test(sentence);
+function collectStrings(value: unknown): string {
+  if (typeof value === "string") return value;
+  if (typeof value === "number") return String(value);
+  if (Array.isArray(value)) return value.map(collectStrings).filter(Boolean).join("\n");
+  if (typeof value === "object" && value !== null) {
+    return Object.entries(value)
+      .filter(([key]) => !["sectionId", "sourceType", "kind", "match", "found", "reason"].includes(key))
+      .map(([, child]) => collectStrings(child))
+      .filter(Boolean)
+      .join("\n");
+  }
+  return "";
+}
+
+export function certifySentences(text: string, evidence: string): string {
+  const hay = evidence.toLowerCase();
+  return text.trim().split(/(?<=[.!])\s+/).filter((sentence) => sentence && sentenceIsSupported(sentence, hay)).join(" ").trim();
+}
+
+function sentenceIsSupported(sentence: string, hay: string): boolean {
+  if (/liam will answer that/i.test(sentence)) return true;
+  if (/i am liam's portfolio assistant/i.test(sentence)) return true;
+  if (!quantitiesInEvidence(sentence, hay)) return false;
+  if (!namesInEvidence(sentence, hay)) return false;
+  const words = contentWords(sentence);
+  if (words.length === 0) return true;
+  const hits = words.filter((word) => hay.includes(word)).length;
+  return hits / words.length >= 0.5;
+}
+
+function quantitiesInEvidence(sentence: string, hay: string): boolean {
+  const numbers = sentence.match(/\d[\d,]*(?:\.\d+)?/g) ?? [];
+  return numbers.every((raw) => new RegExp(`(?<![\\d])${raw.replace(/,/g, "")}(?![\\d])`).test(hay));
+}
+
+function namesInEvidence(sentence: string, hay: string): boolean {
+  const phrases = sentence.match(/[A-Z][A-Za-z0-9.+&-]*(?:\s+(?:the|of|and|a|an|&)\s+[A-Z][A-Za-z0-9.+&-]*|\s+[A-Z][A-Za-z0-9.+&-]*)+/g) ?? [];
+  if (phrases.some((name) => !hay.includes(cleanToken(name).toLowerCase()))) return false;
+  const acronyms = sentence.match(/\b[A-Z]{2,}\b/g) ?? [];
+  if (acronyms.some((name) => !hay.includes(cleanToken(name).toLowerCase()))) return false;
+  const words = sentence.split(/\s+/);
+  for (let index = 0; index < words.length; index += 1) {
+    const raw = cleanToken(words[index]);
+    if (!/^[A-Z][A-Za-z0-9.+&-]{2,}$/.test(raw)) continue;
+    if (index === 0 && LEAD_WORDS.has(raw.toLowerCase())) continue;
+    if (phrases.some((name) => name.includes(raw))) continue;
+    if (!hay.includes(raw.toLowerCase())) return false;
+  }
+  return true;
+}
+
+function cleanToken(value: string): string {
+  return value.replace(/^[("']+|[).,!;:"']+$/g, "").trim();
+}
+
+function contentWords(sentence: string): string[] {
+  return sentence.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length > 3 && !CONTENT_STOP.has(word));
 }
 
 function narratesRecord(sentence: string): boolean {
