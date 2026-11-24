@@ -649,6 +649,28 @@ describe("displayAnswer", () => {
     expect(openRouterIs).toContain("OpenRouter");
     expect(openRouterIs).toContain("providers");
     expect(openRouterIs).not.toContain("Next.js");
+    const mistralIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Mistral?") }],
+      "",
+      "What is Mistral?",
+    );
+    expect(mistralIs).toContain("Mistral");
+    expect(mistralIs).toContain("providers");
+    expect(mistralIs).not.toContain("Next.js");
+    const stgnnIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is ST-GNN?") }],
+      "",
+      "What is ST-GNN?",
+    );
+    expect(stgnnIs).toContain("ST-GNN");
+    expect(stgnnIs).toContain("districts");
+    const caviarIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Black Caviar?") }],
+      "",
+      "What is Black Caviar?",
+    );
+    expect(caviarIs).toContain("Black Caviar");
+    expect(caviarIs).toContain("lineage");
     const nimUsed = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Nvidia NIM used for?") }],
       "",

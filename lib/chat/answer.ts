@@ -766,12 +766,28 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(limit);
     }
   }
-  if (/\bopenrouter\b/i.test(question) && !/\bfree-router\b/i.test(question)) {
-    const providers = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bopenrouter\b/i.test(sentence) && /\bproviders\b/i.test(sentence));
+  if (/\b(openrouter|mistral|google ai studio)\b/i.test(question) && !/\bfree-router\b/i.test(question)) {
+    const providers = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bproviders\b/i.test(sentence) && /\b(openrouter|mistral)\b/i.test(sentence));
     if (providers) {
       chosen.length = 0;
       cap = 1;
       push(providers);
+    }
+  }
+  if (/\bst-gnn\b/i.test(question)) {
+    const graph = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bst-gnn\b/i.test(sentence));
+    if (graph) {
+      chosen.length = 0;
+      cap = 1;
+      push(graph);
+    }
+  }
+  if (/\bblack caviar\b/i.test(question)) {
+    const lineage = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bblack caviar\b/i.test(sentence));
+    if (lineage) {
+      chosen.length = 0;
+      cap = 1;
+      push(lineage);
     }
   }
   if (/\bnim\b/i.test(question)) {
