@@ -1207,6 +1207,21 @@ describe("displayAnswer", () => {
     );
     expect(namRoles).toContain("VietOCR");
     expect(namRoles).toContain("REST");
+    const cameFirst = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Which role came first, Nam A software or Nam A AI?") }],
+      "",
+      "Which role came first, Nam A software or Nam A AI?",
+    );
+    expect(cameFirst).toContain("software came first");
+    expect(cameFirst).toContain("April 2023");
+    expect(cameFirst).toContain("December 2024");
+    const pedigreeBefore = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Was the pedigree project before the senior Harry role?") }],
+      "",
+      "Was the pedigree project before the senior Harry role?",
+    );
+    expect(pedigreeBefore).toContain("March 2026");
+    expect(pedigreeBefore).toContain("December 2025");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",

@@ -200,6 +200,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
   const sets = [
     { when: cityRoles.length > 0, ids: cityRoles },
     { when: /\bnam\b/.test(text) && /\b(two|difference)\b/.test(text) && /\broles?\b/.test(text), ids: ["role-nam-a-ai", "role-nam-a-software"] },
+    { when: /\bnam\b/.test(text) && /\b(first|earlier)\b/.test(text), ids: ["role-nam-a-software", "role-nam-a-ai"] },
     { when: Boolean(adjacent?.length), ids: adjacent ?? [] },
     { when: text.includes("axion") && (text.includes("axis") || text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: text.includes("axis") && (text.includes("write") || text.includes("preview") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },

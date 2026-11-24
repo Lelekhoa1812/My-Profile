@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -198,6 +198,44 @@ function vectorAnswer(question: string, outputs: readonly Record<string, unknown
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(pgvector|faiss)\b/i.test(sentence)));
   const short = lines.filter((sentence) => sentence.split(/\s+/).length <= 24);
   return [...new Set(short.length > 0 ? short : lines)].slice(0, 2).join(" ");
+}
+
+const MONTHS: Record<string, number> = { january: 1, february: 2, march: 3, april: 4, may: 5, june: 6, july: 7, august: 8, september: 9, october: 10, november: 11, december: 12 };
+
+function startKey(sentence: string): number {
+  const dated = sentence.match(/\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+(20\d{2})\b/i);
+  if (!dated) return 999999;
+  return Number(dated[2]) * 12 + (MONTHS[dated[1].toLowerCase()] ?? 0);
+}
+
+function rolePeriods(outputs: readonly Record<string, unknown>[]): { heading: string; period: string; start: number }[] {
+  const rows: { heading: string; period: string; start: number }[] = [];
+  for (const output of outputs) {
+    if (!Array.isArray(output.sections)) continue;
+    for (const section of output.sections) {
+      if (typeof section !== "object" || section === null || section.sourceType !== "role" || typeof section.text !== "string") continue;
+      const period = plainSentences(section.text).find((sentence) => startKey(sentence) < 999999 && sentence.split(/\s+/).length <= 18);
+      if (!period) continue;
+      const heading = "heading" in section ? String(section.heading).replace(/\.$/, "") : "";
+      if (heading) rows.push({ heading, period, start: startKey(period) });
+    }
+  }
+  return rows;
+}
+
+function firstRoleAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bcame first\b/i.test(question) && !(/\bwhich role\b/i.test(question) && /\bfirst\b/i.test(question))) return "";
+  const rows = rolePeriods(outputs).sort((left, right) => left.start - right.start);
+  const [first, second] = rows;
+  if (!first || !second) return "";
+  return `${first.heading} came first. ${first.period} ${second.heading}. ${second.period}`;
+}
+
+function beforePeriodsAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bwas\b/i.test(question) || !/\bbefore\b/i.test(question)) return "";
+  const rows = rolePeriods(outputs);
+  if (rows.length < 2) return "";
+  return rows.slice(0, 2).map((row) => `${row.heading}. ${row.period}`).join(" ");
 }
 
 function cityJobsAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
