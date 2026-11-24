@@ -289,6 +289,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   if (!picked) push(unique);
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
+  if (/\b(his|her) work\b/i.test(question) && !namedEmployer(question)) {
+    const vision = blockSentences.find((sentence) => /\bai vision\b/i.test(sentence));
+    if (vision && !chosen.includes(vision)) chosen.unshift(vision);
+  }
   if (/\b(do|did|build|built|role|experience)\b/i.test(question) || /\b(his|her) work\b/i.test(question)) {
     push(blockSentences.find((sentence) => isToolList(sentence)));
     const work = workSentence(blockSentences);

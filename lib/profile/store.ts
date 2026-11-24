@@ -444,7 +444,9 @@ function sectionEmployer(section: ProfileSection): string | undefined {
 
 export function asksForExperienceSpan(query: string): boolean {
   const text = query.toLowerCase();
-  if (!/\bexperience\b/.test(text) || /\b(at|with)\b/.test(text) || namedEmployer(text)) return false;
+  if (/\b(at|with)\b/.test(text) || namedEmployer(text)) return false;
+  if (/\bhow long\b/.test(text) && /\b(work|worked|working|experience)\b/.test(text)) return true;
+  if (!/\bexperience\b/.test(text)) return false;
   if (/\b(years|year|span|many|total)\b/.test(text)) return true;
   return /\b(what is|what's|whats|tell me)\b/.test(text) || /\bhis experience\b/.test(text);
 }

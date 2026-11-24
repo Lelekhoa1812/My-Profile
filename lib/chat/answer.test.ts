@@ -1888,6 +1888,12 @@ describe("displayAnswer", () => {
     );
     expect(lastRole).toContain("Axion");
     expect(lastRole).toContain("to present");
+    const hisWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Tell me about his work") }],
+      "",
+      "Tell me about his work",
+    );
+    expect(hisWork).toMatch(/Axion Solutions\. He owns the AI vision/);
     expect(cameFirst).toContain("April 2023");
     expect(cameFirst).toContain("December 2024");
     const pedigreeBefore = displayAnswer(
