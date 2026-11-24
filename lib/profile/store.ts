@@ -286,6 +286,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bexported\b/.test(text), ids: ["project-axion-workflows"] },
     { when: /\bforecasted\b/.test(text), ids: ["project-prophet", "project-ericsson", "role-poptech", "project-estatefolio"] },
     { when: /\bmonitored\b/.test(text), ids: ["project-ericsson"] },
+    { when: /\bdetected\b/.test(text), ids: ["project-ericsson", "project-golf", "project-salle"] },
     { when: /\breviewed\b/.test(text), ids: ["role-mizco", "project-cva"] },
     { when: /\b(scored|scoring)\b/.test(text) && !/\b(bertscore|writingjourney|cva)\b/.test(text), ids: ["project-cva", "project-writing"] },
     { when: /\bwater[\s-]?meter\b/.test(text) && /\b(production|exclude|claim|hardware|run|runs)\b/.test(text), ids: ["project-meter"] },

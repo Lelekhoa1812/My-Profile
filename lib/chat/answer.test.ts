@@ -1175,6 +1175,14 @@ describe("displayAnswer", () => {
       "What has he monitored?",
     );
     expect(monitoredWork).toContain("population stability");
+    const detectedWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he detected?") }],
+      "",
+      "What has he detected?",
+    );
+    expect(detectedWork).toContain("degradation");
+    expect(detectedWork).toContain("YOLOv8");
+    expect(detectedWork).toContain("waste");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",
