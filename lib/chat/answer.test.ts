@@ -884,6 +884,27 @@ describe("displayAnswer", () => {
     );
     expect(rosterModelUse).toContain("Kotlin");
     expect(rosterModelUse).not.toContain("Gemini");
+    const prophetLlm = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What LLM does Prophet use?") }],
+      "",
+      "What LLM does Prophet use?",
+    );
+    expect(prophetLlm).toContain("TimesFM");
+    expect(prophetLlm).not.toContain("Gemini");
+    const ericssonVector = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What vector database does Ericsson use?") }],
+      "",
+      "What vector database does Ericsson use?",
+    );
+    expect(ericssonVector).toContain("MySQL");
+    expect(ericssonVector).not.toContain("FAISS");
+    const meterLlm = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What LLM does the water meter use?") }],
+      "",
+      "What LLM does the water meter use?",
+    );
+    expect(meterLlm).toContain("meter photos");
+    expect(meterLlm).not.toContain("Gemini");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],

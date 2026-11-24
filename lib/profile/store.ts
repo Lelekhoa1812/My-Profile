@@ -209,6 +209,9 @@ function askedProductSectionIds(text: string): string[] | undefined {
     [/\bskyledge\b/, "project-skyledge"],
     [/\bsurvee\b/, "project-survee"],
     [/\broster\b/, "project-roster"],
+    [/\bprophet\b/, "project-prophet"],
+    [/\bericsson\b/, "project-ericsson"],
+    [/\bpoptech\b/, "role-poptech"],
   ];
   const ids = named.flatMap(([test, id]) => (test.test(text) ? [id] : []));
   return ids.length > 0 ? [...new Set(ids)] : undefined;
@@ -318,6 +321,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\b(now|currently)\b/.test(text) && /\b(work|working|doing)\b/.test(text) && !namedEmployer(text), ids: ["role-axion"] },
     { when: /\bdeployed\b/.test(text) && !namedEmployer(text) && !/\b(medchat|foodflow|quotient)\b/.test(text), ids: ["project-meter", "role-alta"] },
     { when: /\bdeploy(?:ment|ing)?\b/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["project-meter", "role-alta"] },
+    { when: /\bwater[\s-]?meter\b/.test(text) && (/\bllms?\b/.test(text) || /\bcloud\b/.test(text) || /\bvectors?\b/.test(text)), ids: ["project-meter", "role-vietdan-ml"] },
     { when: (/\bcloud\b/.test(text) || /\bllms?\b/.test(text) || /\b(cut|percent)\b/.test(text) || /\bvectors?\b/.test(text)) && Boolean(askedProductSectionIds(text)?.length), ids: askedProductSectionIds(text) ?? [] },
     { when: /\b(programming|coding)\b/.test(text) && /\blanguages?\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["skills"] },
     { when: /\bcloud\b/.test(text) && /\b(platform|platforms|use|uses|used)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-alta", "skills"] },
