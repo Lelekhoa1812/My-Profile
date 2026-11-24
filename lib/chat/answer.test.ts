@@ -1154,6 +1154,13 @@ describe("displayAnswer", () => {
     expect(ownsDatabase).toContain("does not own");
     expect(ownsDatabase).not.toContain("AI vision");
     expect(ownsDatabase).not.toContain("Software Engineer");
+    const engineDatabase = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Does Axis own the Engine database?") }],
+      "",
+      "Does Axis own the Engine database?",
+    );
+    expect(engineDatabase).toContain("does not own the Engine database");
+    expect(engineDatabase).not.toContain("governed graph");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",

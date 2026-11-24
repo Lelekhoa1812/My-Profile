@@ -161,7 +161,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     }
   }
   const recipes = blockSentences.find((sentence) => /\brecipes are\b/i.test(sentence));
-  if (recipes && /\b(workflow|engine)\b/i.test(question) && !chosen.some((sentence) => /recipes are/i.test(sentence))) {
+  if (recipes && /\b(workflow|engine)\b/i.test(question) && !/\b(own|database)\b/i.test(question) && !chosen.some((sentence) => /recipes are/i.test(sentence))) {
     const title = chosen.findIndex((sentence) => sentence.split(/\s+/).length <= 4);
     if (title >= 0) chosen.splice(title, 1);
     const platform = blockSentences.find((sentence) => /\bgoverned graph platform\b/i.test(sentence));
