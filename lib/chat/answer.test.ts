@@ -2213,6 +2213,14 @@ describe("displayAnswer", () => {
     );
     expect(axionLeader).toMatch(/^(?:Axion Solutions\. )?He owns the AI vision/);
     expect(axionLeader).not.toContain("Modular actions");
+    const bothEmployers = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at both Harry and Mizco?") }],
+      "",
+      "What did he do at both Harry and Mizco?",
+    );
+    expect(bothEmployers).toContain("event inventory");
+    expect(bothEmployers).toContain("trust-first");
+    expect(bothEmployers).not.toContain("mate-selection");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],

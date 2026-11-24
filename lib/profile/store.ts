@@ -273,7 +273,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     }
   }
   if (namedRoles.length >= 2 && /\b(same time|overlaps?|both)\b/.test(text)) {
-    const roles = pool.filter((item) => item.section.sourceType === "role" && namedRoles.some((employer) => employer.section(item.section.sectionId, item.title)));
+    const roles = pool.filter((item) => item.section.sourceType === "role" && !item.section.sectionId.includes("pedigree") && namedRoles.some((employer) => employer.section(item.section.sectionId, item.title)));
     if (roles.length >= 2) {
       return {
         found: true as const,
