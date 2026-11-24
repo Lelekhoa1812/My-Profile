@@ -1,10 +1,27 @@
 import { describe, expect, it } from "vitest";
 import { NIM_MAX_UPSTREAM_CALLS } from "./fetch";
-import { createPoolFetch } from "./provider";
+import { createPoolFetch, getNimPool, resetNimPool } from "./provider";
 import { NimPool } from "./pool";
 
 const KEY_A = "provider-key-alpha";
 const KEY_B = "provider-key-beta";
+
+describe("getNimPool", () => {
+  it("rebuilds the pool when the key list changes", () => {
+    resetNimPool();
+    try {
+      const first = getNimPool({ NVIDIA_NIM_API_KEY_1: "pool-key-one" });
+      const same = getNimPool({ NVIDIA_NIM_API_KEY_1: "pool-key-one" });
+      const second = getNimPool({ NVIDIA_NIM_API_KEY_1: "pool-key-one", NVIDIA_NIM_API_KEY_2: "pool-key-two" });
+      expect(first.size).toBe(1);
+      expect(same).toBe(first);
+      expect(second.size).toBe(2);
+      expect(second).not.toBe(first);
+    } finally {
+      resetNimPool();
+    }
+  });
+});
 
 describe("createPoolFetch", () => {
   it("replaces the caller key and rotates after a rejection", async () => {

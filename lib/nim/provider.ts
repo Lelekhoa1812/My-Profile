@@ -1,21 +1,25 @@
+import { createHash } from "node:crypto";
 import { loadNimKeys } from "./keys";
 import { NIM_MODELS } from "./models";
 import { NIM_MAX_UPSTREAM_CALLS, wireBody, type ChatBody } from "./fetch";
 import { NimPool } from "./pool";
 
-const globalForPool = globalThis as unknown as { nimPool?: NimPool };
+const globalForPool = globalThis as unknown as { nimPool?: NimPool; nimStamp?: string };
 
 export function getNimPool(env: Record<string, string | undefined> = process.env): NimPool {
-  if (!globalForPool.nimPool || globalForPool.nimPool.size === 0) {
-    const keys = loadNimKeys(env);
-    if (keys.length === 0) return new NimPool([]);
-    globalForPool.nimPool = new NimPool(keys);
-  }
-  return globalForPool.nimPool;
+  const keys = loadNimKeys(env);
+  const stamp = createHash("sha256").update(keys.join("\0")).digest("hex");
+  const existing = globalForPool.nimPool;
+  if (existing && globalForPool.nimStamp === stamp) return existing;
+  const pool = new NimPool(keys);
+  globalForPool.nimPool = pool;
+  globalForPool.nimStamp = stamp;
+  return pool;
 }
 
 export function resetNimPool(): void {
   globalForPool.nimPool = undefined;
+  globalForPool.nimStamp = undefined;
 }
 
 export function createPoolFetch(pool: NimPool, models: readonly string[] = NIM_MODELS): typeof fetch {
