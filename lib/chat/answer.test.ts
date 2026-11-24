@@ -931,6 +931,13 @@ describe("displayAnswer", () => {
       "What is YOLO used for?",
     );
     expect(yoloUse).toContain("YOLO");
+    const fastApi = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is FastAPI used for?") }],
+      "",
+      "What is FastAPI used for?",
+    );
+    expect(fastApi).toContain("FastAPI");
+    expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(

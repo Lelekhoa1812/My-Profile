@@ -422,7 +422,7 @@ export function contactLookupKey(query: string): string | undefined {
 }
 
 const STOP_WORDS = new Set([
-  "the", "and", "for", "with", "what", "which", "who", "where", "when", "why", "how", "does", "did", "can",
+  "the", "and", "for", "with", "what", "which", "who", "where", "when", "why", "how", "does", "did", "can", "is",
   "has", "have", "had", "was", "were", "are", "his", "him", "liam", "about", "tell", "that", "this", "from",
   "into", "must", "should", "would", "could", "any", "all", "you", "your", "there", "their", "first",
   "work", "worked", "working", "role", "project", "please", "describe",
@@ -453,7 +453,8 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   }));
   const hits = pool
     .map(({ section, title, body }) => {
-      const matched = terms.filter((term) => covers(title, term) || covers(body, term)).length;
+      const contentTerms = terms.filter((term) => !GENERIC_TERMS.has(term));
+      const matched = (contentTerms.length > 0 ? contentTerms : terms).filter((term) => covers(title, term) || covers(body, term)).length;
       const score = terms.reduce((total, term) => {
         const inTitle = covers(title, term);
         if (!inTitle && !covers(body, term)) return total;
@@ -461,7 +462,11 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       }, 0);
       return { section, title, body, score, matched };
     })
-    .filter((hit) => hit.matched / terms.length >= 0.5 || terms.some((term) => (term.length >= 5 || EMPLOYERS.some((item) => item.test.test(term))) && (covers(hit.title, term) || covers(hit.body, term)) && pool.filter((item) => covers(item.title, term) || covers(item.body, term)).length === 1))
+    .filter((hit) => {
+      const contentTerms = terms.filter((term) => !GENERIC_TERMS.has(term));
+      const basis = contentTerms.length > 0 ? contentTerms : terms;
+      return hit.matched / basis.length >= 0.5 || basis.some((term) => (term.length >= 5 || EMPLOYERS.some((item) => item.test.test(term))) && (covers(hit.title, term) || covers(hit.body, term)) && pool.filter((item) => covers(item.title, term) || covers(item.body, term)).length === 1);
+    })
     .filter((hit) => !hit.section.sectionId.startsWith("archive-") || terms.some((term) => hit.title.includes(term)))
     .sort((left, right) => right.score - left.score);
   if (terms.includes("title") && !namesAnotherRole(pool, terms)) {
