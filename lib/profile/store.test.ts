@@ -394,6 +394,10 @@ describe("profile store", () => {
     expect(searchSections(profile.sections, "worked at Initech")).toEqual({ found: false });
   });
 
+  it("does not answer an unknown tool from the current role", () => {
+    expect(searchSections(profile.sections, "What does he use Terraform for?")).toEqual({ found: false });
+  });
+
   it("finds the FoodFlow section from a paraphrase of the ERP", () => {
     const result = searchSections(profile.sections, "food distribution ERP");
     expect(result.found).toBe(true);

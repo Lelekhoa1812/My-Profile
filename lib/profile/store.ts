@@ -680,7 +680,7 @@ function distinctiveCount(
 const GENERIC_TERMS = new Set([
   "answer", "answers", "build", "built", "code", "data", "hold", "holds", "keep", "keeps",
   "make", "makes", "model", "models", "platform", "read", "reads", "run", "runs", "show",
-  "shows", "store", "stored", "stores", "system", "tool", "tools", "used", "user", "users",
+  "shows", "store", "stored", "stores", "system", "tool", "tools", "framework", "frameworks", "used", "user", "users",
   "using", "work", "works", "write", "writes", "between", "difference", "before", "after", "measure",
 ]);
 
@@ -751,6 +751,10 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   if (terms.length === 0) return broadSections(visible.filter((item) => !sourceType || item.section.sourceType === sourceType));
   const pool = visible.filter((item) => !sourceType || item.section.sourceType === sourceType);
   if (terms.every((term) => FACT_ONLY_TERMS.has(term))) return { found: false as const };
+  const specific = terms.filter((term) => term.length >= 5 && !GENERIC_TERMS.has(term));
+  const anchored = terms.filter((term) => !GENERIC_TERMS.has(term) && !/^(use|uses|used|using)$/.test(term));
+  const unmatched = (term: string) => pool.every((item) => !covers(item.title, term) && !covers(item.body, term));
+  if (specific.length > 0 && specific.every(unmatched) && anchored.every(unmatched)) return { found: false as const };
   const weight = new Map(terms.map((term) => {
     const frequency = pool.filter((item) => item.title.includes(term) || item.body.includes(term)).length;
     return [term, Math.log(1 + pool.length / Math.max(1, frequency))];
