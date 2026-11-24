@@ -97,6 +97,12 @@ describe("profile store", () => {
     }
   });
 
+  it("answers a named-live-app question from the Ericsson twin and the live app", () => {
+    const result = searchSections(profile.sections, "What is not a named live app?");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections.map((section) => section.sectionId)).toEqual(["project-ericsson", "project-shipped"]);
+  });
+
   it("answers a named-public-app question from the water-meter scanner", () => {
     const result = searchSections(profile.sections, "What is not a named public app?");
     expect(result.found).toBe(true);

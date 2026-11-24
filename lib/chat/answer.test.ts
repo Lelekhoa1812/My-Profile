@@ -1815,6 +1815,15 @@ describe("displayAnswer", () => {
     expect(publicApp).toContain("not a named public app");
     expect(publicApp).not.toContain("prompt-me");
     expect(publicApp).not.toContain("the record does not");
+    const notLive = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is not a named live app?") }],
+      "",
+      "What is not a named live app?",
+    );
+    expect(notLive).toContain("not a named live customer app");
+    expect(notLive).toContain("only named live app");
+    expect(notLive).not.toContain("not for a release");
+    expect(notLive).not.toContain("deployment count");
     const versionIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it version?") }],
       "",

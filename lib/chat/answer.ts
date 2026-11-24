@@ -1622,6 +1622,18 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bnot a named live\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /not a named live customer app/i.test(sentence)),
+      sentences.find((sentence) => /only named live app/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bnamed public app\b/i.test(question)) {
     const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /not a named public app/i.test(line));
     if (sentence) {
@@ -2215,6 +2227,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bseparate\b/i.test(question) && /\bfoodflow\b/i.test(question)) return joined;
   if (/\bin production\b/i.test(question) && !/\b(foodflow|skyledge|meter|scanner)\b/i.test(question)) return joined;
   if (/\brelease\b/i.test(question) && !/pre-release/i.test(question) && !namedEmployer(question) && !/\b(cva|foodflow|skyledge|golf|roster|writingjourney|axis|meter|scanner)\b/i.test(question)) return joined;
+  if (/\bnot a named live\b/i.test(question)) return joined;
   if (/\b(cite|explain|train|guard|embed|validat\w*|recogni|recommend|graph|score|trace|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv\w*|rank|track|own|rout|turn|check|gate|version|call|remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
   if (/\bagents?\b/i.test(question) && /\b(build|built)\b/i.test(question)) return joined;
   if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !namedEmployer(question)) return joined;

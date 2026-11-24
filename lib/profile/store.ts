@@ -436,6 +436,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("live") && (text.includes("sale") || text.includes("sales") || text.includes("customer")) && !namedEmployer(text), ids: ["project-shipped", "project-cva"] },
     { when: /\bship\b/.test(text) && /\bbesides\b/.test(text), ids: ["project-shipped"] },
     { when: text.includes("ship") && text.includes("production"), ids: ["project-shipped", "project-cva"] },
+    { when: /\bnot a named live\b/.test(text), ids: ["project-ericsson", "project-shipped"] },
     { when: /\blive app\b/.test(text) || /\bonly named live\b/.test(text), ids: ["project-shipped", "project-cva"] },
     { when: text.includes("measure") && text.includes("live"), ids: ["project-meter", "project-cva", "project-shipped"] },
     { when: /\badmin effort\b/.test(text), ids: ["role-hai-au"] },
