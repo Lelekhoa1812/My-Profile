@@ -15,6 +15,16 @@ describe("profile store", () => {
     if (result.found) expect(result.facts[0]?.value).toBe("Senior AI Software Engineer");
   });
 
+  it("names prompt-me without a production claim", () => {
+    const result = searchSections(profile.sections, "What is prompt-me?");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections[0]?.sectionId).toBe("project-public-code");
+      expect(result.sections[0]?.text).toContain("no production claim");
+      expect(result.sections[0]?.text).toContain("prompt-me");
+    }
+  });
+
   it("answers a ship-to-production question from the shipped-work section", () => {
     const result = searchSections(profile.sections, "What does he ship to production?");
     expect(result.found).toBe(true);
