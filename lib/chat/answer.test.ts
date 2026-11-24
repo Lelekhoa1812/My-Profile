@@ -1030,6 +1030,20 @@ describe("displayAnswer", () => {
     );
     expect(harryRetrieve).toContain("BM25");
     expect(harryRetrieve).not.toContain("Medical-Chatbot");
+    const critic = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the critic check?") }],
+      "",
+      "What does the critic check?",
+    );
+    expect(critic).toContain("Critic");
+    expect(critic).not.toContain("Validators check");
+    const cvaApprove = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does a person approve at CVA?") }],
+      "",
+      "What does a person approve at CVA?",
+    );
+    expect(cvaApprove).toContain("person approves");
+    expect(cvaApprove).not.toContain("FoodFlow");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");

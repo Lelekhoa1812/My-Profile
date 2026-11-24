@@ -120,6 +120,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\b(code|coding|programming)\b/i.test(question) && /\b(vietnamese|mandarin|fluent)\b/i.test(item.sentence)) continue;
     if (/the resume also uses the phrase/i.test(item.sentence) && !/\bphrase\b/i.test(question)) continue;
     if (orgLine && /\bwhat is\b/i.test(question) && !/\borg\b/i.test(question) && /hugging face org is/i.test(item.sentence)) continue;
+    if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (picked && item.score < 2 && !exact) continue;
     if (!picked && unique && item.score < 2 && !exact && answered) continue;
     if (!picked && unique && words.every((word) => !mentions(item.sentence, word) || mentions(unique, word))) continue;
@@ -309,7 +310,7 @@ function countedFact(question: string, sentences: readonly string[], words: read
 
 function titledInQuestion(question: string, block: string): boolean {
   const title = (plainSentences(block)[0] ?? "").split(/[,.]/)[0] ?? "";
-  return title.split(/\s+/).some((word) => /^[A-Z]/.test(word) && word.length >= 4 && new RegExp(`\\b${word}\\b`, "i").test(question));
+  return title.split(/\s+/).some((word) => /^[A-Z]/.test(word) && (word.length >= 4 || (word.length === 3 && word === word.toUpperCase())) && new RegExp(`\\b${word}\\b`, "i").test(question));
 }
 
 function matchingBlock(outputs: readonly Record<string, unknown>[], question: string): string {
