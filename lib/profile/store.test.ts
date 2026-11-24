@@ -165,6 +165,15 @@ describe("profile store", () => {
     }
   });
 
+  it("answers a public-but-not-production question from the repository list", () => {
+    const result = searchSections(profile.sections, "What repositories are public but not production?");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections[0]?.sectionId).toBe("project-public-code");
+      expect(result.sections[0]?.text).toContain("no production claim");
+    }
+  });
+
   it("answers a ship-to-production question from the shipped-work section", () => {
     const result = searchSections(profile.sections, "What does he ship to production?");
     expect(result.found).toBe(true);

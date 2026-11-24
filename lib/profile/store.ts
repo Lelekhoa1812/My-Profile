@@ -399,6 +399,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bmodels?\b/.test(text) && /\bhost(?:s|ed|ing)?\b/.test(text) && !/\bself-hosted\b/.test(text) && !/\baxis\b/.test(text), ids: ["project-medswin"] },
     { when: /\bdistribut/.test(text), ids: ["role-axion"] },
     { when: /\binvest/.test(text) && !/\binvestor\b/.test(text) && !namedEmployer(text), ids: ["project-axion-workflows"] },
+    { when: /\bpublic\b/.test(text) && /\brepositor/.test(text) && /\bnot\b/.test(text) && /\bproduction\b/.test(text), ids: ["project-public-code"] },
     { when: /\bproduction release\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["project-shipped", "project-hf-models"] },
     { when: /\bproduc(?:e|es|ed|ing|tion)\b/.test(text) && !/productionized|production-grade|pre-release|packaged|meter|claim/.test(text) && !/\bship\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["project-shipped"] },
     { when: /\bsegment/.test(text) && /\b(do|does|is|use|uses|for|what)\b/.test(text), ids: ["project-hf-models"] },

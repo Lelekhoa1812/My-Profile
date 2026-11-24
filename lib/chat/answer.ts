@@ -305,7 +305,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\b10-signal ensemble\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\b64-dimensional\b/i.test(sentence)));
   }
-  if (/\bwhat is\b/i.test(question) && /\bhugging face\b/i.test(question) && /\bmodels\b/i.test(question)) {
+  if ((/\bwhat is\b/i.test(question) || /\bmodels are\b/i.test(question)) && /\bhugging face\b/i.test(question) && /\bmodels\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /huggingface\.co\/khoaliamle/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bthe names are\b/i.test(sentence)));
@@ -1836,6 +1836,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       chosen.length = 0;
       cap = 4;
       for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\bpublic\b/i.test(question) && /\brepositor/i.test(question) && /\bnot\b/i.test(question) && /\bproduction\b/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bno production claim\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
     }
   }
   if (/\bwhat does\b/i.test(question) && /\bwater[\s-]?meter\b/i.test(question) && /\bdo\b/i.test(question) && !/\b(read|deploy|hardware|stack|database|llm|reduce|exclude)\b/i.test(question)) {

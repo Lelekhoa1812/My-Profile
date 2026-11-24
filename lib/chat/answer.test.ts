@@ -4597,6 +4597,23 @@ describe("displayAnswer", () => {
     expect(faceCards).toContain("Public datasets");
     expect(faceCards).toContain("huggingface.co/khoaliamle");
     expect(faceCards).toContain("not a production release");
+    const faceModels = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models are on Hugging Face?") }],
+      "",
+      "What models are on Hugging Face?",
+    );
+    expect(faceModels).toContain("MNIST");
+    expect(faceModels).toContain("graffiti detection");
+    expect(faceModels).not.toContain("download count");
+    const publicRepos = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What repositories are public but not production?") }],
+      "",
+      "What repositories are public but not production?",
+    );
+    expect(publicRepos).toContain("prompt-me");
+    expect(publicRepos).toContain("no production claim");
+    expect(publicRepos).not.toContain("business module");
+    expect(publicRepos).not.toContain("star counts");
     const pedigreeProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the pedigree project?") }],
       "",
