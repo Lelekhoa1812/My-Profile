@@ -219,11 +219,11 @@ function Answer({ turn, error, email, onClear, onContinue }: { turn: Turn; error
           <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2">
             <button type="button" onClick={onContinue} className="data flex items-center gap-2 text-white/72 transition-colors hover:text-white">
               <MessagesSquare aria-hidden className="h-3.5 w-3.5" strokeWidth={1.5} />
-              Continue in the panel
+              Continue
             </button>
             <button type="button" onClick={onClear} className="data flex items-center gap-2 text-white/72 transition-colors hover:text-white">
               <X aria-hidden className="h-3.5 w-3.5" strokeWidth={1.5} />
-              Back to the summary
+              Close
             </button>
           </div>
         ) : null}

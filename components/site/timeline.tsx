@@ -1,7 +1,7 @@
 "use client";
 
 import { MessageSquareText } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useRecordChat } from "@/components/chat/record-chat";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import type { Lane, Role } from "@/content/site";
@@ -13,6 +13,89 @@ const START = { year: 2020, month: 1 };
 function index(value: string): number {
   const [year, month] = value.split("-").map(Number);
   return (year - START.year) * 12 + (month - START.month);
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => setReduced(query.matches);
+    apply();
+    query.addEventListener("change", apply);
+    return () => query.removeEventListener("change", apply);
+  }, []);
+  return reduced;
+}
+
+function measureLabelScroll(track: HTMLElement, text: HTMLElement) {
+  const overflow = text.scrollWidth - track.clientWidth;
+  return overflow > 1 ? overflow : 0;
+}
+
+function ScrollingBarLabel({ text, animate }: { text: string; animate: boolean }) {
+  const trackRef = useRef<HTMLSpanElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
+  const [shift, setShift] = useState(0);
+
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    const label = textRef.current;
+    if (!track || !label) return;
+    const apply = () => setShift(measureLabelScroll(track, label));
+    apply();
+    const ro = new ResizeObserver(apply);
+    ro.observe(track);
+    ro.observe(label);
+    return () => ro.disconnect();
+  }, [text]);
+
+  const scroll = animate && shift > 0;
+
+  return (
+    <span ref={trackRef} className="min-w-0 flex-1 overflow-hidden">
+      <span
+        ref={textRef}
+        className={`inline-block whitespace-nowrap ${scroll ? "bar-label-scroll" : ""}`}
+        style={scroll ? ({ ["--scroll-shift" as string]: `${shift}px` } as CSSProperties) : undefined}
+      >
+        {text}
+      </span>
+    </span>
+  );
+}
+
+function NowMarker({ nowAt }: { nowAt: number }) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLSpanElement>(null);
+  const [style, setStyle] = useState<CSSProperties>({ left: `${nowAt}%`, transform: "translateX(-100%)" });
+
+  useLayoutEffect(() => {
+    const row = rowRef.current;
+    const label = labelRef.current;
+    if (!row || !label) return;
+    const place = () => {
+      const rowWidth = row.clientWidth;
+      const labelWidth = label.offsetWidth;
+      if (!rowWidth || !labelWidth) return;
+      const lineX = (nowAt / 100) * rowWidth;
+      const inset = 2;
+      let left = lineX - labelWidth;
+      left = Math.max(inset, Math.min(left, rowWidth - labelWidth - inset));
+      setStyle({ left: `${left}px`, transform: "none" });
+    };
+    place();
+    const ro = new ResizeObserver(place);
+    ro.observe(row);
+    return () => ro.disconnect();
+  }, [nowAt]);
+
+  return (
+    <div ref={rowRef} className="relative h-6">
+      <span ref={labelRef} className="data absolute top-1 whitespace-nowrap text-[10px] text-white/55" style={style}>
+        Now
+      </span>
+    </div>
+  );
 }
 
 function pack(roles: Role[], now: string): { role: Role; row: number }[] {
@@ -35,6 +118,7 @@ export function Timeline({ roles, lanes, now }: { roles: Role[]; lanes: { id: La
   const [focus, setFocus] = useState<string | null>(null);
   const [lane, setLane] = useState<string>("all");
   const scroller = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
   useEffect(() => {
     const element = scroller.current;
     if (element) element.scrollLeft = element.scrollWidth;
@@ -87,11 +171,12 @@ export function Timeline({ roles, lanes, now }: { roles: Role[]; lanes: { id: La
                         <Tooltip key={role.id}>
                           <TooltipTrigger
                             onClick={() => select(role.id)}
+                            title={role.employer}
                             aria-label={`${role.employer}, ${role.title}, ${monthLabel(role.start)} to ${monthLabel(role.end)}`}
-                            className={`absolute flex h-7 items-center overflow-hidden whitespace-nowrap border px-2 text-left text-[11px] leading-none transition-colors ${role.end ? "" : "border-dashed"} ${lit ? "border-white bg-white text-black" : "border-white/40 bg-white/[0.07] text-white/88 hover:border-white hover:bg-white hover:text-black"}`}
+                            className={`absolute flex h-7 min-w-0 items-center overflow-hidden border px-2 text-left text-[11px] leading-none transition-colors ${role.end ? "" : "border-dashed"} ${lit ? "border-white bg-white text-black" : "border-white/40 bg-white/[0.07] text-white/88 hover:border-white hover:bg-white hover:text-black"}`}
                             style={{ left: `${left}%`, width: `${width}%`, top: `${row * 2.25}rem` }}
                           >
-                            {role.employer}
+                            <ScrollingBarLabel text={role.employer} animate={!reducedMotion} />
                           </TooltipTrigger>
                           <TooltipContent side="top" sideOffset={8} className="block max-w-[18rem] rounded-none border border-white/30 bg-black px-4 py-3 text-left text-ink">
                             <span className="block text-sm">{role.employer}</span>
@@ -111,18 +196,10 @@ export function Timeline({ roles, lanes, now }: { roles: Role[]; lanes: { id: La
           </div>
           <div className="grid grid-cols-[10rem_1fr] gap-6">
             <span />
-            <div className="relative h-6">
-              <span className="data absolute top-1 -translate-x-full pr-2 text-[10px] text-white/55" style={{ left: `${nowAt}%` }}>
-                Now
-              </span>
-            </div>
+            <NowMarker nowAt={nowAt} />
           </div>
         </div>
       </div>
-      <p className="data mt-3 text-[10px] text-white/50 md:hidden">Swipe right for earlier years</p>
-      <p className="mt-6 max-w-[44rem] text-sm leading-relaxed text-white/55">
-        From May 2025 to July 2026 several engagements overlap. Lanes group roles by engagement. The resume does not state hours.
-      </p>
       <RoleList roles={roles} lanes={lanes} lane={lane} onLane={setLane} focus={focus} />
     </div>
   );
@@ -157,10 +234,7 @@ function RoleList({ roles, lanes, lane, onLane, focus }: { roles: Role[]; lanes:
               </div>
               <div>
                 <p className="pretty leading-relaxed text-white/88">{role.outcome}</p>
-                <p className="data mt-2 text-[10px] text-white/50">
-                  {lanes.find((item) => item.id === role.lane)?.label}
-                  {role.overlap ? ` · ${role.overlap}` : ""}
-                </p>
+                <p className="data mt-2 text-[10px] text-white/50">{lanes.find((item) => item.id === role.lane)?.label}</p>
               </div>
               <button
                 type="button"

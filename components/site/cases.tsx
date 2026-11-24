@@ -30,20 +30,18 @@ export function Cases({ items }: { items: Case[] }) {
               ))}
             </ul>
             <dl className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
-              <div>
-                <dt className="data text-[11px] text-white/50">Result</dt>
-                {item.result ? (
+              {item.result ? (
+                <div>
+                  <dt className="data text-[11px] text-white/50">Result</dt>
                   <dd className="mt-2">
                     <span className="block text-lg font-light leading-snug text-ink">{item.result.text}</span>
                     <span className="data mt-2 block text-[10px] text-white/50">{item.result.source}</span>
                   </dd>
-                ) : (
-                  <dd className="mt-2 leading-snug text-white/72">The resume states scope and controls here, not a number.</dd>
-                )}
-              </div>
+                </div>
+              ) : null}
               {item.also ? (
                 <div>
-                  <dt className="data text-[11px] text-white/50">Also on the resume</dt>
+                  <dt className="data text-[11px] text-white/50">Also</dt>
                   <dd className="mt-2">
                     <span className="block leading-snug text-white/88">{item.also.text}</span>
                     <span className="data mt-2 block text-[10px] text-white/50">{item.also.source}</span>
@@ -73,7 +71,7 @@ export function Cases({ items }: { items: Case[] }) {
             ) : null}
           </div>
           <div className="flex flex-col gap-8 self-start lg:sticky lg:top-28 lg:col-span-5 lg:pt-3">
-            <Flow steps={item.flow} title={`How ${item.title} hands work to a person`} />
+            <Flow steps={item.flow} title={item.title} />
             {item.image && STILLS[item.image.src] ? (
               <figure className="border border-white/15 p-2">
                 <Image src={STILLS[item.image.src]} alt={item.image.alt} sizes="(min-width: 1024px) 34vw, 100vw" className="h-auto w-full opacity-90 grayscale transition duration-700 hover:opacity-100 hover:grayscale-0" />

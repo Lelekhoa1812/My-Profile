@@ -27,30 +27,17 @@ function ProjectEntry({ item }: { item: Project }) {
 
   return (
     <article id={item.sectionId?.startsWith("project-") ? item.sectionId : `project-${item.id}`} className="group relative px-5 pb-10 pt-9 md:px-8">
-      <div aria-hidden className="absolute left-5 right-5 top-2 flex items-center opacity-0 transition-opacity duration-500 group-focus-within:opacity-100 group-hover:opacity-100 md:left-8 md:right-8">
-        <span className="h-2 w-px bg-white/60" />
-        <span className="h-px flex-1 bg-white/35" />
-        <span className="data mx-2 text-[9px] text-white/60">{still ? `${still.width} × ${still.height}` : "no still"}</span>
-        <span className="h-px flex-1 bg-white/35" />
-        <span className="h-2 w-px bg-white/60" />
-      </div>
-      <div
-        onPointerMove={track}
-        onPointerEnter={(event) => event.currentTarget.style.setProperty("--r", "92px")}
-        onPointerLeave={(event) => event.currentTarget.style.setProperty("--r", "0px")}
-        className="lens relative aspect-[4/3] overflow-hidden border border-white/15 bg-white/[0.02]"
-      >
-        {still ? (
-          <>
-            <Image src={still} alt={item.alt ?? ""} fill sizes="(min-width: 1280px) 30vw, (min-width: 768px) 46vw, 100vw" className="object-cover object-top opacity-80 grayscale" />
-            <Image src={still} alt="" aria-hidden fill sizes="(min-width: 1280px) 30vw, (min-width: 768px) 46vw, 100vw" className="lens-colour object-cover object-top" />
-          </>
-        ) : (
-          <div className="hatch grid h-full place-items-center">
-            <span className="data text-[10px] text-white/50">No public still</span>
-          </div>
-        )}
-      </div>
+      {still ? (
+        <div
+          onPointerMove={track}
+          onPointerEnter={(event) => event.currentTarget.style.setProperty("--r", "92px")}
+          onPointerLeave={(event) => event.currentTarget.style.setProperty("--r", "0px")}
+          className="lens relative aspect-[4/3] overflow-hidden border border-white/15 bg-white/[0.02]"
+        >
+          <Image src={still} alt={item.alt ?? ""} fill sizes="(min-width: 1280px) 30vw, (min-width: 768px) 46vw, 100vw" className="object-cover object-top opacity-80 grayscale" />
+          <Image src={still} alt="" aria-hidden fill sizes="(min-width: 1280px) 30vw, (min-width: 768px) 46vw, 100vw" className="lens-colour object-cover object-top" />
+        </div>
+      ) : null}
       <h3 className="mt-6 text-[1.625rem] font-light leading-tight tracking-[-0.01em] text-ink">{item.title}</h3>
       <p className="data mt-2 text-[10px] text-white/55">{item.label}</p>
       <p className="pretty mt-4 leading-relaxed text-white/72">{item.line}</p>

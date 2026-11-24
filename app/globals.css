@@ -254,6 +254,25 @@ a {
   initial-value: 0px;
 }
 
+@keyframes bar-label-scroll {
+  0%,
+  18% {
+    transform: translateX(0);
+  }
+  42%,
+  58% {
+    transform: translateX(calc(-1 * var(--scroll-shift)));
+  }
+  82%,
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.bar-label-scroll {
+  animation: bar-label-scroll calc(5s + var(--scroll-shift) * 0.04s) ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -263,7 +282,8 @@ a {
   .draw,
   .depth-in,
   .dock-open,
-  .guide {
+  .guide,
+  .bar-label-scroll {
     animation: none;
   }
   .blink {

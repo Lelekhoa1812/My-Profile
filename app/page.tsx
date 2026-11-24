@@ -62,22 +62,22 @@ export default function Home() {
           </div>
         </section>
 
-        <Section id="work" title="Selected work" intro="Four systems from the resume. Each one retrieves evidence, drafts, and stops for a person before anything is written.">
+        <Section id="work" title="Selected work">
           <Cases items={cases} />
         </Section>
 
-        <Section id="timeline" title="Timeline" intro={`${roles.length - 1} roles and a degree since 2020, on one time axis. Select a bar to read the role.`}>
+        <Section id="timeline" title="Timeline">
           <Timeline roles={roles} lanes={lanes} now={currentMonth()} />
         </Section>
 
-        <Section id="projects" title="Projects" intro="Products that shipped, sold, or ran in a hospital, and the open-source tools behind them. Hover a still to see it in colour.">
+        <Section id="projects" title="Projects">
           <Projects items={projects} />
         </Section>
 
         <Section
           id="archive"
           title="Everything public"
-          intro={`Every public repository on GitHub and every model, dataset, and Space on Hugging Face: ${counts.repo} repositories, ${counts.model} models, ${counts.dataset} datasets, and ${counts.space} Spaces.`}
+          intro={`${counts.repo} repositories, ${counts.model} models, ${counts.dataset} datasets, ${counts.space} Spaces.`}
         >
           <Archive items={items} areas={archive.areas} />
         </Section>
@@ -101,7 +101,6 @@ export default function Home() {
                   <dd className="pretty mt-2 leading-relaxed text-white/72">{org.role}</dd>
                 </div>
               ))}
-              <p className="border-t border-white/12 pt-5 text-sm text-white/55">The resume lists no publications yet.</p>
             </dl>
             <div id="skills" className="scroll-mt-28 lg:col-span-7">
               <h3 className="text-[1.375rem] font-light leading-tight text-ink">Stack</h3>
@@ -173,9 +172,8 @@ export default function Home() {
               </figcaption>
             </figure>
           </div>
-          <footer className="mx-auto flex max-w-[90rem] flex-col gap-2 border-t border-white/12 px-5 py-6 text-sm text-white/50 md:flex-row md:justify-between md:px-10">
-            <p>Answers come from Liam's record through Nvidia NIM. The assistant cites what it read.</p>
-            <p className="data text-[10px]">Melbourne · {new Date().getFullYear()}</p>
+          <footer className="mx-auto flex max-w-[90rem] border-t border-white/12 px-5 py-6 md:px-10">
+            <p className="data text-[10px] text-white/50">Melbourne · {new Date().getFullYear()}</p>
           </footer>
         </section>
       </main>
@@ -185,13 +183,13 @@ export default function Home() {
   );
 }
 
-function Section({ id, title, intro, children }: { id: string; title: string; intro: string; children: ReactNode }) {
+function Section({ id, title, intro, children }: { id: string; title: string; intro?: string; children: ReactNode }) {
   return (
     <section id={id} className="scroll-mt-20 border-t border-white/12">
       <div className="mx-auto max-w-[90rem] px-5 py-20 md:px-10 md:py-28">
-        <div className="mb-12 grid gap-6 md:mb-16 lg:grid-cols-12">
+        <div className={`mb-12 md:mb-16 ${intro ? "grid gap-6 lg:grid-cols-12" : ""}`}>
           <h2 className="text-[clamp(2.25rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.02em] text-ink lg:col-span-5">{title}</h2>
-          <p className="pretty max-w-[40rem] text-[1.0625rem] leading-relaxed text-white/72 lg:col-span-6 lg:col-start-7 lg:pt-3">{intro}</p>
+          {intro ? <p className="pretty max-w-[40rem] text-[1.0625rem] leading-relaxed text-white/72 lg:col-span-6 lg:col-start-7 lg:pt-3">{intro}</p> : null}
         </div>
         {children}
       </div>
