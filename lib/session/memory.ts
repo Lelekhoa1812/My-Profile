@@ -44,8 +44,8 @@ function messageText(message: UIMessage): string {
   return message.parts.map((part) => part.type === "text" && "text" in part ? part.text : "").join(" ");
 }
 
-const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent|agents?|retrieval|ocr|measure|models?|score|database|bought|cut|live|deployed clinical|production app|forecast|queue|authenticat\w*|signals?)\b/i;
-const NAMED_PRODUCT = /\b(golf|skyledge|roster|triage|survee|prophet|pedigree|writingjourney|medviet|clara|salle|meter|acnt|cva|medchat|stt-studio|estatefolio|s&p)\b/i;
+const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent|agents?|retrieval|ocr|measure|models?|score|database|bought|cut|live|deployed clinical|production app|forecast|queue|authenticat\w*|signals?|show|draft)\b/i;
+const NAMED_PRODUCT = /\b(golf|skyledge|roster|triage|survee|prophet|pedigree|writingjourney|medviet|clara|salle|meter|acnt|cva|medchat|stt-studio|estatefolio|s&p|ericsson|poptech)\b/i;
 const SPOKEN_EMPLOYER: Record<string, string> = { "hai-au": "Hai Au", "nam-a": "Nam A", "tien-thanh": "Tien Thanh" };
 
 export function groundedQuestion(messages: readonly UIMessage[], index: number): string {
@@ -55,7 +55,7 @@ export function groundedQuestion(messages: readonly UIMessage[], index: number):
   if (/\bforecast\b/i.test(question)) {
     const product = previousProduct(messages, index);
     const stem = question.replace(/\?$/, "").trim();
-    return product === "estatefolio" ? `${stem} for estatefolio?` : question;
+    return product && /^(estatefolio|ericsson|poptech|prophet)$/.test(product) ? `${stem} for ${product}?` : question;
   }
   if (/\bqueue\b/i.test(question)) {
     const product = previousProduct(messages, index);

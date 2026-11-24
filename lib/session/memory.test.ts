@@ -142,6 +142,9 @@ describe("withMemory", () => {
     const harry = { id: "u3", role: "user", parts: [{ type: "text", text: "What did he do at Harry?" }] } as UIMessage;
     expect(groundedQuestion([estate, answer, follow], 2)).toContain("estatefolio");
     expect(groundedQuestion([harry, answer, follow], 2)).toBe("What does the forecast read?");
+    const ericsson = { id: "u4", role: "user", parts: [{ type: "text", text: "What is Ericsson?" }] } as UIMessage;
+    const forecastIt = { id: "u5", role: "user", parts: [{ type: "text", text: "What does it forecast?" }] } as UIMessage;
+    expect(groundedQuestion([ericsson, answer, forecastIt], 2)).toContain("ericsson");
   });
 
   it("names the S&P forecast on a queue follow-up", () => {
@@ -174,5 +177,15 @@ describe("withMemory", () => {
     const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "A mate-selection engine." }] } as UIMessage;
     const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What signals does it use?" }] } as UIMessage;
     expect(groundedQuestion([pedigree, answer, follow], 2)).toContain("pedigree");
+  });
+
+  it("keeps the previous subject on a show or draft follow-up", () => {
+    const mizco = { id: "u1", role: "user", parts: [{ type: "text", text: "What did he do at Mizco?" }] } as UIMessage;
+    const cva = { id: "u2", role: "user", parts: [{ type: "text", text: "What is CVA?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "Recorded." }] } as UIMessage;
+    const show = { id: "u3", role: "user", parts: [{ type: "text", text: "What does it show?" }] } as UIMessage;
+    const draft = { id: "u4", role: "user", parts: [{ type: "text", text: "What does it draft?" }] } as UIMessage;
+    expect(groundedQuestion([mizco, answer, show], 2)).toContain("mizco");
+    expect(groundedQuestion([cva, answer, draft], 2)).toContain("cva");
   });
 });
