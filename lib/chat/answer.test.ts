@@ -507,7 +507,29 @@ describe("displayAnswer", () => {
     expect(databases).toContain("MariaDB");
     expect(databases).toContain("MongoDB");
     expect(databases).toContain("SQLite");
+    expect(databases).toContain("MySQL");
     expect(databases).not.toContain("does not own");
+    const surveeDatabase = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What database does Survee use?") }],
+      "",
+      "What database does Survee use?",
+    );
+    expect(surveeDatabase).toContain("MongoDB");
+    expect(surveeDatabase).not.toContain("MariaDB");
+    const triageDatabase = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What database does the triage app use?") }],
+      "",
+      "What database does the triage app use?",
+    );
+    expect(triageDatabase).toContain("FAISS");
+    expect(triageDatabase).not.toContain("MariaDB");
+    const foodflowDatabase = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What database does FoodFlow use?") }],
+      "",
+      "What database does FoodFlow use?",
+    );
+    expect(foodflowDatabase).toContain("does not own");
+    expect(foodflowDatabase).not.toContain("LangChain");
     const employer = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is his current employer?") }],
       "",

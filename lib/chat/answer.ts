@@ -511,9 +511,17 @@ function deploymentAnswer(question: string, outputs: readonly Record<string, unk
 
 function databaseAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (/\bvector\b/i.test(question)) return "";
+  if (/\b(foodflow|axis)\b/i.test(question) && /\bdatabases?\b/i.test(question)) {
+    const owned = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bdoes not own\b/i.test(sentence) && /\b(database|data)\b/i.test(sentence)));
+    if (owned.length > 0) return [...new Set(owned)].slice(0, 2).join(" ");
+  }
   if (!/\bdatabases?\b/i.test(question) || !/\b(use|uses|used)\b/i.test(question) || namedEmployer(question)) return "";
-  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(mongodb|mariadb|mysql|sqlite)\b/i.test(sentence) && !/\bdoes not\b/i.test(sentence)));
-  return [...new Set(lines)].slice(0, 3).join(" ");
+  const product = ["triage", "survee", "roster", "prophet"].find((name) => new RegExp(`\\b${name}\\b`, "i").test(question));
+  const lines = sectionBlocks(outputs).flatMap((block) => {
+    if (product && !new RegExp(`\\b${product}\\b`, "i").test(block)) return [];
+    return plainSentences(block).filter((sentence) => /\b(mongodb|mariadb|mysql|sqlite)\b/i.test(sentence) && !/\bdoes not\b/i.test(sentence));
+  });
+  return [...new Set(lines)].slice(0, product ? 2 : 5).join(" ");
 }
 
 function runSentence(question: string, sentences: readonly string[]): string | undefined {
