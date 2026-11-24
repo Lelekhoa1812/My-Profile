@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || productStackAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || scoreAnswer(question, outputs) || draftedAnswer(question, outputs) || reviewedAnswer(question, outputs) || exportedAnswer(question, outputs) || forecastedAnswer(question, outputs) || monitoredAnswer(question, outputs) || detectedAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolDutyAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || productStackAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || previousRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || scoreAnswer(question, outputs) || draftedAnswer(question, outputs) || reviewedAnswer(question, outputs) || exportedAnswer(question, outputs) || forecastedAnswer(question, outputs) || monitoredAnswer(question, outputs) || detectedAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolDutyAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -505,8 +505,21 @@ function rolePeriods(outputs: readonly Record<string, unknown>[]): { heading: st
   return rows;
 }
 
+function endKey(sentence: string): number {
+  if (/\bto present\b/i.test(sentence)) return 999912;
+  const dated = sentence.match(/\bto\s+(january|february|march|april|may|june|july|august|september|october|november|december)\s+(20\d{2})\b/i);
+  if (!dated) return 0;
+  return Number(dated[2]) * 12 + (MONTHS[dated[1].toLowerCase()] ?? 0);
+}
+
+function previousRoleAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bprevious role\b/i.test(question) && !(/\bended\b/i.test(question) && /\broles?\b/i.test(question))) return "";
+  const rows = rolePeriods(outputs).filter((row) => !/\bpresent\b/i.test(row.period)).sort((left, right) => endKey(right.period) - endKey(left.period));
+  return rows.slice(0, 2).map((row) => `${row.heading}. ${row.period}`).join(" ");
+}
+
 function firstRoleAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  const earliest = /\bhis first role\b/i.test(question) || /\bwhat did he do first\b/i.test(question);
+  const earliest = /\bhis first role\b/i.test(question) || /\bwhat did he do first\b/i.test(question) || /\boldest role\b/i.test(question);
   if (!/\bcame first\b/i.test(question) && !(/\bwhich role\b/i.test(question) && /\bfirst\b/i.test(question)) && !earliest) return "";
   const rows = rolePeriods(outputs).sort((left, right) => left.start - right.start);
   const [first, second] = rows;

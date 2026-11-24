@@ -167,6 +167,14 @@ function betweenRoleIds(text: string): string[] | undefined {
   return [...earlier.ids, ...middle, ...later.ids].filter((id, index, list) => list.indexOf(id) === index);
 }
 
+function recentEndedRoleIds(text: string): string[] | undefined {
+  if (!/\bprevious role\b/.test(text) && !(/\bended\b/.test(text) && /\broles?\b/.test(text))) return undefined;
+  const closed = ROLE_SPANS.filter((span, index, list) => !span.nested && span.end < 999912 && list.findIndex((item) => item.ids[0] === span.ids[0]) === index);
+  const latest = closed.reduce((end, span) => Math.max(end, span.end), 0);
+  const ids = closed.filter((span) => span.end === latest).sort((left, right) => right.start - left.start).flatMap((span) => span.ids);
+  return ids.length > 0 ? ids.slice(0, 2) : undefined;
+}
+
 function adjacentRoleIds(text: string) {
   const before = text.match(/\bbefore\s+(?:the\s+)?([a-z]+)\b/);
   const after = text.match(/\bafter\s+(?:the\s+)?([a-z]+)\b/);
@@ -241,6 +249,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
   const percentIds = percentFigureIds(pool, text);
   const adjacent = adjacentRoleIds(text);
   const overlapping = overlappingRoleIds(text);
+  const ended = recentEndedRoleIds(text);
   const between = betweenRoleIds(text);
   const city = ["melbourne", "perth", "ho chi minh", "binh duong"].find((name) => text.includes(name));
   const cityRoles = city && /\b(jobs|roles)\b/.test(text)
@@ -253,10 +262,12 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bcloud\b/.test(text) && /\b(platform|platforms|use|uses|used)\b/.test(text) && !namedEmployer(text), ids: ["role-alta", "skills"] },
     { when: Boolean(between?.length), ids: between ?? [] },
     { when: Boolean(overlapping?.length), ids: overlapping ?? [] },
+    { when: Boolean(ended?.length), ids: ended ?? [] },
     { when: cityRoles.length > 0, ids: cityRoles },
     { when: /\bnam\b/.test(text) && /\b(two|difference)\b/.test(text) && /\broles?\b/.test(text), ids: ["role-nam-a-ai", "role-nam-a-software"] },
     { when: /\bnam\b/.test(text) && /\b(first|earlier)\b/.test(text), ids: ["role-nam-a-software", "role-nam-a-ai"] },
-    { when: /\bhis first role\b/.test(text) || /\bwhat did he do first\b/.test(text), ids: ["role-alta"] },
+    { when: /\bhis first role\b/.test(text) || /\bwhat did he do first\b/.test(text) || /\boldest role\b/.test(text), ids: ["role-alta"] },
+    { when: /\b(his last role|what did he do last|his job)\b/.test(text), ids: ["role-axion"] },
     { when: Boolean(percentIds?.length), ids: percentIds ?? [] },
     { when: Boolean(adjacent?.length), ids: adjacent ?? [] },
     { when: text.includes("axion") && /\brole\b/.test(text) && /\b(start|started|begin|began|when)\b/.test(text), ids: ["role-axion"] },
@@ -307,7 +318,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("person") && (text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-cva", "project-writing"] },
     { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },
     { when: /\b(work|job)\b/.test(text) && text.includes("now"), ids: ["role-axion", "project-cva"] },
-    { when: /\b(current employer|latest role|most recently)\b/.test(text), ids: ["role-axion"] },
+    { when: /\b(current employer|latest role|most recently)\b/.test(text) && !/\bended\b/.test(text), ids: ["role-axion"] },
     { when: /\bintroduce\b/.test(text) || (/\bbackground\b/.test(text) && !namedEmployer(text)) || (/\bavailable\b/.test(text) && /\bwork\b/.test(text)), ids: ["role-axion"] },
     { when: /\bcareer\b/.test(text) && !/\b(cva|application|agent)\b/.test(text), ids: ["role-axion"] },
     { when: (/\bknow about\b/.test(text) || /\bhire\b/.test(text) || (/\b(summarise|summarize)\b/.test(text) && /\bwork\b/.test(text))) && !namedEmployer(text), ids: ["role-axion"] },

@@ -1859,6 +1859,35 @@ describe("displayAnswer", () => {
     );
     expect(didFirst).toContain("May 2022");
     expect(didFirst).not.toContain("July 2026");
+    const oldestRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the oldest role?") }],
+      "",
+      "What is the oldest role?",
+    );
+    expect(oldestRole).toContain("Alta");
+    expect(oldestRole).toContain("May 2022");
+    const previousRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What was his previous role?") }],
+      "",
+      "What was his previous role?",
+    );
+    expect(previousRole).toContain("Harry");
+    expect(previousRole).toContain("July 2026");
+    expect(previousRole).not.toContain("to present");
+    const endedRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What role ended most recently?") }],
+      "",
+      "What role ended most recently?",
+    );
+    expect(endedRole).toContain("Harry");
+    expect(endedRole).not.toContain("to present");
+    const lastRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What was his last role?") }],
+      "",
+      "What was his last role?",
+    );
+    expect(lastRole).toContain("Axion");
+    expect(lastRole).toContain("to present");
     expect(cameFirst).toContain("April 2023");
     expect(cameFirst).toContain("December 2024");
     const pedigreeBefore = displayAnswer(
