@@ -11,6 +11,8 @@ import { createPoolFetch, getNimPool } from "../../../lib/nim/provider";
 import { recordCard } from "../../../lib/profile/card";
 import { loadProfile } from "../../../lib/profile/load";
 import { tailForModel } from "../../../lib/session/tail";
+import { loadStoredTurns } from "../../../lib/session/load";
+import { withMemory } from "../../../lib/session/memory";
 import { appendTurns } from "../../../lib/session/turns";
 
 export const runtime = "nodejs";
@@ -44,6 +46,7 @@ export async function POST(request: Request): Promise<Response> {
   const visitor = readVisitor(request);
   const threadId = cleanId(payload.threadId) ?? visitor.id;
   const record = await loadProfile();
+  const stored = await loadStoredTurns(threadId, visitor.id);
   const question = lastUserText(messages);
   const agent = new ToolLoopAgent({
     model: nim().chatModel(NIM_MODELS[0]),
@@ -60,7 +63,7 @@ export async function POST(request: Request): Promise<Response> {
     },
   });
   const result = await agent.stream({
-    messages: tailForModel(await convertToModelMessages(messages)),
+    messages: tailForModel(await convertToModelMessages(withMemory(stored, messages))),
     abortSignal: request.signal,
     timeout: { firstChunkMs: 20_000, chunkMs: 30_000, toolMs: 8_000, stepMs: 45_000, totalMs: 55_000 },
     onEnd: (event) => {
