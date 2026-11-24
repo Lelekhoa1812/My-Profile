@@ -2381,6 +2381,13 @@ describe("displayAnswer", () => {
     expect(ciUse).toContain("CI/CD");
     expect(ciUse).toContain("Kubernetes");
     expect(ciUse).not.toContain("LangChain");
+    const haIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is HA?") }],
+      "",
+      "What is HA?",
+    );
+    expect(haIs).toContain("HA Manager");
+    expect(haIs).not.toContain("LangChain");
     const routePlan = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e plan after detection?") }],
       "",
