@@ -141,6 +141,16 @@ describe("profile store", () => {
     expect(misses, misses.join(" | ")).toEqual([]);
   });
 
+  it("returns both Nam A Bank jobs", () => {
+    const result = searchSections(profile.sections, "What did he do at Nam A Bank?");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      const ids = result.sections.map((section) => section.sectionId);
+      expect(ids).toContain("role-nam-a-ai");
+      expect(ids).toContain("role-nam-a-software");
+    }
+  });
+
   it("opens the degree when the question asks where he studied", () => {
     const result = searchSections(profile.sections, "Where did he study?");
     expect(result.found).toBe(true);

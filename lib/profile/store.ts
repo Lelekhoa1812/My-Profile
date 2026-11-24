@@ -176,7 +176,7 @@ function uniqueAlias(sections: readonly ProfileSection[], wanted: string): Profi
   return hits.length === 1 ? hits[0] : undefined;
 }
 
-function asksForPlace(query: string): boolean {
+export function asksForPlace(query: string): boolean {
   const text = query.toLowerCase();
   if (/\b(model|app|production|ship|deploy)\b/.test(text)) return false;
   return /\bwhere\b/.test(text) && /\b(live|lives|living|based|located)\b/.test(text);

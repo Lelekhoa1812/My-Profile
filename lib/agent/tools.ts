@@ -1,7 +1,7 @@
 import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import type { ProfileRecord } from "../profile/load";
-import { listSections, lookupFacts, readSection, searchSections } from "../profile/store";
+import { asksForPlace, listSections, lookupFacts, readSection, searchSections } from "../profile/store";
 
 const kind = z.enum(["identity", "role", "link", "date", "skill", "education"]).optional();
 
@@ -34,7 +34,7 @@ export function createProfileTools(record: ProfileRecord): ToolSet {
         query: z.string(),
         sourceType: z.enum(["role", "project", "education", "skills", "writing"]).optional(),
       }),
-      execute: async (input) => searchSections(sections, input.query, input.sourceType),
+      execute: async (input) => asksForPlace(input.query) ? lookupFacts(facts, { key: "location" }) : searchSections(sections, input.query, input.sourceType),
     }),
   };
 }
