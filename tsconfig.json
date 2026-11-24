@@ -16,6 +16,11 @@
     "jsx": "react-jsx",
     "allowJs": true,
     "incremental": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
     "plugins": [
       {
         "name": "next"
@@ -24,6 +29,9 @@
   },
   "include": [
     "lib/**/*.ts",
+    "lib/**/*.tsx",
+    "components/**/*.tsx",
+    "content/**/*.ts",
     "app/**/*.ts",
     "app/**/*.tsx",
     "scripts/**/*.ts",

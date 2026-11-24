@@ -1,148 +1,209 @@
+import { ArrowDownToLine, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import type { ReactNode } from "react";
-import profile from "../content/profile.json";
-import { ChatDock } from "./chat-dock";
+import { ChatDock } from "@/components/chat/dock";
+import { RecordChatProvider } from "@/components/chat/record-chat";
+import { HeroConsole } from "@/components/hero/hero-console";
+import { SceneMount } from "@/components/scene/scene-mount";
+import { Archive, type ArchiveItem } from "@/components/site/archive";
+import { Cases } from "@/components/site/cases";
+import { Header, Readout } from "@/components/site/header";
+import { Projects } from "@/components/site/projects";
+import { STILLS } from "@/components/site/stills";
+import { Timeline } from "@/components/site/timeline";
+import archive from "@/content/archive.json";
+import profile from "@/content/profile.json";
+import { cases, lanes, person, projects, research, roles, skills, starterQuestions } from "@/content/site";
 
-const featured = ["role-axion", "project-medswin", "role-harry-senior"] as const;
+const items = archive.items as ArchiveItem[];
+const counts = {
+  repo: items.filter((item) => item.kind === "repo").length,
+  model: items.filter((item) => item.kind === "model").length,
+  dataset: items.filter((item) => item.kind === "dataset").length,
+  space: items.filter((item) => item.kind === "space").length,
+};
 
-const chapters = [
-  {
-    id: "systems",
-    title: "Systems that have to keep their word",
-    ids: ["project-axion-workflows", "role-mizco", "role-teqar"],
-  },
-  {
-    id: "research",
-    title: "Research with a lab and a name",
-    ids: ["role-swinburne-research", "project-medvietai", "role-pythera"],
-  },
-  {
-    id: "record",
-    title: "The employment record",
-    ids: profile.sections.filter((section) => section.sourceType === "role").map((section) => section.sectionId),
-  },
-] as const;
+const PROFILE_LINKS = [
+  { label: "LinkedIn", href: person.links.linkedin },
+  { label: "GitHub", href: person.links.github },
+  { label: "Hugging Face", href: person.links.huggingface },
+];
 
-function opening(heading: string, text: string): string {
-  if (!heading || !text) return text || "";
-  const body = text.startsWith(heading) ? text.slice(heading.length).replace(/^[\s.,]+/, "") : text;
-  const mark = body.indexOf(". ");
-  return mark === -1 ? body : body.slice(0, mark + 1);
+function currentMonth(): string {
+  const date = new Date();
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 }
 
-function sectionText(id: string): { heading: string; text: string } | undefined {
-  const section = profile.sections.find((item) => item.sectionId === id);
-  if (!section) return undefined;
-  return { heading: section.heading, text: section.text };
-}
-
-export default function Page() {
-  const name = profile.facts.find((fact) => fact.key === "full_name")?.value ?? "Dang Khoa Le";
-  const title = profile.facts.find((fact) => fact.key === "public_title")?.value;
-  const place = profile.facts.find((fact) => fact.key === "location")?.value;
-
+export default function Home() {
+  const sectionIds = profile.sections.map((section) => section.sectionId);
   return (
-    <>
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <a href="#work" className="text-lg font-semibold tracking-[-0.03em]">{name}</a>
-        <nav className="flex items-center gap-2" aria-label="Profiles">
-          <IconLink href="https://github.com/Lelekhoa1812" label="GitHub"><GithubIcon /></IconLink>
-          <IconLink href="https://www.linkedin.com/in/dang-khoa-le-96a6332a8" label="LinkedIn"><LinkedInIcon /></IconLink>
-          <IconLink href="https://huggingface.co/khoaliamle" label="Hugging Face"><FaceIcon /></IconLink>
-        </nav>
-      </header>
-      <main>
-        <section id="work" className="mx-auto grid max-w-6xl items-start gap-10 px-6 pb-20 pt-8 md:grid-cols-[minmax(16rem,22rem)_1fr]">
-          <img src="/img/me.jpeg" alt="Portrait of Dang Khoa Le" className="sticky top-6 aspect-[4/5] w-full object-cover" />
-          <div>
-            <h1 className="max-w-[12ch] text-[clamp(2.6rem,6vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.04em]">
-              {name}
-            </h1>
-            <p className="story mt-6 text-ink-soft">{title}. {place}. Senior AI Software Engineer at Axion Solutions.</p>
-            <ul className="mt-10 divide-y divide-line border-y border-line">
-              {featured.map((id) => {
-                const item = sectionText(id);
-                if (!item) return null;
-                return (
-                  <li key={id} className="py-4">
-                    <h2 className="text-xl font-semibold tracking-[-0.03em]">{item.heading}</h2>
-                    <p className="mt-2 max-w-[62ch] text-ink-soft">{item.text}</p>
+    <RecordChatProvider>
+      <a href="#ask-record" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:text-black">
+        Skip to the question field
+      </a>
+      <Header name={person.name} title={person.title} cv={person.cv} />
+      <main id="top">
+        <section className="relative overflow-hidden" aria-label="Introduction">
+          <SceneMount sectionIds={sectionIds} archiveCount={items.length} />
+          <div className="relative mx-auto max-w-[90rem] px-5 md:px-10">
+            <HeroConsole positioning={person.positioning} intro={person.intro} questions={starterQuestions} email={person.email} />
+            <div className="flex flex-col gap-3 border-t border-white/12 py-5 pr-20 sm:flex-row sm:items-center sm:justify-between md:pr-24">
+              <a href={`mailto:${person.email}`} className="w-fit text-[0.9375rem] text-ink underline decoration-white/30 underline-offset-[6px] hover:decoration-white">
+                {person.email}
+              </a>
+              <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                {PROFILE_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <ExternalLink href={link.href}>{link.label}</ExternalLink>
                   </li>
-                );
-              })}
-            </ul>
+                ))}
+              </ul>
+            </div>
           </div>
         </section>
-        {chapters.map((chapter) => (
-          <section key={chapter.id} id={chapter.id} className="mx-auto max-w-6xl px-6 py-16">
-            <h2 className="max-w-[16ch] text-[clamp(2rem,4vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.04em]">
-              {chapter.title}
-            </h2>
-            {chapter.id === "record" ? (
-              <ul className="mt-10 max-w-3xl divide-y divide-line border-y border-line">
-                {chapter.ids.map((id) => {
-                  const item = sectionText(id);
-                  if (!item) return null;
-                  return (
-                    <li key={id} className="py-3">
-                      <p className="font-semibold">{item.heading}</p>
-                      <p className="text-ink-soft">{opening(item.heading, item.text)}</p>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : (
-              <div className="mt-10 max-w-3xl space-y-8">
-                {chapter.ids.map((id) => {
-                  const item = sectionText(id);
-                  if (!item) return null;
-                  return (
-                    <article key={id}>
-                      <h3 className="text-lg font-semibold">{item.heading}</h3>
-                      <p className="story mt-2 text-ink-soft">{item.text}</p>
-                    </article>
-                  );
-                })}
+
+        <Section id="work" title="Selected work" intro="Four systems from the resume. Each one retrieves evidence, drafts, and stops for a person before anything is written.">
+          <Cases items={cases} />
+        </Section>
+
+        <Section id="timeline" title="Timeline" intro={`${roles.length - 1} roles and a degree since 2020, on one time axis. Select a bar to read the role.`}>
+          <Timeline roles={roles} lanes={lanes} now={currentMonth()} />
+        </Section>
+
+        <Section id="projects" title="Projects" intro="Products that shipped, sold, or ran in a hospital, and the open-source tools behind them. Hover a still to see it in colour.">
+          <Projects items={projects} />
+        </Section>
+
+        <Section
+          id="archive"
+          title="Everything public"
+          intro={`Every public repository on GitHub and every model, dataset, and Space on Hugging Face: ${counts.repo} repositories, ${counts.model} models, ${counts.dataset} datasets, and ${counts.space} Spaces.`}
+        >
+          <Archive items={items} areas={archive.areas} />
+        </Section>
+
+        <Section id="research" title="Research and study" intro={research.lab}>
+          <div className="grid gap-12 lg:grid-cols-12">
+            <dl className="space-y-8 lg:col-span-5">
+              <div className="border-t border-white/12 pt-5">
+                <dt className="text-[1.375rem] font-light leading-tight text-ink">{research.degree.title}</dt>
+                <dd className="mt-2 text-white/72">{research.degree.org}</dd>
+                <dd className="data mt-2 text-[10px] text-white/50">{research.degree.dates}</dd>
               </div>
-            )}
-          </section>
-        ))}
+              {research.orgs.map((org) => (
+                <div key={org.name} className="border-t border-white/12 pt-5">
+                  <dt>
+                    <a href={org.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-[1.375rem] font-light leading-tight text-ink hover:underline">
+                      {org.name}
+                      <ArrowUpRight aria-hidden className="h-4 w-4 text-white/55" strokeWidth={1.5} />
+                    </a>
+                  </dt>
+                  <dd className="pretty mt-2 leading-relaxed text-white/72">{org.role}</dd>
+                </div>
+              ))}
+              <p className="border-t border-white/12 pt-5 text-sm text-white/55">The resume lists no publications yet.</p>
+            </dl>
+            <div id="skills" className="scroll-mt-28 lg:col-span-7">
+              <h3 className="text-[1.375rem] font-light leading-tight text-ink">Stack</h3>
+              <div className="mt-6 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+                {skills.map((group) => (
+                  <div key={group.group} className="border-t border-white/12 pt-4">
+                    <h4 className="text-[0.9375rem] text-ink">{group.group}</h4>
+                    <ul className="mt-3 space-y-1.5">
+                      {group.items.map((skill) => (
+                        <li key={skill} className="font-mono text-[0.8125rem] text-white/72">
+                          {skill}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        <section id="contact" className="scroll-mt-20 border-t border-white/12">
+          <div className="mx-auto grid max-w-[90rem] gap-12 px-5 pb-32 pt-20 md:px-10 md:pt-28 lg:grid-cols-12">
+            <div className="lg:col-span-8">
+              <h2 className="text-[clamp(2.25rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.02em] text-ink">Write to Liam</h2>
+              <a href={`mailto:${person.email}`} className="mt-8 block w-fit break-all text-[clamp(1.75rem,5.4vw,5rem)] font-light leading-[1.05] tracking-[-0.03em] text-ink underline decoration-white/25 decoration-1 underline-offset-[0.18em] transition-colors hover:decoration-white">
+                {person.email}
+              </a>
+              <dl className="mt-12 grid gap-8 sm:grid-cols-3">
+                <div>
+                  <dt className="data text-[10px] text-white/50">Phone</dt>
+                  <dd className="mt-2">
+                    <a href={person.phoneHref} className="text-ink hover:underline">
+                      {person.phone}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="data text-[10px] text-white/50">Based in</dt>
+                  <dd className="mt-2 text-ink">{person.location}</dd>
+                </div>
+                <div>
+                  <dt className="data text-[10px] text-white/50">Languages</dt>
+                  <dd className="mt-2 space-y-0.5 text-ink">
+                    {person.languages.map((language) => (
+                      <span key={language} className="block">
+                        {language}
+                      </span>
+                    ))}
+                  </dd>
+                </div>
+              </dl>
+              <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
+                <a href={person.cv} download className="data flex items-center gap-2 border border-white/40 px-4 py-3 text-[11px] text-ink transition-colors hover:bg-white hover:text-black">
+                  Download the CV
+                  <ArrowDownToLine aria-hidden className="h-3.5 w-3.5" strokeWidth={1.5} />
+                </a>
+                {PROFILE_LINKS.map((link) => (
+                  <ExternalLink key={link.href} href={link.href}>
+                    {link.label}
+                  </ExternalLink>
+                ))}
+              </div>
+            </div>
+            <figure className="lg:col-span-3 lg:col-start-10">
+              <Image src={STILLS["me.jpeg"]} alt={`${person.name}, also known as ${person.known}`} sizes="(min-width: 1024px) 22vw, 60vw" className="aspect-[4/5] w-full max-w-[18rem] border border-white/15 object-cover grayscale" />
+              <figcaption className="data mt-3 text-[10px] text-white/50">
+                {person.name} · {person.known}
+              </figcaption>
+            </figure>
+          </div>
+          <footer className="mx-auto flex max-w-[90rem] flex-col gap-2 border-t border-white/12 px-5 py-6 text-sm text-white/50 md:flex-row md:justify-between md:px-10">
+            <p>Answers come from Liam's record through Nvidia NIM. The assistant cites what it read.</p>
+            <p className="data text-[10px]">Melbourne · {new Date().getFullYear()}</p>
+          </footer>
+        </section>
       </main>
-      <ChatDock />
-    </>
+      <Readout />
+      <ChatDock questions={starterQuestions} />
+    </RecordChatProvider>
   );
 }
 
-function IconLink({ href, label, children }: { href: string; label: string; children: ReactNode }) {
+function Section({ id, title, intro, children }: { id: string; title: string; intro: string; children: ReactNode }) {
   return (
-    <a href={href} aria-label={label} target="_blank" rel="noreferrer" className="grid h-11 w-11 place-items-center rounded-full text-ink hover:bg-white">
+    <section id={id} className="scroll-mt-20 border-t border-white/12">
+      <div className="mx-auto max-w-[90rem] px-5 py-20 md:px-10 md:py-28">
+        <div className="mb-12 grid gap-6 md:mb-16 lg:grid-cols-12">
+          <h2 className="text-[clamp(2.25rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.02em] text-ink lg:col-span-5">{title}</h2>
+          <p className="pretty max-w-[40rem] text-[1.0625rem] leading-relaxed text-white/72 lg:col-span-6 lg:col-start-7 lg:pt-3">{intro}</p>
+        </div>
+        {children}
+      </div>
+    </section>
+  );
+}
+
+function ExternalLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <a href={href} target="_blank" rel="noreferrer" className="data flex items-center gap-1.5 border-b border-white/35 pb-1 text-[11px] text-ink transition-colors hover:border-white">
       {children}
+      <ArrowUpRight aria-hidden className="h-3 w-3" strokeWidth={1.5} />
     </a>
-  );
-}
-
-function GithubIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-      <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.1-1.47-1.1-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.86v2.76c0 .26.18.58.69.48A10 10 0 0 0 12 2Z" />
-    </svg>
-  );
-}
-
-function LinkedInIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-      <path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3.5 9h3V21h-3V9Zm6 0h2.88v1.64h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6V21h-3v-5.36c0-1.28-.02-2.92-1.78-2.92-1.78 0-2.05 1.39-2.05 2.82V21h-3V9Z" />
-    </svg>
-  );
-}
-
-function FaceIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M8 14.5c1.2 1.4 2.5 2 4 2s2.8-.6 4-2" />
-      <circle cx="9" cy="10" r="0.8" fill="currentColor" />
-      <circle cx="15" cy="10" r="0.8" fill="currentColor" />
-    </svg>
   );
 }
