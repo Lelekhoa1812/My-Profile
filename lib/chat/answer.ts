@@ -49,13 +49,18 @@ export function sentenceFromModel(text: string): string {
   return trimmed;
 }
 
-function stripToolMarkup(text: string): string {
-  const stripped = text
-    .replace(/<tool_call>[\s\S]*?<\/tool_call>/gi, " ")
-    .replace(/<\/?(?:function|parameter)(?:=[^>\n]*)?>/gi, " ")
+export function stripToolMarkup(text: string): string {
+  const withoutBlocks = text
+    .replace(/<\s*tool_call\b[^>]*>[\s\S]*?(?:<\s*\/\s*tool_call\s*>|$)/gi, " ")
+    .replace(/&lt;\s*tool_call\b[\s\S]*?(?:&lt;\s*\/\s*tool_call\s*&gt;|$)/gi, " ")
+    .replace(/<\s*function\s*=[\s\S]*?(?:<\s*\/\s*function\s*>|$)/gi, " ")
+    .replace(/<\s*\/?\s*(?:function|parameter)\b[^>]*>/gi, " ");
+  return withoutBlocks
+    .split("\n")
+    .filter((line) => !/tool_call|function\s*=|parameter\s*=/i.test(line))
+    .join(" ")
     .replace(/\s+/g, " ")
     .trim();
-  return stripped;
 }
 
 export function dropRecordTalk(text: string): string {

@@ -8,11 +8,15 @@ describe("displayAnswer", () => {
   });
 
   it("hides a tool call that leaked into the sentence", () => {
+    const leaked = `<tool_call> <function=search_sections> <parameter=query> Harry the Hirer
+</parameter> <parameter=sourceType> role </parameter> </function> </tool_call>`;
     const text = displayAnswer(
-      [{ type: "tool-search_sections", state: "output-available", output: { found: true, heading: "Harry the Hirer" } }],
-      "<tool_call><function=search_sections><parameter=query>Harry the Hirer</parameter></function></tool_call>",
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, heading: "Ericsson 5G digital twin" } }],
+      leaked,
     );
     expect(text).toBe("");
+    expect(shownAnswer(text, true, true)).toBe(MISSED);
+    expect(shownAnswer(text, true, true)).not.toContain("tool_call");
   });
 
   it("replaces a boast when every tool missed", () => {
