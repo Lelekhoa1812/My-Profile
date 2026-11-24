@@ -636,7 +636,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(guard);
     }
   }
-  if (/\b(s&p|finbert)\b/i.test(question) && /\b(data|read|news|filings)\b/i.test(question) && !/\bqueue\b/i.test(question)) {
+  if (/\b(s&p|finbert)\b/i.test(question) && /\bpath\b/i.test(question)) {
+    const kafka = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bapache kafka\b/i.test(sentence));
+    if (kafka) {
+      chosen.length = 0;
+      cap = 1;
+      push(kafka);
+    }
+  }
+  if (/\b(s&p|finbert)\b/i.test(question) && /\b(data|read|news|filings)\b/i.test(question) && !/\b(queue|path)\b/i.test(question)) {
     cap = 2;
     const filings = blockSentences.find((sentence) => /\bsec filings\b/i.test(sentence));
     if (filings) {
@@ -1715,6 +1723,33 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (lines.length > 0) {
       chosen.length = 0;
       cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\bwhat does\b/i.test(question) && /\bs&p\b/i.test(question) && /\bdo\b/i.test(question) && !/\b(path|queue|read|text)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\btemporal fusion\b/i.test(sentence)),
+      sentences.find((sentence) => /\bpurged cross-validation\b/i.test(sentence)),
+      sentences.find((sentence) => /\bapache kafka\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\bwhat does\b/i.test(question) && /\btriage\b/i.test(question) && /\bdo\b/i.test(question) && !/\b(data|dataset|speech|speak|language)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\bspeech uses whisper\b/i.test(sentence)),
+      sentences.find((sentence) => /\bclinical reasoning uses gemini\b/i.test(sentence)),
+      sentences.find((sentence) => /\bvision uses qwen\b/i.test(sentence)),
+      sentences.find((sentence) => /\bmedication-delivery\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 4;
       for (const sentence of lines) chosen.push(sentence);
     }
   }

@@ -4378,6 +4378,31 @@ describe("displayAnswer", () => {
     expect(forecastProduct).toContain("multi-horizon");
     expect(forecastProduct).toContain("FinBERT");
     expect(forecastProduct).toContain("Kafka");
+    const spDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the S&P 500 forecast do?") }],
+      "",
+      "What does the S&P 500 forecast do?",
+    );
+    expect(spDoes).toContain("FinBERT");
+    expect(spDoes).toContain("purged cross-validation");
+    expect(spDoes).toContain("Kafka");
+    expect(spDoes).not.toContain("return figure");
+    const spPath = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the S&P forecast use for the data path?") }],
+      "",
+      "What does the S&P forecast use for the data path?",
+    );
+    expect(spPath).toContain("Kafka");
+    expect(spPath).not.toContain("FinBERT");
+    const triageDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the triage system do?") }],
+      "",
+      "What does the triage system do?",
+    );
+    expect(triageDoes).toContain("Whisper");
+    expect(triageDoes).toContain("Gemini");
+    expect(triageDoes).toContain("Qwen");
+    expect(triageDoes).toContain("medication-delivery");
     const adhdProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is ADHD Assistant?") }],
       "",
