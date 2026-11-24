@@ -366,6 +366,8 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("harry") && (text.includes("pilot") || text.includes("cut")), ids: ["role-harry-senior"] },
     { when: text.includes("harry") && /\b(use|uses|used)\b/.test(text) && !/\b(pedigree|ocr|retrieval|agents?)\b/.test(text), ids: ["role-harry-senior"] },
     { when: /\blab\b/.test(text) && /\b(score|record)/.test(text) && !/\b(survee|language|city)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
+    { when: /\blab\b/.test(text) && /\b(datasets?|benchmarks?|measure)/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
+    { when: /\bbenchmarks?\b/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: (text.includes("medswin") || text.includes("bertscore")) && /\b(bertscore|lab|score)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: /\blanguages?\b/.test(text) && /\blab\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: /\blab\b/.test(text) && /\bcity\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },

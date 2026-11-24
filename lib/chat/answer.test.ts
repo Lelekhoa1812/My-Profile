@@ -1141,6 +1141,27 @@ describe("displayAnswer", () => {
     );
     expect(labRecordScore).toContain("86 percent BERTScore");
     expect(labRecordScore).not.toContain("does not score");
+    const labDataset = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What dataset did the lab use?") }],
+      "",
+      "What dataset did the lab use?",
+    );
+    expect(labDataset).toContain("MedMCQA");
+    expect(labDataset).not.toContain("waste");
+    const benchmarks = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What benchmarks does he use?") }],
+      "",
+      "What benchmarks does he use?",
+    );
+    expect(benchmarks).toContain("MedMCQA");
+    expect(benchmarks).not.toContain("LangChain");
+    const labMeasure = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the lab measure?") }],
+      "",
+      "What does the lab measure?",
+    );
+    expect(labMeasure).toContain("86 percent BERTScore");
+    expect(labMeasure).not.toContain("40 percent");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],

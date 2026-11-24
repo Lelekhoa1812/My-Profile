@@ -1374,7 +1374,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bmanual work\b/i.test(question) && /\bmanual work\b/i.test(sentence)) return true;
   if (/\bartefact preparation\b/i.test(question) && /\bartefact preparation\b/i.test(sentence)) return true;
   if (/\blanguages?\b/i.test(question) && /\blab\b/i.test(question) && /\bclinical records and pubmed\b/i.test(sentence)) return true;
-  if (/\b(datasets?|benchmarks?)\b/i.test(question) && /\b(medswin|lab)\b/i.test(question) && /\bmedmcqa\b/i.test(sentence)) return true;
+  if (/\bbenchmarks?\b/i.test(question) && /\bmedmcqa\b/i.test(sentence)) return true;
+  if (/\bdatasets?\b/i.test(question) && /\b(medswin|lab)\b/i.test(question) && /\bmedmcqa\b/i.test(sentence)) return true;
   if (/\bpoptech\b/i.test(question) && /\b(use|uses|used|models)\b/i.test(question) && /\bmodels include\b/i.test(sentence)) return true;
   if (/\bharry\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && !/\b(pedigree|ocr|retrieval|agent)\b/i.test(question) && /\bstack includes\b/i.test(sentence)) return true;
   if (/\bmizco\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && /\binference uses\b/i.test(sentence)) return true;
