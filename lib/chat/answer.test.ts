@@ -1042,6 +1042,13 @@ describe("displayAnswer", () => {
     );
     expect(mcpWhere).toContain("accounting assistant");
     expect(mcpWhere).toContain("MCP-style");
+    const langchainWhere = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where does he use LangChain?") }],
+      "",
+      "Where does he use LangChain?",
+    );
+    expect(langchainWhere).toContain("The engine uses LangChain");
+    expect(langchainWhere).toContain("Azure AI Foundry");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],

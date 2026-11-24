@@ -680,6 +680,18 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(period);
     }
   }
+  if (/\bwhere\b/i.test(question) && /\buse\b/i.test(question) && !namedEmployer(question) && !/\bmcp\b/i.test(question)) {
+    const tool = question.match(/\buse\s+([A-Za-z0-9.+#-]{2,})/i)?.[1];
+    if (tool) {
+      const named = new RegExp(`\\b${tool.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      const lines = [...new Set(sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => named.test(sentence) && !/named tools include/i.test(sentence)))];
+      if (lines.length >= 2) {
+        chosen.length = 0;
+        cap = 3;
+        for (const sentence of lines.slice(0, 3)) push(sentence);
+      }
+    }
+  }
   if (/\bmcp\b/i.test(question) && !/\bacnt\b/i.test(question)) {
     const account = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\baccounting assistant\b/i.test(sentence));
     const access = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bmcp-style\b/i.test(sentence));
