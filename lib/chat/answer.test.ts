@@ -1378,6 +1378,13 @@ describe("displayAnswer", () => {
     );
     expect(mcp).toContain("MCP");
     expect(mcp).not.toContain("mate-selection");
+    const kernel = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is a Shared Ancestor Compatibility Kernel?") }],
+      "",
+      "What is a Shared Ancestor Compatibility Kernel?",
+    );
+    expect(kernel).toContain("ensemble");
+    expect(kernel).toContain("Kernel");
     const labBuild = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
       "",

@@ -658,6 +658,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\b(good at|strengths)\b/i.test(question) && /\bgroups the stack\b/i.test(sentence)) return true;
   if (/\binclude/i.test(question) && /\b(ensemble|dosage)\b/i.test(sentence)) return true;
   if (/\bdosage\b/i.test(question) && /\bdosage\b/i.test(sentence)) return true;
+  if (/\bkernel\b/i.test(question) && /\bkernel\b/i.test(sentence)) return true;
   if (/\blive app\b/i.test(question) && /\bonly named live app\b/i.test(sentence)) return true;
   if (/\bverif/i.test(question) && /\bvalidators check\b/i.test(sentence)) return true;
   if (/\bvision\b/i.test(question) && !/\bmodel\b/i.test(question) && /\bopencv\b/i.test(sentence)) return true;
