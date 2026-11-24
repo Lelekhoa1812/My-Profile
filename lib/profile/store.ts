@@ -244,6 +244,17 @@ export function asksForPlace(query: string): boolean {
   return /\bwhere\b/.test(text) && /\b(live|lives|living|based|located)\b/.test(text);
 }
 
+function distinctiveCount(
+  hit: { section: ProfileSection; title: string; body: string },
+  group: readonly { section: ProfileSection; title: string; body: string }[],
+  terms: readonly string[],
+): number {
+  return terms.filter((term) => {
+    const owners = group.filter((item) => covers(item.title, term) || covers(item.body, term));
+    return owners.length === 1 && owners[0]?.section.sectionId === hit.section.sectionId;
+  }).length;
+}
+
 function covers(text: string, term: string): boolean {
   const word = new RegExp(`\\b${term}(?:s|es|ed|d|ing)?\\b`);
   if (word.test(text)) return true;
@@ -302,7 +313,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
         if (!inTitle && !covers(body, term)) return total;
         return total + (weight.get(term) ?? 0) * (inTitle ? 2 : 1);
       }, 0);
-      return { section, title, score, matched };
+      return { section, title, body, score, matched };
     })
     .filter((hit) => hit.matched / terms.length >= 0.5)
     .filter((hit) => !hit.section.sectionId.startsWith("archive-") || terms.some((term) => hit.title.includes(term)))
@@ -310,14 +321,14 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   if (terms.includes("title") && !namesAnotherRole(pool, terms)) {
     const current = pool.find((item) => item.section.sourceType === "role" && item.body.includes("ai software engineer"));
     if (current && !hits.some((hit) => hit.section.sectionId === current.section.sectionId)) {
-      hits.unshift({ section: current.section, title: current.title, score: Number.POSITIVE_INFINITY, matched: terms.length });
+      hits.unshift({ section: current.section, title: current.title, body: current.body, score: Number.POSITIVE_INFINITY, matched: terms.length });
     }
   }
   for (const item of pool) {
     const heading = item.section.heading.toLowerCase();
     if (item.section.sectionId.startsWith("archive-") || heading.length < 3 || !terms.includes(heading)) continue;
     if (hits.some((hit) => hit.section.sectionId === item.section.sectionId)) continue;
-    hits.push({ section: item.section, title: item.title, score: Number.POSITIVE_INFINITY, matched: terms.length });
+    hits.push({ section: item.section, title: item.title, body: item.body, score: Number.POSITIVE_INFINITY, matched: terms.length });
   }
   const complete = hits.filter((hit) => terms.every((term) => hit.title.includes(term)));
   const namedProfile = hits.filter((hit) => !hit.section.sectionId.startsWith("archive-") && terms.some((term) => hit.section.heading.toLowerCase().includes(term)));
@@ -331,6 +342,12 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
     const leftExact = left.section.heading.toLowerCase() === exactHeading ? 1 : 0;
     const rightExact = right.section.heading.toLowerCase() === exactHeading ? 1 : 0;
     if (leftExact !== rightExact) return rightExact - leftExact;
+    const leftName = !left.section.sectionId.startsWith("archive-") && terms.includes(left.section.heading.toLowerCase()) ? 1 : 0;
+    const rightName = !right.section.sectionId.startsWith("archive-") && terms.includes(right.section.heading.toLowerCase()) ? 1 : 0;
+    if (leftName !== rightName) return rightName - leftName;
+    const leftDistinct = distinctiveCount(left, poolHits, terms);
+    const rightDistinct = distinctiveCount(right, poolHits, terms);
+    if (leftDistinct !== rightDistinct) return rightDistinct - leftDistinct;
     const leftNamed = !left.section.sectionId.startsWith("archive-") && terms.some((term) => left.section.heading.toLowerCase().includes(term)) ? 1 : 0;
     const rightNamed = !right.section.sectionId.startsWith("archive-") && terms.some((term) => right.section.heading.toLowerCase().includes(term)) ? 1 : 0;
     if (leftNamed !== rightNamed) return rightNamed - leftNamed;
