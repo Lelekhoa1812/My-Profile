@@ -680,6 +680,16 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(period);
     }
   }
+  if (/\bauthenticat/i.test(question)) {
+    const auth = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\b(authentication|msal)\b/i.test(sentence));
+    chosen.length = 0;
+    cap = 2;
+    if (auth.length > 0) {
+      for (const sentence of auth.slice(0, 2)) push(sentence);
+    } else {
+      push(blockSentences.find((sentence) => /\b(engineer|lead|researcher|consultant)\b/i.test(sentence) && sentence.split(/\s+/).length <= 16));
+    }
+  }
   if (/\bstack\b/i.test(question) && /\b(axion|axis)\b/i.test(question)) {
     const engine = blockSentences.find((sentence) => /\blangchain\b/i.test(sentence));
     if (engine) {

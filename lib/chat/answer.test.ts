@@ -1014,6 +1014,20 @@ describe("displayAnswer", () => {
     );
     expect(harryApproval).toContain("stays in the loop");
     expect(harryApproval).not.toContain("Human approval gates");
+    const axionAuth = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What authentication does Axion use?") }],
+      "",
+      "What authentication does Axion use?",
+    );
+    expect(axionAuth).toContain("AI Software Engineer");
+    expect(axionAuth).not.toContain("LangChain");
+    const openAuth = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What authentication does he use?") }],
+      "",
+      "What authentication does he use?",
+    );
+    expect(openAuth).toContain("MSAL");
+    expect(openAuth).toContain("customer data path");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
