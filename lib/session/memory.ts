@@ -44,13 +44,14 @@ function messageText(message: UIMessage): string {
   return message.parts.map((part) => part.type === "text" && "text" in part ? part.text : "").join(" ");
 }
 
-const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent|agents?|retrieval)\b/i;
+const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent|agents?|retrieval|ocr|measure)\b/i;
+const NAMED_PRODUCT = /\b(golf|skyledge|roster|triage|survee|prophet|pedigree|writingjourney|medviet|clara|salle|meter|acnt)\b/i;
 const SPOKEN_EMPLOYER: Record<string, string> = { "hai-au": "Hai Au", "nam-a": "Nam A", "tien-thanh": "Tien Thanh" };
 
 export function groundedQuestion(messages: readonly UIMessage[], index: number): string {
   const message = messages[index];
   const question = message ? messageText(message) : "";
-  if (!message || message.role !== "user" || namedEmployer(question) || !FOLLOW_UP.test(question)) return question;
+  if (!message || message.role !== "user" || namedEmployer(question) || NAMED_PRODUCT.test(question) || !FOLLOW_UP.test(question)) return question;
   const prior = messages.slice(0, index).reverse().find((item) => item.role === "user" && namedEmployer(messageText(item)));
   const employer = prior ? namedEmployer(messageText(prior)) : undefined;
   if (!employer) return question;

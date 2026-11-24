@@ -75,4 +75,13 @@ describe("withMemory", () => {
     expect(groundedQuestion([medswin, answer, follow], 2)).toContain("medswin");
     expect(follow.parts[0]).toMatchObject({ text: "What agents did he use?" });
   });
+
+  it("keeps a named product off the previous employer", () => {
+    const harry = { id: "u1", role: "user", parts: [{ type: "text", text: "At Harry the Hirer, what did the pilot cut?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "About 40 percent." }] } as UIMessage;
+    const golf = { id: "u2", role: "user", parts: [{ type: "text", text: "What stack does the golf scanner use?" }] } as UIMessage;
+    const ocr = { id: "u3", role: "user", parts: [{ type: "text", text: "What OCR does he use?" }] } as UIMessage;
+    expect(groundedQuestion([harry, answer, golf], 2)).not.toContain("harry");
+    expect(groundedQuestion([harry, answer, ocr], 2)).toContain("harry");
+  });
 });
