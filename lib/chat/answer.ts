@@ -123,6 +123,13 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     cap = 3;
     push(blockSentences.find((sentence) => /\bkotlin\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bhugging face\b/i.test(question) && /\bmodels\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /huggingface\.co\/khoaliamle/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bthe names are\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bpublic datasets\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bnot a production release\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bericsson\b/i.test(question)) {
     cap = 5;
     push(blockSentences.find((sentence) => /\btower telemetry\b/i.test(sentence)));

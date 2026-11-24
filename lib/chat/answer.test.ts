@@ -2006,6 +2006,15 @@ describe("displayAnswer", () => {
     expect(twinProduct).toContain("tower telemetry");
     expect(twinProduct).toContain("not a named live");
     expect(twinProduct).toContain("C#");
+    const faceCards = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hugging Face models?") }],
+      "",
+      "What is Hugging Face models?",
+    );
+    expect(faceCards).toContain("MNIST");
+    expect(faceCards).toContain("Public datasets");
+    expect(faceCards).toContain("huggingface.co/khoaliamle");
+    expect(faceCards).toContain("not a production release");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",
