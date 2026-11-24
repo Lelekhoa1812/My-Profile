@@ -14,6 +14,24 @@ export type ProfileSection = {
   visibility?: string;
 };
 
+const FACT_LABELS: Record<string, string> = {
+  full_name: "Name",
+  also_known_as: "Also called",
+  email: "Email",
+  phone: "Phone",
+  location: "Location",
+  linkedin: "LinkedIn",
+  github: "GitHub",
+  huggingface: "Hugging Face",
+  public_title: "Current title",
+  degree: "Degree",
+  languages: "Languages",
+};
+
+export function factLabel(key: string): string {
+  return FACT_LABELS[key] ?? key.replaceAll("_", " ");
+}
+
 export function lookupFacts(facts: readonly ProfileFact[], input: { key?: string; kind?: string }) {
   if (!input.key && !input.kind) return { found: false as const };
   const rows = facts.filter((fact) => (fact.visibility ?? "public") === "public")
@@ -22,7 +40,7 @@ export function lookupFacts(facts: readonly ProfileFact[], input: { key?: string
   if (rows.length === 0) return { found: false as const };
   return {
     found: true as const,
-    facts: rows.map((fact) => ({ key: fact.key, kind: fact.kind, value: fact.value })),
+    facts: rows.map((fact) => ({ label: factLabel(fact.key), kind: fact.kind, value: fact.value })),
   };
 }
 

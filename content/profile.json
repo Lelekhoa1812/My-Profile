@@ -3,7 +3,7 @@
     {"key": "full_name", "kind": "identity", "value": "Dang Khoa Le", "visibility": "public"},
     {"key": "also_known_as", "kind": "identity", "value": "Liam", "visibility": "public"},
     {"key": "email", "kind": "identity", "value": "liamkl.work@gmail.com", "visibility": "public"},
-    {"key": "phone", "kind": "identity", "value": "0450445373", "visibility": "public"},
+    {"key": "phone", "kind": "identity", "value": "0450 445 373", "visibility": "public"},
     {"key": "location", "kind": "identity", "value": "Melbourne, Australia", "visibility": "public"},
     {"key": "linkedin", "kind": "link", "value": "https://www.linkedin.com/in/dang-khoa-le-96a6332a8", "visibility": "public"},
     {"key": "github", "kind": "link", "value": "https://github.com/Lelekhoa1812", "visibility": "public"},

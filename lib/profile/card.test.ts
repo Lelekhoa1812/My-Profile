@@ -5,7 +5,9 @@ import { recordCard } from "./card";
 describe("recordCard", () => {
   it("places the public record in one block and leaves out an absent employer", () => {
     const card = recordCard(profile.facts, profile.sections);
-    expect(card).toContain("full_name: Dang Khoa Le");
+    expect(card).toContain("Name: Dang Khoa Le");
+    expect(card).toContain("Current title: Senior AI Software Engineer");
+    expect(card).not.toContain("public_title");
     expect(card).toContain("## Axion Solutions");
     expect(card).toContain("FoodFlow");
     expect(card).toContain("## Public repositories");

@@ -12,7 +12,7 @@ describe("profile store", () => {
   it("keeps the public title on the current resume role", () => {
     const result = lookupFacts(profile.facts, { key: "public_title" });
     expect(result.found).toBe(true);
-    if (result.found) expect(result.facts[0]?.value).toBe("Senior AI Software Engineer");
+    if (result.found) expect(result.facts[0]).toMatchObject({ label: "Current title", value: "Senior AI Software Engineer" });
   });
 
   it("reads a section by its heading as well as its id", () => {
