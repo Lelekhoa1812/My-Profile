@@ -561,7 +561,7 @@ function sectionEmployer(section: ProfileSection): string | undefined {
 
 export function asksForExperienceSpan(query: string): boolean {
   const text = query.toLowerCase();
-  if (/\b(at|with)\b/.test(text) || namedEmployer(text)) return false;
+  if (/\b(at|with|pilot)\b/.test(text) || namedEmployer(text)) return false;
   if (/\bhow long\b/.test(text) && /\b(work|worked|working|experience)\b/.test(text)) return true;
   if (!/\bexperience\b/.test(text)) return false;
   if (/\b(years|year|span|many|total)\b/.test(text)) return true;
@@ -576,17 +576,19 @@ export function asksForTitle(query: string): boolean {
 
 export function asksForSpokenLanguages(query: string): boolean {
   const text = query.toLowerCase();
-  if (/\b(python|java|typescript|stack|programming|code|codes)\b/.test(text)) return false;
+  if (/\b(python|java|typescript|stack|programming|code|codes|model|clinical|speech|whisper|product)\b/.test(text) || askedProductSectionIds(text)?.length) return false;
   return /\b(speak|speaks|spoken|fluent|mandarin)\b/.test(text);
 }
 
 export function asksForGraduation(query: string): boolean {
-  return /\bgraduat(?:e|ed|ion|ing)\b/.test(query.toLowerCase());
+  const text = query.toLowerCase();
+  if (/\b(model|product|app|scanner)\b/.test(text)) return false;
+  return /\bgraduat(?:e|ed|ion|ing)\b/.test(text);
 }
 
 export function asksForName(query: string): "full_name" | "also_known_as" | undefined {
   const text = query.toLowerCase();
-  if (/\b(also called|known as)\b/.test(text)) return "also_known_as";
+  if (/\b(also called|known as)\b/.test(text) && !/\b(founder|product|model|company|employer)\b/.test(text)) return "also_known_as";
   if (/\b(his|her) name\b/.test(text) && !/\b(product|model|file|company|employer)\b/.test(text)) return "full_name";
   return undefined;
 }

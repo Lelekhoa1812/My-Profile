@@ -75,6 +75,9 @@ describe("profile tools", () => {
     expect(duration.facts?.[0]?.value).toContain("3 years");
     const harryDuration = await search.execute({ query: "How long has he worked at Harry the Hirer?" });
     expect(harryDuration.sections?.some((section) => section.sectionId === "role-harry-senior")).toBe(true);
+    const pilot = await search.execute({ query: "How long has the pilot worked?" });
+    expect(pilot.sections?.some((section) => section.sectionId === "role-harry-senior")).toBe(true);
+    expect(pilot.facts).toBeUndefined();
     const title = await search.execute({ query: "What is his title?" });
     expect(title.facts?.[0]?.value).toContain("AI Software Engineer");
     const who = await search.execute({ query: "Who is he?" });
@@ -94,6 +97,11 @@ describe("profile tools", () => {
     expect(spoken.sections?.[0]?.text).toContain("Mandarin");
     expect(spoken.sections?.[0]?.text).toContain("Vietnamese");
     expect(spoken.sections?.[0]?.text).not.toContain("Python");
+    const triageSpeech = await search.execute({ query: "What language does the triage model speak?" });
+    expect(triageSpeech.sections?.some((section) => section.sectionId === "project-triage")).toBe(true);
+    expect(triageSpeech.sections?.[0]?.text ?? "").not.toContain("Mandarin");
+    const founder = await search.execute({ query: "Who is known as the founder?" });
+    expect(founder.sections?.some((section) => section.sectionId === "project-medvietai")).toBe(true);
   });
 
   it("returns the Harry pilot when a project-only search misses the role", async () => {
