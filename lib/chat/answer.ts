@@ -112,6 +112,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     const exact = words.some((word) => new RegExp(`\\b${word}\\b`, "i").test(item.sentence));
     if (picked && /\bhow many\b/i.test(question) && /\b\d/.test(item.sentence)) continue;
     const answered = words.some((word) => !new RegExp(`\\b${word}\\b`, "i").test(item.sentence) && mentions(item.sentence, word) && chosen.some((sentence) => new RegExp(`\\b${word}\\b`, "i").test(sentence)));
+    if (/\b(code|coding|programming)\b/i.test(question) && /\b(vietnamese|mandarin|fluent)\b/i.test(item.sentence)) continue;
     if (picked && item.score < 2 && !exact) continue;
     if (!picked && unique && item.score < 2 && !exact && answered) continue;
     if (!picked && unique && words.every((word) => !mentions(item.sentence, word) || mentions(unique, word))) continue;
@@ -186,6 +187,7 @@ function matchingBlock(outputs: readonly Record<string, unknown>[], question: st
     let score = sentences.reduce((best, sentence) => Math.max(best, askScore(question, sentence, words)), 0);
     if (employer && !chronological && employerMentioned(employer, block)) score += 8;
     if (!employer && /\b(sold|sell|products)\b/i.test(question) && /named live or sold work/i.test(block)) score += 20;
+    if (/\bocr\b/i.test(question) && !employer && !/\b(meter|water|harry|golf|passport|nam)\b/i.test(question) && /\b(vietocr|paddleocr)\b/i.test(block)) score += 15;
     if (!chronological && titledInQuestion(question, block)) score += 8;
     if (countedFact(question, sentences, words)) score += 12;
     if (score > bestScore) {

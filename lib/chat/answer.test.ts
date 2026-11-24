@@ -521,6 +521,14 @@ describe("displayAnswer", () => {
     );
     expect(coded).toContain("Python");
     expect(coded).toContain("TypeScript");
+    expect(coded).not.toContain("Vietnamese");
+    const ocr = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What OCR does he use?") }],
+      "",
+      "What OCR does he use?",
+    );
+    expect(ocr).toContain("VietOCR");
+    expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],
       "",
