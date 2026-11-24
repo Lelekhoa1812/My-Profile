@@ -563,6 +563,19 @@ describe("displayAnswer", () => {
       "Can I see his resume?",
     );
     expect(resume).not.toContain("capital-markets");
+    const models = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does he use?") }],
+      "",
+      "What models does he use?",
+    );
+    expect(models).toContain("Gemini");
+    expect(models).toContain("TimesFM");
+    const coachSend = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the writing coach send?") }],
+      "",
+      "What does the writing coach send?",
+    );
+    expect(coachSend).toContain("scores a submission");
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],

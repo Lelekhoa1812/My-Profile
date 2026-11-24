@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs);
+  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -150,6 +150,12 @@ function vectorAnswer(question: string, outputs: readonly Record<string, unknown
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(pgvector|faiss)\b/i.test(sentence)));
   const short = lines.filter((sentence) => sentence.split(/\s+/).length <= 24);
   return [...new Set(short.length > 0 ? short : lines)].slice(0, 2).join(" ");
+}
+
+function modelAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bwhat\b/i.test(question) || !/\bmodels?\b/i.test(question) || !/\b(use|uses)\b/i.test(question) || namedEmployer(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(gemini|qwen|timesfm|yolo|tft)\b/i.test(sentence) && sentence.split(/\s+/).length <= 24));
+  return [...new Set(lines)].slice(0, 3).join(" ");
 }
 
 function llmAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
@@ -338,6 +344,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\b(store|stored|stores|stay|stays)\b/i.test(question) && /\bmongodb\b/i.test(sentence)) return true;
   if (/\b(stack|code|coding|programming)\b/i.test(question) && /\bpython\b/i.test(sentence)) return true;
   if (/\bplan\b/i.test(question) && /\bplans?\b/i.test(sentence)) return true;
+  if (/\b(coach|writingjourney)\b/i.test(question) && /\bscores a submission\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence) && question.toLowerCase().split(/[^a-z0-9]+/).some((word) => word.length >= 5 && mentions(sentence, word))) return true;
