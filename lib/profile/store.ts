@@ -176,6 +176,12 @@ function uniqueAlias(sections: readonly ProfileSection[], wanted: string): Profi
   return hits.length === 1 ? hits[0] : undefined;
 }
 
+export function asksForExperienceSpan(query: string): boolean {
+  const text = query.toLowerCase();
+  if (!/\bexperience\b/.test(text) || /\b(at|with)\b/.test(text)) return false;
+  return /\b(years|year|span|many|total)\b/.test(text);
+}
+
 export function asksForPlace(query: string): boolean {
   const text = query.toLowerCase();
   if (/\b(model|app|production|ship|deploy)\b/.test(text)) return false;

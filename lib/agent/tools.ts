@@ -1,7 +1,7 @@
 import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import type { ProfileRecord } from "../profile/load";
-import { asksForPlace, contactLookupKey, listSections, lookupFacts, readSection, searchSections } from "../profile/store";
+import { asksForExperienceSpan, asksForPlace, contactLookupKey, listSections, lookupFacts, readSection, searchSections } from "../profile/store";
 
 const kind = z.enum(["identity", "role", "link", "date", "skill", "education"]).optional();
 
@@ -38,6 +38,7 @@ export function createProfileTools(record: ProfileRecord): ToolSet {
         const key = contactLookupKey(input.query);
         if (key) return lookupFacts(facts, { key });
         if (asksForPlace(input.query)) return lookupFacts(facts, { key: "location" });
+        if (asksForExperienceSpan(input.query)) return lookupFacts(facts, { key: "experience" });
         return searchSections(sections, input.query, input.sourceType);
       },
     }),

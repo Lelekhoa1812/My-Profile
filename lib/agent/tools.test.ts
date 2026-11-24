@@ -33,4 +33,18 @@ describe("profile tools", () => {
     expect(workflow.found).toBe(true);
     expect(workflow.sections?.some((section) => section.sectionId === "project-axion-workflows")).toBe(true);
   });
+
+  it("returns the experience span and keeps a named employer on the role", async () => {
+    const tools = createProfileTools({ facts: profile.facts, sections: profile.sections, source: "file" });
+    const search = tools.search_sections as unknown as {
+      execute: (input: { query: string }) => Promise<{ found: boolean; facts?: { value: string }[]; sections?: { sectionId: string }[] }>;
+    };
+    const span = await search.execute({ query: "How many years of experience does he have?" });
+    expect(span.found).toBe(true);
+    expect(span.facts?.[0]?.value).toContain("4 years");
+    expect(span.facts?.[0]?.value).toContain("3 years");
+    const harry = await search.execute({ query: "What was his experience at Harry the Hirer?" });
+    expect(harry.found).toBe(true);
+    expect(harry.sections?.some((section) => section.sectionId === "role-harry-senior")).toBe(true);
+  });
 });
