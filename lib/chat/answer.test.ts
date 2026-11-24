@@ -682,6 +682,18 @@ describe("displayAnswer", () => {
       "What did he do at VietDan?",
     );
     expect(vietdan).toContain("10,000");
+    const retrieval = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What retrieval does Harry use?") }],
+      "",
+      "What retrieval does Harry use?",
+    );
+    const validators = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did validators check at Harry?") }],
+      "",
+      "What did validators check at Harry?",
+    );
+    expect(retrieval).toContain("BM25");
+    expect(validators).toContain("evidence");
     expect(vietdan).toContain("AWS IoT");
     const aitc = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did AITC build?") }],

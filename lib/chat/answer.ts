@@ -76,7 +76,13 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     .filter((item) => item.score > 0)
     .sort((left, right) => right.score - left.score);
   const decision = countedSentence(question, blockSentences, words) ?? blockSentences.find((sentence) => isDecision(question, sentence));
-  const unique = blockSentences.find((sentence) => words.some((word) => word.length >= 5 && mentions(sentence, word) && blockSentences.filter((item) => mentions(item, word)).length === 1));
+  const unique = words
+    .filter((word) => word.length >= 5)
+    .flatMap((word) => {
+      const owners = blockSentences.filter((sentence) => mentions(sentence, word));
+      return owners.length === 1 && owners[0] ? [{ word, sentence: owners[0] }] : [];
+    })
+    .sort((left, right) => right.word.length - left.word.length)[0]?.sentence;
   const chosen: string[] = [];
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(sentence, blockSentences) : "";
@@ -239,7 +245,7 @@ function mentions(sentence: string, word: string): boolean {
   if (word.endsWith("s") && word.length > 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
   if (word.endsWith("e") && new RegExp(`\\b${word.slice(0, -1)}ed\\b`, "i").test(sentence)) return true;
   if (word.length >= 6 && new RegExp(`\\b${word}ion\\b`, "i").test(sentence)) return true;
-  return word.length >= 8 && new RegExp(`\\b${word.slice(0, word.length - 3)}`, "i").test(sentence);
+  return word.length >= 8 && new RegExp(`\\b${word.slice(0, word.length - 3)}(?:ing|ed|es|ion|ten)\\b`, "i").test(sentence);
 }
 
 function askWords(question: string): string[] {
