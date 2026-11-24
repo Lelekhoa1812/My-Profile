@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "@ai-sdk/openai-compatible": "latest",
+    "@ai-sdk/react": "^4.0.186",
+    "@tailwindcss/postcss": "^4.3.5",
     "ai": "latest",
     "mongodb": "latest",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "tailwindcss": "^4.3.5",
     "zod": "latest"
   },
   "devDependencies": {

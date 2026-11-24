@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f3f6f6;
+  --ink: #142028;
+  --ink-soft: #314854;
+  --oxide: #0e6b52;
+  --line: #c9d7dc;
+  --panel: #ffffff;
+  color-scheme: light;
+}
+
+@theme inline {
+  --font-sans: "Familjen Grotesk", sans-serif;
+  --font-story: "Literata", serif;
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-oxide: var(--oxide);
+  --color-line: var(--line);
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+::selection {
+  background: var(--oxide);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--oxide);
+  outline-offset: 3px;
+}
+
+.story {
+  font-family: var(--font-story);
+  font-size: 1.125rem;
+  line-height: 1.55;
+  max-width: 68ch;
+}
+
+.panel-open {
+  animation: panel-open 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes panel-open {
+  from { clip-path: inset(12% 8% 40% 8% round 16px); }
+  to { clip-path: inset(0 0 0 0 round 16px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel-open { animation: none; }
+}

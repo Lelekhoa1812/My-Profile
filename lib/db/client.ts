@@ -1,6 +1,17 @@
 import { MongoClient, type Db } from "mongodb";
 
-const globalForMongo = globalThis as unknown as { profileMongo?: MongoClient };
+const globalForMongo = globalThis as unknown as { profileMongo?: MongoClient; mongoQuietUntil?: number };
+
+export function mongoIsQuiet(): boolean {
+  return Date.now() < (globalForMongo.mongoQuietUntil ?? 0);
+}
+
+export function markMongoDown(): void {
+  globalForMongo.mongoQuietUntil = Date.now() + 60_000;
+  const client = globalForMongo.profileMongo;
+  globalForMongo.profileMongo = undefined;
+  void client?.close().catch(() => undefined);
+}
 
 export function getMongoClient(): MongoClient {
   const uri = process.env.MONGODB_URI;
@@ -10,7 +21,8 @@ export function getMongoClient(): MongoClient {
       maxPoolSize: 5,
       minPoolSize: 0,
       maxIdleTimeMS: 60_000,
-      waitQueueTimeoutMS: 5_000,
+      serverSelectionTimeoutMS: 2_500,
+      waitQueueTimeoutMS: 2_500,
     });
   }
   return globalForMongo.profileMongo;

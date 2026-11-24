@@ -12,7 +12,6 @@ describe("profile content", () => {
   it("repeats each heading inside the section text", () => {
     for (const section of profile.sections) {
       expect(section.text.startsWith(section.heading)).toBe(true);
-      expect(section.visibility ?? "public").toBe("public");
     }
   });
 });

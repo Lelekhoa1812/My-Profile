@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { MongoClient } from "mongodb";
 import profile from "../content/profile.json" with { type: "json" };
 
@@ -19,7 +20,7 @@ function loadEnvFile(path: string): void {
 }
 
 async function main(): Promise<void> {
-  loadEnvFile(new URL("../.env", import.meta.url));
+  loadEnvFile(fileURLToPath(new URL("../.env", import.meta.url)));
   const uri = process.env.MONGODB_URI;
   if (!uri) throw new Error("MONGODB_URI is not set");
   const client = new MongoClient(uri, { maxPoolSize: 5, serverSelectionTimeoutMS: 8_000 });
