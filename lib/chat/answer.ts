@@ -803,7 +803,7 @@ function scoreAnswer(question: string, outputs: readonly Record<string, unknown>
 }
 
 function measureAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\b(measure|measured|cut)\b/i.test(question) || namedEmployer(question) || /\b(live|pilot|uptime|bert|golf|meter|scanner|recall|precision)\b/i.test(question)) return "";
+  if (!/\b(measure|measured|cut)\b/i.test(question) || namedEmployer(question) || /\b(live|pilot|uptime|bert|golf|meter|scanner|recall|precision|estatefolio|cva|codoptic|survee|quotient|adhd|writingjourney|acnt|free-router|medchat|sall-?e|skyledge|medviet|passport|stt-studio)\b/i.test(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bpercent\b/i.test(sentence) && sentence.split(/\s+/).length <= 28));
   return [...new Set(lines)].slice(0, 3).join(" ");
 }
@@ -840,7 +840,7 @@ function modelAnswer(question: string, outputs: readonly Record<string, unknown>
 }
 
 function llmAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\bllms?\b/i.test(question) || namedEmployer(question) || /\b(pedigree|mate|explanation)\b/i.test(question)) return "";
+  if (!/\bllms?\b/i.test(question) || namedEmployer(question) || /\b(pedigree|mate|explanation|estatefolio|cva|codoptic|roster|survee|quotient|adhd|writingjourney|acnt|free-router|medchat|sall-?e|skyledge|medviet|passport|stt-studio)\b/i.test(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(gemini|qwen|openai|vllm)\b/i.test(sentence)));
   return [...new Set(lines)].slice(0, 2).join(" ");
 }
@@ -882,7 +882,7 @@ function codeLanguageAnswer(question: string, outputs: readonly Record<string, u
 }
 
 function cloudAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\bcloud\b/i.test(question)) return "";
+  if (!/\bcloud\b/i.test(question) || /\b(estatefolio|cva|codoptic|roster|survee|quotient|adhd|writingjourney|acnt|free-router|medchat|sall-?e|skyledge|medviet|passport|stt-studio|golf)\b/i.test(question)) return "";
   const employer = namedEmployer(question);
   const lines = sectionBlocks(outputs).flatMap((block) => {
     if (employer && !new RegExp(`\\b${employer}\\b`, "i").test(block)) return [];

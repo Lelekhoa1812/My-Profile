@@ -2088,6 +2088,39 @@ describe("displayAnswer", () => {
     );
     expect(openModels).toContain("Gemini");
     expect(openModels).toContain("TimesFM");
+    const estateLlm = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What LLM does EstateFolio use?") }],
+      "",
+      "What LLM does EstateFolio use?",
+    );
+    expect(estateLlm).toContain("transformer");
+    expect(estateLlm).not.toContain("Gemini");
+    const estateCloud = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What cloud does EstateFolio use?") }],
+      "",
+      "What cloud does EstateFolio use?",
+    );
+    expect(estateCloud).toContain("transformer");
+    expect(estateCloud).not.toContain("Kubernetes");
+    const estateCut = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What percent did EstateFolio cut?") }],
+      "",
+      "What percent did EstateFolio cut?",
+    );
+    expect(estateCut).toContain("transformer");
+    expect(estateCut).not.toContain("40 percent");
+    const openLlm = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What LLM does he use?") }],
+      "",
+      "What LLM does he use?",
+    );
+    expect(openLlm).toContain("Gemini");
+    const openCloud = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What cloud does he use?") }],
+      "",
+      "What cloud does he use?",
+    );
+    expect(openCloud).toContain("AWS");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
