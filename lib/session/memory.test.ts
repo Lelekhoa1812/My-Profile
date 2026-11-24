@@ -105,4 +105,23 @@ describe("withMemory", () => {
     const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What score did the lab record?" }] } as UIMessage;
     expect(groundedQuestion([medswin, answer, follow], 2)).toContain("medswin");
   });
+
+  it("names the previous product on a database, buyer, cut, or live follow-up", () => {
+    const survee = { id: "u1", role: "user", parts: [{ type: "text", text: "What is Survee?" }] } as UIMessage;
+    const golf = { id: "u2", role: "user", parts: [{ type: "text", text: "What is the golf scorecard scanner?" }] } as UIMessage;
+    const meter = { id: "u3", role: "user", parts: [{ type: "text", text: "What is the water-meter scanner?" }] } as UIMessage;
+    const cva = { id: "u4", role: "user", parts: [{ type: "text", text: "What is CVA?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "Recorded." }] } as UIMessage;
+    expect(groundedQuestion([survee, answer, { id: "f1", role: "user", parts: [{ type: "text", text: "What database does it use?" }] } as UIMessage], 2)).toContain("survee");
+    expect(groundedQuestion([golf, answer, { id: "f2", role: "user", parts: [{ type: "text", text: "Who bought it?" }] } as UIMessage], 2)).toContain("golf");
+    expect(groundedQuestion([meter, answer, { id: "f3", role: "user", parts: [{ type: "text", text: "What did it cut?" }] } as UIMessage], 2)).toContain("meter");
+    expect(groundedQuestion([cva, answer, { id: "f4", role: "user", parts: [{ type: "text", text: "Is it live?" }] } as UIMessage], 2)).toContain("cva");
+  });
+
+  it("leaves a live follow-up on the shipped list when no product came first", () => {
+    const harry = { id: "u1", role: "user", parts: [{ type: "text", text: "What did he do at Harry?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "He led the work." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "Is it live?" }] } as UIMessage;
+    expect(groundedQuestion([harry, answer, follow], 2)).toBe("Is it live?");
+  });
 });

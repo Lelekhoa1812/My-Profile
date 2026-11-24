@@ -44,14 +44,22 @@ function messageText(message: UIMessage): string {
   return message.parts.map((part) => part.type === "text" && "text" in part ? part.text : "").join(" ");
 }
 
-const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent|agents?|retrieval|ocr|measure|models?|score)\b/i;
-const NAMED_PRODUCT = /\b(golf|skyledge|roster|triage|survee|prophet|pedigree|writingjourney|medviet|clara|salle|meter|acnt)\b/i;
+const FOLLOW_UP = /\b(stack|buyer|pilot|uptime|percent|agents?|retrieval|ocr|measure|models?|score|database|bought|cut|live)\b/i;
+const NAMED_PRODUCT = /\b(golf|skyledge|roster|triage|survee|prophet|pedigree|writingjourney|medviet|clara|salle|meter|acnt|cva)\b/i;
 const SPOKEN_EMPLOYER: Record<string, string> = { "hai-au": "Hai Au", "nam-a": "Nam A", "tien-thanh": "Tien Thanh" };
 
 export function groundedQuestion(messages: readonly UIMessage[], index: number): string {
   const message = messages[index];
   const question = message ? messageText(message) : "";
   if (!message || message.role !== "user" || namedEmployer(question) || NAMED_PRODUCT.test(question) || !FOLLOW_UP.test(question)) return question;
+  if (/\b(database|bought|cut|live)\b/i.test(question)) {
+    const named = lastNamed(messages, index);
+    const stem = question.replace(/\?$/, "").trim();
+    if (/\blive\b/i.test(question)) return named.product ? `${stem} for ${named.product}?` : question;
+    if (named.product && named.productAt >= named.employerAt) return `${stem} for ${named.product}?`;
+    if (named.employer) return `${stem} at ${SPOKEN_EMPLOYER[named.employer] ?? named.employer}?`;
+    return question;
+  }
   const prior = messages.slice(0, index).reverse().find((item) => item.role === "user" && namedEmployer(messageText(item)));
   const employer = prior ? namedEmployer(messageText(prior)) : undefined;
   if (!employer) {
@@ -60,6 +68,28 @@ export function groundedQuestion(messages: readonly UIMessage[], index: number):
   }
   const spoken = SPOKEN_EMPLOYER[employer] ?? employer;
   return `${question.replace(/\?$/, "").trim()} at ${spoken}?`;
+}
+
+function lastNamed(messages: readonly UIMessage[], index: number): { employer?: string; employerAt: number; product?: string; productAt: number } {
+  let employer: string | undefined;
+  let product: string | undefined;
+  let employerAt = -1;
+  let productAt = -1;
+  messages.slice(0, index).forEach((item, at) => {
+    if (item.role !== "user") return;
+    const text = messageText(item);
+    const named = namedEmployer(text);
+    const found = text.match(NAMED_PRODUCT)?.[1]?.toLowerCase();
+    if (named) {
+      employer = named;
+      employerAt = at;
+    }
+    if (found) {
+      product = found;
+      productAt = at;
+    }
+  });
+  return { employer, employerAt, product, productAt };
 }
 
 function previousProduct(messages: readonly UIMessage[], index: number): string | undefined {
