@@ -161,6 +161,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of uses) push(sentence);
     }
   }
+  const thinDoes = /\bwhat does\b/i.test(question) && /\bdo\b/i.test(question) && chosen.length > 0 && chosen.every((sentence) => sentence.split(/\s+/).length <= 10);
+  if (thinDoes) {
+    const richer = blockSentences.find((sentence) => {
+      const length = sentence.split(/\s+/).length;
+      return length > 8 && length <= 40 && /\b(uses|names|runs|uploads|sends|answers|turns)\b/i.test(sentence) && !chosen.includes(sentence);
+    });
+    push(richer);
+  }
   const recipes = blockSentences.find((sentence) => /\brecipes are\b/i.test(sentence));
   if (recipes && /\b(workflow|engine)\b/i.test(question) && !/\b(own|database)\b/i.test(question) && !chosen.some((sentence) => /recipes are/i.test(sentence))) {
     const title = chosen.findIndex((sentence) => sentence.split(/\s+/).length <= 4);

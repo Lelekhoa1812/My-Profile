@@ -1311,6 +1311,31 @@ describe("displayAnswer", () => {
     expect(codeLanguages).toContain("Python");
     expect(codeLanguages).toContain("TypeScript");
     expect(codeLanguages).not.toContain("Kubernetes");
+    const router = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does free-router do?") }],
+      "",
+      "What does free-router do?",
+    );
+    expect(router).toContain("OpenRouter");
+    expect(router).toContain("Mistral");
+    const studio = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does stt-studio do?") }],
+      "",
+      "What does stt-studio do?",
+    );
+    expect(studio).toContain("faster-whisper");
+    const survee = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Survee do?") }],
+      "",
+      "What does Survee do?",
+    );
+    expect(survee).toContain("questionnaire");
+    const modelCards = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Hugging Face models do?") }],
+      "",
+      "What does Hugging Face models do?",
+    );
+    expect(modelCards).toContain("MNIST");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",
