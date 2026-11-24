@@ -416,6 +416,14 @@ describe("displayAnswer", () => {
     );
     expect(medswinText).toContain("86 percent");
     expect(medswinText).not.toContain("clinical records");
+    const medswinSearch = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "At MedSwin, what BERTScore did the lab record?") }],
+      "",
+      "At MedSwin, what BERTScore did the lab record?",
+    );
+    expect(medswinSearch).toContain("86 percent");
+    expect(medswinSearch).toContain("July 2026");
+    expect(medswinSearch).not.toContain("clinical records");
     expect(medswinText).toContain("MedMCQA");
     expect(medswinText).not.toContain("5 million");
     expect(medswinText).not.toContain("most downloaded");

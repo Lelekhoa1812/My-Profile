@@ -100,7 +100,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const body = chosen.length > 0
     ? chosen
     : blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence)).slice(0, 2);
-  return keptOffer(question, shown, withIdentity(question, withPeriod(body, blockSentences), blockSentences));
+  return keptOffer(question, shown, withIdentity(question, withPeriod(body, blockSentences, outputs), blockSentences));
 }
 
 function titledInQuestion(question: string, block: string): boolean {
@@ -151,11 +151,29 @@ function withIdentity(question: string, proof: string, blockSentences: readonly 
   return `${sentence} ${proof}`.trim();
 }
 
-function withPeriod(sentences: readonly string[], blockSentences: readonly string[]): string {
+function withPeriod(sentences: readonly string[], blockSentences: readonly string[], outputs: readonly Record<string, unknown>[] = []): string {
   const joined = sentences.join(" ");
   if (/\b20\d{2}\b/.test(joined) || sentences.length >= 3) return joined;
-  const period = blockSentences.find((sentence) => /\b20\d{2}\b.*\b(20\d{2}|present)\b/i.test(sentence) && sentence.split(/\s+/).length <= 18);
+  const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;
+}
+
+function employmentPeriod(sentences: readonly string[]): string {
+  return sentences.find((sentence) => /\b20\d{2}\b.*\b(20\d{2}|present)\b/i.test(sentence) && sentence.split(/\s+/).length <= 18) ?? "";
+}
+
+function siblingPeriod(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[]): string {
+  const names = (blockSentences[0] ?? "").split(/[,.]/)[0]?.split(/\s+/).filter((word) => /^[A-Z]/.test(word) && word.length >= 4) ?? [];
+  if (names.length === 0) return "";
+  const current = blockSentences.join(" ");
+  for (const block of sectionBlocks(outputs)) {
+    const sentences = plainSentences(block);
+    if (sentences.join(" ") === current) continue;
+    if (!names.some((name) => new RegExp(`\\b${name}\\b`, "i").test(block))) continue;
+    const period = employmentPeriod(sentences);
+    if (period) return period;
+  }
+  return "";
 }
 
 function mentions(sentence: string, word: string): boolean {
