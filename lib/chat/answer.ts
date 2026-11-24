@@ -488,6 +488,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (!picked && unique && words.every((word) => !mentions(item.sentence, word) || mentions(unique, word))) continue;
     push(item.sentence);
   }
+  if (/\b(lead|leads|leader|led)\b/i.test(question) && /\b(team|work)\b/i.test(question) && namedEmployer(question) && !/\b(axion|axis)\b/i.test(question)) {
+    const led = blockSentences.find((sentence) => /\bled\b/i.test(sentence));
+    if (led) {
+      chosen.length = 0;
+      cap = 2;
+      push(led);
+    }
+  }
   if (/\b(what is|tell me about)\b/i.test(question) && chosen.length > 0 && !chosen.some((sentence) => isDecision(question, sentence)) && chosen.every((sentence) => !/\b(is|are|led|uses|use|used|reads|covers|owns|built|turns|takes|trains|advises)\b/i.test(sentence))) {
     chosen.length = 0;
     const asked = blockSentences.find((sentence) => askWords(question).some((word) => word.length >= 5 && mentions(sentence, word)) && /\b(is|are|led|uses|use|used|reads|covers|owns|answers|turns|takes|refines|trains)\b/i.test(sentence));

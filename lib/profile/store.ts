@@ -734,7 +734,23 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   const titleOnly = terms.length === 1 && exactHeadings.has(terms[0] ?? "");
   const withoutArchiveCopy = titleOnly ? ranked : ranked.filter((hit) => !(hit.section.sectionId.startsWith("archive-") && exactHeadings.has(hit.section.heading.toLowerCase())));
   const top = narrowToDistinctiveLead(withoutArchiveCopy.slice(0, 3), terms);
-  if (top.length === 0) return { found: false as const };
+  if (top.length === 0) {
+    const askedEmployer = EMPLOYERS.find((item) => item.id === employer);
+    const roles = askedEmployer
+      ? pool.filter((item) => item.section.sourceType === "role" && askedEmployer.section(item.section.sectionId, item.title) && (asked.includes("pedigree") || !item.section.sectionId.includes("pedigree"))).slice(0, 2)
+      : [];
+    if (roles.length === 0) return { found: false as const };
+    return {
+      found: true as const,
+      sections: roles.map((hit) => ({
+        sectionId: hit.section.sectionId,
+        heading: hit.section.heading,
+        sourceType: hit.section.sourceType,
+        text: hit.section.text,
+        match: "keyword" as const,
+      })),
+    };
+  }
   return {
     found: true as const,
     sections: top.map((hit) => ({
