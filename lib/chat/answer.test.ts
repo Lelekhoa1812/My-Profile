@@ -912,6 +912,18 @@ describe("displayAnswer", () => {
     );
     expect(teqarScope).toContain("analytics");
     expect(teqarScope).toContain("vision quality checks");
+    const harryRoleFigure = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Harry?") }],
+      "",
+      "What did he do at Harry?",
+    );
+    expect(harryRoleFigure).toContain("40 percent");
+    const mizcoRoleFigure = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Mizco?") }],
+      "",
+      "What did he do at Mizco?",
+    );
+    expect(mizcoRoleFigure).toContain("50 percent");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",

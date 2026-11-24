@@ -123,6 +123,13 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (!/\b(draft recipe|investor scouting)\b/i.test(question) && action && !chosen.some((sentence) => /\b(scores|drafts|detect|reads|localise|localize)\b/i.test(sentence))) push(action);
     if (/\binvestor scouting\b/i.test(question)) push(blockSentences.find((sentence) => /\binvestor scouting builds\b/i.test(sentence)));
     if (/\bdraft recipe\b/i.test(question)) push(blockSentences.find((sentence) => /\bemails founders\b/i.test(sentence)));
+    if (/\bwhat did he do\b/i.test(question) && namedEmployer(question)) {
+      const figure = blockSentences.find((sentence) => /\bpercent\b/i.test(sentence) && !/does not name one metric/i.test(sentence) && !chosen.includes(sentence));
+      if (figure) {
+        cap = 3;
+        push(figure);
+      }
+    }
     if (/\bbuild\b/i.test(question)) {
       const stack = blockSentences.find((sentence) => (/\b(uses|used)\b/i.test(sentence) || /\bmodels include\b/i.test(sentence)) && sentence.split(/\s+/).length <= 28 && !/named tools include/i.test(sentence) && !chosen.includes(sentence));
       if (stack) {
