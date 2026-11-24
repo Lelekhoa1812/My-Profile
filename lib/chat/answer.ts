@@ -236,6 +236,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       cap = 3;
     }
   }
+  if (/\bwhat is\b/i.test(question) && /\btriage\b/i.test(question)) {
+    cap = 5;
+    push(blockSentences.find((sentence) => /\bspeech uses whisper\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bclinical reasoning uses gemini\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bvision uses qwen\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bmimic-iv\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bmedication-delivery\b/i.test(sentence)));
+  }
   if (thinWork && /\b(do|did)\b/i.test(question) && !/\b(percent|measure|cut|pilot|efficiency|gain|accuracy|recall|precision)\b/i.test(question) && !chosen.some((sentence) => isDecision(question, sentence))) {
     const sold = blockSentences.find((sentence) => /\b(sold|acquired)\b/i.test(sentence) && sentence.split(/\s+/).length <= 8);
     const uses = blockSentences.filter((sentence) => /\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 10);
@@ -859,6 +867,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bskyledge\b/i.test(question) && /\bobd-ii\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question) && /\bcareer application agent\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bsurvee\b/i.test(question) && /\bhost-run interview\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\btriage\b/i.test(question) && /\b(speech uses whisper|clinical reasoning uses gemini|vision uses qwen|mimic-iv|medication-delivery)\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\b(download|rank)\b/i.test(question) && /\bmost downloaded\b/i.test(sentence)) return true;

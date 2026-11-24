@@ -1956,6 +1956,8 @@ describe("displayAnswer", () => {
     );
     expect(triageIs).toContain("Whisper");
     expect(triageIs).toContain("Qwen-VL");
+    expect(triageIs).toContain("MIMIC-IV");
+    expect(triageIs).toContain("medication-delivery");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",
