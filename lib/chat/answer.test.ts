@@ -2349,6 +2349,13 @@ describe("displayAnswer", () => {
       "What did he own at AITC?",
     );
     expect(owned).toContain("ingestion");
+    const ingestion = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "At AITC, what is ingestion?") }],
+      "",
+      "At AITC, what is ingestion?",
+    );
+    expect(ingestion).toContain("owned ingestion");
+    expect(ingestion).toContain("mentored data engineers");
     const promptMe = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does prompt-me refine?") }],
       "",

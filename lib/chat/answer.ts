@@ -774,6 +774,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(founders);
     }
   }
+  if (/\b(ingestion|preprocessing|optimisation|optimization|mentored)\b/i.test(question)) {
+    const owned = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bowned ingestion\b/i.test(sentence));
+    if (owned) {
+      chosen.length = 0;
+      cap = 1;
+      push(owned);
+    }
+  }
   if (/\bcockpit\b/i.test(question)) {
     const cockpit = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bcockpit shows traces\b/i.test(sentence));
     if (cockpit) {
