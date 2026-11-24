@@ -88,6 +88,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     })
     .sort((left, right) => right.word.length - left.word.length)[0]?.sentence;
   const picked = decision && unique && unique !== decision && /\bthe stack is\b/i.test(decision) ? unique : decision;
+  const orgLine = blockSentences.some((sentence) => /hugging face org is/i.test(sentence));
   const chosen: string[] = [];
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(sentence, blockSentences) : "";
@@ -97,7 +98,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (named.split(/\s+/).length < 4 && !isDecision(question, named) && !shortFact) return;
     chosen.push(named);
   };
-  push(picked);
+  if (orgLine && /\bwhat is\b/i.test(question) && !/\borg\b/i.test(question)) {
+    push(workSentence(blockSentences));
+    push(blockSentences.find((sentence) => /\bextends\b/i.test(sentence)));
+  } else push(picked);
   if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question)) {
     push(blockSentences.find((sentence) => /\b(jetson|aws)\b/i.test(sentence) && /\b(deploy|deployment|used)\b/i.test(sentence)));
   }
@@ -115,6 +119,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     const answered = words.some((word) => !new RegExp(`\\b${word}\\b`, "i").test(item.sentence) && mentions(item.sentence, word) && chosen.some((sentence) => new RegExp(`\\b${word}\\b`, "i").test(sentence)));
     if (/\b(code|coding|programming)\b/i.test(question) && /\b(vietnamese|mandarin|fluent)\b/i.test(item.sentence)) continue;
     if (/the resume also uses the phrase/i.test(item.sentence) && !/\bphrase\b/i.test(question)) continue;
+    if (orgLine && /\bwhat is\b/i.test(question) && !/\borg\b/i.test(question) && /hugging face org is/i.test(item.sentence)) continue;
     if (picked && item.score < 2 && !exact) continue;
     if (!picked && unique && item.score < 2 && !exact && answered) continue;
     if (!picked && unique && words.every((word) => !mentions(item.sentence, word) || mentions(unique, word))) continue;

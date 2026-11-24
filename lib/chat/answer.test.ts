@@ -964,6 +964,13 @@ describe("displayAnswer", () => {
     );
     expect(quotientShip).toContain("brief");
     expect(quotientShip).toContain("not a deployed product");
+    const medviet = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is MedVietAI?") }],
+      "",
+      "What is MedVietAI?",
+    );
+    expect(medviet).toContain("founder");
+    expect(medviet).toContain("MedSwin");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
