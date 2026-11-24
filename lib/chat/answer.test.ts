@@ -1153,6 +1153,7 @@ describe("displayAnswer", () => {
     );
     expect(ownsDatabase).toContain("does not own");
     expect(ownsDatabase).not.toContain("AI vision");
+    expect(ownsDatabase).not.toContain("Software Engineer");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",

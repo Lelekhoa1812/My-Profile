@@ -129,6 +129,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\bdraft recipe\b/i.test(question) && /\b(send|refuse)\b/i.test(question) && !/\b(send|email)\b/i.test(item.sentence) && !/\bdraft recipe\b/i.test(item.sentence)) continue;
     if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && !/\b(send|refuse)\b/i.test(question) && /\bdoes not send\b/i.test(item.sentence)) continue;
     if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && !/\b(own|database)\b/i.test(question) && /\bdoes not own\b/i.test(item.sentence)) continue;
+    if (/\bdatabase\b/i.test(question) && /\bown/i.test(question) && picked && /\bdoes not own\b/i.test(picked) && !/\bdoes not own\b/i.test(item.sentence)) continue;
     if (/\bexport\b/i.test(question) && !/\bdraft\b/i.test(question) && /\bdraft recipe does not send\b/i.test(item.sentence)) continue;
     if (picked && item.score < 2 && !exact) continue;
     if (!picked && unique && item.score < 2 && !exact && answered) continue;
@@ -172,7 +173,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const body = chosen.length > 0 ? chosen : (workSentences.length > 0 ? workSentences : openSentences).slice(0, 2);
   const extra = siblingWork(outputs, blockSentences, question);
   const withExtra = extra && !body.includes(extra) ? [...body, extra] : body;
-  const timed = withIdentity(question, withPeriod(withExtra, blockSentences, outputs), blockSentences);
+  const timed = withIdentity(question, withPeriod(withExtra, blockSentences, outputs, question), blockSentences);
   const second = secondPeriod(outputs, blockSentences, question, timed);
   return keptOffer(question, shown, withSchool(question, second ? `${timed} ${second}` : timed, blockSentences));
 }
@@ -389,8 +390,9 @@ function withIdentity(question: string, proof: string, blockSentences: readonly 
   return `${sentence} ${proof}`.trim();
 }
 
-function withPeriod(sentences: readonly string[], blockSentences: readonly string[], outputs: readonly Record<string, unknown>[] = []): string {
+function withPeriod(sentences: readonly string[], blockSentences: readonly string[], outputs: readonly Record<string, unknown>[] = [], question = ""): string {
   const joined = sentences.join(" ");
+  if (/\bdatabase\b/i.test(question) && /\bown/i.test(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;
