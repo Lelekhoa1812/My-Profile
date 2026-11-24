@@ -18,7 +18,7 @@
       "heading": "Axion Solutions",
       "sourceType": "role",
       "aliases": ["Axion", "Axis", "FoodFlow"],
-      "text": "Axion Solutions. Senior AI Software Engineer, July 2026 to present. The resume names the role on the Axis platform. The product record separates two systems. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. The codebase classes FoodFlow as AI-enabled, with a path toward governed agent actions. Axis is a separate AI product for Studio copilot, data insight, and message drafting. For FoodFlow, Axis is designed to call typed MCP tools, with preview and human approval before a write. Axis does not own FoodFlow's database."
+      "text": "Axion Solutions. Senior AI Software Engineer, July 2026 to present. The resume describes Axis as capital-markets automation for investment and growth workflows. The product record separates two systems. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. Axis is a separate AI product for Studio copilot, data insight, and message drafting. It calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write. Axis does not own FoodFlow's database."
     },
     {
       "sectionId": "project-axion-workflows",

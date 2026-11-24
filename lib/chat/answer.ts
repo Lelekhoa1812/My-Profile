@@ -3,6 +3,13 @@ export const UNREAD = "The record could not be read.";
 
 type AnswerPart = { type: string; state?: string; output?: unknown };
 
+export function keptSentence(outputs: readonly unknown[], modelText: string): string {
+  return displayAnswer(
+    outputs.map((output) => ({ type: "tool-output", state: "output-available", output })),
+    modelText,
+  );
+}
+
 export function displayAnswer(parts: readonly AnswerPart[], modelText: string): string {
   const outputs = parts
     .filter((part) => part.type.startsWith("tool-") && part.state === "output-available")

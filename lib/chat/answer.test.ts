@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { displayAnswer, SILENCE, UNREAD } from "./answer";
+import { displayAnswer, keptSentence, SILENCE, UNREAD } from "./answer";
 
 describe("displayAnswer", () => {
   it("replaces a boast when every tool missed", () => {
@@ -16,6 +16,10 @@ describe("displayAnswer", () => {
       "His email is on the resume.",
     );
     expect(text).toBe(UNREAD);
+  });
+
+  it("keeps the silence sentence for the session when every tool missed", () => {
+    expect(keptSentence([{ found: false }], "He led a team of 20.")).toBe(SILENCE);
   });
 
   it("keeps the model sentence when a tool found a section", () => {
