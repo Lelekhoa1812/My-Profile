@@ -1267,6 +1267,20 @@ describe("displayAnswer", () => {
     );
     expect(workingNow).toContain("Axis");
     expect(workingNow).toContain("July 2026");
+    const deployment = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for deployment?") }],
+      "",
+      "What does he use for deployment?",
+    );
+    expect(deployment).toContain("Jetson");
+    expect(deployment).toContain("Kubernetes");
+    expect(deployment).not.toContain("ONNX");
+    const poptechMeasure = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he measure at PopTech?") }],
+      "",
+      "What does he measure at PopTech?",
+    );
+    expect(poptechMeasure).toContain("drift");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",

@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = identityAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = identityAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -371,6 +371,12 @@ function withReleaseLimit(question: string, proof: string, outputs: readonly Rec
   return wanted && !proof.includes(wanted) ? `${wanted} ${proof}`.trim() : proof;
 }
 
+function deploymentAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bdeploy(?:ment|ing)?\b/i.test(question) || !/\b(use|uses|used|for)\b/i.test(question) || namedEmployer(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => sentence.split(/\s+/).length <= 16 && /\b(jetson|kubernetes|docker)\b/i.test(sentence) && !/\bdoes not\b/i.test(sentence)));
+  return [...new Set(lines)].slice(0, 2).join(" ");
+}
+
 function databaseAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (/\bvector\b/i.test(question)) return "";
   if (!/\bdatabases?\b/i.test(question) || !/\b(use|uses|used)\b/i.test(question) || namedEmployer(question)) return "";
@@ -600,6 +606,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\buptime\b/i.test(question) && /\buptime\b/i.test(sentence)) return true;
   if (/\bship\b/i.test(question) && /\bnamed live or sold work\b/i.test(sentence)) return true;
   if (/\btext\b/i.test(question) && /\bfinbert\b/i.test(sentence)) return true;
+  if (/\bmeasure\b/i.test(question) && /\b(drift|impute|quality)\b/i.test(sentence)) return true;
   if (/\binclude/i.test(question) && /\b(ensemble|dosage)\b/i.test(sentence)) return true;
   if (/\bdosage\b/i.test(question) && /\bdosage\b/i.test(sentence)) return true;
   if (/\blive app\b/i.test(question) && /\bonly named live app\b/i.test(sentence)) return true;
