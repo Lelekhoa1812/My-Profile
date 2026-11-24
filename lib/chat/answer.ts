@@ -75,7 +75,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     .map((sentence) => ({ sentence, score: askScore(question, sentence, words) }))
     .filter((item) => item.score > 0)
     .sort((left, right) => right.score - left.score);
-  const decision = countedSentence(question, blockSentences, words) ?? blockSentences.find((sentence) => isDecision(question, sentence));
+  const decision = countedSentence(question, blockSentences, words) ?? runSentence(question, blockSentences) ?? blockSentences.find((sentence) => isDecision(question, sentence));
   const unique = words
     .filter((word) => word.length >= 5)
     .flatMap((word) => {
@@ -113,6 +113,12 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const timed = withIdentity(question, withPeriod(withExtra, blockSentences, outputs), blockSentences);
   const second = secondPeriod(outputs, blockSentences, question, timed);
   return keptOffer(question, shown, second ? `${timed} ${second}` : timed);
+}
+
+function runSentence(question: string, sentences: readonly string[]): string | undefined {
+  if (!/\b(run|running|deploy)\b/i.test(question)) return undefined;
+  const platforms = sentences.filter((sentence) => /\b(raspberry|jetson|aws|docker|fastapi)\b/i.test(sentence));
+  return platforms.find((sentence) => /\b(run|running|deploy)\b/i.test(sentence)) ?? platforms[0];
 }
 
 function countedSentence(question: string, sentences: readonly string[], words: readonly string[]): string | undefined {
@@ -272,7 +278,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\b(sell|sold|buyer|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
   if (/\b(store|stored|stores|stay|stays)\b/i.test(question) && /\bmongodb\b/i.test(sentence)) return true;
   if (/\bstack\b/i.test(question) && /\bpython\b/i.test(sentence)) return true;
-  if (/\b(run|running|deploy)\b/i.test(question) && /\b(raspberry|jetson|aws|docker|fastapi)\b/i.test(sentence)) return true;
+  if (/\bplan\b/i.test(question) && /\bplans?\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence) && question.toLowerCase().split(/[^a-z0-9]+/).some((word) => word.length >= 5 && mentions(sentence, word))) return true;
@@ -281,7 +287,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\brepositor(?:y|ies)\b/i.test(question) && /\brepositor(?:y|ies)\b/i.test(sentence)) return true;
   if (/\btraces?\b/i.test(question) && /\btraces?\b/i.test(sentence)) return true;
   if (/\b(reduce|reduced|reduction|less)\b/i.test(question) && /\bpercent\b/i.test(sentence)) return true;
-  if (/\b(refuse|send)\b/i.test(question) && /\bdoes not send\b/i.test(sentence)) {
+  if (/\b(refuse|send)\b/i.test(question) && /\bdoes not\b/i.test(sentence)) {
     if (/\bexport\b/i.test(question)) return /\bexport\b/i.test(sentence);
     if (/\bdraft\b/i.test(question)) return /\bdraft\b/i.test(sentence);
     return true;

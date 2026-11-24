@@ -693,6 +693,24 @@ describe("displayAnswer", () => {
       "What did validators check at Harry?",
     );
     expect(retrieval).toContain("BM25");
+    const docker = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where do the Harry services run?") }],
+      "",
+      "Where do the Harry services run?",
+    );
+    const coach = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the writing coach plan?") }],
+      "",
+      "What did the writing coach plan?",
+    );
+    const refuse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Survee refuse to do?") }],
+      "",
+      "What does Survee refuse to do?",
+    );
+    expect(docker.split(/(?<=[.!])\s+/)[0]).toContain("Docker");
+    expect(coach).toContain("rewrite");
+    expect(refuse).toContain("does not score");
     expect(validators).toContain("evidence");
     expect(vietdan).toContain("AWS IoT");
     const aitc = displayAnswer(
