@@ -1949,6 +1949,21 @@ describe("displayAnswer", () => {
     );
     expect(compareRoles).toContain("Harry");
     expect(compareRoles).toContain("Mizco");
+    const roleDifference = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the difference between Harry and Mizco?") }],
+      "",
+      "What is the difference between Harry and Mizco?",
+    );
+    expect(roleDifference).toContain("Harry");
+    expect(roleDifference).toContain("Mizco");
+    expect(roleDifference).not.toContain("mate-selection");
+    const documentTools = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What document AI tools does he use?") }],
+      "",
+      "What document AI tools does he use?",
+    );
+    expect(documentTools).toContain("document AI");
+    expect(documentTools).not.toContain("Pydantic");
     const managerIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is HA Manager?") }],
       "",

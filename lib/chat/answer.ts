@@ -640,7 +640,7 @@ function cityJobsAnswer(question: string, outputs: readonly Record<string, unkno
 }
 
 function bothWorkAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\bboth\b/i.test(question) && !/\b(compare|versus|vs)\b/i.test(question) && !(/\btwo\b/i.test(question) && /\broles?\b/i.test(question))) return "";
+  if (!/\bboth\b/i.test(question) && !/\b(compare|versus|vs|difference)\b/i.test(question) && !(/\btwo\b/i.test(question) && /\broles?\b/i.test(question))) return "";
   const lines: string[] = [];
   for (const output of outputs) {
     if (!Array.isArray(output.sections)) continue;
@@ -654,6 +654,7 @@ function bothWorkAnswer(question: string, outputs: readonly Record<string, unkno
       if (!lines.includes(line)) lines.push(line);
     }
   }
+  if (lines.length < 2) return "";
   return lines.slice(0, 3).join(" ");
 }
 
