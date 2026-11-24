@@ -126,6 +126,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (orgLine && /\b(what is|tell me about)\b/i.test(question) && !/\borg\b/i.test(question) && /hugging face org is/i.test(item.sentence)) continue;
     if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
+    if (/\bdraft recipe\b/i.test(question) && /\bsend\b/i.test(question) && !/\b(draft|send|email)\b/i.test(item.sentence)) continue;
     if (/\bexport\b/i.test(question) && !/\bdraft\b/i.test(question) && /\bdraft recipe does not send\b/i.test(item.sentence)) continue;
     if (picked && item.score < 2 && !exact) continue;
     if (!picked && unique && item.score < 2 && !exact && answered) continue;
