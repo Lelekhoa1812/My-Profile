@@ -5,6 +5,7 @@ import { turnToStore } from "../../../lib/chat/answer";
 import { streamHeaders } from "../../../lib/chat/headers";
 import { visitorCookie } from "../../../lib/session/cookie";
 import { instructionPrefix } from "../../../lib/agent/instructions";
+import { stepTools } from "../../../lib/agent/loop";
 import { createProfileTools } from "../../../lib/agent/tools";
 import { emptyNimSlots, loadNimKeys } from "../../../lib/nim/keys";
 import { NIM_MODELS } from "../../../lib/nim/models";
@@ -64,14 +65,11 @@ export async function POST(request: Request): Promise<Response> {
     model: nim().chatModel(NIM_MODELS[0]),
     instructions: `${instructionPrefix()}\n\n<record>\n${recordCard(record.facts, record.sections)}\n</record>`,
     tools: createProfileTools(record),
-    stopWhen: isStepCount(5),
+    stopWhen: isStepCount(3),
     maxRetries: 0,
     maxOutputTokens: 1024,
     toolOrder: ["lookup_fact", "list_sections", "read_section", "search_sections"],
-    prepareStep: ({ stepNumber }) => {
-      if (stepNumber === 0) return { toolChoice: "required" as const };
-      return { toolChoice: "none" as const, activeTools: [] };
-    },
+    prepareStep: ({ stepNumber, steps }) => stepTools(stepNumber, steps),
   });
   const result = await agent.stream({
     messages: tailForModel(await convertToModelMessages(withMemory(stored, messages))),

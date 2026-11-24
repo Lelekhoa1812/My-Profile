@@ -1,8 +1,21 @@
-export const SILENCE = "The record does not include that.";
-export const UNREAD = "The record could not be read.";
-export const MISSED = "The record did not answer this time.";
+import profile from "../../content/profile.json";
 
 type AnswerPart = { type: string; state?: string; output?: unknown };
+
+export function holdAnswer(): string {
+  const name = factValue("full_name");
+  const known = factValue("also_known_as");
+  const title = factValue("public_title");
+  if (!name || !title) return "I am Liam's portfolio assistant.";
+  const article = /^[aeiou]/i.test(title) ? "an" : "a";
+  const who = known ? `${name}, also called ${known},` : name;
+  return `${who} is ${article} ${title}. Ask about a role, a product, or a skill to go deeper.`;
+}
+
+function factValue(key: string): string {
+  const fact = profile.facts.find((item) => item.key === key);
+  return typeof fact?.value === "string" ? fact.value.trim() : "";
+}
 
 export function turnToStore(aborted: boolean, outputs: readonly unknown[], modelText: string): string | null {
   if (aborted) return null;
@@ -10,7 +23,7 @@ export function turnToStore(aborted: boolean, outputs: readonly unknown[], model
 }
 
 export function shownAnswer(draft: string, done: boolean, hasReply: boolean): string {
-  return done && hasReply && !draft.trim() ? MISSED : draft;
+  return done && hasReply && !draft.trim() ? holdAnswer() : draft;
 }
 
 export function keptSentence(outputs: readonly unknown[], modelText: string): string {
@@ -18,7 +31,7 @@ export function keptSentence(outputs: readonly unknown[], modelText: string): st
     outputs.map((output) => ({ type: "tool-output", state: "output-available", output })),
     modelText,
   );
-  return text.trim() ? text : MISSED;
+  return text.trim() ? text : holdAnswer();
 }
 
 export function displayAnswer(parts: readonly AnswerPart[], modelText: string): string {
@@ -26,9 +39,15 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
     .filter((part) => part.type.startsWith("tool-") && part.state === "output-available")
     .map((part) => part.output)
     .filter((output): output is Record<string, unknown> => typeof output === "object" && output !== null);
-  if (outputs.some((output) => output.reason === "unavailable")) return UNREAD;
-  if (outputs.length > 0 && outputs.every((output) => output.found === false)) return SILENCE;
-  return dropSourceTail(dropRecordTalk(stripMarkdown(sentenceFromModel(stripToolMarkup(modelText)))), sourceHeadings(outputs));
+  if (outputs.some((output) => output.reason === "unavailable")) return holdAnswer();
+  const missed = outputs.length > 0 && outputs.every((output) => output.found === false);
+  let text = dropGapSentences(dropSourceTail(
+    dropRecordTalk(stripMarkdown(sentenceFromModel(stripToolMarkup(modelText)))),
+    sourceHeadings(outputs),
+  ));
+  if (missed) text = dropUngroundedQuantities(text);
+  if (missed && !text.trim()) return holdAnswer();
+  return text;
 }
 
 export function stripMarkdown(text: string): string {
@@ -95,6 +114,25 @@ function stripRecordLead(sentence: string): string {
     .replace(/^the record says (?:that )?/i, "")
     .trim();
   return stripped ? stripped[0].toUpperCase() + stripped.slice(1) : "";
+}
+
+function exposesGap(sentence: string): boolean {
+  return /the record does not include/i.test(sentence)
+    || /the record could not be read/i.test(sentence)
+    || /the record did not answer/i.test(sentence)
+    || /the record does not name/i.test(sentence);
+}
+
+export function dropGapSentences(text: string): string {
+  return text.trim().split(/(?<=[.!])\s+/).filter((sentence) => sentence && !exposesGap(sentence)).join(" ").trim();
+}
+
+function dropUngroundedQuantities(text: string): string {
+  return text.trim().split(/(?<=[.!])\s+/).filter((sentence) => sentence && !hasUngroundedQuantity(sentence)).join(" ").trim();
+}
+
+function hasUngroundedQuantity(sentence: string): boolean {
+  return /\d+\s*%/.test(sentence) || /\d+\s*percent/i.test(sentence) || /\b\d{2,}\b/.test(sentence);
 }
 
 function narratesRecord(sentence: string): boolean {

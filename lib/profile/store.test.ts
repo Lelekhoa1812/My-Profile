@@ -27,7 +27,7 @@ describe("profile store", () => {
   it("resolves the current title when the key and the kind are both off", () => {
     const result = lookupFacts(profile.facts, { key: "current_title", kind: "role" });
     expect(result.found).toBe(true);
-    if (result.found) expect(result.facts[0]?.value).toBe("Senior AI Software Engineer");
+    if (result.found) expect(result.facts[0]?.value).toBe("AI Software Engineer");
   });
 
   it("names public datasets and does not call a Space a release", () => {
@@ -78,6 +78,14 @@ describe("profile store", () => {
     }
   });
 
+  it("opens the current role and the shipped work when the question has no content words", () => {
+    const result = searchSections(profile.sections, "Tell me about his work");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections.map((section) => section.sectionId)).toEqual(["role-axion", "project-shipped"]);
+    }
+  });
+
   it("finds the current role when the question asks for the title", () => {
     const result = searchSections(profile.sections, "current title", "role");
     expect(result.found).toBe(true);
@@ -87,7 +95,7 @@ describe("profile store", () => {
   it("keeps the public title on the current resume role", () => {
     const result = lookupFacts(profile.facts, { key: "public_title" });
     expect(result.found).toBe(true);
-    if (result.found) expect(result.facts[0]).toMatchObject({ label: "Current title", value: "Senior AI Software Engineer" });
+    if (result.found) expect(result.facts[0]).toMatchObject({ label: "Current title", value: "AI Software Engineer" });
   });
 
   it("answers FoodFlow before the resume phrase for Axis", () => {

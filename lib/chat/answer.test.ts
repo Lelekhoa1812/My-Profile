@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { displayAnswer, dropRecordTalk, dropSourceTail, keptSentence, MISSED, shownAnswer, SILENCE, turnToStore, UNREAD } from "./answer";
+import { displayAnswer, dropGapSentences, dropRecordTalk, dropSourceTail, holdAnswer, keptSentence, shownAnswer, turnToStore } from "./answer";
 
 describe("displayAnswer", () => {
   it("reads the sentence field from a structured answer", () => {
-    const text = displayAnswer([], '{"sentence": "His title is Senior AI Software Engineer."}');
-    expect(text).toBe("His title is Senior AI Software Engineer.");
+    const text = displayAnswer([], '{"sentence": "His title is AI Software Engineer."}');
+    expect(text).toBe("His title is AI Software Engineer.");
   });
 
   it("reads a sentence field that follows a lead-in", () => {
@@ -27,7 +27,7 @@ describe("displayAnswer", () => {
       leaked,
     );
     expect(text).toBe("");
-    expect(shownAnswer(text, true, true)).toBe(MISSED);
+    expect(shownAnswer(text, true, true)).toBe(holdAnswer());
     expect(shownAnswer(text, true, true)).not.toContain("tool_call");
   });
 
@@ -36,15 +36,35 @@ describe("displayAnswer", () => {
       [{ type: "tool-search_sections", state: "output-available", output: { found: false } }, { type: "text" }],
       "He led a team of 20 and cut review by 40%.",
     );
-    expect(text).toBe(SILENCE);
+    expect(text).toBe(holdAnswer());
+    expect(text).not.toContain("20");
+    expect(text).not.toContain("40%");
+    expect(text).not.toContain("record");
   });
 
-  it("uses the unread sentence when the store could not be read", () => {
+  it("keeps a supported sentence when the lookup misses", () => {
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: false } }],
+      "Liam is an AI Software Engineer. The record does not include that.",
+    );
+    expect(text).toBe("Liam is an AI Software Engineer.");
+  });
+
+  it("drops an ungrounded quantity and keeps a single-digit span when the lookup misses", () => {
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: false } }],
+      "The resume summary says 4 years of software engineering experience. He cut review by 40%.",
+    );
+    expect(text).toBe("The resume summary says 4 years of software engineering experience.");
+  });
+
+  it("uses the hold sentence when the store could not be read", () => {
     const text = displayAnswer(
       [{ type: "tool-lookup_fact", state: "output-available", output: { found: false, reason: "unavailable" } }],
       "His email is on the resume.",
     );
-    expect(text).toBe(UNREAD);
+    expect(text).toBe(holdAnswer());
+    expect(text).not.toContain("email");
   });
 
   it("stores nothing when the visitor stops the answer", () => {
@@ -56,15 +76,15 @@ describe("displayAnswer", () => {
   });
 
   it("shows a sentence when the finished answer has no words", () => {
-    expect(shownAnswer("   ", true, true)).toBe(MISSED);
+    expect(shownAnswer("   ", true, true)).toBe(holdAnswer());
   });
 
-  it("stores a plain sentence when the model finishes with no words", () => {
-    expect(keptSentence([{ found: true, heading: "Skills" }], "   ")).toBe(MISSED);
+  it("stores a hold sentence when the model finishes with no words", () => {
+    expect(keptSentence([{ found: true, heading: "Skills" }], "   ")).toBe(holdAnswer());
   });
 
-  it("keeps the silence sentence for the session when every tool missed", () => {
-    expect(keptSentence([{ found: false }], "He led a team of 20.")).toBe(SILENCE);
+  it("stores the hold sentence when every tool missed and the model added a quantity", () => {
+    expect(keptSentence([{ found: false }], "He led a team of 20.")).toBe(holdAnswer());
   });
 
   it("drops a trailing list of section headings the page already shows", () => {
@@ -109,20 +129,20 @@ describe("displayAnswer", () => {
 
   it("drops a sentence that narrates the record and keeps the answer", () => {
     const text = dropRecordTalk(
-      "Liam's job title is Senior AI Software Engineer. The record lists the current title as Senior AI Software Engineer. The page title field reads AI Software Engineer.",
+      "Liam's job title is AI Software Engineer. The record lists the current title as AI Software Engineer. The page title field reads AI Software Engineer.",
     );
-    expect(text).toBe("Liam's job title is Senior AI Software Engineer.");
+    expect(text).toBe("Liam's job title is AI Software Engineer.");
   });
 
-  it("keeps the silence sentence", () => {
-    expect(dropRecordTalk(SILENCE)).toBe(SILENCE);
+  it("drops a sentence that names a missing fact", () => {
+    expect(dropGapSentences("Liam builds CVA. The record does not include that.")).toBe("Liam builds CVA.");
   });
 
   it("keeps the model sentence when a tool found a section", () => {
     const text = displayAnswer(
       [{ type: "tool-read_section", state: "output-available", output: { found: true, sectionId: "role-axion" } }],
-      "Liam is a Senior AI Software Engineer at Axion Solutions.",
+      "Liam is a AI Software Engineer at Axion Solutions.",
     );
-    expect(text).toBe("Liam is a Senior AI Software Engineer at Axion Solutions.");
+    expect(text).toBe("Liam is a AI Software Engineer at Axion Solutions.");
   });
 });

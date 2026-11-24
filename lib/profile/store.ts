@@ -104,6 +104,26 @@ export function readSection(sections: readonly ProfileSection[], sectionId: stri
   };
 }
 
+const BROAD_SECTION_IDS = ["role-axion", "project-shipped"] as const;
+
+function broadSections(pool: readonly { section: ProfileSection; title: string; body: string }[]) {
+  const chosen = BROAD_SECTION_IDS.flatMap((sectionId) => {
+    const hit = pool.find((item) => item.section.sectionId === sectionId);
+    return hit ? [hit] : [];
+  });
+  if (chosen.length === 0) return { found: false as const };
+  return {
+    found: true as const,
+    sections: chosen.map((hit) => ({
+      sectionId: hit.section.sectionId,
+      heading: hit.section.heading,
+      sourceType: hit.section.sourceType,
+      text: hit.section.text,
+      match: "broad" as const,
+    })),
+  };
+}
+
 function namesAnotherRole(pool: readonly { section: ProfileSection; title: string; body: string }[], terms: readonly string[]): boolean {
   return pool.some((item) => item.section.sourceType === "role"
     && item.section.sectionId !== "role-axion"
@@ -126,7 +146,6 @@ const STOP_WORDS = new Set([
 export function searchSections(sections: readonly ProfileSection[], query: string, sourceType?: string) {
   const terms = [...new Set(query.toLowerCase().split(/[^a-z0-9]+/))]
     .filter((term) => term.length > 2 && !STOP_WORDS.has(term));
-  if (terms.length === 0) return { found: false as const };
   const pool = sections
     .filter((section) => (section.visibility ?? "public") === "public")
     .filter((section) => !sourceType || section.sourceType === sourceType)
@@ -135,6 +154,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       title: `${section.heading} ${(section.aliases ?? []).join(" ")}`.toLowerCase(),
       body: section.text.toLowerCase(),
     }));
+  if (terms.length === 0) return broadSections(pool);
   const weight = new Map(terms.map((term) => {
     const frequency = pool.filter((item) => item.title.includes(term) || item.body.includes(term)).length;
     return [term, Math.log(1 + pool.length / Math.max(1, frequency))];
@@ -153,7 +173,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
     .filter((hit) => !hit.section.sectionId.startsWith("archive-") || terms.some((term) => hit.title.includes(term)))
     .sort((left, right) => right.score - left.score);
   if (terms.includes("title") && !namesAnotherRole(pool, terms)) {
-    const current = pool.find((item) => item.section.sourceType === "role" && item.body.includes("senior ai software engineer"));
+    const current = pool.find((item) => item.section.sourceType === "role" && item.body.includes("ai software engineer"));
     if (current && !hits.some((hit) => hit.section.sectionId === current.section.sectionId)) {
       hits.unshift({ section: current.section, title: current.title, score: Number.POSITIVE_INFINITY, matched: terms.length });
     }

@@ -1,14 +1,14 @@
 {
   "facts": [
     {"key": "full_name", "kind": "identity", "value": "Dang Khoa Le", "visibility": "public"},
-    {"key": "also_known_as", "kind": "identity", "value": "Liam", "visibility": "public"},
+    {"key": "also_known_as", "kind": "identity", "value": "Liam Le", "visibility": "public"},
     {"key": "email", "kind": "identity", "value": "liamkl.work@gmail.com", "visibility": "public"},
     {"key": "phone", "kind": "identity", "value": "0450 445 373", "visibility": "public"},
     {"key": "location", "kind": "identity", "value": "Melbourne, Australia", "visibility": "public"},
     {"key": "linkedin", "kind": "link", "value": "https://www.linkedin.com/in/dang-khoa-le-96a6332a8", "visibility": "public"},
     {"key": "github", "kind": "link", "value": "https://github.com/Lelekhoa1812", "visibility": "public"},
     {"key": "huggingface", "kind": "link", "value": "https://huggingface.co/khoaliamle", "visibility": "public"},
-    {"key": "public_title", "kind": "identity", "value": "Senior AI Software Engineer", "visibility": "public"},
+    {"key": "public_title", "kind": "identity", "value": "AI Software Engineer", "visibility": "public"},
     {"key": "page_title", "kind": "identity", "value": "AI Software Engineer", "visibility": "public"},
     {"key": "degree", "kind": "education", "value": "Bachelor of Software Engineering, Swinburne University of Technology, 2022–2025", "visibility": "public"},
     {"key": "languages", "kind": "skill", "value": "Vietnamese (native), English (fluent), Mandarin (intermediate)", "visibility": "public"},
@@ -19,8 +19,8 @@
       "sectionId": "role-axion",
       "heading": "Axion Solutions",
       "sourceType": "role",
-      "aliases": ["Axion", "Axis", "FoodFlow"],
-      "text": "Axion Solutions. Senior AI Software Engineer, July 2026 to present. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. Axis is a separate AI product for Studio copilot, data insight, and message drafting. It calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write. Axis does not own FoodFlow's database. The resume also uses the phrase capital-markets automation for investment and growth workflows. That phrase does not rename FoodFlow. The word production in that list is a business module, not a release."
+      "aliases": ["Axion", "Workflow Engine", "Axis", "FoodFlow"],
+      "text": "Axion Solutions. AI Software Engineer, July 2026 to present. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. Axis is a separate AI product for Studio copilot, data insight, and message drafting. It calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write. Axis does not own FoodFlow's database. The resume also uses the phrase capital-markets automation for investment and growth workflows. That phrase does not rename FoodFlow. The word production in that list is a business module, not a release."
     },
     {
       "sectionId": "project-axion-workflows",

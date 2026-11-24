@@ -7,7 +7,8 @@ describe("recordCard", () => {
   it("places the public record in one block and leaves out an absent employer", () => {
     const card = recordCard(profile.facts, profile.sections);
     expect(card).toContain("Name: Dang Khoa Le");
-    expect(card).toContain("Current title: Senior AI Software Engineer");
+    expect(card).toContain("Also called: Liam Le");
+    expect(card).toContain("Current title: AI Software Engineer");
     expect(card).toContain("Page title: AI Software Engineer");
     expect(card).toContain("Experience: The resume summary says 4 years");
     expect(card).not.toContain("public_title");
