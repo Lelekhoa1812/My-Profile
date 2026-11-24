@@ -11,3 +11,4 @@ reports/
 *.tsbuildinfo
 .DS_Store
 .vitest/
+.vercel
