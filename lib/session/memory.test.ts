@@ -143,4 +143,13 @@ describe("withMemory", () => {
     expect(groundedQuestion([estate, answer, follow], 2)).toContain("estatefolio");
     expect(groundedQuestion([harry, answer, follow], 2)).toBe("What does the forecast read?");
   });
+
+  it("names the S&P forecast on a queue follow-up", () => {
+    const forecast = { id: "u1", role: "user", parts: [{ type: "text", text: "What is the S&P forecast?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "A multi-horizon system." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What queue does it use?" }] } as UIMessage;
+    const harry = { id: "u3", role: "user", parts: [{ type: "text", text: "What did he do at Harry?" }] } as UIMessage;
+    expect(groundedQuestion([forecast, answer, follow], 2)).toContain("s&p");
+    expect(groundedQuestion([harry, answer, follow], 2)).toBe("What queue does it use?");
+  });
 });

@@ -1085,6 +1085,13 @@ describe("displayAnswer", () => {
       "What queue does the S&P work use?",
     );
     expect(queue).toContain("Kafka");
+    const spQueue = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What queue does it use for s&p?") }],
+      "",
+      "What queue does it use for s&p?",
+    );
+    expect(spQueue).toContain("Kafka");
+    expect(spQueue).not.toContain("LangChain");
     const classify = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e classify?") }],
       "",
