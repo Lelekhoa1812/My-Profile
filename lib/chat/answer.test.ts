@@ -1247,6 +1247,12 @@ describe("displayAnswer", () => {
     );
     expect(betweenAlta).toContain("iNet");
     expect(betweenAlta).toContain("VietDan");
+    const harryExperience = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What was his experience at Harry the Hirer?") }],
+      "",
+      "What was his experience at Harry the Hirer?",
+    );
+    expect(harryExperience).toContain("event inventory");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",

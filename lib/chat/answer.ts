@@ -1,5 +1,5 @@
 import profile from "../../content/profile.json";
-import { employerMentioned, namedEmployer } from "../profile/store";
+import { asksForExperienceSpan, asksForTitle, employerMentioned, namedEmployer } from "../profile/store";
 
 type AnswerPart = { type: string; state?: string; output?: unknown };
 
@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = identityAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -109,7 +109,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   if (!picked) push(unique);
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
-  if (/\b(do|did|build|built|role)\b/i.test(question) || /\b(his|her) work\b/i.test(question)) {
+  if (/\b(do|did|build|built|role|experience)\b/i.test(question) || /\b(his|her) work\b/i.test(question)) {
     push(blockSentences.find((sentence) => isToolList(sentence)));
     if (!chosen.some((sentence) => /\b(led|built|uses|used|owned|owns|covers|percent|python|ocr)\b/i.test(sentence))) {
       push(workSentence(blockSentences));
@@ -283,6 +283,15 @@ function placeAnswer(question: string, outputs: readonly Record<string, unknown>
   const work = sentences.find((sentence) => /\bpedigree\b/i.test(question) && /\b(mate-selection|black caviar)\b/i.test(sentence))
     ?? sentences.find((sentence) => /\b(engine|platform|led|owns|built)\b/i.test(sentence));
   return [city, work].filter((sentence): sentence is string => Boolean(sentence)).join(" ");
+}
+
+function identityAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  const asked = /\bwho is (he|him)\b/i.test(question) || asksForTitle(question) || (asksForExperienceSpan(question) && !/\b(years|year|span|many|total)\b/i.test(question));
+  if (!asked) return "";
+  const values = outputs.flatMap((output) => Array.isArray(output.facts) ? output.facts : [])
+    .flatMap((fact) => typeof fact === "object" && fact !== null && "value" in fact && typeof fact.value === "string" ? [fact.value] : []);
+  if (values.length === 0 || outputs.some(hasSectionText)) return "";
+  return values.join(". ");
 }
 
 function sameTimeAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {

@@ -383,8 +383,15 @@ function sectionEmployer(section: ProfileSection): string | undefined {
 
 export function asksForExperienceSpan(query: string): boolean {
   const text = query.toLowerCase();
-  if (!/\bexperience\b/.test(text) || /\b(at|with)\b/.test(text)) return false;
-  return /\b(years|year|span|many|total)\b/.test(text);
+  if (!/\bexperience\b/.test(text) || /\b(at|with)\b/.test(text) || namedEmployer(text)) return false;
+  if (/\b(years|year|span|many|total)\b/.test(text)) return true;
+  return /\b(what is|what's|whats|tell me)\b/.test(text) || /\bhis experience\b/.test(text);
+}
+
+export function asksForTitle(query: string): boolean {
+  const text = query.toLowerCase();
+  if (namedEmployer(text) || /\b(at|role)\b/.test(text)) return false;
+  return /\b(his|her|your) title\b/.test(text);
 }
 
 export function asksForSpokenLanguages(query: string): boolean {

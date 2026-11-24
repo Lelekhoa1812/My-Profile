@@ -1,7 +1,7 @@
 import { tool, type ToolSet } from "ai";
 import { z } from "zod";
 import type { ProfileRecord } from "../profile/load";
-import { asksForExperienceSpan, asksForGraduation, asksForName, asksForPlace, asksForSpokenLanguages, contactLookupKey, listSections, lookupFacts, namedEmployer, readSection, searchSections } from "../profile/store";
+import { asksForExperienceSpan, asksForGraduation, asksForName, asksForPlace, asksForSpokenLanguages, asksForTitle, contactLookupKey, listSections, lookupFacts, namedEmployer, readSection, searchSections } from "../profile/store";
 
 const kind = z.enum(["identity", "role", "link", "date", "skill", "education"]).optional();
 
@@ -42,6 +42,14 @@ export function createProfileTools(record: ProfileRecord): ToolSet {
         if (asksForPlace(input.query)) return lookupFacts(facts, { key: "location" });
         if (/\bcity\b/i.test(input.query) && /\b(it|that)\b/i.test(input.query) && !namedEmployer(input.query)) return lookupFacts(facts, { key: "location" });
         if (asksForExperienceSpan(input.query)) return lookupFacts(facts, { key: "experience" });
+        if (asksForTitle(input.query)) return lookupFacts(facts, { key: "public_title" });
+        if (/\bwho is (he|him)\b/i.test(input.query) && !namedEmployer(input.query)) {
+          const rows = ["full_name", "also_known_as", "public_title"].flatMap((key) => {
+            const found = lookupFacts(facts, { key });
+            return found.found ? found.facts : [];
+          });
+          if (rows.length > 0) return { found: true as const, facts: rows };
+        }
         if (asksForGraduation(input.query)) return lookupFacts(facts, { key: "degree" });
         if (asksForSpokenLanguages(input.query)) {
           const spoken = lookupFacts(facts, { key: "languages" });

@@ -59,6 +59,13 @@ describe("profile tools", () => {
     expect(span.found).toBe(true);
     expect(span.facts?.[0]?.value).toContain("4 years");
     expect(span.facts?.[0]?.value).toContain("3 years");
+    const experience = await search.execute({ query: "What is his experience?" });
+    expect(experience.facts?.[0]?.value).toContain("4 years");
+    const title = await search.execute({ query: "What is his title?" });
+    expect(title.facts?.[0]?.value).toContain("AI Software Engineer");
+    const who = await search.execute({ query: "Who is he?" });
+    expect(who.facts?.map((fact) => fact.value).join(" ")).toContain("Dang Khoa Le");
+    expect(who.facts?.map((fact) => fact.value).join(" ")).toContain("Liam");
     const harry = await search.execute({ query: "What was his experience at Harry the Hirer?" });
     expect(harry.found).toBe(true);
     expect(harry.sections?.some((section) => section.sectionId === "role-harry-senior")).toBe(true);
