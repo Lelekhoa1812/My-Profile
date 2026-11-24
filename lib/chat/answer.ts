@@ -1,4 +1,5 @@
 import profile from "../../content/profile.json";
+import { employerMentioned, namedEmployer } from "../profile/store";
 
 type AnswerPart = { type: string; state?: string; output?: unknown };
 
@@ -65,23 +66,16 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
 const ASK_STOP = new Set(["what", "does", "did", "does", "do", "the", "his", "her", "for", "and", "with", "from", "that", "this", "into", "about", "when", "where", "which", "who", "how", "was", "were", "are", "you", "your", "him", "she", "they", "their", "have", "has", "had", "not", "any", "can", "will", "just", "than", "then", "also", "only", "before", "after"]);
 
 function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>[], question: string): string {
-  const block = sectionBlocks(outputs)[0] ?? "";
+  const block = matchingBlock(outputs, question);
   if (!block.trim()) return text;
   const words = askWords(question);
   const blockSentences = plainSentences(block);
   const shown = plainSentences(text);
-  const dump = isSectionDump(text, block);
-  const ranked = (dump ? blockSentences : shown)
+  const ranked = blockSentences
     .map((sentence) => ({ sentence, score: askScore(question, sentence, words) }))
     .filter((item) => item.score > 0)
     .sort((left, right) => right.score - left.score);
   const decision = blockSentences.find((sentence) => isDecision(question, sentence));
-  const modelAnswers = !dump && shown.length > 0 && shown.length <= 3 && shown.some((sentence) => isDecision(question, sentence) || askScore(question, sentence, words) >= 2);
-  if (modelAnswers) {
-    const tight = shown.filter((sentence) => !isLabel(sentence)).slice(0, 2);
-    const withDecision = decision && !tight.some((sentence) => isDecision(question, sentence)) ? [decision, ...tight] : tight;
-    return withPeriod(withDecision.slice(0, 3), blockSentences);
-  }
   const chosen: string[] = [];
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(sentence, blockSentences) : "";
@@ -89,12 +83,42 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (named.split(/\s+/).length < 5 && !isDecision(question, named)) return;
     chosen.push(named);
   };
-  if (dump || !shown.some((sentence) => isDecision(question, sentence))) push(decision);
+  push(decision);
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   for (const item of ranked) push(item.sentence);
-  if (chosen.length === 0 && dump) return blockSentences.filter((sentence) => !isLabel(sentence) && !exposesGap(sentence)).slice(0, 2).join(" ");
-  if (chosen.length === 0) return text;
-  return withPeriod(chosen, blockSentences);
+  const proof = chosen.length > 0
+    ? withPeriod(chosen, blockSentences)
+    : blockSentences.filter((sentence) => !isLabel(sentence) && !exposesGap(sentence)).slice(0, 2).join(" ");
+  return keptOffer(question, shown, proof);
+}
+
+function matchingBlock(outputs: readonly Record<string, unknown>[], question: string): string {
+  const blocks = sectionBlocks(outputs);
+  const words = askWords(question);
+  const employer = namedEmployer(question);
+  let best = blocks[0] ?? "";
+  let bestScore = -1;
+  for (const block of blocks) {
+    const sentences = plainSentences(block);
+    let score = sentences.reduce((sum, sentence) => sum + askScore(question, sentence, words), 0);
+    if (employer && employerMentioned(employer, block)) score += 8;
+    if (score > bestScore) {
+      best = block;
+      bestScore = score;
+    }
+  }
+  return best;
+}
+
+function keptOffer(question: string, shown: readonly string[], proof: string): string {
+  if (!proof.trim() || namedEmployer(question) || specificQuestion(question)) return proof;
+  const offer = shown.find((sentence) => /\b(go deeper|would you like)\b/i.test(sentence));
+  if (!offer || proof.toLowerCase().includes(offer.toLowerCase())) return proof;
+  return `${proof} ${offer}`.trim();
+}
+
+function specificQuestion(question: string): boolean {
+  return /\b(write|show|preview|approv|cut|pilot|percent|measure|bert|score|sell|sold|buyer|purchas|acquir)\b/i.test(question);
 }
 
 function withPeriod(sentences: readonly string[], blockSentences: readonly string[]): string {
@@ -125,13 +149,6 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\b(write|show|preview|approv)/i.test(question) && /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
   if (/\b(sell|sold|buyer|purchas|acquir)/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
   return /\b(cut|pilot|percent|measure|bert|score|metric)/i.test(question) && /\bpercent\b/i.test(sentence);
-}
-
-function isSectionDump(text: string, block: string): boolean {
-  const sentences = text.trim().split(/(?<=[.!])\s+/).map((sentence) => sentence.trim()).filter(Boolean);
-  if (sentences.length < 4) return false;
-  const hay = block.toLowerCase();
-  return sentences.filter((sentence) => hay.includes(sentence.toLowerCase().slice(0, 48))).length >= 3;
 }
 
 function plainSentences(text: string): string[] {
@@ -371,7 +388,7 @@ export function dropGapSentences(text: string): string {
 
 const LEAD_WORDS = new Set(["the", "a", "an", "he", "his", "her", "this", "that", "ask", "liam", "dang"]);
 const SENTENCE_STARTS = new Set(["about", "after", "also", "because", "before", "both", "could", "during", "each", "if", "let", "once", "only", "please", "should", "since", "some", "then", "there", "these", "those", "when", "while", "would"]);
-const CONTENT_STOP = new Set(["that", "this", "with", "from", "have", "what", "when", "where", "which", "about", "their", "there"]);
+const CONTENT_STOP = new Set(["that", "this", "with", "from", "have", "what", "when", "where", "which", "about", "their", "there", "would", "like"]);
 
 export function evidenceCorpus(outputs: readonly Record<string, unknown>[]): string {
   const identity = ["full_name", "also_known_as", "public_title", "page_title"].map(factValue).filter(Boolean);

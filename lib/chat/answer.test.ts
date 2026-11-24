@@ -432,6 +432,21 @@ describe("displayAnswer", () => {
     );
     expect(golfText).toContain("VHandicap");
     expect(golfText.split(/(?<=[.!])\s+/)[0]).toMatch(/sold/i);
+    const axion = profile.sections.find((item) => item.sectionId === "role-axion");
+    const mixed = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: axion?.text ?? "" }, { text: harry?.text ?? "" }] } }],
+      axion?.text ?? "",
+      "At Harry the Hirer, what did the pilot cut?",
+    );
+    expect(mixed).toContain("40 percent");
+    expect(mixed).not.toContain("preview");
+    const broad = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "CVA is the only named live app. A sale is not a production release." }] } }],
+      "CVA is the only named live app. Would you like the live app?",
+      "What has he shipped?",
+    );
+    expect(broad).toContain("CVA");
+    expect(broad).toContain("Would you like the live app?");
   });
 
   it("keeps the model sentence when a tool found a section", () => {

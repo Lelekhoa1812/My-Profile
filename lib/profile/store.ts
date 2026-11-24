@@ -256,6 +256,14 @@ export function namedEmployer(text: string): string | undefined {
   return EMPLOYERS.find((item) => item.test.test(value))?.id;
 }
 
+export function employerMentioned(employerId: string, text: string): boolean {
+  const employer = EMPLOYERS.find((item) => item.id === employerId);
+  if (!employer) return false;
+  const hay = text.toLowerCase();
+  if (employer.test.test(hay) || employer.section(hay, hay)) return true;
+  return employerId === "medswin" && hay.includes("swinburne-research");
+}
+
 function sectionEmployer(section: ProfileSection): string | undefined {
   const id = section.sectionId.toLowerCase();
   const title = `${section.heading} ${(section.aliases ?? []).join(" ")}`.toLowerCase();

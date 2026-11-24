@@ -69,7 +69,7 @@ export async function POST(request: Request): Promise<Response> {
     maxRetries: 0,
     maxOutputTokens: 1024,
     toolOrder: ["lookup_fact", "list_sections", "read_section", "search_sections"],
-    prepareStep: ({ stepNumber, steps }) => stepTools(stepNumber, steps),
+    prepareStep: ({ stepNumber, steps }) => stepTools(stepNumber, steps, question),
   });
   const result = await agent.stream({
     messages: tailForModel(await convertToModelMessages(dropOtherEmployer(withMemory(stored, messages)))),

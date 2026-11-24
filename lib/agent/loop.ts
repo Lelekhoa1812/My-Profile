@@ -1,3 +1,5 @@
+import { employerMentioned, namedEmployer } from "../profile/store";
+
 const MISS_TOOLS = ["lookup_fact", "search_sections", "read_section"] as const;
 const CLOSED_LABELS = new Set(["Email", "Phone", "Location", "Name", "Also called", "Degree", "Experience", "LinkedIn", "GitHub", "Hugging Face"]);
 
@@ -10,16 +12,43 @@ export type StepToolChoice = {
   activeTools?: Array<"lookup_fact" | "list_sections" | "read_section" | "search_sections">;
 };
 
-export function stepTools(stepNumber: number, steps: readonly ToolStep[]): StepToolChoice {
+export function stepTools(stepNumber: number, steps: readonly ToolStep[], question = ""): StepToolChoice {
   if (stepNumber === 0) return { toolChoice: "required", activeTools: ["search_sections"] };
   const outputs = lastOutputs(steps);
   if (stepNumber !== 1) return { toolChoice: "none", activeTools: [] };
-  if (hasSectionText(outputs) && !unreadHeadings(outputs)) return { toolChoice: "none", activeTools: [] };
+  if (hasSectionText(outputs) && !unreadHeadings(outputs)) {
+    if (missesNamedEmployer(question, outputs)) return { toolChoice: "required", activeTools: ["search_sections", "read_section"] };
+    return { toolChoice: "none", activeTools: [] };
+  }
   if (closedFacts(outputs) && !unreadHeadings(outputs)) return { toolChoice: "none", activeTools: [] };
   if (outputs.length === 0 || outputs.every((output) => output.found === false)) {
     return { toolChoice: "required", activeTools: [...MISS_TOOLS] };
   }
   return { toolChoice: "required", activeTools: ["search_sections"] };
+}
+
+function missesNamedEmployer(question: string, outputs: readonly Record<string, unknown>[]): boolean {
+  const employer = namedEmployer(question);
+  if (!employer) return false;
+  return !employerMentioned(employer, outputHay(outputs));
+}
+
+function outputHay(outputs: readonly Record<string, unknown>[]): string {
+  const parts: string[] = [];
+  for (const output of outputs) {
+    for (const key of ["sectionId", "heading", "text"]) {
+      if (typeof output[key] === "string") parts.push(output[key]);
+    }
+    if (!Array.isArray(output.sections)) continue;
+    for (const section of output.sections) {
+      if (typeof section !== "object" || section === null) continue;
+      const record = section as Record<string, unknown>;
+      for (const key of ["sectionId", "heading", "text"]) {
+        if (typeof record[key] === "string") parts.push(record[key]);
+      }
+    }
+  }
+  return parts.join(" ");
 }
 
 function lastOutputs(steps: readonly ToolStep[]): readonly Record<string, unknown>[] {

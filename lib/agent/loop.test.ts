@@ -50,6 +50,20 @@ describe("stepTools", () => {
     expect(choice).toEqual({ toolChoice: "none", activeTools: [] });
   });
 
+  it("searches again when the section names a different employer", () => {
+    const choice = stepTools(1, [{
+      toolResults: [{ output: { found: true, sections: [{ sectionId: "role-axion", text: "Axion Solutions. Axis shows a preview." }] } }],
+    }], "At Harry the Hirer, what did the pilot cut?");
+    expect(choice).toEqual({ toolChoice: "required", activeTools: ["search_sections", "read_section"] });
+  });
+
+  it("stops when the section names the employer in the question", () => {
+    const choice = stepTools(1, [{
+      toolResults: [{ output: { found: true, sections: [{ sectionId: "role-harry-senior", text: "Harry the Hirer. About 40 percent less repetitive lookup." }] } }],
+    }], "At Harry the Hirer, what did the pilot cut?");
+    expect(choice).toEqual({ toolChoice: "none", activeTools: [] });
+  });
+
   it("stops tool calls on the write step", () => {
     const choice = stepTools(2, [
       { toolResults: [{ output: { found: false } }] },
