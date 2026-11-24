@@ -924,6 +924,13 @@ describe("displayAnswer", () => {
       "What did he do at Mizco?",
     );
     expect(mizcoRoleFigure).toContain("50 percent");
+    const axionRoleWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Axion?") }],
+      "",
+      "What did he do at Axion?",
+    );
+    expect(axionRoleWork).toContain("preview");
+    expect(axionRoleWork).toContain("approve");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
