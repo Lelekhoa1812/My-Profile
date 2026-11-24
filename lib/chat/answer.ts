@@ -316,7 +316,7 @@ export function certifySentences(text: string, evidence: string, blocks: readonl
 
 function keptSentenceForm(sentence: string, hay: string, pools: readonly string[]): string {
   if (/liam will answer/i.test(sentence) || /i am liam's portfolio assistant/i.test(sentence)) return sentence;
-  if (!quantitiesInEvidence(sentence, hay) || !numbersShareOneBlock(sentence, pools) || deniesMeasuredFigure(sentence, hay)) return "";
+  if (!quantitiesInEvidence(sentence, hay) || !numbersShareOneBlock(sentence, pools) || !percentStaysInClause(sentence, pools) || deniesMeasuredFigure(sentence, hay)) return "";
   const named = namesInEvidence(sentence, hay) ? sentence : sentenceWithoutUnknownNames(sentence, hay);
   const grounded = withoutJoinedModifier(named, hay);
   if (!grounded || !namesInEvidence(grounded, hay)) return "";
@@ -342,6 +342,21 @@ function sentenceWithoutUnknownNames(sentence: string, hay: string): string {
     if (index === 0 && (LEAD_WORDS.has(raw.toLowerCase()) || SENTENCE_STARTS.has(raw.toLowerCase()))) return true;
     return hay.includes(raw.toLowerCase());
   }).join(" ").replace(/\s+/g, " ").trim();
+}
+
+function percentStaysInClause(sentence: string, pools: readonly string[]): boolean {
+  const numbers = sentence.match(/\d[\d,]*(?:\.\d+)?(?=\s*percent\b)/gi) ?? [];
+  if (numbers.length === 0) return true;
+  const words = contentWords(sentence).filter((word) => word !== "percent");
+  if (words.length === 0) return true;
+  return pools.some((block) => numbers.every((number) => {
+    const raw = number.replace(/,/g, "");
+    return block.split(/, and |;|(?<=[.!])\s+/).some((clause) => {
+      const hay = clause.toLowerCase().replace(/,/g, "");
+      if (!new RegExp(`(?<![\\d])${raw}(?![\\d])`).test(hay)) return false;
+      return words.some((word) => hay.includes(word));
+    });
+  }));
 }
 
 function deniesMeasuredFigure(sentence: string, evidence: string): boolean {

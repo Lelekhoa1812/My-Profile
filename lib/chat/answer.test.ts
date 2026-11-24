@@ -237,6 +237,17 @@ describe("displayAnswer", () => {
     expect(text).toContain("Would you like");
   });
 
+  it("does not give the uptime figure to the pilot cut", () => {
+    const harry = profile.sections.find((item) => item.sectionId === "role-harry-senior");
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: harry?.text ?? "" }] } }],
+      "The targeted pilot cut repetitive lookup by 99.9 percent.",
+    );
+    expect(text).toContain("40 percent");
+    expect(text).toContain("operational uptime");
+    expect(text).not.toContain("lookup by 99.9");
+  });
+
   it("replaces a denial of the pilot figure with the recorded cut", () => {
     const harry = profile.sections.find((item) => item.sectionId === "role-harry-senior");
     const text = displayAnswer(
