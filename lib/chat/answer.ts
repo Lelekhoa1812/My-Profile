@@ -1157,6 +1157,43 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (
+    /\bforecast/i.test(question) &&
+    !/\bforecasted\b/i.test(question) &&
+    !/\b(use|uses|used|read|reads|data|graph|estatefolio|ericsson|prophet|poptech|s&p|skyledge)\b/i.test(question) &&
+    !namedEmployer(question)
+  ) {
+    const lines = sectionBlocks(outputs).flatMap((block) => {
+      const sentences = plainSentences(block).filter((sentence) => /\bforecast/i.test(sentence) && !exposesGap(sentence) && sentence.split(/\s+/).length <= 24);
+      const best = sentences.find((sentence) => /bandwidth|electricity|price forecast|TimesFM|S&P/i.test(sentence)) ?? sentences[0];
+      if (!best) return [];
+      const system = best.split(/\s+/).length < 5
+        ? plainSentences(block).find((sentence) => /temporal fusion transformers/i.test(sentence))
+        : undefined;
+      return [best, system].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    });
+    if (lines.length >= 2) {
+      chosen.length = 0;
+      cap = 6;
+      for (const sentence of [...new Set(lines)].slice(0, 6)) chosen.push(sentence);
+    }
+  }
+  if (/\bfuse\b/i.test(question) && !/\bsall-?e\b/i.test(question)) {
+    const fusion = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /sensor fusion/i.test(sentence));
+    if (fusion) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(fusion.endsWith(".") ? fusion : `${fusion}.`);
+    }
+  }
+  if (/\bdistill/i.test(question)) {
+    const distilled = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /distillation/i.test(sentence));
+    if (distilled) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(distilled.endsWith(".") ? distilled : `${distilled}.`);
+    }
+  }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));
@@ -1668,6 +1705,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   const joined = sentences.join(" ");
   if (/\bdatabase\b/i.test(question) && /\bown/i.test(question)) return joined;
   if (/\bevaluat|\bvalidation\b/i.test(question)) return joined;
+  if (/\bforecast/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|read|reads|data|graph)\b/i.test(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;

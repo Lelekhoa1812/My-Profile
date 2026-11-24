@@ -1386,6 +1386,29 @@ describe("displayAnswer", () => {
     expect(hosts).toContain("hosts the models");
     expect(hosts).toContain("self-hosted");
     expect(hosts).not.toContain("host-run");
+    const forecastIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it forecast?") }],
+      "",
+      "What does it forecast?",
+    );
+    expect(forecastIt).toContain("electricity forecasting");
+    expect(forecastIt).toContain("bandwidth");
+    expect(forecastIt).toContain("temporal fusion transformers");
+    expect(forecastIt).toContain("price forecast");
+    expect(forecastIt).toContain("TimesFM");
+    const fuseIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it fuse?") }],
+      "",
+      "What does it fuse?",
+    );
+    expect(fuseIt).toContain("sensor fusion");
+    const distillIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it distill?") }],
+      "",
+      "What does it distill?",
+    );
+    expect(distillIt).toContain("distillation");
+    expect(distillIt).toContain("LoRA");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",
