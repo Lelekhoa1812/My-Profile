@@ -171,6 +171,16 @@ describe("displayAnswer", () => {
     expect(dropGapSentences("The record does not specify a live metric. Manual processing fell about 35 percent.")).toBe("Manual processing fell about 35 percent.");
   });
 
+  it("drops a modifier that only exists inside a longer record word", () => {
+    const text = displayAnswer(
+      [{ type: "tool-read_section", state: "output-available", output: { found: true, text: "The resume records about 35 percent less manual meter processing, on more than 10,000 samples. The resume says the scanner was productionized." } }],
+      "The scanner cut manual meter processing by about 35 percent on more than 10,000 production samples.",
+    );
+    expect(text).toContain("10,000 samples");
+    expect(text).toContain("35 percent");
+    expect(text).not.toContain("production samples");
+  });
+
   it("keeps the model sentence when a tool found a section", () => {
     const text = displayAnswer(
       [{ type: "tool-read_section", state: "output-available", output: { found: true, sectionId: "role-axion", text: "Axion Solutions. AI Software Engineer." } }],

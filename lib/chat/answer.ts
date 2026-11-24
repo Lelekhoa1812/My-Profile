@@ -162,11 +162,21 @@ function keptSentenceForm(sentence: string, hay: string): string {
   if (/liam will answer/i.test(sentence) || /i am liam's portfolio assistant/i.test(sentence)) return sentence;
   if (!quantitiesInEvidence(sentence, hay)) return "";
   const named = namesInEvidence(sentence, hay) ? sentence : sentenceWithoutUnknownNames(sentence, hay);
-  if (!named || !namesInEvidence(named, hay)) return "";
-  const words = contentWords(named);
+  const grounded = withoutJoinedModifier(named, hay);
+  if (!grounded || !namesInEvidence(grounded, hay)) return "";
+  const words = contentWords(grounded);
   if (words.length === 0) return named;
   const hits = words.filter((word) => hay.includes(word)).length;
-  return hits / words.length >= 0.5 ? named : "";
+  return hits / words.length >= 0.5 ? grounded : "";
+}
+
+function withoutJoinedModifier(sentence: string, hay: string): string {
+  return sentence.split(/\s+/).filter((word) => {
+    const token = cleanToken(word).toLowerCase();
+    if (token.length < 4 || CONTENT_STOP.has(token)) return true;
+    if (new RegExp(`\\b${token}\\b`).test(hay)) return true;
+    return !new RegExp(`\\b${token}[a-z]+\\b`).test(hay);
+  }).join(" ").replace(/\s+/g, " ").trim();
 }
 
 function sentenceWithoutUnknownNames(sentence: string, hay: string): string {
@@ -180,7 +190,8 @@ function sentenceWithoutUnknownNames(sentence: string, hay: string): string {
 
 function quantitiesInEvidence(sentence: string, hay: string): boolean {
   const numbers = sentence.match(/\d[\d,]*(?:\.\d+)?/g) ?? [];
-  return numbers.every((raw) => new RegExp(`(?<![\\d])${raw.replace(/,/g, "")}(?![\\d])`).test(hay));
+  const digits = hay.replace(/,/g, "");
+  return numbers.every((raw) => new RegExp(`(?<![\\d])${raw.replace(/,/g, "")}(?![\\d])`).test(digits));
 }
 
 function namesInEvidence(sentence: string, hay: string): boolean {
