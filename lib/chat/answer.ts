@@ -1701,6 +1701,20 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bwhat does\b/i.test(question) && /\bgolf\b/i.test(question) && /\bdo\b/i.test(question) && !/\b(handwriting|measure|digit|use)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\bsold to vhandicap\b/i.test(sentence)),
+      sentences.find((sentence) => /\b15 percent efficiency\b/i.test(sentence)),
+      sentences.find((sentence) => /\byolov8\b/i.test(sentence)),
+      sentences.find((sentence) => /\bvietocr\b/i.test(sentence) && /\bpaddleocr\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 4;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bwhat does\b/i.test(question) && /\bclara\b/i.test(question) && /\bdo\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [

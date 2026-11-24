@@ -2325,6 +2325,15 @@ describe("displayAnswer", () => {
     expect(golfIs).toContain("YOLOv8");
     expect(golfIs).toContain("15 percent");
     expect(golfIs).toContain("VietOCR");
+    const golfDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the golf scanner do?") }],
+      "",
+      "What does the golf scanner do?",
+    );
+    expect(golfDoes).toContain("VHandicap");
+    expect(golfDoes).toContain("15 percent");
+    expect(golfDoes).toContain("YOLOv8");
+    expect(golfDoes).toContain("VietOCR");
     const rosterIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Roster management?") }],
       "",
