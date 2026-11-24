@@ -2121,6 +2121,28 @@ describe("displayAnswer", () => {
       "What cloud does he use?",
     );
     expect(openCloud).toContain("AWS");
+    const programLanguages = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What programming language does he use?") }],
+      "",
+      "What programming language does he use?",
+    );
+    expect(programLanguages).toContain("Python");
+    expect(programLanguages).toContain("Java");
+    expect(programLanguages).not.toContain("remittance");
+    const estateVector = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What vector database does EstateFolio use?") }],
+      "",
+      "What vector database does EstateFolio use?",
+    );
+    expect(estateVector).toContain("transformer");
+    expect(estateVector).not.toContain("FAISS");
+    expect(estateVector).not.toContain("pgvector");
+    const triageVector = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What vector database does triage use?") }],
+      "",
+      "What vector database does triage use?",
+    );
+    expect(triageVector).toContain("FAISS");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
