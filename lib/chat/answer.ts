@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || scoreAnswer(question, outputs) || draftedAnswer(question, outputs) || reviewedAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || scoreAnswer(question, outputs) || draftedAnswer(question, outputs) || reviewedAnswer(question, outputs) || exportedAnswer(question, outputs) || forecastedAnswer(question, outputs) || monitoredAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -373,6 +373,24 @@ function percentFigureAnswer(question: string, outputs: readonly Record<string, 
   if (!percent || !/\bfigure\b/i.test(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => sentence.includes(percent) && /\bpercent\b/i.test(sentence) && sentence.split(/\s+/).length <= 28));
   return [...new Set(lines)].slice(0, 3).join(" ");
+}
+
+function exportedAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bexported\b/i.test(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bexports\b|\bexport does not\b/i.test(sentence) && sentence.split(/\s+/).length <= 28));
+  return [...new Set(lines)].slice(0, 2).join(" ");
+}
+
+function forecastedAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bforecasted\b/i.test(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bforecast/i.test(sentence) && sentence.split(/\s+/).length >= 3 && sentence.split(/\s+/).length <= 18));
+  return [...new Set(lines)].slice(0, 4).join(" ");
+}
+
+function monitoredAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bmonitored\b/i.test(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bmonitoring\b/i.test(sentence) && /\bstability\b/i.test(sentence)));
+  return [...new Set(lines)].slice(0, 1).join(" ");
 }
 
 function draftedAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {

@@ -1156,6 +1156,25 @@ describe("displayAnswer", () => {
       "What has he reviewed?",
     );
     expect(reviewedWork).toContain("uncertain");
+    const exportedWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he exported?") }],
+      "",
+      "What has he exported?",
+    );
+    expect(exportedWork).toContain("does not send a message");
+    const forecastedWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he forecasted?") }],
+      "",
+      "What has he forecasted?",
+    );
+    expect(forecastedWork).toContain("TimesFM");
+    expect(forecastedWork).toContain("bandwidth");
+    const monitoredWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he monitored?") }],
+      "",
+      "What has he monitored?",
+    );
+    expect(monitoredWork).toContain("population stability");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",
