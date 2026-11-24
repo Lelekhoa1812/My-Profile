@@ -2295,7 +2295,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     : undefined;
   const selectedLines = chosen.length > 0 ? chosen : definition && !fallback.includes(definition) ? [definition, ...fallback].slice(0, 2) : fallback;
   const productDefinition = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /multi-tenant food-distribution/i.test(sentence));
-  const body = /\bmodels?\b/i.test(question) && /\b(use|uses)\b/i.test(question) && selectedLines.some((sentence) => /not for a release/i.test(sentence))
+  const body = /\b(models?|languages?|stack)\b/i.test(question) && /\b(use|uses)\b/i.test(question) && selectedLines.some((sentence) => /not for a release/i.test(sentence))
     ? [productDefinition ?? selectedLines.find((sentence) => !/not for a release/i.test(sentence))].flatMap((sentence) => (sentence ? [sentence] : []))
     : selectedLines;
   const extra = siblingWork(outputs, blockSentences, question);

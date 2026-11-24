@@ -1180,6 +1180,26 @@ describe("displayAnswer", () => {
     );
     expect(foodflowModels).toContain("multi-tenant");
     expect(foodflowModels).not.toContain("not for a release");
+    const foodflowLanguage = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What language does FoodFlow use?") }],
+      "",
+      "What language does FoodFlow use?",
+    );
+    expect(foodflowLanguage).toContain("multi-tenant");
+    expect(foodflowLanguage).not.toContain("not for a release");
+    const foodflowStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does FoodFlow use?") }],
+      "",
+      "What stack does FoodFlow use?",
+    );
+    expect(foodflowStack).toContain("multi-tenant");
+    expect(foodflowStack).not.toContain("not for a release");
+    const foodflowDeploy = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he deploy at FoodFlow?") }],
+      "",
+      "What did he deploy at FoodFlow?",
+    );
+    expect(foodflowDeploy).toContain("not for a release");
     const beforeMeter = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at VietDan before the meter work?") }],
       "",
