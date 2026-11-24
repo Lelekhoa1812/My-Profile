@@ -1031,6 +1031,27 @@ describe("displayAnswer", () => {
     );
     expect(fiveMillion).toContain("5 million synthetic cases");
     expect(fiveMillion).not.toContain("8-million");
+    const harryPercent = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the 40 percent figure?") }],
+      "",
+      "What is the 40 percent figure?",
+    );
+    expect(harryPercent).toContain("40 percent");
+    expect(harryPercent).not.toContain("15 percent");
+    const mizcoPercent = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the 50 percent figure?") }],
+      "",
+      "What is the 50 percent figure?",
+    );
+    expect(mizcoPercent).toContain("50 percent");
+    const meterPercent = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the 35 percent figure?") }],
+      "",
+      "What is the 35 percent figure?",
+    );
+    expect(meterPercent).toContain("admin effort");
+    expect(meterPercent).toContain("manual work");
+    expect(meterPercent).toContain("meter");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",

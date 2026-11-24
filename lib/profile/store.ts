@@ -178,6 +178,14 @@ function adjacentRoleIds(text: string) {
   return ids.length > 0 ? ids : undefined;
 }
 
+function percentFigureIds(pool: readonly { section: ProfileSection; body: string }[], text: string): string[] | undefined {
+  const number = text.match(/\b(\d{2,}(?:\.\d+)?)\s+percent\b/)?.[1];
+  if (!number || !text.includes("figure")) return undefined;
+  const pattern = new RegExp(`\\b${number.replace(".", "\\.")}\\b`);
+  const ids = pool.filter((item) => pattern.test(item.body) && /\bpercent\b/.test(item.body)).map((item) => item.section.sectionId);
+  return ids.length > 0 ? ids.slice(0, 4) : undefined;
+}
+
 function pinnedSections(pool: readonly { section: ProfileSection; title: string; body: string }[], query: string) {
   const text = query.toLowerCase();
   const namedRoles = EMPLOYERS.filter((item) => item.test.test(text));
@@ -226,6 +234,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
       };
     }
   }
+  const percentIds = percentFigureIds(pool, text);
   const adjacent = adjacentRoleIds(text);
   const overlapping = overlappingRoleIds(text);
   const between = betweenRoleIds(text);
@@ -242,6 +251,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: cityRoles.length > 0, ids: cityRoles },
     { when: /\bnam\b/.test(text) && /\b(two|difference)\b/.test(text) && /\broles?\b/.test(text), ids: ["role-nam-a-ai", "role-nam-a-software"] },
     { when: /\bnam\b/.test(text) && /\b(first|earlier)\b/.test(text), ids: ["role-nam-a-software", "role-nam-a-ai"] },
+    { when: Boolean(percentIds?.length), ids: percentIds ?? [] },
     { when: Boolean(adjacent?.length), ids: adjacent ?? [] },
     { when: text.includes("axion") && (text.includes("axis") || text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: /\b(build|built)\b/.test(text) && text.includes("axion") && !/\b(workflow|engine|recipe)\b/.test(text), ids: ["role-axion"] },
@@ -494,7 +504,7 @@ const STOP_WORDS = new Set([
 
 export function searchSections(sections: readonly ProfileSection[], query: string, sourceType?: string) {
   const terms = [...new Set(query.toLowerCase().split(/[^a-z0-9&]+/))]
-    .filter((term) => (term.length > 2 || term === "5g") && !STOP_WORDS.has(term));
+    .filter((term) => (term.length > 2 || term === "5g" || /^\d{2,}$/.test(term)) && !STOP_WORDS.has(term));
   const visible = sections
     .filter((section) => (section.visibility ?? "public") === "public")
     .map((section) => ({

@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -362,6 +362,13 @@ function whisperAnswer(question: string, outputs: readonly Record<string, unknow
   return [...new Set(lines)].slice(0, 2).join(" ");
 }
 
+function percentFigureAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  const percent = question.match(/\b(\d{2,}(?:\.\d+)?)\s+percent\b/i)?.[1];
+  if (!percent || !/\bfigure\b/i.test(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => sentence.includes(percent) && /\bpercent\b/i.test(sentence) && sentence.split(/\s+/).length <= 28));
+  return [...new Set(lines)].slice(0, 3).join(" ");
+}
+
 function measureAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (!/\b(measure|cut)\b/i.test(question) || namedEmployer(question) || /\b(live|pilot|uptime|bert|golf|meter|scanner|recall|precision)\b/i.test(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bpercent\b/i.test(sentence) && sentence.split(/\s+/).length <= 28));
@@ -634,7 +641,7 @@ function focusClause(question: string, sentence: string): string {
 }
 
 function askWords(question: string): string[] {
-  const words = [...new Set(question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 3 && !ASK_STOP.has(word)))];
+  const words = [...new Set(question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => (word.length >= 3 || /^\d{2,}$/.test(word)) && !ASK_STOP.has(word)))];
   const dropWork = /\b(available|summarise|summarize)\b/i.test(question) || (/\bwork\b/i.test(question) && /\bnow\b/i.test(question));
   return dropWork ? words.filter((word) => word !== "work") : words;
 }
@@ -692,6 +699,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\b8[-\s]?million\b/i.test(question) && /\b8-million\b/i.test(sentence)) return true;
   if (/\b5\s+million\b/i.test(question) && /\b5 million\b/i.test(sentence)) return true;
   if (/\b500[,.]?000\b/i.test(question) && /\b500,000\b/i.test(sentence)) return true;
+  const percent = question.match(/\b(\d{2,}(?:\.\d+)?)\s+percent\b/i)?.[1];
+  if (percent && sentence.includes(percent) && /\bpercent\b/i.test(sentence)) return true;
   if (/\bhandwriting\b/i.test(question) && /\bvision\b/i.test(question) && /qwen/i.test(sentence)) return true;
   if (/\bhandwriting\b/i.test(question) && !/\bvision\b/i.test(question) && /\bhandwriting uses\b/i.test(sentence)) return true;
   if (/\baccounting\b/i.test(question) && /\baccounting assistant\b/i.test(sentence)) return true;
