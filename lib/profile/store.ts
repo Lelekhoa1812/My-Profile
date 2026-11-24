@@ -193,7 +193,13 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     }
   }
   const adjacent = adjacentRoleIds(text);
+  const city = ["melbourne", "perth", "ho chi minh", "binh duong"].find((name) => text.includes(name));
+  const cityRoles = city && /\b(jobs|roles)\b/.test(text)
+    ? pool.filter((item) => item.section.sourceType === "role" && (item.body.includes(city) || item.title.includes(city))).map((item) => item.section.sectionId)
+    : [];
   const sets = [
+    { when: cityRoles.length > 0, ids: cityRoles },
+    { when: /\bnam\b/.test(text) && /\b(two|difference)\b/.test(text) && /\broles?\b/.test(text), ids: ["role-nam-a-ai", "role-nam-a-software"] },
     { when: Boolean(adjacent?.length), ids: adjacent ?? [] },
     { when: text.includes("axion") && (text.includes("axis") || text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: text.includes("axis") && (text.includes("write") || text.includes("preview") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },

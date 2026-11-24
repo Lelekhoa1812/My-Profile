@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -200,8 +200,27 @@ function vectorAnswer(question: string, outputs: readonly Record<string, unknown
   return [...new Set(short.length > 0 ? short : lines)].slice(0, 2).join(" ");
 }
 
+function cityJobsAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\b(jobs|roles)\b/i.test(question)) return "";
+  const city = question.match(/\b(melbourne|perth|ho chi minh(?: city)?|binh duong)\b/i)?.[0];
+  if (!city) return "";
+  const lines: string[] = [];
+  for (const output of outputs) {
+    if (!Array.isArray(output.sections)) continue;
+    for (const section of output.sections) {
+      if (typeof section !== "object" || section === null || section.sourceType !== "role" || typeof section.text !== "string") continue;
+      if (!new RegExp(city.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(section.text)) continue;
+      const heading = "heading" in section ? String(section.heading).split(",")[0] : "";
+      const period = plainSentences(section.text).find((sentence) => /\b20\d{2}\b/.test(sentence) && sentence.split(/\s+/).length <= 16) ?? "";
+      const line = heading && period && !period.toLowerCase().includes(heading.toLowerCase()) ? `${heading}. ${period}` : heading;
+      if (line && !lines.includes(line)) lines.push(line);
+    }
+  }
+  return lines.slice(0, 4).join(" ");
+}
+
 function bothWorkAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\bboth\b/i.test(question)) return "";
+  if (!/\bboth\b/i.test(question) && !(/\btwo\b/i.test(question) && /\broles?\b/i.test(question))) return "";
   const lines: string[] = [];
   for (const output of outputs) {
     if (!Array.isArray(output.sections)) continue;

@@ -1185,6 +1185,28 @@ describe("displayAnswer", () => {
       "What language does HA Manager use?",
     );
     expect(haLanguage).toContain("bilingual");
+    const melbourneJobs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Which jobs were in Melbourne?") }],
+      "",
+      "Which jobs were in Melbourne?",
+    );
+    expect(melbourneJobs).toContain("Harry");
+    expect(melbourneJobs).toContain("PopTech");
+    expect(melbourneJobs).toContain("Swinburne");
+    const perthJobs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Which jobs were in Perth?") }],
+      "",
+      "Which jobs were in Perth?",
+    );
+    expect(perthJobs).toContain("Mizco");
+    expect(perthJobs).toContain("Teqar");
+    const namRoles = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the difference between the two Nam A roles?") }],
+      "",
+      "What is the difference between the two Nam A roles?",
+    );
+    expect(namRoles).toContain("VietOCR");
+    expect(namRoles).toContain("REST");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",
