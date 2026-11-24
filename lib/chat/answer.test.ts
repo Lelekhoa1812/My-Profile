@@ -937,6 +937,20 @@ describe("displayAnswer", () => {
       "What is FastAPI used for?",
     );
     expect(fastApi).toContain("FastAPI");
+    expect(fastApi).toContain("vLLM");
+    const dockerUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Docker used for?") }],
+      "",
+      "What is Docker used for?",
+    );
+    expect(dockerUse).toContain("MSAL");
+    expect(dockerUse).toContain("CI/CD");
+    const mongoUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is MongoDB used for?") }],
+      "",
+      "What is MongoDB used for?",
+    );
+    expect(mongoUse).toContain("Answers stay in MongoDB");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
