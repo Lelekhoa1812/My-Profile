@@ -84,4 +84,25 @@ describe("withMemory", () => {
     expect(groundedQuestion([harry, answer, golf], 2)).not.toContain("harry");
     expect(groundedQuestion([harry, answer, ocr], 2)).toContain("harry");
   });
+
+  it("names the previous employer on a model follow-up", () => {
+    const poptech = { id: "u1", role: "user", parts: [{ type: "text", text: "What did he do at PopTech?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "He led the platform." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What models did he use?" }] } as UIMessage;
+    expect(groundedQuestion([poptech, answer, follow], 2)).toContain("poptech");
+  });
+
+  it("names the previous product on a model follow-up", () => {
+    const pedigree = { id: "u1", role: "user", parts: [{ type: "text", text: "What is the pedigree project?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "A mate-selection engine." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What models does it use?" }] } as UIMessage;
+    expect(groundedQuestion([pedigree, answer, follow], 2)).toContain("pedigree");
+  });
+
+  it("names the previous employer on a score follow-up", () => {
+    const medswin = { id: "u1", role: "user", parts: [{ type: "text", text: "What did he do at MedSwin?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "He led the lab." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What score did the lab record?" }] } as UIMessage;
+    expect(groundedQuestion([medswin, answer, follow], 2)).toContain("medswin");
+  });
 });
