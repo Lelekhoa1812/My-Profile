@@ -151,6 +151,22 @@ describe("profile store", () => {
     }
   });
 
+  it("opens the acquired work when the question asks about a sale", () => {
+    const acquired = searchSections(profile.sections, "Did any product get acquired?");
+    expect(acquired.found).toBe(true);
+    if (acquired.found) {
+      const ids = acquired.sections.map((section) => section.sectionId);
+      expect(ids[0]).toBe("project-shipped");
+      expect(ids).toContain("project-skyledge");
+    }
+    const sold = searchSections(profile.sections, "Which products were sold?");
+    expect(sold.found).toBe(true);
+    if (sold.found) {
+      const ids = sold.sections.map((section) => section.sectionId);
+      expect(ids).toEqual(expect.arrayContaining(["project-writing", "project-roster", "project-golf"]));
+    }
+  });
+
   it("opens the degree when the question asks where he studied", () => {
     const result = searchSections(profile.sections, "Where did he study?");
     expect(result.found).toBe(true);
