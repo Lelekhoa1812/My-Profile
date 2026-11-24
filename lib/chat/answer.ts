@@ -90,9 +90,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const picked = decision && unique && unique !== decision && /\bthe stack is\b/i.test(decision) ? unique : decision;
   const orgLine = blockSentences.some((sentence) => /hugging face org is/i.test(sentence));
   const chosen: string[] = [];
+  let cap = 2;
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(focusClause(question, sentence), blockSentences) : "";
-    if (!named || chosen.includes(named) || chosen.length >= 2) return;
+    if (!named || chosen.includes(named) || chosen.length >= cap) return;
     if (/the resume also uses the phrase/i.test(named) && !/\bphrase\b/i.test(question)) return;
     const shortFact = named.split(/\s+/).length >= 3 && /\b(use|uses|run|runs|led|cut)\b/.test(named) && words.some((word) => word.length >= 4 && mentions(named, word));
     const shortUse = /\b(do|did)\b/i.test(question) && named.split(/\s+/).length >= 3 && (/\buses\b/i.test(named) || /\b(sold|acquired)\b/i.test(named));
@@ -146,6 +147,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     const uses = blockSentences.filter((sentence) => /\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 10);
     if (uses.length >= 2 || (sold && uses.length >= 1)) {
       chosen.length = 0;
+      cap = 3;
       if (sold) push(sold);
       for (const sentence of uses) push(sentence);
     }

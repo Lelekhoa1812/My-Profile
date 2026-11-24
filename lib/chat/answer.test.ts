@@ -1065,6 +1065,7 @@ describe("displayAnswer", () => {
     );
     expect(triageWork).toContain("Whisper");
     expect(triageWork).toContain("Gemini");
+    expect(triageWork).toContain("Qwen");
     const golfWork = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at the golf scanner?") }],
       "",
