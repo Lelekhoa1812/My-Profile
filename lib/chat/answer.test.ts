@@ -571,6 +571,18 @@ describe("displayAnswer", () => {
       "What did the water meter reduce?",
     );
     expect(alta).toContain("Kubernetes");
+    const surveeRepo = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What repository holds the Survee code?") }],
+      "",
+      "What repository holds the Survee code?",
+    );
+    const golfDetect = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the golf scanner detect on the card?") }],
+      "",
+      "What did the golf scanner detect on the card?",
+    );
+    expect(surveeRepo).toContain("Lelekhoa1812/survee");
+    expect(golfDetect).toContain("YOLOv8");
     expect(inet).toContain("Obsei");
     expect(traces).toContain("LangSmith");
     expect(meter).toContain("35 percent");

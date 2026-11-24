@@ -92,6 +92,11 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   return keptOffer(question, shown, withIdentity(question, withPeriod(body, blockSentences), blockSentences));
 }
 
+function titledInQuestion(question: string, block: string): boolean {
+  const title = (plainSentences(block)[0] ?? "").split(/[,.]/)[0] ?? "";
+  return title.split(/\s+/).some((word) => /^[A-Z]/.test(word) && word.length >= 4 && new RegExp(`\\b${word}\\b`, "i").test(question));
+}
+
 function matchingBlock(outputs: readonly Record<string, unknown>[], question: string): string {
   const blocks = sectionBlocks(outputs);
   const words = askWords(question);
@@ -103,6 +108,7 @@ function matchingBlock(outputs: readonly Record<string, unknown>[], question: st
     const chronological = /\b(before|after)\b/.test(question.toLowerCase());
     let score = sentences.reduce((best, sentence) => Math.max(best, askScore(question, sentence, words)), 0);
     if (employer && !chronological && employerMentioned(employer, block)) score += 8;
+    if (!chronological && titledInQuestion(question, block)) score += 8;
     if (score > bestScore) {
       best = block;
       bestScore = score;
@@ -145,6 +151,7 @@ function mentions(sentence: string, word: string): boolean {
   if (new RegExp(`\\b${word}(?:s|es|ed|ing)?\\b`, "i").test(sentence)) return true;
   if (word === "ocr" && /\b\w*ocr\b/i.test(sentence)) return true;
   if (word.endsWith("s") && word.length > 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
+  if (word.length >= 6 && new RegExp(`\\b${word}ion\\b`, "i").test(sentence)) return true;
   return word.length >= 8 && new RegExp(`\\b${word.slice(0, word.length - 3)}`, "i").test(sentence);
 }
 
@@ -153,7 +160,8 @@ function askWords(question: string): string[] {
 }
 
 function askScore(question: string, sentence: string, words: readonly string[]): number {
-  if (isLabel(sentence) || exposesGap(sentence)) return 0;
+  if (exposesGap(sentence)) return 0;
+  if (isLabel(sentence) && !isDecision(question, sentence) && !words.some((word) => mentions(sentence, word))) return 0;
   const hits = words.filter((word) => mentions(sentence, word)).length;
   const boundary = (/\baxis\b/i.test(question) || /\b(write|preview|approv)/i.test(question)) && /\bseparate\b/i.test(sentence) && /\baxis\b/i.test(sentence) ? 3 : 0;
   return hits + boundary + (isDecision(question, sentence) ? 4 : 0);
@@ -175,7 +183,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\b(poptech|electricity)\b/i.test(question) && /\btft\b/i.test(sentence)) return true;
-  if (/\b(use|used|stack|operate|operates)\b/i.test(question) && /\bthe stack is\b/i.test(sentence)) return true;
+  if (/\b(use|used|stack|operate|operates)\b/i.test(question) && (/\bthe stack is\b/i.test(sentence) || isToolList(sentence))) return true;
+  if (/\brepositor(?:y|ies)\b/i.test(question) && /\brepositor(?:y|ies)\b/i.test(sentence)) return true;
   if (/\btraces?\b/i.test(question) && /\btraces?\b/i.test(sentence)) return true;
   if (/\b(reduce|reduced|reduction|less)\b/i.test(question) && /\bpercent\b/i.test(sentence)) return true;
   if (/\b(refuse|send)\b/i.test(question) && /\bdoes not send\b/i.test(sentence)) {
