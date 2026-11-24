@@ -2348,6 +2348,23 @@ describe("displayAnswer", () => {
     expect(csharpUse).toContain(".NET");
     expect(csharpUse).toContain("ONNX");
     expect(csharpUse).not.toContain("LangChain");
+    const mlUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for ML?") }],
+      "",
+      "What does he use for ML?",
+    );
+    expect(mlUse).toContain("machine learning");
+    expect(mlUse).not.toContain("LangChain");
+    const llmFor = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use an LLM for?") }],
+      "",
+      "What does he use an LLM for?",
+    );
+    expect(llmFor).toContain("LLM explanations");
+    expect(llmFor).toContain("LLM advisory");
+    expect(llmFor).toContain("LLM pipeline");
+    expect(llmFor).toContain("Gemini");
+    expect(llmFor).not.toContain("March 2026");
     const routePlan = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e plan after detection?") }],
       "",

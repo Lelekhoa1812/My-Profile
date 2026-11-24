@@ -351,6 +351,8 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bvalidat/.test(text) && /\b(do|does|is|what)\b/.test(text) && !/\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["role-harry-senior", "project-sp500", "role-mizco"] },
     { when: /\bci\s*\/\s*cd\b/.test(text), ids: ["role-alta"] },
     { when: /c#/.test(text) && !namedEmployer(text), ids: ["project-ericsson", "skills"] },
+    { when: /\bml\b/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text) && !/\b(pedigree|poptech|harry)\b/.test(text), ids: ["skills"] },
+    { when: /\bllms?\b/.test(text) && /\bfor\b/.test(text) && /\b(use|uses|used)\b/.test(text) && !namedEmployer(text) && !/\b(vietnamese|medical|clara|pythera)\b/.test(text) && !askedProductSectionIds(text), ids: ["role-harry-pedigree", "role-poptech", "role-inet", "project-triage"] },
     { when: /\bcloud\b/.test(text) && /\b(platform|platforms|use|uses|used)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-alta", "skills"] },
     { when: Boolean(between?.length), ids: between ?? [] },
     { when: Boolean(overlapping?.length), ids: overlapping ?? [] },

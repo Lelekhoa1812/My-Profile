@@ -1457,6 +1457,28 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bml\b/i.test(question) && /\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question) && !/\b(pedigree|poptech|harry)\b/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /machine learning/i.test(line) && /groups the stack/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
+  if (/\bllms?\b/i.test(question) && /\bfor\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && !namedEmployer(question) && !/\b(vietnamese|medical|clara|pythera|pedigree|explain)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /LLM explanations/i.test(sentence)),
+      sentences.find((sentence) => /LLM advisory path/i.test(sentence)),
+      sentences.find((sentence) => /LLM pipeline/i.test(sentence)),
+      sentences.find((sentence) => /Clinical reasoning uses Gemini/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 4;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/c#/i.test(question) && !/\bericsson\b/i.test(question) && !namedEmployer(question)) {
     const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /the stack is c#/i.test(line));
     if (sentence) {
@@ -1836,6 +1858,7 @@ function modelAnswer(question: string, outputs: readonly Record<string, unknown>
 }
 
 function llmAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (/\bfor\b/i.test(question) && /\b(use|uses|used)\b/i.test(question)) return "";
   if (!/\bllms?\b/i.test(question) || namedEmployer(question) || /\b(pedigree|mate|explanation|estatefolio|cva|codoptic|roster|survee|quotient|adhd|writingjourney|acnt|free-router|medchat|sall-?e|skyledge|medviet|passport|stt-studio)\b/i.test(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(gemini|qwen|openai|vllm)\b/i.test(sentence)));
   return [...new Set(lines)].slice(0, 2).join(" ");
@@ -2030,6 +2053,8 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bshows?\b/i.test(question) && !namedEmployer(question) && !/\b(cockpit|axis|preview|write)\b/i.test(question)) return joined;
   if (/\bauthenticat/i.test(question) && !namedEmployer(question)) return joined;
+  if (/\bml\b/i.test(question) && /\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) return joined;
+  if (/\bllms?\b/i.test(question) && /\bfor\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && !namedEmployer(question) && !/\b(vietnamese|medical)\b/i.test(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;
