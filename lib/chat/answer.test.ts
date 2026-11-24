@@ -1502,6 +1502,7 @@ describe("displayAnswer", () => {
     expect(validateIt).toContain("Validators check");
     expect(validateIt).toContain("cross-validation");
     expect(validateIt).toContain("validation");
+    expect(validateIt).not.toContain("December 2025");
     const recogniseIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it recognise?") }],
       "",
@@ -1545,6 +1546,7 @@ describe("displayAnswer", () => {
     );
     expect(retrieveIt).toContain("BM25");
     expect(retrieveIt).toContain("clinical records");
+    expect(retrieveIt).not.toContain("December 2025");
     const controlIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it control?") }],
       "",
@@ -1664,6 +1666,7 @@ describe("displayAnswer", () => {
     );
     expect(approveIt).toContain("approve a write");
     expect(approveIt).toContain("person approves");
+    expect(approveIt).not.toContain("July 2026");
     const rankIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it rank?") }],
       "",
@@ -1836,6 +1839,7 @@ describe("displayAnswer", () => {
     );
     expect(retrievalUse).toContain("BM25");
     expect(retrievalUse).toContain("clinical records");
+    expect(retrievalUse).not.toContain("December 2025");
     const detectionUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for detection?") }],
       "",
@@ -2871,6 +2875,7 @@ describe("displayAnswer", () => {
       "What does Harry retrieve with?",
     );
     expect(harryRetrieve).toContain("BM25");
+    expect(harryRetrieve).toContain("December 2025");
     expect(harryRetrieve).not.toContain("Medical-Chatbot");
     const critic = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the critic check?") }],

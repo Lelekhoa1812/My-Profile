@@ -1953,7 +1953,8 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bforecast/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|read|reads|data|graph)\b/i.test(question)) return joined;
   if (/\bschedul/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bdraft/i.test(question) && !/\b(send|recipe|on|axis|drafted)\b/i.test(question) && !namedEmployer(question)) return joined;
-  if (/\b(cite|explain|train|guard|embed|validat|recogni|recommend|graph|score|trace|retriev|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv|rank|track|own|rout|turn|check|gate|version|call|remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
+  if (/\bretriev/i.test(question) && !namedEmployer(question)) return joined;
+  if (/\b(cite|explain|train|guard|embed|validat\w*|recogni|recommend|graph|score|trace|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv\w*|rank|track|own|rout|turn|check|gate|version|call|remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
   if (/\bagents?\b/i.test(question) && /\b(build|built)\b/i.test(question)) return joined;
   if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bbuild/i.test(question) && !namedEmployer(question) && !/\b(lab|5g)\b/i.test(question)) return joined;
