@@ -7,6 +7,7 @@ describe("recordCard", () => {
     const card = recordCard(profile.facts, profile.sections);
     expect(card).toContain("Name: Dang Khoa Le");
     expect(card).toContain("Current title: Senior AI Software Engineer");
+    expect(card).toContain("Page title: AI Software Engineer");
     expect(card).not.toContain("public_title");
     expect(card).toContain("## Axion Solutions");
     expect(card).toContain("FoodFlow");

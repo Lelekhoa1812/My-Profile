@@ -24,6 +24,7 @@ const FACT_LABELS: Record<string, string> = {
   github: "GitHub",
   huggingface: "Hugging Face",
   public_title: "Current title",
+  page_title: "Page title",
   degree: "Degree",
   languages: "Languages",
 };

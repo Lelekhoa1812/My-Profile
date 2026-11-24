@@ -13,5 +13,7 @@ describe("instructionPrefix", () => {
     expect(text).not.toContain("FoodFlow");
     expect(text).toContain("answer only from the Axion sections in the record");
     expect(text).toContain('Do not use "I" for his work.');
+    expect(text).toContain("The current title is the job.");
+    expect(text).toContain("The page title is the short label on the visitor page.");
   });
 });
