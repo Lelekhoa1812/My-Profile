@@ -1143,6 +1143,13 @@ describe("displayAnswer", () => {
     );
     expect(draftRecipeDo).toContain("does not send email");
     expect(draftRecipeDo).not.toContain("Apollo");
+    const investorScouting = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does investor scouting do?") }],
+      "",
+      "What does investor scouting do?",
+    );
+    expect(investorScouting).toContain("people list");
+    expect(investorScouting).not.toContain("Apollo");
     const draftedWork = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he drafted?") }],
       "",
