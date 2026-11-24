@@ -3333,6 +3333,13 @@ describe("displayAnswer", () => {
     );
     expect(exportRecipe.split(/(?<=[.!])\s+/)[0]).toContain("does not send a message");
     expect(draft.split(/(?<=[.!])\s+/)[0]).toContain("does not send email");
+    const draftWillNot = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What will the draft recipe not send?") }],
+      "",
+      "What will the draft recipe not send?",
+    );
+    expect(draftWillNot.split(/(?<=[.!])\s+/)[0]).toContain("does not send email");
+    expect(draftWillNot).not.toContain("does not send a message");
     expect(hardware).toContain("Raspberry");
     expect(signals).toContain("10-signal");
     const engineSignals = displayAnswer(

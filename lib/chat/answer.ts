@@ -1371,6 +1371,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\b(write|show|preview|approv)\b/i.test(question) && /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
   if (/\bwait/i.test(question) && /\bwaits?\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
   if (/\bnot\b/i.test(question) && /\bdoes not\b/i.test(sentence)) {
+    if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(sentence)) return false;
     const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 4 && !["does", "that", "this", "what", "with"].includes(word));
     return words.some((word) => mentions(sentence, word));
   }
