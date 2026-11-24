@@ -238,6 +238,20 @@
       "text": "MedChat. The resume calls this a prototype. It is a multilingual medical conversation agent with a planner, specialist routing, and citation checks. The resume does not describe it as a deployed clinical system."
     },
     {
+      "sectionId": "project-sp500",
+      "heading": "S&P 500 forecast",
+      "sourceType": "project",
+      "aliases": ["FinBERT", "portfolio"],
+      "text": "S&P 500 forecast. The resume describes a multi-horizon system. It uses temporal fusion transformers, graph networks, FinBERT on news and SEC filings, and a reinforcement-learning agent for portfolio execution. The record does not include a return figure."
+    },
+    {
+      "sectionId": "project-estatefolio",
+      "heading": "EstateFolio",
+      "sourceType": "project",
+      "aliases": ["Hanoi", "Ho Chi Minh City", "real estate"],
+      "text": "EstateFolio. The resume describes a price forecast for homes in Ho Chi Minh City and Hanoi. It models links between districts and reads listing text. The record does not include an error rate."
+    },
+    {
       "sectionId": "project-public-code",
       "heading": "Public repositories",
       "sourceType": "project",

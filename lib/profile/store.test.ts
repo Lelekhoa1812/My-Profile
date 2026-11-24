@@ -45,6 +45,15 @@ describe("profile store", () => {
     if (result.found) expect(result.sections.some((section) => section.sectionId === "project-writing")).toBe(true);
   });
 
+  it("finds the S&P forecast without treating it as a published return", () => {
+    const result = searchSections(profile.sections, "S&P 500 stock forecast");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      const hit = result.sections.find((section) => section.sectionId === "project-sp500");
+      expect(hit?.text).toContain("does not include a return figure");
+    }
+  });
+
   it("finds Kubernetes in the skills section", () => {
     const result = searchSections(profile.sections, "does he use Kubernetes");
     expect(result.found).toBe(true);
