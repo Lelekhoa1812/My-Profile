@@ -12,6 +12,11 @@ describe("withArchive", () => {
     expect(result.sections[0]?.text).not.toMatch(/star/i);
   });
 
+  it("tells a full-list question that the page holds the archive", () => {
+    const section = profile.sections.find((item) => item.sectionId === "project-public-code");
+    expect(section?.text).toContain("The visitor page lists the full public archive.");
+  });
+
   it("does not dump the archive when the record is listed", () => {
     const listed = listSections(withArchive(profile.sections));
     expect(listed.found).toBe(true);
