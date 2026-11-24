@@ -424,6 +424,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bembeddings?\b/i.test(question) && /\bembeddings?\b/i.test(sentence)) return true;
   if (/\bhow many\b/i.test(question) && /\b\d/.test(sentence) && question.toLowerCase().split(/[^a-z0-9]+/).some((word) => word.length >= 5 && mentions(sentence, word))) return true;
   if (/\b(poptech|electricity)\b/i.test(question) && /\btft\b/i.test(sentence)) return true;
+  if (/\bstack\b/i.test(question) && isToolList(sentence)) return true;
   if (/\b(use|used|operate|operates)\b/i.test(question) && (/\bthe stack is\b/i.test(sentence) || isToolList(sentence))) return true;
   if (/\brepositor(?:y|ies)\b/i.test(question) && /\brepositor(?:y|ies)\b/i.test(sentence)) return true;
   if (/\btraces?\b/i.test(question) && /\btraces?\b/i.test(sentence)) return true;

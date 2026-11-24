@@ -684,6 +684,19 @@ describe("displayAnswer", () => {
     );
     expect(pedigreePlace).toContain("Melbourne");
     expect(pedigreePlace).toContain("Black Caviar");
+    const altaStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does Alta use?") }],
+      "",
+      "What stack does Alta use?",
+    );
+    expect(altaStack).toContain("Kubernetes");
+    const rosterStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the roster app use?") }],
+      "",
+      "What stack does the roster app use?",
+    );
+    expect(rosterStack).toContain("MariaDB");
+    expect(rosterStack).not.toContain("Named tools");
     expect(overlap).toContain("December 2025");
     expect(overlap).toContain("August 2025");
     expect(archive.toLowerCase()).toContain("free-router");

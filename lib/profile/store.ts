@@ -199,7 +199,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("harry") && (text.includes("pilot") || text.includes("cut")), ids: ["role-harry-senior"] },
     { when: (text.includes("medswin") || text.includes("bertscore")) && /\b(bertscore|lab|score)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: text.includes("mizco"), ids: ["role-mizco"] },
-    { when: /\bstack\b/.test(text) && !namedEmployer(text), ids: ["skills"] },
+    { when: /\bstack\b/.test(text) && !namedEmployer(text) && !/\b(roster|golf|skyledge|survee|prophet|triage|writing|coach|meter)\b/.test(text), ids: ["skills"] },
     { when: /\bwater[-\s]?meter\b/.test(text) && /\b(sample|measur\w*|productionized|result|model|cut|percent)\b/.test(text), ids: ["project-meter", "role-vietdan-ml"] },
     { when: text.includes("harry") && (text.includes("pedigree") || text.includes("earlier") || (text.includes("before") && !/\bbefore (?:harry|the hirer)\b/.test(text))), ids: ["role-harry-pedigree", "role-harry-senior"] },
     { when: /\bpedigree\b/.test(text) && /\b(based|located)\b/.test(text), ids: ["role-harry-senior", "role-harry-pedigree"] },
@@ -452,7 +452,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       }, 0);
       return { section, title, body, score, matched };
     })
-    .filter((hit) => hit.matched / terms.length >= 0.5 || terms.some((term) => term.length >= 5 && (covers(hit.title, term) || covers(hit.body, term)) && pool.filter((item) => covers(item.title, term) || covers(item.body, term)).length === 1))
+    .filter((hit) => hit.matched / terms.length >= 0.5 || terms.some((term) => (term.length >= 5 || EMPLOYERS.some((item) => item.test.test(term))) && (covers(hit.title, term) || covers(hit.body, term)) && pool.filter((item) => covers(item.title, term) || covers(item.body, term)).length === 1))
     .filter((hit) => !hit.section.sectionId.startsWith("archive-") || terms.some((term) => hit.title.includes(term)))
     .sort((left, right) => right.score - left.score);
   if (terms.includes("title") && !namesAnotherRole(pool, terms)) {
