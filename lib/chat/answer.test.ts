@@ -1010,6 +1010,13 @@ describe("displayAnswer", () => {
     );
     expect(fiveGBuild).toContain("tower telemetry");
     expect(fiveGBuild).not.toContain("investor");
+    const vietnameseLlm = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the Vietnamese medical LLM?") }],
+      "",
+      "What is the Vietnamese medical LLM?",
+    );
+    expect(vietnameseLlm).toContain("MedSwin");
+    expect(vietnameseLlm).not.toContain("Gemini");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",
