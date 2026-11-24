@@ -9,6 +9,5 @@ export function recordCard(facts: readonly ProfileFact[], sections: readonly Pro
   const publicSections = sections.filter((section) => isPublic(section.visibility));
   const factLines = publicFacts.map((fact) => `${factLabel(fact.key)}: ${fact.value}`);
   const sectionLines = publicSections.map((section) => `## ${section.heading}\n${section.text}`);
-  const headings = publicSections.map((section) => section.heading).join("; ");
-  return ["Facts", ...factLines, "", ...sectionLines, "", `Headings: ${headings}`].join("\n");
+  return ["Facts", ...factLines, "", ...sectionLines].join("\n");
 }

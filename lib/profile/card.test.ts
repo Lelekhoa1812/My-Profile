@@ -13,5 +13,6 @@ describe("recordCard", () => {
     expect(card).toContain("## Public repositories");
     expect(card).toContain("## Hugging Face models");
     expect(card).not.toContain("Initech");
+    expect(card).not.toContain("Headings:");
   });
 });
