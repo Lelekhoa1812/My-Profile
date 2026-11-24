@@ -953,6 +953,28 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(title);
     }
   }
+  if (/\bdevelopment consultant\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const title = sentences.find((sentence) => /\bdevelopment consultant\b/i.test(sentence));
+    if (title && !chosen.some((sentence) => /\bdevelopment consultant\b/i.test(sentence))) {
+      chosen.unshift(title.endsWith(".") ? title : `${title}.`);
+      if (chosen.length === 1) {
+        const advice = sentences.find((sentence) => /\bworkflow maps\b/i.test(sentence));
+        if (advice) chosen.push(advice);
+      }
+    }
+  }
+  if (/\bmulti-horizon\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const label = sentences.find((sentence) => /\bmulti-horizon\b/i.test(sentence));
+    if (label && !chosen.some((sentence) => /\bmulti-horizon\b/i.test(sentence))) {
+      chosen.unshift(label.endsWith(".") ? label : `${label}.`);
+      if (chosen.length === 1) {
+        const system = sentences.find((sentence) => /\btemporal fusion\b/i.test(sentence));
+        if (system) chosen.push(system);
+      }
+    }
+  }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));

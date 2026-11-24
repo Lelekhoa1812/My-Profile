@@ -787,6 +787,20 @@ describe("displayAnswer", () => {
     );
     expect(skyledgeName).toContain("fleet maintenance");
     expect(skyledgeName).toContain("SkyLedge Kenya");
+    const consultant = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is a development consultant?") }],
+      "",
+      "What is a development consultant?",
+    );
+    expect(consultant.split(/(?<=[.!])\s+/)[0]).toContain("AI Development Consultant");
+    expect(consultant).toContain("workflow maps");
+    const horizon = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the multi-horizon system?") }],
+      "",
+      "What is the multi-horizon system?",
+    );
+    expect(horizon).toContain("multi-horizon");
+    expect(horizon).toContain("temporal fusion");
     const webCrawl = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is web crawling?") }],
       "",
