@@ -150,6 +150,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       return { section, title, score, matched };
     })
     .filter((hit) => hit.matched / terms.length >= 0.5)
+    .filter((hit) => !hit.section.sectionId.startsWith("archive-") || terms.some((term) => hit.title.includes(term)))
     .sort((left, right) => right.score - left.score);
   if (terms.includes("title") && !namesAnotherRole(pool, terms)) {
     const current = pool.find((item) => item.section.sourceType === "role" && item.body.includes("senior ai software engineer"));

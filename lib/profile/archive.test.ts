@@ -4,6 +4,14 @@ import { withArchive } from "./archive";
 import { listSections, searchSections } from "./store";
 
 describe("withArchive", () => {
+  it("does not answer a year question with an archive title that lacks that year", () => {
+    const result = searchSections(withArchive(profile.sections), "What did he do in 2026?");
+    expect(result.found).toBe(true);
+    if (!result.found) return;
+    expect(result.sections.some((section) => section.sectionId.startsWith("archive-"))).toBe(false);
+    expect(result.sections.some((section) => section.text.includes("2026"))).toBe(true);
+  });
+
   it("keeps a production question on the shipped-work section", () => {
     const result = searchSections(withArchive(profile.sections), "What does he ship to production?");
     expect(result.found).toBe(true);
