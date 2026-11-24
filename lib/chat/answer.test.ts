@@ -2186,6 +2186,26 @@ describe("displayAnswer", () => {
     );
     expect(medswinJobTitle.startsWith("MedSwin.")).toBe(true);
     expect(medswinJobTitle).toContain("Researcher at Swinburne");
+    const harryStart = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "When did Harry the Hirer start?") }],
+      "",
+      "When did Harry the Hirer start?",
+    );
+    expect(harryStart.startsWith("Melbourne, December 2025")).toBe(true);
+    expect(harryStart).not.toContain("mate-selection");
+    const pedigreeStart = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "When did the pedigree engine start?") }],
+      "",
+      "When did the pedigree engine start?",
+    );
+    expect(pedigreeStart.startsWith("March 2026")).toBe(true);
+    const pytheraPlace = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What city was Pythera in?") }],
+      "",
+      "What city was Pythera in?",
+    );
+    expect(pytheraPlace).toContain("January 2025");
+    expect(pytheraPlace).not.toContain("Ho Chi Minh");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
