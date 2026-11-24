@@ -179,6 +179,25 @@ describe("withMemory", () => {
     expect(groundedQuestion([pedigree, answer, follow], 2)).toContain("pedigree");
   });
 
+  it("keeps an explain, train, cover, or build follow-up on the subject that records it", () => {
+    const pedigree = { id: "u1", role: "user", parts: [{ type: "text", text: "What is the pedigree engine?" }] } as UIMessage;
+    const medswin = { id: "u2", role: "user", parts: [{ type: "text", text: "What did he do at MedSwin?" }] } as UIMessage;
+    const hai = { id: "u3", role: "user", parts: [{ type: "text", text: "What did he do at Hai Au?" }] } as UIMessage;
+    const cva = { id: "u4", role: "user", parts: [{ type: "text", text: "What is CVA?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "Recorded." }] } as UIMessage;
+    const explain = { id: "u5", role: "user", parts: [{ type: "text", text: "What does it explain?" }] } as UIMessage;
+    const train = { id: "u6", role: "user", parts: [{ type: "text", text: "What does it train?" }] } as UIMessage;
+    const cover = { id: "u7", role: "user", parts: [{ type: "text", text: "What does it cover?" }] } as UIMessage;
+    const build = { id: "u8", role: "user", parts: [{ type: "text", text: "What does it build?" }] } as UIMessage;
+    expect(groundedQuestion([pedigree, answer, explain], 2)).toContain("pedigree");
+    expect(groundedQuestion([cva, answer, explain], 2)).toBe("What does it explain?");
+    expect(groundedQuestion([medswin, answer, train], 2)).toContain("medswin");
+    expect(groundedQuestion([medswin, answer, cover], 2)).toContain("medswin");
+    expect(groundedQuestion([hai, answer, cover], 2)).toContain("hai au");
+    expect(groundedQuestion([medswin, answer, build], 2)).toContain("medswin");
+    expect(groundedQuestion([cva, answer, build], 2)).toBe("What does it build?");
+  });
+
   it("keeps a check follow-up on the subject that records a check", () => {
     const golf = { id: "u1", role: "user", parts: [{ type: "text", text: "What is the golf scanner?" }] } as UIMessage;
     const teqar = { id: "u2", role: "user", parts: [{ type: "text", text: "What does Teqar advise?" }] } as UIMessage;
