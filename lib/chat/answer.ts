@@ -616,6 +616,7 @@ function withIdentity(question: string, proof: string, blockSentences: readonly 
   if (/\bpreview\b/i.test(proof) && /\bapprov/i.test(proof)) return proof;
   const token = opening.split(",")[0].replace(/[.]+$/, "").trim();
   if (token.length < 4 || proof.toLowerCase().includes(token.toLowerCase())) return proof;
+  if (/^Swinburne research\.?$/i.test(opening) && !/\bswinburne\b/i.test(question)) return proof;
   const sentence = /[.!]$/.test(opening) ? opening : `${opening}.`;
   return `${sentence} ${proof}`.trim();
 }

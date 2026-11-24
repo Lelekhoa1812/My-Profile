@@ -788,6 +788,13 @@ describe("displayAnswer", () => {
     );
     expect(verifierRole).toContain("Verifier");
     expect(verifierRole).not.toContain("Validators check");
+    const rerankerDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the reranker do?") }],
+      "",
+      "What does the reranker do?",
+    );
+    expect(rerankerDuty.startsWith("An 8-million-document")).toBe(true);
+    expect(rerankerDuty).not.toContain("Swinburne research");
     const namVision = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Nam A use for vision?") }],
       "",
