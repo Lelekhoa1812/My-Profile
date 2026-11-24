@@ -4345,6 +4345,15 @@ describe("displayAnswer", () => {
     expect(medswinRole).toContain("LoRA");
     expect(medswinRole).toContain("86 percent");
     expect(medswinRole).not.toContain("not re-counted");
+    const medswinDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does MedSwin do?") }],
+      "",
+      "What does MedSwin do?",
+    );
+    expect(medswinDoes).toContain("specialist medical agents");
+    expect(medswinDoes).toContain("clinical records");
+    expect(medswinDoes).toContain("Swinburne-funded");
+    expect(medswinDoes).not.toContain("not re-counted");
     const harryIdentity = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Harry the Hirer?") }],
       "",

@@ -1701,6 +1701,19 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bwhat does\b/i.test(question) && /\bmedswin\b/i.test(question) && /\bdo\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\bswinburne-funded\b/i.test(sentence)),
+      sentences.find((sentence) => /\bfive-person lab\b/i.test(sentence)),
+      sentences.find((sentence) => /\bagentic retrieval\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     if (/\bwhat does\b/i.test(question)) {
@@ -1926,7 +1939,7 @@ function sameTimeAnswer(question: string, outputs: readonly Record<string, unkno
 }
 
 function toolDutyAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (/\bskyledge\b/i.test(question)) return "";
+  if (/\b(skyledge|medswin)\b/i.test(question)) return "";
   if (/\buse fastapi for\b/i.test(question)) return toolDutyAnswer("What does FastAPI do?", outputs);
   const used = question.match(/\bwhat does he use ([a-z0-9.+#-]{2,}) for\b/i)?.[1];
   if (used && !/^(aws|ocr)$/i.test(used)) return toolDutyAnswer(`What does ${used} do?`, outputs);
