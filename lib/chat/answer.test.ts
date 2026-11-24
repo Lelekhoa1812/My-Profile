@@ -514,6 +514,18 @@ describe("displayAnswer", () => {
       "How many signals does the pedigree ensemble use?",
     );
     expect(vision.split(/(?<=[.!])\s+/)[0]).toContain("Qwen");
+    const exportRecipe = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the export recipe refuse to do?") }],
+      "",
+      "What did the export recipe refuse to do?",
+    );
+    const draft = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the draft recipe refuse to send?") }],
+      "",
+      "What does the draft recipe refuse to send?",
+    );
+    expect(exportRecipe.split(/(?<=[.!])\s+/)[0]).toContain("does not send a message");
+    expect(draft.split(/(?<=[.!])\s+/)[0]).toContain("does not send email");
     expect(hardware).toContain("Raspberry");
     expect(signals).toContain("10-signal");
   });
