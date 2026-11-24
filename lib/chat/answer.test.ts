@@ -5272,6 +5272,32 @@ describe("displayAnswer", () => {
     expect(medswin).not.toContain("synthetic passport set");
   });
 
+  it("answers a catalogue metric question with the recorded list", () => {
+    const questions = [
+      ["What star count do the public repositories have?", "prompt-me", "star counts"],
+      ["What user count do the public repositories have?", "Prophet", "star counts"],
+      ["What revenue do the public repositories have?", "StudyBuddy", "revenue for these"],
+      ["What accuracy do the Hugging Face models report?", "MNIST", "does not include"],
+      ["What download count do the Hugging Face models have?", "graffiti detection", "most downloaded"],
+    ];
+    for (const [question, proof, avoid] of questions) {
+      const answer = displayAnswer(
+        [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, question) }],
+        "",
+        question,
+      );
+      expect(answer, question).toContain(proof);
+      expect(answer, question).not.toContain(avoid);
+    }
+    const routerUsers = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many users does free-router have?") }],
+      "",
+      "How many users does free-router have?",
+    );
+    expect(routerUsers).toContain("gateway");
+    expect(routerUsers).not.toContain("prompt-me");
+  });
+
   it("answers a named model card from the Hugging Face name list", () => {
     const questions = [
       ["What is the rust detection model?", "rust detection", "tower telemetry"],
