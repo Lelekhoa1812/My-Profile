@@ -1362,6 +1362,43 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\btrack/i.test(question) && !namedEmployer(question) && !/\b(salle|sall-e|roster)\b/i.test(question)) {
     keepSentences(/object tracking|shift tracking/i, 2);
   }
+  if (/\bown/i.test(question) && !/\bengine\b/i.test(question) && !namedEmployer(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /owns the AI vision/i.test(sentence)),
+      sentences.find((sentence) => /does not own/i.test(sentence)),
+      sentences.find((sentence) => /owned ingestion/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 0) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\bagents?\b/i.test(question) && /\b(build|built)\b/i.test(question) && !/\bclinical\b/i.test(question)) {
+    keepSentences(/Tool-Executor agents|specialist medical agents/i, 2);
+  }
+  if (/\brout/i.test(question) && !/\brouter\b/i.test(question) && !/\bplan/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/route planning|agent routing|specialist routing/i, 3);
+  }
+  if (/\bturn/i.test(question) && !namedEmployer(question) && !/\b(codoptic|mizco|aitc)\b/i.test(question)) {
+    keepSentences(/turns RFQ|turn unstructured|turns a repository/i, 3);
+  }
+  if (/\bcheck/i.test(question) && !/\b(verifier|critic|use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/Validators check|vision quality checks|check sensor quality/i, 3);
+  }
+  if (/\bgate/i.test(question) && !/\bwhat is\b/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/review gates|govern execution|confidence gates/i, 3);
+  }
+  if (/\bversion/i.test(question) && !/\bwhat is\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/version-controlled pipelines|versioned artifacts|document versions/i, 3);
+  }
+  if (/\bcall/i.test(question) && !/\b(use|uses|used|for|resume|repository)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/calls typed tools|tool calling/i, 2);
+  }
+  if (/\b(remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\bcva\b/i.test(question)) {
+    keepSentences(/profile memory/i, 1);
+  }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));
@@ -1876,7 +1913,8 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bforecast/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|read|reads|data|graph)\b/i.test(question)) return joined;
   if (/\bschedul/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bdraft/i.test(question) && !/\b(send|recipe|on|axis|drafted)\b/i.test(question) && !namedEmployer(question)) return joined;
-  if (/\b(cite|explain|train|guard|embed|validat|recogni|recommend|graph|score|trace|retriev|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv|rank|track)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
+  if (/\b(cite|explain|train|guard|embed|validat|recogni|recommend|graph|score|trace|retriev|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv|rank|track|own|rout|turn|check|gate|version|call|remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
+  if (/\bagents?\b/i.test(question) && /\b(build|built)\b/i.test(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;

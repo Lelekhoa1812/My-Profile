@@ -1678,6 +1678,74 @@ describe("displayAnswer", () => {
     );
     expect(trackIt).toContain("object tracking");
     expect(trackIt).toContain("shift tracking");
+    const ownIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it own?") }],
+      "",
+      "What does it own?",
+    );
+    expect(ownIt).toContain("AI vision");
+    expect(ownIt).toContain("does not own");
+    expect(ownIt).toContain("owned ingestion");
+    const builtAgents = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What agents does he build?") }],
+      "",
+      "What agents does he build?",
+    );
+    expect(builtAgents).toContain("Tool-Executor");
+    expect(builtAgents).toContain("specialist medical agents");
+    const routeIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it route?") }],
+      "",
+      "What does it route?",
+    );
+    expect(routeIt).toContain("route planning");
+    expect(routeIt).toContain("agent routing");
+    expect(routeIt).toContain("specialist routing");
+    const turnIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it turn?") }],
+      "",
+      "What does it turn?",
+    );
+    expect(turnIt).toContain("RFQ");
+    expect(turnIt).toContain("unstructured PDFs");
+    expect(turnIt).toContain("repository");
+    const checkIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it check?") }],
+      "",
+      "What does it check?",
+    );
+    expect(checkIt).toContain("Validators check");
+    expect(checkIt).toContain("vision quality checks");
+    expect(checkIt).toContain("sensor quality");
+    const gateIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it gate?") }],
+      "",
+      "What does it gate?",
+    );
+    expect(gateIt).toContain("review gates");
+    expect(gateIt).toContain("govern execution");
+    expect(gateIt).toContain("confidence gates");
+    const versionIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it version?") }],
+      "",
+      "What does it version?",
+    );
+    expect(versionIt).toContain("version-controlled");
+    expect(versionIt).toContain("versioned artifacts");
+    expect(versionIt).toContain("document versions");
+    const callIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it call?") }],
+      "",
+      "What does it call?",
+    );
+    expect(callIt).toContain("typed tools");
+    expect(callIt).toContain("tool calling");
+    const rememberIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it remember?") }],
+      "",
+      "What does it remember?",
+    );
+    expect(rememberIt).toContain("profile memory");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",

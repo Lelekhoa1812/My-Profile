@@ -450,6 +450,8 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\btransform/.test(text) && /\b(do|does|is|what)\b/.test(text) && !/\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-teqar", "project-ericsson", "project-sp500", "project-estatefolio"] },
     { when: /\bmaint/.test(text) && /\b(do|does|is|what)\b/.test(text) && !/\b(fleet|skyledge|ericsson)\b/.test(text) && !namedEmployer(text), ids: ["project-skyledge", "project-ericsson"] },
     { when: /\breview/.test(text) && /\b(do|does|is|what)\b/.test(text) && !/\b(uncertain|reviewed|he|him|his|use|uses|used|for)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-axion", "role-mizco", "project-codoptic", "project-cva"] },
+    { when: /\brout/.test(text) && /\b(do|does|is|what)\b/.test(text) && !/\brouter\b/.test(text) && !/\bplan/.test(text) && !/\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["project-salle", "role-mizco", "project-medchat"] },
+    { when: /\b(remember|memory)\b/.test(text) && /\b(do|does|is|what)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["project-cva"] },
     { when: /\bexported\b/.test(text), ids: ["project-axion-workflows"] },
     { when: /\bforecasted\b/.test(text), ids: ["project-prophet", "project-ericsson", "role-poptech", "project-estatefolio"] },
     { when: /\bforecast/.test(text) && /\b(do|does|is|what|use|uses)\b/.test(text) && !/\b(use|uses|used|read|reads|data|graph)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-poptech", "project-ericsson", "project-sp500", "project-estatefolio", "project-prophet"] },
