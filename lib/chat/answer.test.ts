@@ -817,6 +817,13 @@ describe("displayAnswer", () => {
     );
     expect(llamaIndexDuty).toContain("LlamaIndex");
     expect(llamaIndexDuty).not.toContain("TypeScript");
+    const mcpDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does MCP do?") }],
+      "",
+      "What does MCP do?",
+    );
+    expect(mcpDuty).toContain("MCP-style");
+    expect(mcpDuty).not.toContain("OpenCollective");
     const namVision = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Nam A use for vision?") }],
       "",

@@ -368,7 +368,7 @@ function toolDutyAnswer(question: string, outputs: readonly Record<string, unkno
   const name = raw?.toLowerCase();
   if (!raw || !name || ["the", "his", "her", "its", "this", "that"].includes(name)) return "";
   const token = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const named = new RegExp(`\\b${token}\\b`, "i");
+  const named = new RegExp(`(?<![\\w-])${token}\\b`, "i");
   const blocks = sectionBlocks(outputs);
   const productBlocks = blocks.filter((block) => !/public repositories/i.test(block));
   const source = productBlocks.some((block) => named.test(block)) ? productBlocks : blocks;
@@ -376,7 +376,8 @@ function toolDutyAnswer(question: string, outputs: readonly Record<string, unkno
     const length = sentence.split(/\s+/).length;
     return named.test(sentence) && !/named tools include/i.test(sentence) && !/^repository:/i.test(sentence) && length >= 5 && length <= 24;
   }));
-  if (lines.length > 0) return [...new Set(lines)].slice(0, 2).join(" ");
+  const distinct = [...new Set(lines)].filter((line, _, all) => !all.some((other) => other !== line && other.includes(line.replace(/\.$/, ""))));
+  if (distinct.length > 0) return distinct.slice(0, 2).join(" ");
   const listed = source.some((block) => /named tools include/i.test(block) && named.test(block));
   return listed ? `Named tools include ${raw}.` : "";
 }

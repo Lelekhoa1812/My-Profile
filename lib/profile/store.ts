@@ -577,10 +577,13 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   const complete = hits.filter((hit) => terms.every((term) => hit.title.includes(term)));
   const namedProfile = hits.filter((hit) => !hit.section.sectionId.startsWith("archive-") && terms.some((term) => hit.section.heading.toLowerCase().includes(term)));
   const poolHits = complete.length > 0 ? [...complete] : [...hits];
-  if (poolHits.every((hit) => hit.section.sectionId === "skills")) {
+  const skillsOnly = poolHits.every((hit) => hit.section.sectionId === "skills");
+  const hyphenTerms = terms.filter((term) => poolHits.some((hit) => new RegExp(`\\b[a-z0-9]+-${term}\\b`).test(hit.title)));
+  if (skillsOnly || (terms.length === 1 && hyphenTerms.length === 1)) {
     for (const hit of hits) {
-      if (hit.section.sectionId === "skills" || poolHits.some((item) => item.section.sectionId === hit.section.sectionId)) continue;
-      if (terms.some((term) => covers(hit.body, term))) poolHits.push(hit);
+      if (poolHits.some((item) => item.section.sectionId === hit.section.sectionId)) continue;
+      const wanted = skillsOnly ? terms : hyphenTerms;
+      if (wanted.some((term) => (skillsOnly ? covers(hit.body, term) : new RegExp(`(?<![\\w-])${term}\\b`).test(hit.body)))) poolHits.push(hit);
     }
   }
   for (const hit of namedProfile) {
