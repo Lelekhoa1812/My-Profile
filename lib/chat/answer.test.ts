@@ -4861,6 +4861,14 @@ describe("displayAnswer", () => {
       "Is the Ericsson build a named live customer app?",
     );
     expect(embeddings).toContain("64-dimensional");
+    const pedigreeEmbeds = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the pedigree use for embeddings?") }],
+      "",
+      "What does the pedigree use for embeddings?",
+    );
+    expect(pedigreeEmbeds).toContain("64-dimensional");
+    expect(pedigreeEmbeds).toContain("graph expansion");
+    expect(pedigreeEmbeds).not.toContain("matrix factorization");
     const poptech = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did PopTech use for the electricity forecast?") }],
       "",

@@ -1423,6 +1423,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\bembed/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/pedigree embeddings/i, 1);
   }
+  if (/\bembed/i.test(question) && /\b(use|uses|used|for)\b/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bpedigree embeddings\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
   if (/\bvalidat/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/Validators check|cross-validation|shows traces, confidence gates, and validation/i, 3);
   }
@@ -2785,7 +2793,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bmodels?\b/i.test(question) && /\bclara\b/i.test(question) && /\bvietnamese medical language\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bteqar\b/i.test(question) && /\badvises b2b\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\baitc\b/i.test(question) && /\bindustrial assistant\b/i.test(sentence)) return true;
-  if (/\bpedigree\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && !/\b(what is|models?)\b/i.test(question) && /\b10-signal ensemble\b/i.test(sentence)) return true;
+  if (/\bpedigree\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && !/\b(what is|models?|embed)\b/i.test(question) && /\b10-signal ensemble\b/i.test(sentence)) return true;
+  if (/\bembed/i.test(question) && /\b(use|uses|used|for)\b/i.test(question) && /\b64-dimensional\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\btriage\b/i.test(question) && /\b(speech uses whisper|clinical reasoning uses gemini|vision uses qwen|mimic-iv|medication-delivery)\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
