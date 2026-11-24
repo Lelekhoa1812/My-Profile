@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import profile from "../../content/profile.json";
 import { withArchive } from "./archive";
-import { listSections, lookupFacts, readSection, searchSections } from "./store";
+import { asksForTitle, listSections, lookupFacts, readSection, searchSections } from "./store";
 
 describe("profile store", () => {
   it("attributes the experience span to the resume summary", () => {
@@ -35,6 +35,11 @@ describe("profile store", () => {
   it("does not return every fact when the kind is absent", () => {
     const result = lookupFacts(profile.facts, { kind: "role" });
     expect(result.found).toBe(false);
+  });
+
+  it("treats a current title question as the public title", () => {
+    expect(asksForTitle("What is his current title?")).toBe(true);
+    expect(asksForTitle("What was his title at Harry the Hirer?")).toBe(false);
   });
 
   it("resolves the current title when the key and the kind are both off", () => {

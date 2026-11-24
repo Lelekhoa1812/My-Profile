@@ -318,6 +318,12 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       cap = 4;
       push(blockSentences.find((sentence) => /\blangchain\b/i.test(sentence)));
     }
+    if (/\bwhat did he do\b/i.test(question) && /\bswinburne\b/i.test(question)) {
+      cap = 4;
+      push(blockSentences.find((sentence) => /\bthe lab is medswin\b/i.test(sentence)));
+      push(blockSentences.find((sentence) => /\blora\b/i.test(sentence)));
+      push(blockSentences.find((sentence) => /\bmedmcqa\b/i.test(sentence)));
+    }
     if (/\bbuild\b/i.test(question)) {
       const stack = blockSentences.find((sentence) => (/\b(uses|used)\b/i.test(sentence) || /\bmodels include\b/i.test(sentence)) && sentence.split(/\s+/).length <= 28 && !/named tools include/i.test(sentence) && !chosen.includes(sentence));
       if (stack) {

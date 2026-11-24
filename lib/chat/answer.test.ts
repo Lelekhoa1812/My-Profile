@@ -959,6 +959,20 @@ describe("displayAnswer", () => {
       "What did he do at Teqar?",
     );
     expect(teqarWork).toContain("analytics");
+    const swinburneWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Swinburne?") }],
+      "",
+      "What did he do at Swinburne?",
+    );
+    expect(swinburneWork).toContain("MedSwin");
+    expect(swinburneWork).toContain("LoRA");
+    expect(swinburneWork).toContain("86 percent");
+    const currentTitle = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, facts: [{ label: "Current title", value: "AI Software Engineer" }] } }],
+      "",
+      "What is his current title?",
+    );
+    expect(currentTitle).toBe("AI Software Engineer");
     const estatefolioIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is EstateFolio?") }],
       "",

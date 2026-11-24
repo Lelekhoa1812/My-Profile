@@ -433,7 +433,7 @@ export function asksForExperienceSpan(query: string): boolean {
 export function asksForTitle(query: string): boolean {
   const text = query.toLowerCase();
   if (namedEmployer(text) || /\b(at|role)\b/.test(text)) return false;
-  return /\b(his|her|your) title\b/.test(text);
+  return /\b(his|her|your)(?:\s+\w+){0,2}\s+title\b/.test(text);
 }
 
 export function asksForSpokenLanguages(query: string): boolean {
