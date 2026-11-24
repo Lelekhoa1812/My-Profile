@@ -18,14 +18,14 @@
       "heading": "Axion Solutions",
       "sourceType": "role",
       "aliases": ["Axion", "Axis", "FoodFlow"],
-      "text": "Axion Solutions. Senior AI Software Engineer, July 2026 to present. The resume describes Axis as capital-markets automation for investment and growth workflows. The product record separates two systems. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. Axis is a separate AI product for Studio copilot, data insight, and message drafting. It calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write. Axis does not own FoodFlow's database."
+      "text": "Axion Solutions. Senior AI Software Engineer, July 2026 to present. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. Axis is a separate AI product for Studio copilot, data insight, and message drafting. It calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write. Axis does not own FoodFlow's database. The resume also uses the phrase capital-markets automation for investment and growth workflows. That phrase does not rename FoodFlow."
     },
     {
       "sectionId": "project-axion-workflows",
       "heading": "Axion workflow engine",
       "sourceType": "project",
       "aliases": ["startup outreach", "investor scouting", "portfolio reporting"],
-      "text": "Axion workflow engine. A governed graph platform in the Engine monorepo, separate from FoodFlow. The recipes include startup scouting, investor scouting, and portfolio reporting. Startup scouting searches a list and public profiles, then scores and exports. Investor scouting builds a people list. Portfolio reporting drafts company updates and founder email. Axis drafts on the same host. It does not own the Engine database or FoodFlow's data."
+      "text": "Axion workflow engine. A governed graph platform in the Engine monorepo, separate from FoodFlow. The recipes are startup scouting, investor scouting, and portfolio reporting. Startup scouting searches a list and public profiles, then scores and exports. Investor scouting builds a people list. Portfolio reporting drafts company updates and founder email. The record does not call those recipes capital-markets products. Axis can draft on the same host. Axis does not own the Engine database or FoodFlow's data."
     },
     {
       "sectionId": "role-harry-senior",

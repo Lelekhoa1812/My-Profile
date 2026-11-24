@@ -15,6 +15,18 @@ describe("profile store", () => {
     if (result.found) expect(result.facts[0]).toMatchObject({ label: "Current title", value: "Senior AI Software Engineer" });
   });
 
+  it("answers FoodFlow before the resume phrase for Axis", () => {
+    const role = readSection(profile.sections, "Axion Solutions");
+    const flow = readSection(profile.sections, "workflow engine");
+    expect(role.found).toBe(true);
+    expect(flow.found).toBe(true);
+    if (role.found) {
+      expect(role.text.indexOf("FoodFlow")).toBeLessThan(role.text.indexOf("capital-markets"));
+      expect(role.text).toContain("does not rename FoodFlow");
+    }
+    if (flow.found) expect(flow.text).toContain("does not call those recipes capital-markets products");
+  });
+
   it("reads a section by its heading as well as its id", () => {
     const result = readSection(profile.sections, "Axion Solutions");
     expect(result.found).toBe(true);
