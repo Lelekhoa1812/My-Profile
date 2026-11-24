@@ -1421,6 +1421,20 @@ describe("displayAnswer", () => {
     expect(triageModels).toContain("Gemini");
     expect(triageModels).toContain("Qwen-VL");
     expect(triageModels).not.toContain("TimesFM");
+    const prophetModels = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does Prophet use?") }],
+      "",
+      "What models does Prophet use?",
+    );
+    expect(prophetModels).toContain("TimesFM");
+    expect(prophetModels).not.toContain("Free-router");
+    const pedigreeModels = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the pedigree engine use?") }],
+      "",
+      "What models does the pedigree engine use?",
+    );
+    expect(pedigreeModels).toContain("matrix factorization");
+    expect(pedigreeModels).toContain("Dosage Theory");
     const labBuild = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
       "",

@@ -377,10 +377,14 @@ function archiveAnswer(question: string, outputs: readonly Record<string, unknow
 
 function modelAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (/\b(speech|whisper|vision|forecast)\b/i.test(question)) return "";
+  if (/\bmodels?\b/i.test(question) && /\bpedigree\b/i.test(question)) {
+    const ensemble = sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bensemble\b/i.test(sentence));
+    if (ensemble) return ensemble;
+  }
   if (!/\bwhat\b/i.test(question) || !/\bmodels?\b/i.test(question) || !/\b(use|uses)\b/i.test(question) || namedEmployer(question)) return "";
   const product = question.match(/\b(triage|golf|prophet|poptech|ericsson)\b/i)?.[1];
   const lines = sectionBlocks(outputs).flatMap((block) => {
-    if (product && !new RegExp(`\\b${product}\\b`, "i").test(block)) return [];
+    if (product && (/public repositories/i.test(block) || !new RegExp(`\\b${product}\\b`, "i").test(block))) return [];
     const pattern = product === "triage" ? /\b(whisper|gemini|qwen)\b/i : /\b(gemini|qwen|timesfm|yolo|tft)\b/i;
     return plainSentences(block).filter((sentence) => pattern.test(sentence) && sentence.split(/\s+/).length <= 24);
   });
