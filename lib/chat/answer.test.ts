@@ -899,6 +899,19 @@ describe("displayAnswer", () => {
     );
     expect(bareCut).toContain("40 percent");
     expect(bareCut).not.toContain("Named tools");
+    const buyer = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is VHandicap?") }],
+      "",
+      "What is VHandicap?",
+    );
+    expect(buyer).toContain("VHandicap");
+    const industrial = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is MJ Industrial?") }],
+      "",
+      "What is MJ Industrial?",
+    );
+    expect(industrial).toContain("MJ Industrial");
+    expect(industrial).not.toContain("PDFs");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(

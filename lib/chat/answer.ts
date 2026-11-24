@@ -289,6 +289,7 @@ function matchingBlock(outputs: readonly Record<string, unknown>[], question: st
     if (!employer && /\b(sold|sell|products)\b/i.test(question) && /named live or sold work/i.test(block)) score += 20;
     if (/\bocr\b/i.test(question) && !employer && !/\b(meter|water|harry|golf|passport|nam)\b/i.test(question) && /\b(vietocr|paddleocr)\b/i.test(block)) score += 15;
     if (/\bdraft on\b/i.test(question) && /\bsame host\b/i.test(block)) score += 12;
+    if (/\bmj industrial\b/i.test(question) && /\bmj industrial\b/i.test(block)) score += 12;
     if (!chronological && titledInQuestion(question, block)) score += 8;
     if (countedFact(question, sentences, words)) score += 12;
     if (score > bestScore) {
@@ -423,7 +424,9 @@ function isDecision(question: string, sentence: string): boolean {
     const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 4 && !["does", "that", "this", "what", "with"].includes(word));
     return words.some((word) => mentions(sentence, word));
   }
-  if (/\b(sell|sold|buyer|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
+  if (/\b(sell|sold|buyer|buy|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
+  if (/\bvhandicap\b/i.test(question) && /\bvhandicap\b/i.test(sentence)) return true;
+  if (/\bmj industrial\b/i.test(question) && /\bmj industrial\b/i.test(sentence)) return true;
   if (/\b(store|stored|stores|stay|stays|keep|keeps|database)\b/i.test(question) && /\bmongodb\b/i.test(sentence)) return true;
   if (/\b(stack|code|coding|programming)\b/i.test(question) && /\bpython\b/i.test(sentence)) return true;
   if (/\bplan\b/i.test(question) && /\b(?:plans?|planning)\b/i.test(sentence)) return true;
