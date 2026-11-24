@@ -2076,6 +2076,13 @@ describe("displayAnswer", () => {
     expect(peopleCount).toContain("software team of five");
     expect(peopleCount).not.toContain("people list");
     expect(peopleCount).not.toContain("August 2025");
+    const documentCount = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many documents?") }],
+      "",
+      "How many documents?",
+    );
+    expect(documentCount).toContain("8-million-document");
+    expect(documentCount).not.toContain("passport");
     const labLanguages = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What languages does the lab cover?") }],
       "",
