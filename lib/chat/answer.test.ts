@@ -996,6 +996,20 @@ describe("displayAnswer", () => {
     );
     expect(accounting).toContain("OpenCollective");
     expect(accounting).not.toContain("ADHD");
+    const fiveG = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is 5G?") }],
+      "",
+      "What is 5G?",
+    );
+    expect(fiveG).toContain("tower telemetry");
+    expect(fiveG).not.toContain("Axis");
+    const fiveGBuild = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build for 5G?") }],
+      "",
+      "What did he build for 5G?",
+    );
+    expect(fiveGBuild).toContain("tower telemetry");
+    expect(fiveGBuild).not.toContain("investor");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",

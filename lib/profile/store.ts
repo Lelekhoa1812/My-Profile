@@ -248,6 +248,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("axis") && (text.includes("write") || text.includes("preview") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: /\bs&p\b/.test(text), ids: ["project-sp500"] },
     { when: /\bha manager\b/.test(text), ids: ["role-hai-au"] },
+    { when: /\b5g\b/.test(text), ids: ["project-ericsson"] },
     { when: /\baccounting\b/.test(text), ids: ["project-acnt"] },
     { when: /\b(download|rank)\b/.test(text) && text.includes("medswin"), ids: ["project-medswin"] },
     { when: /\bagents?\b/.test(text) && /\b(lab|clinical|medswin)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
@@ -492,7 +493,7 @@ const STOP_WORDS = new Set([
 
 export function searchSections(sections: readonly ProfileSection[], query: string, sourceType?: string) {
   const terms = [...new Set(query.toLowerCase().split(/[^a-z0-9&]+/))]
-    .filter((term) => term.length > 2 && !STOP_WORDS.has(term));
+    .filter((term) => (term.length > 2 || term === "5g") && !STOP_WORDS.has(term));
   const visible = sections
     .filter((section) => (section.visibility ?? "public") === "public")
     .map((section) => ({

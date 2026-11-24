@@ -684,6 +684,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\b(download|rank)\b/i.test(question) && /\bmost downloaded\b/i.test(sentence)) return true;
   if (/\bcva\b/i.test(question) && /\blive\b/i.test(question) && !/\bonly named\b/i.test(question) && /cva-mauve/i.test(sentence)) return true;
+  if (/\b5g\b/i.test(question) && /\btower telemetry\b/i.test(sentence)) return true;
   if (/\bhandwriting\b/i.test(question) && /\bvision\b/i.test(question) && /qwen/i.test(sentence)) return true;
   if (/\bhandwriting\b/i.test(question) && !/\bvision\b/i.test(question) && /\bhandwriting uses\b/i.test(sentence)) return true;
   if (/\baccounting\b/i.test(question) && /\baccounting assistant\b/i.test(sentence)) return true;
