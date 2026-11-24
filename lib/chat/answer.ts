@@ -899,6 +899,8 @@ function productStackAnswer(question: string, outputs: readonly Record<string, u
   if (/\bestatefolio\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(transformer reads|st-gnn)\b/i.test(sentence)).slice(0, 2).join(" ");
   if (/\bcodoptic\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(generate or review code|interactive dsl)\b/i.test(sentence)).slice(0, 2).join(" ");
   if (/\bskyledge\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(raspberry pi|fault prediction)\b/i.test(sentence)).slice(0, 2).join(" ");
+  if (/\badhd\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(nvidia nim|voice or text)\b/i.test(sentence)).slice(0, 2).join(" ");
+  if (/\bwater[\s-]?meter\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(jetson|meter photos)\b/i.test(sentence)).slice(0, 2).join(" ");
   return "";
 }
 

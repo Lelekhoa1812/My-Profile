@@ -2020,6 +2020,25 @@ describe("displayAnswer", () => {
     );
     expect(skyledgeStack).toContain("FastAPI");
     expect(skyledgeStack).toContain("LSTM");
+    const medchatStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does MedChat use?") }],
+      "",
+      "What stack does MedChat use?",
+    );
+    expect(medchatStack).toContain("multilingual medical");
+    expect(medchatStack).not.toContain("Named tools include");
+    const adhdStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the ADHD assistant use?") }],
+      "",
+      "What stack does the ADHD assistant use?",
+    );
+    expect(adhdStack).toContain("Nvidia NIM");
+    const meterStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the water meter use?") }],
+      "",
+      "What stack does the water meter use?",
+    );
+    expect(meterStack).toContain("Jetson");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],

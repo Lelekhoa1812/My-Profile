@@ -190,6 +190,25 @@ function adjacentRoleIds(text: string) {
   return ids.length > 0 ? ids : undefined;
 }
 
+function productStackIds(text: string): string[] | undefined {
+  if (!/\bstack\b/.test(text)) return undefined;
+  const named: Array<[RegExp, string]> = [
+    [/\bmedchat\b/, "project-medchat"],
+    [/\bstt-studio\b|\bstt\b/, "project-stt"],
+    [/\bwritingjourney\b|\bwriting coach\b/, "project-writing"],
+    [/\bacnt\b/, "project-acnt"],
+    [/\badhd\b/, "project-adhd"],
+    [/\bquotient\b/, "project-quotient"],
+    [/\bmedviet\b/, "project-medvietai"],
+    [/\bpassport\b/, "project-passport"],
+    [/\bfree-router\b|\brouter\b/, "project-router"],
+    [/\bwater[\s-]?meter\b/, "project-meter"],
+  ];
+  const ids = named.flatMap(([test, id]) => (test.test(text) ? [id] : []));
+  if (/\bwater[\s-]?meter\b/.test(text)) ids.push("role-vietdan-ml");
+  return ids.length > 0 ? [...new Set(ids)] : undefined;
+}
+
 function percentFigureIds(pool: readonly { section: ProfileSection; body: string }[], text: string): string[] | undefined {
   const number = text.match(/\b(\d{2,}(?:\.\d+)?)\s+percent\b/)?.[1];
   if (!number || !text.includes("figure")) return undefined;
@@ -262,6 +281,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     }
   }
   const percentIds = percentFigureIds(pool, text);
+  const productStack = productStackIds(text);
   const adjacent = adjacentRoleIds(text);
   const overlapping = overlappingRoleIds(text);
   const ended = recentEndedRoleIds(text);
@@ -308,6 +328,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("mizco"), ids: ["role-mizco"] },
     { when: /\broster\b/.test(text) && /\bstack\b/.test(text), ids: ["project-roster"] },
     { when: /\bcva\b/.test(text) && /\bstack\b/.test(text), ids: ["project-cva"] },
+    { when: Boolean(productStack?.length), ids: productStack ?? [] },
     { when: /\bsall-?e\b/.test(text) && /\bstack\b/.test(text), ids: ["project-salle"] },
     { when: /\bestatefolio\b/.test(text) && /\bstack\b/.test(text), ids: ["project-estatefolio"] },
     { when: /\bcodoptic\b/.test(text) && /\bstack\b/.test(text), ids: ["project-codoptic"] },
