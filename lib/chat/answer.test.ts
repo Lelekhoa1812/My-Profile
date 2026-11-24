@@ -2604,6 +2604,12 @@ describe("displayAnswer", () => {
     expect(validationUse).toContain("stays on the evidence");
     expect(validationUse).toContain("cross-validation");
     expect(validationUse).toContain("confidence gates");
+    const rerankerDocuments = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many documents does the reranker read?") }],
+      "",
+      "How many documents does the reranker read?",
+    );
+    expect(rerankerDocuments).toContain("8-million-document");
     const labCorpus = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What corpus does the lab use?") }],
       "",

@@ -332,6 +332,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bqueue\b/.test(text) && Boolean(askedProductSectionIds(text)?.length), ids: askedProductSectionIds(text) ?? [] },
     { when: /\borchestrat/.test(text) && !namedEmployer(text), ids: ["project-medswin", "role-swinburne-research"] },
     { when: /\brerank/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["role-harry-senior", "project-medswin"] },
+    { when: /\breranker\b/.test(text) && /\b(how many|documents?)\b/.test(text) && !/\b(use|uses|used)\b/.test(text), ids: ["project-medswin", "role-swinburne-research"] },
     { when: /\bevaluat/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["role-harry-senior", "project-sp500", "role-mizco"] },
     { when: /\bvalidat/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["role-harry-senior", "project-sp500", "role-mizco"] },
     { when: /\bcloud\b/.test(text) && /\b(platform|platforms|use|uses|used)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-alta", "skills"] },
