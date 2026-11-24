@@ -75,7 +75,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     .map((sentence) => ({ sentence, score: askScore(question, sentence, words) }))
     .filter((item) => item.score > 0)
     .sort((left, right) => right.score - left.score);
-  const decision = blockSentences.find((sentence) => isDecision(question, sentence));
+  const decision = countedSentence(question, blockSentences, words) ?? blockSentences.find((sentence) => isDecision(question, sentence));
   const unique = blockSentences.find((sentence) => words.some((word) => word.length >= 5 && mentions(sentence, word) && blockSentences.filter((item) => mentions(item, word)).length === 1));
   const chosen: string[] = [];
   const push = (sentence?: string) => {
@@ -103,6 +103,16 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     ? chosen
     : blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence)).slice(0, 2);
   return keptOffer(question, shown, withIdentity(question, withPeriod(body, blockSentences, outputs), blockSentences));
+}
+
+function countedSentence(question: string, sentences: readonly string[], words: readonly string[]): string | undefined {
+  if (!/\bhow many\b/i.test(question)) return undefined;
+  const ranked = sentences
+    .filter((sentence) => /\b\d/.test(sentence))
+    .map((sentence) => ({ sentence, hits: words.filter((word) => mentions(sentence, word)).length }))
+    .filter((item) => item.hits > 0)
+    .sort((left, right) => right.hits - left.hits);
+  return ranked[0]?.sentence;
 }
 
 function countedFact(question: string, sentences: readonly string[], words: readonly string[]): boolean {
@@ -188,6 +198,7 @@ function mentions(sentence: string, word: string): boolean {
   if (new RegExp(`\\b${word}(?:s|es|ed|ing)?\\b`, "i").test(sentence)) return true;
   if (word === "ocr" && /\b\w*ocr\b/i.test(sentence)) return true;
   if (word.endsWith("s") && word.length > 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
+  if (word.endsWith("e") && new RegExp(`\\b${word.slice(0, -1)}ed\\b`, "i").test(sentence)) return true;
   if (word.length >= 6 && new RegExp(`\\b${word}ion\\b`, "i").test(sentence)) return true;
   return word.length >= 8 && new RegExp(`\\b${word.slice(0, word.length - 3)}`, "i").test(sentence);
 }

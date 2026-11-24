@@ -431,6 +431,14 @@ describe("displayAnswer", () => {
       "How many cases did the MedSwin lab curate?",
     );
     expect(cases).toContain("500,000");
+    expect(cases).not.toContain("5 million");
+    const synthetic = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many synthetic cases does the MedSwin line cite?") }],
+      "",
+      "How many synthetic cases does the MedSwin line cite?",
+    );
+    expect(synthetic).toContain("5 million");
+    expect(synthetic).not.toContain("500,000");
     expect(medswinText).toContain("MedMCQA");
     expect(medswinText).not.toContain("5 million");
     expect(medswinText).not.toContain("most downloaded");
