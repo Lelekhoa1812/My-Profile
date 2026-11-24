@@ -1753,7 +1753,40 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
-  if (/\bbuild/i.test(question) && !/\bagents?\b/i.test(question) && !namedEmployer(question) && !/\b(lab|5g|axion|mizco|poptech)\b/i.test(question)) {
+  if (/\bbuild/i.test(question) && /\bfastapi\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\bfastapi streaming\b/i.test(sentence)),
+      sentences.find((sentence) => /\braspberry pi into fastapi\b/i.test(sentence)),
+      sentences.find((sentence) => /\bfaster-whisper\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\bbuild/i.test(question) && /\bdocker\b/i.test(question) && !/\bfastapi\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\bservices run in docker\b/i.test(sentence)),
+      sentences.find((sentence) => /\bkubernetes\b/i.test(sentence) && /\bdocker\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 0) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\bbuild/i.test(question) && /\bkubernetes\b/i.test(question) && !/\bdocker\b/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bkubernetes\b/i.test(line) && /\bci\/cd\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
+  if (/\bbuild/i.test(question) && !/\bagents?\b/i.test(question) && !namedEmployer(question) && !/\b(lab|5g|axion|mizco|poptech|fastapi|docker|kubernetes)\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
       sentences.find((sentence) => /builds a people list/i.test(sentence)),

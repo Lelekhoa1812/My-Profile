@@ -2848,6 +2848,30 @@ describe("displayAnswer", () => {
     expect(fastapiUse).toContain("Raspberry Pi");
     expect(fastapiUse).toContain("faster-whisper");
     expect(fastapiUse).not.toContain("November 2025");
+    const fastapiBuild = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build with FastAPI?") }],
+      "",
+      "What did he build with FastAPI?",
+    );
+    expect(fastapiBuild).toContain("FastAPI streaming");
+    expect(fastapiBuild).toContain("Raspberry Pi");
+    expect(fastapiBuild).not.toContain("people list");
+    const dockerBuild = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build with Docker?") }],
+      "",
+      "What did he build with Docker?",
+    );
+    expect(dockerBuild).toContain("Docker");
+    expect(dockerBuild).toContain("Kubernetes");
+    expect(dockerBuild).not.toContain("people list");
+    const kubernetesBuild = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build with Kubernetes?") }],
+      "",
+      "What did he build with Kubernetes?",
+    );
+    expect(kubernetesBuild).toContain("Kubernetes");
+    expect(kubernetesBuild).toContain("CI/CD");
+    expect(kubernetesBuild).not.toContain("people list");
     const pythonUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use Python for?") }],
       "",

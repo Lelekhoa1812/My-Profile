@@ -106,6 +106,18 @@ describe("profile store", () => {
     }
   });
 
+  it("answers a build-with-tool question from the sections that name the tool", () => {
+    const fastapi = searchSections(profile.sections, "What did he build with FastAPI?");
+    const docker = searchSections(profile.sections, "What did he build with Docker?");
+    const kubernetes = searchSections(profile.sections, "What did he build with Kubernetes?");
+    expect(fastapi.found).toBe(true);
+    expect(docker.found).toBe(true);
+    expect(kubernetes.found).toBe(true);
+    if (fastapi.found) expect(fastapi.sections[0]?.sectionId).toBe("role-harry-senior");
+    if (docker.found) expect(docker.sections.map((section) => section.sectionId)).toEqual(["role-harry-senior", "role-alta"]);
+    if (kubernetes.found) expect(kubernetes.sections[0]?.sectionId).toBe("role-alta");
+  });
+
   it("answers a pedigree leakage question from the pedigree role", () => {
     const result = searchSections(profile.sections, "What does the pedigree guard against?");
     expect(result.found).toBe(true);
