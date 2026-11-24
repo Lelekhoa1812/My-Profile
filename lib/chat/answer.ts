@@ -203,7 +203,7 @@ function employmentPeriod(sentences: readonly string[]): string {
 
 function workSentence(sentences: readonly string[]): string | undefined {
   const content = sentences.filter((sentence) => !isLabel(sentence) && !employmentPeriod([sentence]) && sentence.split(/\s+/).length >= 4);
-  return content.find((sentence) => /\b(led|trains|built|covers)\b/i.test(sentence))
+  return content.find((sentence) => /\b(led|trains|built|covers|owns)\b/i.test(sentence))
     ?? content.find((sentence) => /\b(uses|use|used|percent|ocr)\b/i.test(sentence))
     ?? content[0];
 }

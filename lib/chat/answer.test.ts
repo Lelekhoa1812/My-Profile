@@ -735,6 +735,13 @@ describe("displayAnswer", () => {
     expect(measured).toContain("35 percent");
     expect(measured).toContain("10,000");
     expect(measured).toContain("Jetson");
+    const afterHarry = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do after Harry the Hirer?") }],
+      "",
+      "What did he do after Harry the Hirer?",
+    );
+    expect(afterHarry).toContain("owns");
+    expect(afterHarry).toContain("Axis");
     expect(coach).toContain("rewrite");
     expect(refuse).toContain("does not score");
     expect(validators).toContain("evidence");
