@@ -1587,6 +1587,19 @@ describe("displayAnswer", () => {
     expect(whisper).toContain("Speech uses Whisper");
     expect(whisper).toContain("faster-whisper");
     expect(whisper).toContain("local Whisper inference");
+    const geminiDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Gemini do?") }],
+      "",
+      "What does Gemini do?",
+    );
+    expect(geminiDuty).toContain("Clinical reasoning uses Gemini");
+    expect(geminiDuty).toContain("Free-router");
+    const fastapiDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does FastAPI do?") }],
+      "",
+      "What does FastAPI do?",
+    );
+    expect(fastapiDuty).toContain("FastAPI streaming");
     const qwenUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Qwen used for?") }],
       "",
