@@ -866,6 +866,19 @@ describe("displayAnswer", () => {
     );
     expect(labLanguages).toContain("PubMed");
     expect(labLanguages).not.toContain("Mandarin");
+    const labBenchmarks = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What benchmarks did the lab use?") }],
+      "",
+      "What benchmarks did the lab use?",
+    );
+    expect(labBenchmarks).toContain("MedMCQA");
+    expect(labBenchmarks).toContain("86 percent");
+    const medswinDatasets = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What datasets did MedSwin use?") }],
+      "",
+      "What datasets did MedSwin use?",
+    );
+    expect(medswinDatasets).toContain("MedQuAD");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
