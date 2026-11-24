@@ -2,19 +2,17 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 describe("public facts", () => {
-  it("uses the public title and does not lead with product names", () => {
+  it("keeps the current resume title and the FoodFlow split", () => {
     const site = readFileSync("content/site.ts", "utf8");
     const layout = readFileSync("app/layout.tsx", "utf8");
-    expect(site).toContain('title: "AI Software Engineer"');
-    expect(layout).toContain("Dang Khoa Le · AI Software Engineer");
-    expect(site).not.toContain("FoodFlow");
-    expect(site).not.toContain("Copilot");
     expect(site).toContain('title: "Senior AI Software Engineer"');
+    expect(layout).toContain("Dang Khoa Le · Senior AI Software Engineer");
+    expect(site).toContain("FoodFlow is the multi-tenant ERP");
   });
 
-  it("uses the illustration stills", () => {
+  it("uses the product stills, not a stock stand-in", () => {
     const stills = readFileSync("components/site/stills.ts", "utf8");
-    expect(stills).toContain("illustrations/clara.jpg");
-    expect(stills).not.toContain('from "@/img/clara.jpeg"');
+    expect(stills).not.toContain("illustrations/");
+    expect(stills).toContain('from "@/img/clara.jpeg"');
   });
 });
