@@ -43,7 +43,8 @@ export function readSection(sections: readonly ProfileSection[], sectionId: stri
   const wanted = sectionId.trim().toLowerCase();
   const visible = sections.filter((item) => (item.visibility ?? "public") === "public");
   const section = visible.find((item) => item.sectionId === sectionId)
-    ?? visible.find((item) => item.heading.toLowerCase() === wanted || item.sectionId.toLowerCase() === wanted);
+    ?? visible.find((item) => item.heading.toLowerCase() === wanted || item.sectionId.toLowerCase() === wanted)
+    ?? uniqueHeading(visible, wanted);
   if (!section) return { found: false as const };
   return {
     found: true as const,
@@ -52,6 +53,12 @@ export function readSection(sections: readonly ProfileSection[], sectionId: stri
     sourceType: section.sourceType,
     text: section.text,
   };
+}
+
+function uniqueHeading(sections: readonly ProfileSection[], wanted: string): ProfileSection | undefined {
+  if (wanted.length < 4) return undefined;
+  const hits = sections.filter((item) => item.heading.toLowerCase().includes(wanted));
+  return hits.length === 1 ? hits[0] : undefined;
 }
 
 const STOP_WORDS = new Set([

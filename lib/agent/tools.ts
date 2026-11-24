@@ -24,7 +24,7 @@ export function createProfileTools(record: ProfileRecord): ToolSet {
       execute: async (input) => listSections(sections, input.sourceType),
     }),
     read_section: tool({
-      description: "Read one full profile section by its heading words. The text is the citable record.",
+      description: "Read one full profile section by its id or its heading. A short heading phrase works only when one section matches.",
       inputSchema: z.object({ sectionId: z.string() }),
       execute: async (input) => readSection(sections, input.sectionId),
     }),

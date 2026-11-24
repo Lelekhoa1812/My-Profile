@@ -15,6 +15,16 @@ describe("profile store", () => {
     if (result.found) expect(result.sectionId).toBe("role-axion");
   });
 
+  it("reads one section from a unique heading phrase", () => {
+    const result = readSection(profile.sections, "workflow engine");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sectionId).toBe("project-axion-workflows");
+  });
+
+  it("refuses a heading phrase that matches two jobs", () => {
+    expect(readSection(profile.sections, "Nam A Bank").found).toBe(false);
+  });
+
   it("marks an empty section list as a miss", () => {
     expect(listSections(profile.sections, "writing")).toEqual({ found: false, sections: [] });
   });
