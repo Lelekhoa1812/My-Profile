@@ -307,6 +307,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\b(measure|measured|cut)\b/.test(text) && !namedEmployer(text) && !/\b(live|pilot|uptime|bert|golf|meter|scanner|recall|precision)\b/.test(text), ids: ["role-harry-senior", "role-mizco", "role-swinburne-research"] },
     { when: /\b(train|trained|training)\b/.test(text) && /\b(he|him|his|lab)\b/.test(text) && !namedEmployer(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: /\b(founder|founded)\b/.test(text), ids: ["project-medvietai"] },
+    { when: /\bmedviet\b/.test(text), ids: ["project-medvietai"] },
     { when: /\bpartners?\b/.test(text), ids: ["role-aitc"] },
     { when: /\bdrafted\b/.test(text), ids: ["project-cva", "project-axion-workflows"] },
     { when: /\bexported\b/.test(text), ids: ["project-axion-workflows"] },

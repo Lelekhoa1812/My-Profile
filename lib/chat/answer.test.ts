@@ -1923,6 +1923,19 @@ describe("displayAnswer", () => {
     expect(harryUse).toContain("Azure AI Foundry");
     expect(harryUse).not.toContain("Tool-Executor");
     expect(harryUse).not.toContain("mate-selection");
+    const harryReranker = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What reranker does Harry use?") }],
+      "",
+      "What reranker does Harry use?",
+    );
+    expect(harryReranker).toContain("cross-encoder");
+    const medvietIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is MedViet?") }],
+      "",
+      "What is MedViet?",
+    );
+    expect(medvietIs).toContain("Vietnamese medical language model");
+    expect(medvietIs).toContain("MedSwin");
     expect(cameFirst).toContain("April 2023");
     expect(cameFirst).toContain("December 2024");
     const pedigreeBefore = displayAnswer(
