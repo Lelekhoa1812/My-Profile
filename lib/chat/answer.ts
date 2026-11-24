@@ -681,9 +681,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     }
   }
   if (/\buse[sd]?\b/i.test(question) && !namedEmployer(question) && !/\bmcp\b/i.test(question)) {
-    const tool = question.match(/\buse[sd]?\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1] ?? question.match(/\buse[sd]?\s+for\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1] ?? question.match(/\buse[sd]?\s+for\s+(forecasts?|retrieval|documents?|detection|traces?|agents|orchestrat\w*|rerank\w*)\b/i)?.[1] ?? question.match(/\b(agents)\b/i)?.[1] ?? question.match(/\b(rerank\w*)\b/i)?.[1];
+    const tool = question.match(/\buse[sd]?\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1] ?? question.match(/\buse[sd]?\s+for\s+([A-Z][A-Za-z0-9.+#-]{2,})/)?.[1] ?? question.match(/\buse[sd]?\s+for\s+(forecasts?|retrieval|documents?|detection|traces?|agents|orchestrat\w*|rerank\w*|evaluat\w*)\b/i)?.[1] ?? question.match(/\b(agents)\b/i)?.[1] ?? question.match(/\b(rerank\w*)\b/i)?.[1];
     if (tool) {
-      const named = tool.toLowerCase() === "ocr" ? /\b\w*ocr\b/i : /^forecast/i.test(tool) ? /\bforecast\w*/i : /^retriev/i.test(tool) ? /\bretrieval\b/i : /^document/i.test(tool) ? /\bdocuments?\b/i : /^detect/i.test(tool) ? /\bdetection\b/i : /^trace/i.test(tool) ? /\btraces?\b/i : /^agent/i.test(tool) ? /\bagents\b/i : /^orchestrat/i.test(tool) ? /\borchestrat\w*/i : /^rerank/i.test(tool) ? /\brerank\w*/i : new RegExp(`\\b${tool.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      const named = tool.toLowerCase() === "ocr" ? /\b\w*ocr\b/i : /^forecast/i.test(tool) ? /\bforecast\w*/i : /^retriev/i.test(tool) ? /\bretrieval\b/i : /^document/i.test(tool) ? /\bdocuments?\b/i : /^detect/i.test(tool) ? /\bdetection\b/i : /^trace/i.test(tool) ? /\btraces?\b/i : /^agent/i.test(tool) ? /\bagents\b/i : /^orchestrat/i.test(tool) ? /\borchestrat\w*/i : /^rerank/i.test(tool) ? /\brerank\w*/i : /^evaluat/i.test(tool) ? /\bvalidat\w*/i : new RegExp(`\\b${tool.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
       const seen = new Set<string>();
       const lines: string[] = [];
       for (const sentence of sectionBlocks(outputs).flatMap((item) => plainSentences(item))) {
@@ -1233,6 +1233,7 @@ function withIdentity(question: string, proof: string, blockSentences: readonly 
 function withPeriod(sentences: readonly string[], blockSentences: readonly string[], outputs: readonly Record<string, unknown>[] = [], question = ""): string {
   const joined = sentences.join(" ");
   if (/\bdatabase\b/i.test(question) && /\bown/i.test(question)) return joined;
+  if (/\bevaluat/i.test(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;

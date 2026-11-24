@@ -2588,6 +2588,14 @@ describe("displayAnswer", () => {
     );
     expect(triageDataIs.startsWith("The triage data is MIMIC-IV")).toBe(true);
     expect(triageDataIs).not.toContain("Whisper");
+    const evaluationUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for evaluation?") }],
+      "",
+      "What does he use for evaluation?",
+    );
+    expect(evaluationUse).toContain("stays on the evidence");
+    expect(evaluationUse).toContain("cross-validation");
+    expect(evaluationUse).not.toContain("LangChain");
     const labCorpus = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What corpus does the lab use?") }],
       "",
