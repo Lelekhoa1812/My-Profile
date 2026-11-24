@@ -19,5 +19,6 @@ describe("instructionPrefix", () => {
     expect(text).toContain("Answer only what was asked.");
     expect(text).toContain("The current title is the job.");
     expect(text).toContain("The page title is the short label on the visitor page.");
+    expect(text).toContain("Do not say that a sold or acquired product reached production.");
   });
 });
