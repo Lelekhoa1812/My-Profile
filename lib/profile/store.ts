@@ -428,6 +428,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\b(lead|led|leads)\b/.test(text) && /\b(do|does|did|what|who)\b/.test(text) && !/\bteams?\b/.test(text) && !/\b(axion|axis)\b/.test(text) && !namedEmployer(text), ids: ["role-swinburne-research", "role-poptech", "project-skyledge", "project-salle", "role-mizco", "role-harry-senior", "role-aitc"] },
     { when: /\bbuild/.test(text) && /\b(do|does|did|what|has)\b/.test(text) && !/\bagents?\b/.test(text) && !/\b(lab|5g)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["project-axion-workflows", "role-swinburne-research", "project-medswin"] },
     { when: /\bstack\b/.test(text) && !namedEmployer(text) && !/\b(roster|golf|skyledge|survee|prophet|triage|writing|coach|meter|cva|salle|sall-e|estatefolio|codoptic)\b/.test(text), ids: ["skills"] },
+    { when: /\bnamed public app\b/.test(text), ids: ["project-meter"] },
     { when: /\bwater[-\s]?meter\b/.test(text) && /\b(sample|measur\w*|productionized|result|model|cut|percent)\b/.test(text), ids: ["project-meter", "role-vietdan-ml"] },
     { when: text.includes("harry") && (text.includes("pedigree") || text.includes("earlier") || (text.includes("before") && !/\bbefore (?:harry|the hirer)\b/.test(text))), ids: ["role-harry-pedigree", "role-harry-senior"] },
     { when: /\bpedigree\b/.test(text) && /\b(based|located)\b/.test(text), ids: ["role-harry-senior", "role-harry-pedigree"] },

@@ -97,6 +97,12 @@ describe("profile store", () => {
     }
   });
 
+  it("answers a named-public-app question from the water-meter scanner", () => {
+    const result = searchSections(profile.sections, "What is not a named public app?");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections[0]?.sectionId).toBe("project-meter");
+  });
+
   it("answers a production-release question from the sale and the public Space", () => {
     const result = searchSections(profile.sections, "What is not a production release?");
     expect(result.found).toBe(true);

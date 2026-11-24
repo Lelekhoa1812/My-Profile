@@ -1806,6 +1806,15 @@ describe("displayAnswer", () => {
     expect(notRelease).toContain("not for a release");
     expect(notRelease).not.toContain("the record does not");
     expect(notRelease).not.toContain("July 2026");
+    const publicApp = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is not a named public app?") }],
+      "",
+      "What is not a named public app?",
+    );
+    expect(publicApp).toContain("productionized");
+    expect(publicApp).toContain("not a named public app");
+    expect(publicApp).not.toContain("prompt-me");
+    expect(publicApp).not.toContain("the record does not");
     const versionIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it version?") }],
       "",
