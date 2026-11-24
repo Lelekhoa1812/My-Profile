@@ -1778,6 +1778,15 @@ describe("displayAnswer", () => {
     expect(gateIt).toContain("review gates");
     expect(gateIt).toContain("govern execution");
     expect(gateIt).toContain("confidence gates");
+    const writeGate = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What gates a write?") }],
+      "",
+      "What gates a write?",
+    );
+    expect(writeGate).toContain("approve a write");
+    expect(writeGate).toContain("govern execution");
+    expect(writeGate).not.toContain("confidence gates");
+    expect(writeGate).not.toContain("review gates");
     const versionIt = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it version?") }],
       "",

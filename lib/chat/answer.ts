@@ -1501,8 +1501,20 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\bcheck/i.test(question) && !/\b(verifier|critic|use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/Validators check|vision quality checks|check sensor quality/i, 3);
   }
-  if (/\bgate/i.test(question) && !/\bwhat is\b/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
+  if (/\bgate/i.test(question) && !/\bwrites?\b/i.test(question) && !/\bwhat is\b/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/review gates|govern execution|confidence gates/i, 3);
+  }
+  if (/\bgate/i.test(question) && /\bwrites?\b/i.test(question) && !namedEmployer(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /approve a write/i.test(sentence)),
+      sentences.find((sentence) => /govern execution/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 0) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
   }
   if (/\bversion/i.test(question) && !/\bwhat is\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/version-controlled pipelines|versioned artifacts|document versions/i, 3);
