@@ -245,8 +245,9 @@ export function asksForPlace(query: string): boolean {
 }
 
 function covers(text: string, term: string): boolean {
-  if (text.includes(term)) return true;
-  return term.startsWith("approv") && text.includes("approv");
+  const word = new RegExp(`\\b${term}(?:s|es|ed|d|ing)?\\b`);
+  if (word.test(text)) return true;
+  return term.startsWith("approv") && /\bapprov/.test(text);
 }
 
 const FACT_ONLY_TERMS = new Set([

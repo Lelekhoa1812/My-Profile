@@ -209,6 +209,12 @@ describe("profile store", () => {
     expect(hai.found && hai.sections[0]?.sectionId).toBe("role-hai-au");
     expect(hai.found && hai.sections.some((section) => section.sectionId === "role-harry-senior")).toBe(false);
     expect(hai.found && hai.sections.some((section) => section.sectionId === "role-axion")).toBe(false);
+    const pilot = searchSections(profile.sections, "What did the pilot cut?");
+    expect(pilot.found && pilot.sections[0]?.sectionId).toBe("role-harry-senior");
+    expect(pilot.found && pilot.sections[0]?.text).toContain("40 percent");
+    const mate = searchSections(profile.sections, "What did the mate-selection engine use?");
+    expect(mate.found && mate.sections[0]?.sectionId).toBe("role-harry-pedigree");
+    expect(mate.found && mate.sections[0]?.text).toContain("Black Caviar");
     const water = searchSections(profile.sections, "What did the water meter cut?");
     expect(water.found && water.sections.map((section) => section.sectionId)).toEqual(["project-meter", "role-vietdan-ml"]);
   });
