@@ -864,7 +864,23 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(ensemble);
     }
   }
-  if (/\b(bm25|hnsw|agentic chunking|query decomposition|cross-encoder)\b/i.test(question)) {
+  if (/\bwhat is\b/i.test(question) && /\b(retriever|verifier|critic|tool-executor|tool executor)\b/i.test(question)) {
+    const layer = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bretriever\b/i.test(sentence) && /\bverifier\b/i.test(sentence) && /\bcritic\b/i.test(sentence));
+    if (layer) {
+      chosen.length = 0;
+      cap = 1;
+      push(layer);
+    }
+  }
+  if (/\bin the loop\b/i.test(question) || (/\bloop\b/i.test(question) && /\bharry\b/i.test(question))) {
+    const loop = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bstays in the loop\b/i.test(sentence));
+    if (loop) {
+      chosen.length = 0;
+      cap = 1;
+      push(loop);
+    }
+  }
+  if (/\b(bm25|hnsw|chunking|query decomposition|cross-encoder)\b/i.test(question)) {
     const retrieval = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bbm25\b/i.test(sentence) && /\bhnsw\b/i.test(sentence));
     if (retrieval) {
       chosen.length = 0;
