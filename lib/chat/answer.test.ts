@@ -971,6 +971,24 @@ describe("displayAnswer", () => {
     );
     expect(medviet).toContain("founder");
     expect(medviet).toContain("MedSwin");
+    const poptechRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is PopTech?") }],
+      "",
+      "What is PopTech?",
+    );
+    expect(poptechRole).toContain("electricity");
+    const poptechModelList = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models did PopTech use?") }],
+      "",
+      "What models did PopTech use?",
+    );
+    expect(poptechModelList).toContain("TFT");
+    const ericssonName = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the Ericsson 5G digital twin?") }],
+      "",
+      "What is the Ericsson 5G digital twin?",
+    );
+    expect(ericssonName).toContain("tower telemetry");
     expect(fastApi).not.toContain("LoRA");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");

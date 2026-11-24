@@ -125,6 +125,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (!picked && unique && words.every((word) => !mentions(item.sentence, word) || mentions(unique, word))) continue;
     push(item.sentence);
   }
+  if (/\bwhat is\b/i.test(question) && chosen.length === 1 && chosen[0] && !/\b(is|are|led|uses|use|reads|covers|owns|built|turns|takes)\b/i.test(chosen[0])) push(workSentence(blockSentences));
   const body = chosen.length > 0
     ? chosen
     : blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence)).slice(0, 2);
@@ -485,7 +486,7 @@ function isDecision(question: string, sentence: string): boolean {
     const words = question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 5 && !["cases", "people", "using", "about"].includes(word));
     return words.some((word) => mentions(sentence, word));
   }
-  if (/\b(poptech|electricity)\b/i.test(question) && /\btft\b/i.test(sentence)) return true;
+  if (/\b(poptech|electricity)\b/i.test(question) && !/\bwhat is\b/i.test(question) && /\b(model|tft|forecast|electricity)\b/i.test(question) && /\btft\b/i.test(sentence)) return true;
   if (/\bstack\b/i.test(question) && isToolList(sentence)) return true;
   if (/\bci\b/i.test(question) && /\bci\/cd\b/i.test(sentence)) return true;
   if (/\bdigits?\b/i.test(question) && /\bmnist\b/i.test(sentence)) return true;
