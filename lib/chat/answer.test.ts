@@ -1964,6 +1964,15 @@ describe("displayAnswer", () => {
       "Was the lab Swinburne-funded?",
     );
     expect(labFunded).toContain("Swinburne-funded");
+    const quotientProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Quotient?") }],
+      "",
+      "What is Quotient?",
+    );
+    expect(quotientProduct).toContain("recorded meeting");
+    expect(quotientProduct).toContain("moment");
+    expect(quotientProduct).toContain("held for review");
+    expect(quotientProduct).toContain("not a deployed product");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",
