@@ -168,14 +168,17 @@ describe("profile store", () => {
   });
 
   it("opens the proof for the three employer questions", () => {
-    const live = searchSections(profile.sections, "What is live for a customer?");
-    const meter = searchSections(profile.sections, "What result did the water-meter model deliver?");
-    const write = searchSections(profile.sections, "Where must a person approve a write?");
+    const live = searchSections(profile.sections, "At Axion, what does Axis show before a write?");
+    const meter = searchSections(profile.sections, "At Harry the Hirer, what did the pilot cut?");
+    const write = searchSections(profile.sections, "At MedSwin, what BERTScore did the lab record?");
     const research = searchSections(profile.sections, "What research did he study at Swinburne?");
     const earlier = searchSections(profile.sections, "What did he build for Harry the Hirer before the senior role?");
-    expect(live.found && live.sections[0]?.sectionId).toBe("project-shipped");
-    expect(meter.found && meter.sections.map((section) => section.sectionId)).toEqual(["project-meter", "role-vietdan-ml"]);
-    expect(write.found && write.sections[0]?.sectionId).toBe("role-axion");
+    expect(live.found && live.sections[0]?.sectionId).toBe("role-axion");
+    expect(live.found && live.sections[0]?.text).toContain("shows a preview");
+    expect(meter.found && meter.sections[0]?.sectionId).toBe("role-harry-senior");
+    expect(meter.found && meter.sections[0]?.text).toContain("40 percent");
+    expect(write.found && write.sections[0]?.sectionId).toBe("role-swinburne-research");
+    expect(write.found && write.sections[0]?.text).toContain("BERTScore");
     expect(research.found && research.sections.some((section) => section.sectionId === "role-swinburne-research")).toBe(true);
     expect(earlier.found && earlier.sections[0]?.sectionId).toBe("role-harry-pedigree");
   });

@@ -20,14 +20,14 @@
       "heading": "Axion Solutions",
       "sourceType": "role",
       "aliases": ["Axion", "Workflow Engine", "Axis", "FoodFlow"],
-      "text": "Axion Solutions. AI Software Engineer, July 2026 to present. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. Axis is a separate AI product for Studio copilot, data insight, and message drafting. It calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write. Axis does not own FoodFlow's database. The resume also uses the phrase capital-markets automation for investment and growth workflows. That phrase does not rename FoodFlow. The word production in that list is a business module, not a release."
+      "text": "Axion Solutions. AI Software Engineer, July 2026 to present. He owns the AI vision, the product strategy, and the operating model for Axis. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. Axis is a separate product for Studio copilot, data insight, and message drafting. It calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write. Axis does not own FoodFlow's database. The engine uses LangChain and LangGraph. Modular actions, connectors, scoring, review gates, and version-controlled pipelines assemble the work. LangSmith and OpenTelemetry cover the traces. Human approval gates and audit trails govern execution. The resume also uses the phrase capital-markets automation for investment and growth workflows. That phrase does not rename FoodFlow. The word production in that list is a business module, not a release."
     },
     {
       "sectionId": "project-axion-workflows",
       "heading": "Axion workflow engine",
       "sourceType": "project",
       "aliases": ["startup outreach", "investor scouting", "portfolio reporting"],
-      "text": "Axion workflow engine. A governed graph platform in the Engine monorepo, separate from FoodFlow. The recipes are startup scouting, investor scouting, and portfolio reporting. Startup scouting searches a list and public profiles, then scores and exports. That export does not send a message. Investor scouting builds a people list. One recipe starts from a saved persona. Portfolio reporting writes company updates. The draft recipe does not send email. A separate recipe emails founders. The record does not call those recipes capital-markets products. Axis can draft on the same host. Axis does not own the Engine database or FoodFlow's data."
+      "text": "Axion workflow engine. A governed graph platform in the Engine monorepo, separate from FoodFlow. The recipes are startup scouting, investor scouting, and portfolio reporting. Startup scouting searches a list and public profiles with Apollo, Seamless, Tavily, and web crawling, then scores and exports. That export does not send a message. Investor scouting builds a people list so a startup can look for investors. One recipe starts from a saved persona. Portfolio reporting writes company updates as versioned artifacts. The draft recipe does not send email. A separate recipe emails founders. The record does not call those recipes capital-markets products. Axis can draft on the same host. Axis does not own the Engine database or FoodFlow's data."
     },
     {
       "sectionId": "project-shipped",
@@ -41,21 +41,21 @@
       "heading": "Harry the Hirer, Senior AI Engineer",
       "sourceType": "role",
       "aliases": ["Harry the Hirer"],
-      "text": "Harry the Hirer, Senior AI Engineer. Melbourne, December 2025 to July 2026. Enterprise multi-agent retrieval for event inventory, logistics, and planning. The resume records a pilot effort reduction of about 40 percent and an uptime claim of 99.9 percent. The work includes OCR and document pipelines, and MCP-style access to stock and planning data."
+      "text": "Harry the Hirer, Senior AI Engineer. Melbourne, December 2025 to July 2026. He led the AI work for event inventory, logistics, planning, and documents. The resume calls the company Australia's largest event enterprise. The stack includes Azure AI Foundry, Azure OpenAI, LangChain, LangGraph, and FastAPI. A multi-agent layer uses Planner, Retriever, Verifier, Critic, and Tool-Executor agents. Answers are citation-grounded, and a person stays in the loop. Retrieval uses agentic chunking, query decomposition, BM25 and HNSW hybrid search, metadata filters, and cross-encoder reranking. Validators check that an answer stays on the evidence. The resume records about 40 percent less repetitive lookup and drafting in targeted pilot workflows, and 99.9 percent operational uptime. OCR and document extraction use Pydantic contracts, constrained JSON, and MCP-style access to stock and planning data. Services run in Docker with MSAL authentication."
     },
     {
       "sectionId": "role-harry-pedigree",
       "heading": "Harry the Hirer, pedigree AI",
       "sourceType": "role",
       "aliases": ["Black Caviar"],
-      "text": "Harry the Hirer, pedigree AI. March 2026 to May 2026. Thoroughbred pedigree AI for the Black Caviar lineage platform, in an ML and data science role."
+      "text": "Harry the Hirer, pedigree AI. March 2026 to May 2026. Thoroughbred pedigree AI for the Black Caviar lineage platform, in an ML and data science role. It is a mate-selection engine for genetic merit, compatibility, and inbreeding risk. The resume describes a 10-signal ensemble: matrix factorization, GBM temporal ranking, VAE genetic fingerprints, Bayesian nicking, Dosage Theory, and a Shared Ancestor Compatibility Kernel. It uses 64-dimensional pedigree embeddings, graph expansion, temporal splits against leakage, and LLM explanations."
     },
     {
       "sectionId": "role-mizco",
       "heading": "Mizco",
       "sourceType": "role",
       "aliases": ["Trust-First", "RFQ"],
-      "text": "Mizco, AI Team Lead. Perth, November 2025 to June 2026. Trust-first platform that turns RFQ text into governed industrial artefacts. The resume records about 50 percent less manual review in the targeted workflows. The build uses constrained JSON, confidence gates, and human review."
+      "text": "Mizco, AI Team Lead. Perth, November 2025 to June 2026. He led a trust-first platform that turns RFQ text into governed industrial artefacts for compliance-sensitive work. The resume records about 50 percent less manual review and artefact preparation in the targeted workflows. Inference uses vLLM, agent routing, constrained JSON, and ReAct tool calling behind FastAPI. A Next.js cockpit shows traces, confidence gates, and validation. The pipelines read PDF, DOCX, and XLSX. A person reviews uncertain output."
     },
     {
       "sectionId": "role-teqar",
@@ -69,7 +69,7 @@
       "heading": "Swinburne research",
       "sourceType": "role",
       "aliases": ["MedSwin", "Swinburne"],
-      "text": "Swinburne research. Researcher at Swinburne University of Technology, Melbourne, August 2025 to July 2026. Clinical AI lab of five people. The resume records more than 500,000 curated cases and 86 percent BERTScore on MedMCQA, PubMedQA, and MedQuAD. A project line also cites 5 million synthetic cases. Both figures are resume wording, and they are not the same count."
+      "text": "Swinburne research. Researcher at Swinburne University of Technology, Melbourne, August 2025 to July 2026. Liam led a clinical AI lab of five people. The lab is MedSwin. It built specialist medical agents and a reasoning orchestrator. Fine-tuning used distillation, LoRA, and QLoRA on more than 500,000 curated cases. A project line also cites 5 million synthetic cases. Both figures are resume wording, and they are not the same count. Agentic retrieval covers clinical records and PubMed, with safety guardrails. An 8-million-document biomedical reranker feeds the orchestrator. The resume records 86 percent BERTScore on MedMCQA, PubMedQA, and MedQuAD."
     },
     {
       "sectionId": "role-aitc",
@@ -160,7 +160,7 @@
       "heading": "MedSwin",
       "sourceType": "project",
       "aliases": ["clinical AI"],
-      "text": "MedSwin. Swinburne-funded multi-agent clinical AI. Liam led a five-person lab. Hugging Face org MedSwin hosts the models. The resume says the models were among Australia's most downloaded AI models in November and December 2025. That download rank is resume wording and was not re-counted here."
+      "text": "MedSwin. Swinburne-funded multi-agent clinical AI. Liam led a five-person lab that built specialist medical agents and a reasoning orchestrator. Fine-tuning used distillation, LoRA, and QLoRA. Agentic retrieval covers clinical records and PubMed. An 8-million-document biomedical reranker feeds the orchestrator. The resume records 86 percent BERTScore on MedMCQA, PubMedQA, and MedQuAD. Hugging Face org MedSwin hosts the models. The resume says the models were among Australia's most downloaded AI models in November and December 2025. That download rank is resume wording and was not re-counted here."
     },
     {
       "sectionId": "project-medvietai",

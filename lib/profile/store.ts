@@ -114,6 +114,10 @@ const BROAD_SECTION_IDS = ["role-axion", "project-shipped"] as const;
 function pinnedSections(pool: readonly { section: ProfileSection; title: string; body: string }[], query: string) {
   const text = query.toLowerCase();
   const sets = [
+    { when: text.includes("axion") && (text.includes("axis") || text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
+    { when: text.includes("harry") && (text.includes("pilot") || text.includes("cut")), ids: ["role-harry-senior"] },
+    { when: (text.includes("medswin") || text.includes("bertscore")) && /\b(bertscore|lab|score)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
+    { when: text.includes("mizco"), ids: ["role-mizco"] },
     { when: /\bwater[-\s]?meter\b/.test(text) && /\b(sample|measur\w*|productionized|result|model)\b/.test(text), ids: ["project-meter", "role-vietdan-ml"] },
     { when: text.includes("harry") && (text.includes("before") || text.includes("earlier") || text.includes("pedigree")), ids: ["role-harry-pedigree", "role-harry-senior"] },
     { when: text.includes("live") && (text.includes("sale") || text.includes("sales") || text.includes("customer")), ids: ["project-shipped", "project-cva"] },

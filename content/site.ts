@@ -66,9 +66,9 @@ export const person = {
 };
 
 export const starterQuestions = [
-  "What is live for a customer?",
-  "What result did the water-meter model deliver?",
-  "Where must a person approve a write?",
+  "At Axion, what does Axis show before a write?",
+  "At Harry the Hirer, what did the pilot cut?",
+  "At MedSwin, what BERTScore did the lab record?",
 ];
 
 export const cases: Case[] = [
