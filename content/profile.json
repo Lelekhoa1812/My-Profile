@@ -76,7 +76,7 @@
       "heading": "AITC",
       "sourceType": "role",
       "aliases": ["industrial assistant"],
-      "text": "AITC, Senior AI Engineer. June 2025 to November 2025. Industrial LLM, NLP, and OCR assistant. The resume names partner work with Nvidia, HPA, IBM, Juniper, and Cisco Vietnam."
+      "text": "AITC, Senior AI Engineer. June 2025 to November 2025. He led an industrial assistant that uses LLMs, NLP, and OCR to turn unstructured PDFs into operational guidance. He owned ingestion, preprocessing, deployment, and optimisation, and he mentored data engineers. The resume names partner work with Nvidia, HPA, IBM, Juniper, and Cisco Vietnam."
     },
     {
       "sectionId": "role-hai-au",
@@ -97,7 +97,7 @@
       "heading": "PopTech",
       "sourceType": "role",
       "aliases": ["electricity forecasting"],
-      "text": "PopTech, ML Engineer. Melbourne, May 2025 to July 2025. IoT electricity forecasting. Liam led a four-person team."
+      "text": "PopTech, ML Engineer. Melbourne, May 2025 to July 2025. Liam led a four-person team on an IoT electricity forecasting and control platform. The pipelines check sensor quality, impute gaps, and watch for drift. The models include TFT, XGBoost, and DQN, with an LLM advisory path and speech input for billing and energy recommendations."
     },
     {
       "sectionId": "role-nam-a-ai",
@@ -174,14 +174,14 @@
       "heading": "Codoptic",
       "sourceType": "project",
       "aliases": ["coding agent"],
-      "text": "Codoptic. Open-source coding agent and DSL for repository diagrams. Public repository: github.com/Codoptic/Codoptic."
+      "text": "Codoptic. Open-source coding agent. It reads a repository, plans an implementation, and can generate or review code. It also turns a repository into interactive DSL diagrams so a developer can navigate the architecture. Public repository: github.com/Codoptic/Codoptic."
     },
     {
       "sectionId": "project-triage",
       "heading": "Clinical triage response",
       "sourceType": "project",
       "aliases": ["drone", "MIMIC"],
-      "text": "Clinical triage response. Speech, vision, and language models over MIMIC-IV, with a drone medication-delivery path. Repository: Lelekhoa1812/Triage-LLM-Based. Space: huggingface.co/spaces/khoaliamle/Triage_LLM."
+      "text": "Clinical triage response. Speech uses Whisper. Clinical reasoning uses Gemini. Vision uses Qwen-VL. The triage data is MIMIC-IV. The portals use React Native and React, with FastAPI streaming and FAISS plus MongoDB retrieval. A Great Shark 330 PRO VTOL drone is the medication-delivery path. Repository: Lelekhoa1812/Triage-LLM-Based. Space: huggingface.co/spaces/khoaliamle/Triage_LLM."
     },
     {
       "sectionId": "project-skyledge",
@@ -202,14 +202,14 @@
       "heading": "Golf scorecard scanner",
       "sourceType": "project",
       "aliases": ["VHandicap"],
-      "text": "Golf scorecard scanner. Sold to VHandicap. The resume records about 15 percent efficiency gain. The stack includes YOLO, VietOCR, and Qwen2.5-VL."
+      "text": "Golf scorecard scanner. Sold to VHandicap. The resume records about 15 percent efficiency gain. Field detection uses YOLOv8 and YOLOv11. Text extraction uses VietOCR and PaddleOCR. Handwriting uses MNIST and CTC. Qwen2.5-VL checks handwritten corrections."
     },
     {
       "sectionId": "project-cva",
       "heading": "CVA",
       "sourceType": "project",
       "aliases": ["career agent"],
-      "text": "CVA. A career application agent. It plans an application and drafts a CV and a cover letter. A reviewer agent critiques the draft, and a person approves it. Repository: Lelekhoa1812/CVA. Live app: cva-mauve.vercel.app."
+      "text": "CVA. A career application agent. A planner agent scores role fit and drafts a CV and a cover letter. A reviewer agent critiques the draft, and a person approves it. The run keeps profile memory and document versions. Repository: Lelekhoa1812/CVA. Live app: cva-mauve.vercel.app."
     },
     {
       "sectionId": "project-writing",

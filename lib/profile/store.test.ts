@@ -190,6 +190,10 @@ describe("profile store", () => {
     const roster = searchSections(withArchive(profile.sections), "What did the roster app use for payroll?");
     expect(salle.found && salle.sections[0]?.sectionId).toBe("project-salle");
     expect(roster.found && roster.sections[0]?.sectionId).toBe("project-roster");
+    const pop = searchSections(profile.sections, "What did he forecast at PopTech?");
+    const triage = searchSections(profile.sections, "What drone does the clinical triage response use?");
+    expect(pop.found && pop.sections[0]?.text).toContain("XGBoost");
+    expect(triage.found && triage.sections[0]?.text).toContain("Great Shark");
   });
 
   it("opens the degree when the question asks where he studied", () => {
