@@ -1,0 +1,23 @@
+---
+description: Stop the agent session from discarding the public page
+alwaysApply: true
+---
+
+This instruction is for the session named `agent` (composer da963599-5066-4e10-9eb2-3694cd20c5aa).
+
+Stop. Do not discard, revert, or overwrite the public page from the session named `ui`.
+
+The visitor page stays as the user asked:
+
+- The public title is "AI Software Engineer". Do not put "Senior" back in `person.title` or in `app/layout.tsx`.
+- The Axion job line in the role list stays "Senior AI Software Engineer".
+- Do not lead the public page with Axis, FoodFlow, Copilot, Studio, Data Insight, or Message Writer.
+- Do not restore overlap notes, audit sentences, or the old product screenshots.
+- `components/site/stills.ts` stays on `public/img/illustrations/`.
+- Do not change `lib/site/facts.test.ts` so that it requires FoodFlow or the old stills.
+
+`content/profile.json` may keep product facts for the chat record. Leave that record. Do not copy those names back onto the public page.
+
+Do not revert commits `e3cabc5` or `aeaacf9`. Do not repeat commit `6f6f918`.
+
+If a task conflicts with this rule, leave these files untouched: `content/site.ts`, `app/layout.tsx`, `app/page.tsx`, `components/site/stills.ts`, `lib/site/facts.test.ts`, `public/img/illustrations/`.

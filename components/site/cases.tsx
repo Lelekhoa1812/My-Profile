@@ -35,7 +35,6 @@ export function Cases({ items }: { items: Case[] }) {
                   <dt className="data text-[11px] text-white/50">Result</dt>
                   <dd className="mt-2">
                     <span className="block text-lg font-light leading-snug text-ink">{item.result.text}</span>
-                    <span className="data mt-2 block text-[10px] text-white/50">{item.result.source}</span>
                   </dd>
                 </div>
               ) : null}
@@ -44,7 +43,6 @@ export function Cases({ items }: { items: Case[] }) {
                   <dt className="data text-[11px] text-white/50">Also</dt>
                   <dd className="mt-2">
                     <span className="block leading-snug text-white/88">{item.also.text}</span>
-                    <span className="data mt-2 block text-[10px] text-white/50">{item.also.source}</span>
                   </dd>
                 </div>
               ) : null}
