@@ -238,6 +238,7 @@ describe("displayAnswer", () => {
     );
     expect(harry).toContain("40 percent");
     expect(harry).toContain("Planner");
+    expect(harry).toContain("2025");
     expect(harry).not.toMatch(/^Melbourne/);
     const pedigree = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Harry the Hirer, pedigree AI. March 2026 to May 2026. Thoroughbred pedigree AI for the Black Caviar lineage platform, in an ML and data science role. It is a mate-selection engine for genetic merit, compatibility, and inbreeding risk." }] } }],

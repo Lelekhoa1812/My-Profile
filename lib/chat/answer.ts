@@ -65,7 +65,18 @@ function withSectionProof(answer: string, outputs: readonly Record<string, unkno
     .filter((sentence) => sentence.split(/\s+/).length > 3 && !isLabel(sentence));
   const technical = candidates.filter((sentence) => technicalProof(answer, sentence) && !otherProduct(answer, sentence));
   const extras = (technical.length > 0 ? technical : candidates.filter((sentence) => newProof(answer, sentence))).slice(0, 2);
-  return [answer, ...extras].filter(Boolean).join(" ");
+  const period = periodSentence(answer, block);
+  const chosen = period && !extras.some((sentence) => /\b20\d{2}\b/.test(sentence)) ? [...extras, period] : extras;
+  return [answer, ...chosen].filter(Boolean).join(" ");
+}
+
+function periodSentence(answer: string, block: string): string {
+  if (/\b20\d{2}\b/.test(answer)) return "";
+  return block.split(/(?<=[.!])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter((sentence) => sentence && !exposesGap(sentence))
+    .map(plainSentence)
+    .find((sentence) => /\b20\d{2}\b/.test(sentence)) ?? "";
 }
 
 function isLabel(sentence: string): boolean {
