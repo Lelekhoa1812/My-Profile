@@ -3449,6 +3449,20 @@ describe("displayAnswer", () => {
       "Does the pedigree engine use Dosage Theory?",
     );
     expect(dosage).toContain("Dosage Theory");
+    const pedigreeTheory = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What theory does the pedigree use?") }],
+      "",
+      "What theory does the pedigree use?",
+    );
+    expect(pedigreeTheory).toContain("Dosage Theory");
+    expect(pedigreeTheory).not.toContain("graph expansion");
+    const pedigreePrints = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What fingerprints does the pedigree use?") }],
+      "",
+      "What fingerprints does the pedigree use?",
+    );
+    expect(pedigreePrints).toContain("VAE genetic fingerprints");
+    expect(pedigreePrints).not.toContain("graph expansion");
     const liveApp = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Is CVA the only named live app?") }],
       "",
