@@ -739,6 +739,30 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(blockSentences.find((sentence) => /\bwriting coach\b/i.test(sentence)));
     }
   }
+  if (/\bdistribut/i.test(question)) {
+    const distribution = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /food-distribution/i.test(sentence));
+    if (distribution) {
+      chosen.length = 0;
+      cap = 1;
+      push(distribution);
+    }
+  }
+  if (/\binvest/i.test(question) && !/\binvestor\b/i.test(question)) {
+    const investors = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /look for investors/i.test(sentence));
+    if (investors) {
+      chosen.length = 0;
+      cap = 1;
+      push(investors);
+    }
+  }
+  if (/\bproduc(?:e|es|ed|ing|tion)\b/i.test(question) && !/productionized|production-grade|pre-release|packaged/i.test(question) && !/\bship\b/i.test(question) && !/\b(skyledge|roster|golf|writingjourney|foodflow|cva|ericsson|quotient|meter)\b/i.test(question)) {
+    const moduleLimit = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /business module/i.test(sentence) && /not for a release/i.test(sentence));
+    if (moduleLimit) {
+      chosen.length = 0;
+      cap = 1;
+      push(moduleLimit);
+    }
+  }
   if (/\bexecut/i.test(question) && !/\bexecutor\b/i.test(question)) {
     const executed = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bexecution\b/i.test(sentence));
     if (executed.length > 0) {

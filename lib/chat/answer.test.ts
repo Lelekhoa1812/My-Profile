@@ -1350,6 +1350,25 @@ describe("displayAnswer", () => {
       "What does it optimise?",
     );
     expect(optimise).toContain("optimisation");
+    const distribute = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it distribute?") }],
+      "",
+      "What does it distribute?",
+    );
+    expect(distribute).toContain("food-distribution");
+    const invest = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it invest?") }],
+      "",
+      "What does it invest?",
+    );
+    expect(invest).toContain("look for investors");
+    const produce = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it produce?") }],
+      "",
+      "What does it produce?",
+    );
+    expect(produce).toContain("business module");
+    expect(produce).toContain("not for a release");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",
