@@ -795,7 +795,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bconfidence\b/i.test(question) && /\bconfidence\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && sentence.split(/\s+/).length > 8 && askWords(question).filter((word) => word.length >= 6 && mentions(sentence, word)).length >= 2) return true;
   if (/\blive app\b/i.test(question) && /\bonly named live app\b/i.test(sentence)) return true;
-  if (/\bverif/i.test(question) && /\bvalidators check\b/i.test(sentence)) return true;
+  if ((/\bvalidators?\b/i.test(question) || (/\bverif/i.test(question) && /\bcheck/i.test(question))) && /\bvalidators check\b/i.test(sentence)) return true;
   if (/\bvision\b/i.test(question) && !/\bmodel\b/i.test(question) && /\bopencv\b/i.test(sentence)) return true;
   if (/\bhardware\b/i.test(question) && /\bjetson\b/i.test(sentence)) return true;
   if (/\bqueue\b/i.test(question) && /\bkafka\b/i.test(sentence)) return true;

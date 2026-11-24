@@ -781,6 +781,13 @@ describe("displayAnswer", () => {
       "What does the verifier check at Harry?",
     );
     expect(verifier).toContain("evidence");
+    const verifierRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the verifier do?") }],
+      "",
+      "What does the verifier do?",
+    );
+    expect(verifierRole).toContain("Verifier");
+    expect(verifierRole).not.toContain("Validators check");
     const namVision = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Nam A use for vision?") }],
       "",
