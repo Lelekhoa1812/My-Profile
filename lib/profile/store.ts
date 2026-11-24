@@ -163,6 +163,10 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },
     { when: /\b(work|job)\b/.test(text) && text.includes("now"), ids: ["role-axion", "project-cva"] },
     { when: /\bintroduce\b/.test(text) || (/\bbackground\b/.test(text) && !namedEmployer(text)) || (/\bavailable\b/.test(text) && /\bwork\b/.test(text)), ids: ["role-axion"] },
+    { when: /\bcareer\b/.test(text) && !/\b(cva|application|agent)\b/.test(text), ids: ["role-axion"] },
+    { when: (/\bknow about\b/.test(text) || /\bhire\b/.test(text) || (/\b(summarise|summarize)\b/.test(text) && /\bwork\b/.test(text))) && !namedEmployer(text), ids: ["role-axion"] },
+    { when: (/\bgood at\b/.test(text) || /\bstrengths\b/.test(text)) && !namedEmployer(text), ids: ["skills"] },
+    { when: /\bdatabases?\b/.test(text) && /\b(use|uses|used)\b/.test(text) && !namedEmployer(text), ids: ["project-roster", "project-survee", "project-prophet"] },
     { when: /\b(study|university|bachelor|degree)\b/.test(text) && !/\bresearch\b/.test(text), ids: ["education-swinburne"] },
     { when: /\b(acquir\w*|sold|sell|sale|bought|buyer|purchase\w*)\b/.test(text), ids: saleIds(text) },
   ];

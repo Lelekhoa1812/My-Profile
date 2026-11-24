@@ -53,6 +53,8 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
+  const stores = databaseAnswer(question, outputs);
+  if (stores) return stores;
   if (!text.trim() && primary.length > 0) {
     const outcome = recordedOutcome(primary);
     const focused = question.trim() ? focusOnQuestion(outcome, primary, question) : outcome;
@@ -121,6 +123,12 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const timed = withIdentity(question, withPeriod(withExtra, blockSentences, outputs), blockSentences);
   const second = secondPeriod(outputs, blockSentences, question, timed);
   return keptOffer(question, shown, second ? `${timed} ${second}` : timed);
+}
+
+function databaseAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bdatabases?\b/i.test(question) || !/\b(use|uses|used)\b/i.test(question) || namedEmployer(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(mongodb|mariadb|mysql|sqlite)\b/i.test(sentence) && !/\bdoes not\b/i.test(sentence)));
+  return [...new Set(lines)].slice(0, 3).join(" ");
 }
 
 function runSentence(question: string, sentences: readonly string[]): string | undefined {
@@ -265,7 +273,7 @@ function mentions(sentence: string, word: string): boolean {
 
 function askWords(question: string): string[] {
   const words = [...new Set(question.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 3 && !ASK_STOP.has(word)))];
-  return /\bavailable\b/i.test(question) ? words.filter((word) => word !== "work") : words;
+  return /\b(available|summarise|summarize)\b/i.test(question) ? words.filter((word) => word !== "work") : words;
 }
 
 function askScore(question: string, sentence: string, words: readonly string[]): number {

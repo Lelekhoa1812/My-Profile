@@ -492,6 +492,22 @@ describe("displayAnswer", () => {
       "What is his background?",
     );
     expect(background).toContain("AI Software Engineer");
+    const career = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Walk me through his career.") }],
+      "",
+      "Walk me through his career.",
+    );
+    expect(career).toContain("Axion");
+    expect(career.toLowerCase()).not.toContain("career application");
+    const databases = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What databases does he use?") }],
+      "",
+      "What databases does he use?",
+    );
+    expect(databases).toContain("MariaDB");
+    expect(databases).toContain("MongoDB");
+    expect(databases).toContain("SQLite");
+    expect(databases).not.toContain("does not own");
     expect(spoken).toContain("Mandarin");
     expect(cases).not.toContain("5 million");
     const synthetic = displayAnswer(
