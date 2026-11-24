@@ -333,6 +333,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("axion") && /\bwhen\b/.test(text) && /\b(start|started|begin|began)\b/.test(text) && !/\b(recipe|workflow)\b/.test(text), ids: ["role-axion"] },
     { when: /\bwhen\b/.test(text) && /\b(start|started|begin|began|end|ended)\b/.test(text) && /\bpedigree\b/.test(text), ids: ["role-harry-pedigree"] },
     { when: /\bwhen\b/.test(text) && /\b(start|started|begin|began|end|ended)\b/.test(text) && /\b(harry|hirer)\b/.test(text) && !/\bpedigree\b/.test(text), ids: ["role-harry-senior"] },
+    { when: /\b(lead|leads|leader)\b/.test(text) && /\b(axion|axis)\b/.test(text), ids: ["role-axion"] },
     { when: text.includes("axion") && (text.includes("axis") || text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: /\b(build|built)\b/.test(text) && text.includes("axion") && !/\b(workflow|engine|recipe)\b/.test(text), ids: ["role-axion"] },
     { when: text.includes("axis") && (text.includes("write") || text.includes("preview") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },

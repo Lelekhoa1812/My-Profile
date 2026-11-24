@@ -2206,6 +2206,13 @@ describe("displayAnswer", () => {
     );
     expect(pytheraPlace).toContain("January 2025");
     expect(pytheraPlace).not.toContain("Ho Chi Minh");
+    const axionLeader = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who leads the Axion work?") }],
+      "",
+      "Who leads the Axion work?",
+    );
+    expect(axionLeader).toMatch(/^(?:Axion Solutions\. )?He owns the AI vision/);
+    expect(axionLeader).not.toContain("Modular actions");
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],

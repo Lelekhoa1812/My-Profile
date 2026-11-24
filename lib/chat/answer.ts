@@ -544,6 +544,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (platform && !chosen.includes(platform)) push(platform);
     push(recipes);
   }
+  if (/\b(lead|leads|leader)\b/i.test(question) && /\b(axion|axis)\b/i.test(question)) {
+    cap = 3;
+    const owns = blockSentences.find((sentence) => /\bowns the ai vision\b/i.test(sentence));
+    if (owns) {
+      chosen.length = 0;
+      push(owns);
+    }
+  }
   if (/\bwhen\b/i.test(question) && /\b(start|started|begin|began|end|ended)\b/i.test(question)) {
     cap = 2;
     const period = blockSentences.find((sentence) => /\b20\d{2}\b/.test(sentence) && sentence.split(/\s+/).length <= 16);
