@@ -3544,6 +3544,8 @@ describe("displayAnswer", () => {
       "What cloud does he use?",
     );
     expect(openCloud).toContain("AWS");
+    expect(openCloud).toContain("AWS IoT");
+    expect(openCloud).toContain("Azure");
     const programLanguages = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What programming language does he use?") }],
       "",
