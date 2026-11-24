@@ -1837,6 +1837,8 @@ function sameTimeAnswer(question: string, outputs: readonly Record<string, unkno
 
 function toolDutyAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (/\buse fastapi for\b/i.test(question)) return toolDutyAnswer("What does FastAPI do?", outputs);
+  const used = question.match(/\bwhat does he use ([a-z0-9.+#-]{2,}) for\b/i)?.[1];
+  if (used && !/^(aws|ocr)$/i.test(used)) return toolDutyAnswer(`What does ${used} do?`, outputs);
   const raw = question.match(/\bwhat does ([a-z0-9.+#-]{2,}) do\b/i)?.[1];
   const name = raw?.toLowerCase();
   if (!raw || !name || ["the", "his", "her", "its", "this", "that"].includes(name)) return "";

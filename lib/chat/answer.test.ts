@@ -2631,6 +2631,14 @@ describe("displayAnswer", () => {
     expect(fastapiUse).toContain("Raspberry Pi");
     expect(fastapiUse).toContain("faster-whisper");
     expect(fastapiUse).not.toContain("November 2025");
+    const pythonUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use Python for?") }],
+      "",
+      "What does he use Python for?",
+    );
+    expect(pythonUse).toContain("Named tools include Python");
+    expect(pythonUse).not.toContain("Java");
+    expect(pythonUse).not.toContain("does not name");
     const reactDuty = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does React do?") }],
       "",
