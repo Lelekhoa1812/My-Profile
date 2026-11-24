@@ -753,6 +753,13 @@ describe("displayAnswer", () => {
     );
     expect(versionedArtifact).toContain("versioned artifacts");
     expect(versionedArtifact).toContain("company updates");
+    const handwritten = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is handwritten corrections?") }],
+      "",
+      "What is handwritten corrections?",
+    );
+    expect(handwritten).toContain("Qwen2.5-VL");
+    expect(handwritten).toContain("handwritten corrections");
     const webCrawl = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is web crawling?") }],
       "",

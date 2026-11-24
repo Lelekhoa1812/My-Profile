@@ -766,6 +766,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(limit);
     }
   }
+  if (/\bhandwritten corrections\b/i.test(question)) {
+    const corrections = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bhandwritten corrections\b/i.test(sentence));
+    if (corrections) {
+      chosen.length = 0;
+      cap = 1;
+      push(corrections);
+    }
+  }
   if (/\b(review gates?|connectors?|modular actions?|version-controlled pipelines?)\b/i.test(question)) {
     const assembly = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\breview gates\b/i.test(sentence) && /\bconnectors\b/i.test(sentence));
     if (assembly) {
