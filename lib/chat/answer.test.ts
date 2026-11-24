@@ -3859,6 +3859,28 @@ describe("displayAnswer", () => {
     );
     expect(pytheraPlace).toContain("January 2025");
     expect(pytheraPlace).not.toContain("Ho Chi Minh");
+    const claraAdopted = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What city adopted Clara?") }],
+      "",
+      "What city adopted Clara?",
+    );
+    expect(claraAdopted).toContain("175 Hospital");
+    expect(claraAdopted).toContain("Ho Chi Minh");
+    const phraseCover = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the capital-markets phrase cover?") }],
+      "",
+      "What does the capital-markets phrase cover?",
+    );
+    expect(phraseCover).toContain("capital-markets automation");
+    expect(phraseCover).toContain("does not rename");
+    expect(phraseCover).not.toContain("covering sales");
+    const surveeSends = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Survee send?") }],
+      "",
+      "What does Survee send?",
+    );
+    expect(surveeSends).toContain("private link");
+    expect(surveeSends).not.toContain("does not score");
     const axionLeader = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who leads the Axion work?") }],
       "",

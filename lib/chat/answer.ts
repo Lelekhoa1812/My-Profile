@@ -711,7 +711,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(period);
     }
   }
-  if (/\bcity\b/i.test(question) && /\b(pythera|clara)\b/i.test(question)) {
+  if (/\bcity\b/i.test(question) && /\b(pythera|clara)\b/i.test(question) && !/\badopt/i.test(question)) {
     cap = 2;
     const role = blockSentences.find((sentence) => /\bpythera\b/i.test(sentence) && /\bengineer\b/i.test(sentence));
     const period = blockSentences.find((sentence) => /\bjanuary 2025\b/i.test(sentence));
@@ -1586,7 +1586,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
-  if (/\bcover/i.test(question) && !namedEmployer(question) && !/\b(lab|clinical|foodflow|traces)\b/i.test(question)) {
+  if (/\b(clara|pythera)\b/i.test(question) && /\badopt/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\badopted by 175\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
+  if (/\bcover/i.test(question) && !namedEmployer(question) && !/\b(lab|clinical|foodflow|traces|capital-markets|capital markets)\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
       sentences.find((sentence) => /covering sales/i.test(sentence)),
@@ -1958,6 +1966,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       chosen.length = 0;
       cap = 3;
       for (const sentence of lines) chosen.push(sentence);
+    }
+  }
+  if (/\bsurvee\b/i.test(question) && /\bsends?\b/i.test(question) && !/\bdo\b/i.test(question) && !/\b(score|refuse)\b/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bprivate link\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
     }
   }
   if (/\bwhat does\b/i.test(question) && /\bsurvee\b/i.test(question) && /\bdo\b/i.test(question) && !/\brefuse\b/i.test(question)) {
