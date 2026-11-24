@@ -1631,6 +1631,21 @@ describe("displayAnswer", () => {
     );
     expect(qwenCheck).toContain("handwritten corrections");
     expect(qwenCheck).not.toContain("Whisper");
+    const whisperDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Whisper do?") }],
+      "",
+      "What does Whisper do?",
+    );
+    expect(whisperDuty).toContain("faster-whisper");
+    expect(whisperDuty).toContain("Speech uses Whisper");
+    expect(whisperDuty).toContain("local Whisper inference");
+    const vietocrDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does VietOCR do?") }],
+      "",
+      "What does VietOCR do?",
+    );
+    expect(vietocrDuty).toContain("Text extraction uses VietOCR");
+    expect(vietocrDuty).toContain("synthetic passports");
     const fastapiDuty = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does FastAPI do?") }],
       "",
