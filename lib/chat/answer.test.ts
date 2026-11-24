@@ -2596,6 +2596,14 @@ describe("displayAnswer", () => {
     expect(evaluationUse).toContain("stays on the evidence");
     expect(evaluationUse).toContain("cross-validation");
     expect(evaluationUse).not.toContain("LangChain");
+    const validationUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for validation?") }],
+      "",
+      "What does he use for validation?",
+    );
+    expect(validationUse).toContain("stays on the evidence");
+    expect(validationUse).toContain("cross-validation");
+    expect(validationUse).toContain("confidence gates");
     const labCorpus = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What corpus does the lab use?") }],
       "",
