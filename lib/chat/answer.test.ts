@@ -1145,6 +1145,7 @@ describe("displayAnswer", () => {
     );
     expect(draftOn).toContain("same host");
     expect(draftOn).not.toContain("does not send");
+    expect(draftOn).not.toContain("does not own");
     const ownsDatabase = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Does Axis own FoodFlow's database?") }],
       "",

@@ -128,6 +128,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\b(send|refuse)\b/i.test(question) && !/\b(send|email)\b/i.test(item.sentence) && !/\bdraft recipe\b/i.test(item.sentence)) continue;
     if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && !/\b(send|refuse)\b/i.test(question) && /\bdoes not send\b/i.test(item.sentence)) continue;
+    if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && !/\b(own|database)\b/i.test(question) && /\bdoes not own\b/i.test(item.sentence)) continue;
     if (/\bexport\b/i.test(question) && !/\bdraft\b/i.test(question) && /\bdraft recipe does not send\b/i.test(item.sentence)) continue;
     if (picked && item.score < 2 && !exact) continue;
     if (!picked && unique && item.score < 2 && !exact && answered) continue;
