@@ -864,6 +864,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(ensemble);
     }
   }
+  if (/\b(seamless|tavily|apollo|web crawling)\b/i.test(question)) {
+    const scouting = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bapollo\b/i.test(sentence) && /\bseamless\b/i.test(sentence) && /\btavily\b/i.test(sentence));
+    if (scouting) {
+      chosen.length = 0;
+      cap = 1;
+      push(scouting);
+    }
+  }
   if (/\b(black caviar|thoroughbred)\b/i.test(question)) {
     const lineage = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bblack caviar\b/i.test(sentence));
     if (lineage) {

@@ -1035,6 +1035,14 @@ describe("displayAnswer", () => {
     );
     expect(thoroughbred).toContain("Thoroughbred");
     expect(thoroughbred).toContain("Black Caviar");
+    const seamlessAtAxion = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "At Axion, what is Seamless?") }],
+      "",
+      "At Axion, what is Seamless?",
+    );
+    expect(seamlessAtAxion).toContain("Seamless");
+    expect(seamlessAtAxion).toContain("Apollo");
+    expect(seamlessAtAxion).toContain("web crawling");
     const ensemble = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the pedigree engine include?") }],
       "",
