@@ -926,6 +926,13 @@ describe("displayAnswer", () => {
     );
     expect(harryQueue).toContain("Azure");
     expect(harryQueue).not.toContain("Kafka");
+    const namPercent = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What percent did Nam A record?") }],
+      "",
+      "What percent did Nam A record?",
+    );
+    expect(namPercent).toContain("Nam");
+    expect(namPercent).not.toContain("35 percent");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],

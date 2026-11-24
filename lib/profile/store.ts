@@ -328,7 +328,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bwater[\s-]?meter\b/.test(text) && (/\bllms?\b/.test(text) || /\bcloud\b/.test(text) || /\bvectors?\b/.test(text) || /\bqueue\b/.test(text)), ids: ["project-meter", "role-vietdan-ml"] },
     { when: (/\bcloud\b/.test(text) || /\bllms?\b/.test(text) || /\b(cut|percent)\b/.test(text) || /\bvectors?\b/.test(text)) && Boolean(askedProductSectionIds(text)?.length), ids: askedProductSectionIds(text) ?? [] },
     { when: /\b(programming|coding)\b/.test(text) && /\blanguages?\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["skills"] },
-    { when: (/\bcloud\b/.test(text) || /\bvectors?\b/.test(text) || /\bqueue\b/.test(text)) && employerRoles.length > 0 && !askedProductSectionIds(text), ids: employerRoles },
+    { when: (/\bcloud\b/.test(text) || /\bvectors?\b/.test(text) || /\bqueue\b/.test(text) || /\bpercent\b/.test(text)) && employerRoles.length > 0 && !askedProductSectionIds(text) && !/\bwater[\s-]?meter\b/.test(text), ids: employerRoles },
     { when: /\bqueue\b/.test(text) && Boolean(askedProductSectionIds(text)?.length), ids: askedProductSectionIds(text) ?? [] },
     { when: /\bcloud\b/.test(text) && /\b(platform|platforms|use|uses|used)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-alta", "skills"] },
     { when: Boolean(between?.length), ids: between ?? [] },
