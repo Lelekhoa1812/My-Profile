@@ -78,8 +78,13 @@ export function ChatDock({ questions }: { questions: string[] }) {
   }
 
   function onPointerDown(event: PointerEvent<HTMLButtonElement>) {
+    if (event.button !== 0) return;
     drag.current = { pointer: event.pointerId, origin: { x: event.clientX, y: event.clientY }, start: placeRef.current, moved: false };
-    event.currentTarget.setPointerCapture(event.pointerId);
+    try {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    } catch {
+      // The pointer can already be gone. Move events still drag the button.
+    }
   }
 
   function onPointerMove(event: PointerEvent<HTMLButtonElement>) {
@@ -92,7 +97,12 @@ export function ChatDock({ questions }: { questions: string[] }) {
     persist({ x: active.start.x - dx, y: active.start.y - dy });
   }
 
-  function finishDrag() {
+  function finishDrag(event: PointerEvent<HTMLButtonElement>) {
+    try {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    } catch {
+      // Nothing was captured.
+    }
     const active = drag.current;
     drag.current = null;
     if (!active?.moved) return;
