@@ -969,6 +969,19 @@ describe("displayAnswer", () => {
       "What does the reasoning orchestrator do?",
     );
     expect(orchestrator).toContain("reranker");
+    const downloadRank = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What download rank did MedSwin record?") }],
+      "",
+      "What download rank did MedSwin record?",
+    );
+    expect(downloadRank).toContain("most downloaded");
+    expect(downloadRank).not.toContain("86 percent");
+    const cvaLive = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Is CVA live?") }],
+      "",
+      "Is CVA live?",
+    );
+    expect(cvaLive).toContain("cva-mauve.vercel.app");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",

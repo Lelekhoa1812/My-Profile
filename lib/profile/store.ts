@@ -248,6 +248,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("axis") && (text.includes("write") || text.includes("preview") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: /\bs&p\b/.test(text), ids: ["project-sp500"] },
     { when: /\bha manager\b/.test(text), ids: ["role-hai-au"] },
+    { when: /\b(download|rank)\b/.test(text) && text.includes("medswin"), ids: ["project-medswin"] },
     { when: /\bagents?\b/.test(text) && /\b(lab|clinical|medswin)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: /\borchestrator\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: /\bsafety\b/.test(text) && /\bmedswin\b/.test(text), ids: ["role-swinburne-research"] },
