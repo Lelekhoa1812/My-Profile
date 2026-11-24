@@ -1399,6 +1399,21 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\b(remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\bcva\b/i.test(question)) {
     keepSentences(/profile memory/i, 1);
   }
+  if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !/\b(axion|axis)\b/i.test(question) && !namedEmployer(question)) {
+    keepSentences(/\bled\b/i, 7);
+  }
+  if (/\bbuild/i.test(question) && !/\bagents?\b/i.test(question) && !namedEmployer(question) && !/\b(lab|5g|axion|mizco|poptech)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /builds a people list/i.test(sentence)),
+      sentences.find((sentence) => /built specialist medical agents/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 0) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));
@@ -1915,6 +1930,8 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bdraft/i.test(question) && !/\b(send|recipe|on|axis|drafted)\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\b(cite|explain|train|guard|embed|validat|recogni|recommend|graph|score|trace|retriev|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv|rank|track|own|rout|turn|check|gate|version|call|remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
   if (/\bagents?\b/i.test(question) && /\b(build|built)\b/i.test(question)) return joined;
+  if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !namedEmployer(question)) return joined;
+  if (/\bbuild/i.test(question) && !namedEmployer(question) && !/\b(lab|5g)\b/i.test(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;

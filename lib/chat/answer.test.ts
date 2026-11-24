@@ -1746,6 +1746,24 @@ describe("displayAnswer", () => {
       "What does it remember?",
     );
     expect(rememberIt).toContain("profile memory");
+    const leadIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he lead?") }],
+      "",
+      "What did he lead?",
+    );
+    expect(leadIt).toContain("five people");
+    expect(leadIt).toContain("four-person");
+    expect(leadIt).toContain("software team of five");
+    expect(leadIt).toContain("trust-first platform");
+    expect(leadIt).toContain("event inventory");
+    expect(leadIt).toContain("industrial assistant");
+    const buildIt = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does it build?") }],
+      "",
+      "What does it build?",
+    );
+    expect(buildIt).toContain("builds a people list");
+    expect(buildIt).toContain("specialist medical agents");
     const haiAuGroup = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Hai Au Group?") }],
       "",
