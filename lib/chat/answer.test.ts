@@ -1120,6 +1120,20 @@ describe("displayAnswer", () => {
     );
     expect(orchestratorUse).toContain("reasoning orchestrator");
     expect(orchestratorUse).toContain("8-million-document");
+    const rerankUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use for reranking?") }],
+      "",
+      "What does he use for reranking?",
+    );
+    expect(rerankUse).toContain("cross-encoder");
+    expect(rerankUse).toContain("8-million-document");
+    const rerankerUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What reranker does he use?") }],
+      "",
+      "What reranker does he use?",
+    );
+    expect(rerankerUse).toContain("cross-encoder");
+    expect(rerankerUse).toContain("8-million-document");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
