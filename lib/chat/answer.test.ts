@@ -739,6 +739,20 @@ describe("displayAnswer", () => {
     expect(workflowMap).toContain("workflow maps");
     expect(workflowMap).toContain("staged delivery");
     expect(workflowMap).not.toContain("FoodFlow");
+    const reviewGate = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is a review gate?") }],
+      "",
+      "What is a review gate?",
+    );
+    expect(reviewGate).toContain("review gates");
+    expect(reviewGate).toContain("connectors");
+    const versionedArtifact = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is a versioned artifact?") }],
+      "",
+      "What is a versioned artifact?",
+    );
+    expect(versionedArtifact).toContain("versioned artifacts");
+    expect(versionedArtifact).toContain("company updates");
     const webCrawl = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is web crawling?") }],
       "",
