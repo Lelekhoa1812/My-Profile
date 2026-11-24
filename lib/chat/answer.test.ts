@@ -2116,6 +2116,35 @@ describe("displayAnswer", () => {
     expect(harryIdentity).toContain("Azure");
     expect(harryIdentity).toContain("40 percent");
     expect(harryIdentity).toContain("event inventory");
+    const claraFigures = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
+      "",
+      "What is Clara?",
+    );
+    expect(claraFigures).toContain("recall above 95");
+    expect(claraFigures).toContain("400,000");
+    expect(claraFigures).toContain("175 Hospital");
+    const claraModelFigures = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does Clara use?") }],
+      "",
+      "What models does Clara use?",
+    );
+    expect(claraModelFigures).toContain("Vietnamese medical");
+    expect(claraModelFigures).toContain("recall above 95");
+    const teqarIdentity = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Teqar?") }],
+      "",
+      "What is Teqar?",
+    );
+    expect(teqarIdentity).toContain("analytics");
+    expect(teqarIdentity).toContain("vision quality");
+    const aitcNames = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is AITC?") }],
+      "",
+      "What is AITC?",
+    );
+    expect(aitcNames).toContain("industrial assistant");
+    expect(aitcNames).toContain("Nvidia");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",

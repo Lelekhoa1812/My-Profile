@@ -150,6 +150,23 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     cap = 3;
     push(blockSentences.find((sentence) => /\bllm pipeline\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bclara\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\badopted by 175\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\brecall above 95\b/i.test(sentence)));
+  }
+  if (/\bmodels?\b/i.test(question) && /\bclara\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\brecall above 95\b/i.test(sentence)));
+  }
+  if (/\bwhat is\b/i.test(question) && /\bteqar\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\bscope includes\b/i.test(sentence)));
+  }
+  if (/\bwhat is\b/i.test(question) && /\baitc\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\bpartner work\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bmedswin\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\bswinburne-funded\b/i.test(sentence)));
@@ -985,6 +1002,10 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bpoptech\b/i.test(question) && /\bmodels include\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\binet\b/i.test(question) && /\bobsei\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bmedswin\b/i.test(question) && /\bswinburne-funded\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bclara\b/i.test(question) && /\bvietnamese medical language\b/i.test(sentence)) return true;
+  if (/\bmodels?\b/i.test(question) && /\bclara\b/i.test(question) && /\bvietnamese medical language\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bteqar\b/i.test(question) && /\badvises b2b\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\baitc\b/i.test(question) && /\bindustrial assistant\b/i.test(sentence)) return true;
   if (/\bpedigree\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && !/\b(what is|models?)\b/i.test(question) && /\b10-signal ensemble\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\btriage\b/i.test(question) && /\b(speech uses whisper|clinical reasoning uses gemini|vision uses qwen|mimic-iv|medication-delivery)\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
