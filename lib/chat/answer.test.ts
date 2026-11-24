@@ -3546,6 +3546,15 @@ describe("displayAnswer", () => {
     expect(openCloud).toContain("AWS");
     expect(openCloud).toContain("AWS IoT");
     expect(openCloud).toContain("Azure");
+    const awsUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does he use AWS for?") }],
+      "",
+      "What does he use AWS for?",
+    );
+    expect(awsUse).toContain("AWS IoT");
+    expect(awsUse).toContain("Jetson and AWS");
+    expect(awsUse).toContain("Kubernetes");
+    expect(awsUse).not.toContain("December 2024");
     const programLanguages = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What programming language does he use?") }],
       "",
