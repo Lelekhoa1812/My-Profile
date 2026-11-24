@@ -2056,6 +2056,33 @@ describe("displayAnswer", () => {
     expect(workflowIs).toContain("startup scouting");
     expect(workflowIs).toContain("export does not send");
     expect(workflowIs).toContain("does not send email");
+    const mizcoRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Mizco?") }],
+      "",
+      "What is Mizco?",
+    );
+    expect(mizcoRole).toContain("vLLM");
+    expect(mizcoRole).toContain("50 percent");
+    const poptechIdentity = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is PopTech?") }],
+      "",
+      "What is PopTech?",
+    );
+    expect(poptechIdentity).toContain("XGBoost");
+    expect(poptechIdentity).toContain("TFT");
+    const inetRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is iNet?") }],
+      "",
+      "What is iNet?",
+    );
+    expect(inetRole).toContain("Obsei");
+    const medswinRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is MedSwin?") }],
+      "",
+      "What is MedSwin?",
+    );
+    expect(medswinRole).toContain("Swinburne-funded");
+    expect(medswinRole).toContain("86 percent");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",

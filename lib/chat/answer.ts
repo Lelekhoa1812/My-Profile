@@ -128,6 +128,25 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\b64-dimensional\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bmate-selection\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bmizco\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\binference uses\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\btrust-first\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\b50 percent\b/i.test(sentence)));
+  }
+  if (/\bwhat is\b/i.test(question) && /\bpoptech\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\bled a four-person\b/i.test(sentence)));
+  }
+  if (/\bwhat is\b/i.test(question) && /\binet\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\bllm pipeline\b/i.test(sentence)));
+  }
+  if (/\bwhat is\b/i.test(question) && /\bmedswin\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\bswinburne-funded\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bmedmcqa\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bworkflow\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\brecipes are\b/i.test(sentence)));
@@ -936,6 +955,10 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bpedigree\b/i.test(question) && /\bmate-selection\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\b(axion|axis)\b/i.test(question) && !/\bworkflow\b/i.test(question) && /\bpreview\b/i.test(sentence) && /\bapprov/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bworkflow\b/i.test(question) && /\bgoverned graph platform\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bmizco\b/i.test(question) && /\binference uses\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bpoptech\b/i.test(question) && /\bmodels include\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\binet\b/i.test(question) && /\bobsei\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bmedswin\b/i.test(question) && /\bswinburne-funded\b/i.test(sentence)) return true;
   if (/\bpedigree\b/i.test(question) && /\b(use|uses|used)\b/i.test(question) && !/\b(what is|models?)\b/i.test(question) && /\b10-signal ensemble\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\btriage\b/i.test(question) && /\b(speech uses whisper|clinical reasoning uses gemini|vision uses qwen|mimic-iv|medication-delivery)\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
