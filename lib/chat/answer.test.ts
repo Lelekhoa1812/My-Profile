@@ -206,6 +206,18 @@ describe("displayAnswer", () => {
     expect(detailed).not.toContain("person approves");
   });
 
+  it("does not add a later search's product to the first result", () => {
+    const text = displayAnswer(
+      [
+        { type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Water-meter scanner. The resume records about 35 percent less manual meter processing, on more than 10,000 samples." }] } },
+        { type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Ericsson 5G digital twin. Drift monitoring uses the population stability index." }] } },
+      ],
+      "The scanner cut manual meter processing by about 35 percent. The Ericsson twin monitors drift.",
+    );
+    expect(text).toContain("35 percent");
+    expect(text).not.toContain("Ericsson");
+  });
+
   it("adds the preview when a long write answer leaves it out", () => {
     const axion = profile.sections.find((item) => item.sectionId === "role-axion");
     const text = displayAnswer(

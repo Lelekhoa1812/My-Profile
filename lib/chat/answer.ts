@@ -40,14 +40,15 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
     .map((part) => part.output)
     .filter((output): output is Record<string, unknown> => typeof output === "object" && output !== null);
   if (outputs.some((output) => output.reason === "unavailable")) return holdAnswer();
+  const primary = primaryOutputs(outputs);
   let text = dropGapSentences(dropSourceTail(
     dropRecordTalk(stripMarkdown(sentenceFromModel(stripToolMarkup(modelText)))),
     sourceHeadings(outputs),
   ));
   const cleaned = text;
-  if (outputs.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(outputs), evidenceBlocks(outputs));
-  if (!text.trim() && outputs.length > 0) return recordedOutcome(outputs) || (cleaned.trim() ? holdAnswer() : "");
-  if (text.trim() && outputs.length > 0 && (text.split(/\s+/).length < 22 || lacksMeasuredFigure(text, outputs) || lacksApproval(text, outputs))) text = withSectionProof(text, outputs);
+  if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
+  if (!text.trim() && primary.length > 0) return recordedOutcome(primary) || (cleaned.trim() ? holdAnswer() : "");
+  if (text.trim() && primary.length > 0 && (text.split(/\s+/).length < 22 || lacksMeasuredFigure(text, primary) || lacksApproval(text, primary))) text = withSectionProof(text, primary);
   return text;
 }
 
@@ -148,6 +149,17 @@ function recordedOutcome(outputs: readonly Record<string, unknown>[]): string {
     if (plain.length > 0) return plain.join(" ");
   }
   return "";
+}
+
+function hasSectionText(output: Record<string, unknown>): boolean {
+  return Array.isArray(output.sections) && output.sections.some((section) => typeof section === "object" && section !== null && "text" in section && typeof section.text === "string" && section.text.trim().length > 0);
+}
+
+function primaryOutputs(outputs: readonly Record<string, unknown>[]): Record<string, unknown>[] {
+  const withText = outputs.filter(hasSectionText);
+  if (withText.length > 0) return [withText[0]];
+  const facts = outputs.filter((output) => Array.isArray(output.facts) && output.facts.length > 0);
+  return facts.length > 0 ? facts : [...outputs];
 }
 
 function evidenceBlocks(outputs: readonly Record<string, unknown>[]): string[] {
