@@ -179,6 +179,17 @@ describe("withMemory", () => {
     expect(groundedQuestion([pedigree, answer, follow], 2)).toContain("pedigree");
   });
 
+  it("keeps an extract follow-up on the subject that records extraction", () => {
+    const golf = { id: "u1", role: "user", parts: [{ type: "text", text: "What is the golf scanner?" }] } as UIMessage;
+    const nam = { id: "u2", role: "user", parts: [{ type: "text", text: "What did he do at Nam A?" }] } as UIMessage;
+    const cva = { id: "u3", role: "user", parts: [{ type: "text", text: "What is CVA?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "Recorded." }] } as UIMessage;
+    const extract = { id: "u4", role: "user", parts: [{ type: "text", text: "What does it extract?" }] } as UIMessage;
+    expect(groundedQuestion([golf, answer, extract], 2)).toContain("golf");
+    expect(groundedQuestion([nam, answer, extract], 2)).toContain("nam a");
+    expect(groundedQuestion([cva, answer, extract], 2)).toBe("What does it extract?");
+  });
+
   it("keeps an explain, train, cover, or build follow-up on the subject that records it", () => {
     const pedigree = { id: "u1", role: "user", parts: [{ type: "text", text: "What is the pedigree engine?" }] } as UIMessage;
     const medswin = { id: "u2", role: "user", parts: [{ type: "text", text: "What did he do at MedSwin?" }] } as UIMessage;
