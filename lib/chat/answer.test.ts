@@ -167,6 +167,8 @@ describe("displayAnswer", () => {
 
   it("drops a sentence that names a missing fact", () => {
     expect(dropGapSentences("Liam builds CVA. The record does not include that.")).toBe("Liam builds CVA.");
+    expect(dropGapSentences("CVA is the live app. The record does not say FoodFlow is in production.")).toBe("CVA is the live app.");
+    expect(dropGapSentences("The record does not specify a live metric. Manual processing fell about 35 percent.")).toBe("Manual processing fell about 35 percent.");
   });
 
   it("keeps the model sentence when a tool found a section", () => {

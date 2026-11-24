@@ -63,12 +63,22 @@ describe("profile store", () => {
     }
   });
 
-  it("does not invent a metric for a live model", () => {
+  it("answers a live-model measure question from the live app and the recorded outcome", () => {
     const result = searchSections(profile.sections, "What does he measure after a model is live?");
     expect(result.found).toBe(true);
     if (result.found) {
-      expect(result.sections[0]?.sectionId).toBe("skills");
-      expect(result.sections[0]?.text).toContain("does not name one metric");
+      expect(result.sections.map((section) => section.sectionId)).toEqual(["project-meter", "project-cva", "project-shipped"]);
+      expect(result.sections[0]?.text).toContain("35 percent");
+      expect(result.sections[1]?.text).toContain("a person approves it");
+    }
+  });
+
+  it("answers a write-approval question from the job and the live app", () => {
+    const result = searchSections(profile.sections, "What will he not let a model write without a person?");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections.map((section) => section.sectionId)).toEqual(["role-axion", "project-cva", "project-writing"]);
+      expect(result.sections[0]?.text).toContain("approve a write");
     }
   });
 
@@ -90,12 +100,33 @@ describe("profile store", () => {
     }
   });
 
+  it("opens the current job when the question asks where he works now", () => {
+    const result = searchSections(profile.sections, "Where does he work now, and what does a person approve?");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections[0]?.sectionId).toBe("role-axion");
+  });
+
   it("opens the current role and the shipped work when the question has no content words", () => {
     const result = searchSections(profile.sections, "Tell me about his work");
     expect(result.found).toBe(true);
     if (result.found) {
       expect(result.sections.map((section) => section.sectionId)).toEqual(["role-axion", "project-shipped"]);
     }
+  });
+
+  it("reads the current job from a short role label", () => {
+    const byRole = readSection(profile.sections, "Current role");
+    const byAlias = readSection(profile.sections, "Axion");
+    expect(byRole.found).toBe(true);
+    expect(byAlias.found).toBe(true);
+    if (byRole.found) expect(byRole.sectionId).toBe("role-axion");
+    if (byAlias.found) expect(byAlias.sectionId).toBe("role-axion");
+  });
+
+  it("finds an approval question from the word approval", () => {
+    const result = searchSections(profile.sections, "approval");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections.some((section) => section.sectionId === "role-axion")).toBe(true);
   });
 
   it("finds the current role when the question asks for the title", () => {

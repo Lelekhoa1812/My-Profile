@@ -1,5 +1,5 @@
-const SECTION_TOOLS = ["read_section", "search_sections", "lookup_fact"] as const;
 const MISS_TOOLS = ["lookup_fact", "search_sections", "read_section"] as const;
+const CLOSED_LABELS = new Set(["Email", "Phone", "Location", "Name", "Also called", "Degree", "Experience", "LinkedIn", "GitHub", "Hugging Face"]);
 
 export type ToolStep = {
   toolResults?: readonly { output?: unknown }[];
@@ -11,15 +11,15 @@ export type StepToolChoice = {
 };
 
 export function stepTools(stepNumber: number, steps: readonly ToolStep[]): StepToolChoice {
-  if (stepNumber === 0) return { toolChoice: "required" };
+  if (stepNumber === 0) return { toolChoice: "required", activeTools: ["search_sections"] };
   const outputs = lastOutputs(steps);
-  if (stepNumber === 1 && outputs.length > 0 && outputs.every((output) => output.found === false)) {
+  if (stepNumber !== 1) return { toolChoice: "none", activeTools: [] };
+  if (hasSectionText(outputs) && !unreadHeadings(outputs)) return { toolChoice: "none", activeTools: [] };
+  if (closedFacts(outputs) && !unreadHeadings(outputs)) return { toolChoice: "none", activeTools: [] };
+  if (outputs.length === 0 || outputs.every((output) => output.found === false)) {
     return { toolChoice: "required", activeTools: [...MISS_TOOLS] };
   }
-  if (stepNumber === 1 && needsSectionText(outputs)) {
-    return { toolChoice: "required", activeTools: [...SECTION_TOOLS] };
-  }
-  return { toolChoice: "none", activeTools: [] };
+  return { toolChoice: "required", activeTools: ["search_sections"] };
 }
 
 function lastOutputs(steps: readonly ToolStep[]): readonly Record<string, unknown>[] {
@@ -27,9 +27,17 @@ function lastOutputs(steps: readonly ToolStep[]): readonly Record<string, unknow
   return (last?.toolResults ?? []).map((result) => result.output).filter(isRecord);
 }
 
-function needsSectionText(outputs: readonly Record<string, unknown>[]): boolean {
-  if (outputs.length === 0) return false;
-  return outputs.every((output) => Array.isArray(output.sections) && output.sections.length > 0 && output.sections.every(hasNoText));
+function hasSectionText(outputs: readonly Record<string, unknown>[]): boolean {
+  return outputs.some((output) => Array.isArray(output.sections) && output.sections.some((section) => !hasNoText(section)));
+}
+
+function unreadHeadings(outputs: readonly Record<string, unknown>[]): boolean {
+  return outputs.some((output) => output.found !== false && Array.isArray(output.sections) && output.sections.length > 0 && output.sections.every(hasNoText));
+}
+
+function closedFacts(outputs: readonly Record<string, unknown>[]): boolean {
+  const facts = outputs.flatMap((output) => Array.isArray(output.facts) ? output.facts : []);
+  return facts.length > 0 && facts.every((fact) => isRecord(fact) && typeof fact.label === "string" && CLOSED_LABELS.has(fact.label));
 }
 
 function hasNoText(section: unknown): boolean {

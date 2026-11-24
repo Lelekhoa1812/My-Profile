@@ -3,7 +3,7 @@ import { stepTools } from "./loop";
 
 describe("stepTools", () => {
   it("requires a tool on the first step", () => {
-    expect(stepTools(0, [])).toEqual({ toolChoice: "required" });
+    expect(stepTools(0, [])).toEqual({ toolChoice: "required", activeTools: ["search_sections"] });
   });
 
   it("asks for section text when the first lookup misses", () => {
@@ -16,7 +16,31 @@ describe("stepTools", () => {
     const choice = stepTools(1, [{
       toolResults: [{ output: { found: true, sections: [{ heading: "Axion Solutions" }] } }],
     }]);
-    expect(choice).toEqual({ toolChoice: "required", activeTools: ["read_section", "search_sections", "lookup_fact"] });
+    expect(choice).toEqual({ toolChoice: "required", activeTools: ["search_sections"] });
+  });
+
+  it("reads the job when the lookup returns only the page title", () => {
+    const choice = stepTools(1, [{
+      toolResults: [
+        { output: { found: true, facts: [{ label: "Current title", value: "AI Software Engineer" }, { label: "Page title", value: "AI Software Engineer" }] } },
+        { output: { found: false } },
+      ],
+    }]);
+    expect(choice).toEqual({ toolChoice: "required", activeTools: ["search_sections"] });
+  });
+
+  it("searches the record when a skill fact is not the job", () => {
+    const choice = stepTools(1, [{
+      toolResults: [{ output: { found: true, facts: [{ label: "Languages", value: "English" }] } }],
+    }]);
+    expect(choice).toEqual({ toolChoice: "required", activeTools: ["search_sections"] });
+  });
+
+  it("stops when the lookup returns the email", () => {
+    const choice = stepTools(1, [{
+      toolResults: [{ output: { found: true, facts: [{ label: "Email", value: "liam@example.com" }] } }],
+    }]);
+    expect(choice).toEqual({ toolChoice: "none", activeTools: [] });
   });
 
   it("stops tool calls after a lookup that returns text", () => {

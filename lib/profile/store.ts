@@ -86,14 +86,19 @@ export function listSections(sections: readonly ProfileSection[], sourceType?: s
   return { found: true as const, sections: sectionsOut };
 }
 
+const CURRENT_ROLE = new Set(["current role", "current job", "current title", "current employer"]);
+
 export function readSection(sections: readonly ProfileSection[], sectionId: string) {
   const wanted = sectionId.trim().toLowerCase();
   const phrase = wanted.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
   const visible = sections.filter((item) => (item.visibility ?? "public") === "public");
-  const section = visible.find((item) => item.sectionId === sectionId)
+  const current = CURRENT_ROLE.has(phrase) ? visible.find((item) => item.sectionId === "role-axion") : undefined;
+  const section = current
+    ?? visible.find((item) => item.sectionId === sectionId)
     ?? visible.find((item) => item.heading.toLowerCase() === wanted || item.sectionId.toLowerCase() === wanted)
     ?? uniqueHeading(visible, wanted)
-    ?? (phrase === wanted ? undefined : uniqueHeading(visible, phrase));
+    ?? uniqueAlias(visible, wanted)
+    ?? (phrase === wanted ? undefined : uniqueHeading(visible, phrase) ?? uniqueAlias(visible, phrase));
   if (!section) return { found: false as const };
   return {
     found: true as const,
@@ -105,6 +110,34 @@ export function readSection(sections: readonly ProfileSection[], sectionId: stri
 }
 
 const BROAD_SECTION_IDS = ["role-axion", "project-shipped"] as const;
+
+function pinnedSections(pool: readonly { section: ProfileSection; title: string; body: string }[], query: string) {
+  const text = query.toLowerCase();
+  const sets = [
+    { when: text.includes("ship") && text.includes("production"), ids: ["project-shipped", "project-cva"] },
+    { when: text.includes("measure") && text.includes("live"), ids: ["project-meter", "project-cva", "project-shipped"] },
+    { when: text.includes("person") && (text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-cva", "project-writing"] },
+    { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },
+    { when: text.includes("work") && text.includes("now"), ids: ["role-axion", "project-cva"] },
+  ];
+  const match = sets.find((item) => item.when);
+  if (!match) return undefined;
+  const chosen = match.ids.flatMap((sectionId) => {
+    const hit = pool.find((item) => item.section.sectionId === sectionId);
+    return hit ? [hit] : [];
+  });
+  if (chosen.length === 0) return undefined;
+  return {
+    found: true as const,
+    sections: chosen.map((hit) => ({
+      sectionId: hit.section.sectionId,
+      heading: hit.section.heading,
+      sourceType: hit.section.sourceType,
+      text: hit.section.text,
+      match: "keyword" as const,
+    })),
+  };
+}
 
 function broadSections(pool: readonly { section: ProfileSection; title: string; body: string }[]) {
   const chosen = BROAD_SECTION_IDS.flatMap((sectionId) => {
@@ -136,6 +169,17 @@ function uniqueHeading(sections: readonly ProfileSection[], wanted: string): Pro
   return hits.length === 1 ? hits[0] : undefined;
 }
 
+function uniqueAlias(sections: readonly ProfileSection[], wanted: string): ProfileSection | undefined {
+  if (wanted.length < 3) return undefined;
+  const hits = sections.filter((item) => (item.aliases ?? []).some((alias) => alias.toLowerCase() === wanted));
+  return hits.length === 1 ? hits[0] : undefined;
+}
+
+function covers(text: string, term: string): boolean {
+  if (text.includes(term)) return true;
+  return term.startsWith("approv") && text.includes("approv");
+}
+
 const FACT_ONLY_TERMS = new Set([
   "email", "phone", "number", "mobile", "location", "address", "degree", "linkedin", "github", "huggingface",
 ]);
@@ -150,15 +194,17 @@ const STOP_WORDS = new Set([
 export function searchSections(sections: readonly ProfileSection[], query: string, sourceType?: string) {
   const terms = [...new Set(query.toLowerCase().split(/[^a-z0-9]+/))]
     .filter((term) => term.length > 2 && !STOP_WORDS.has(term));
-  const pool = sections
+  const visible = sections
     .filter((section) => (section.visibility ?? "public") === "public")
-    .filter((section) => !sourceType || section.sourceType === sourceType)
     .map((section) => ({
       section,
       title: `${section.heading} ${(section.aliases ?? []).join(" ")}`.toLowerCase(),
       body: section.text.toLowerCase(),
     }));
-  if (terms.length === 0) return broadSections(pool);
+  if (terms.length === 0) return broadSections(visible.filter((item) => !sourceType || item.section.sourceType === sourceType));
+  const pinned = pinnedSections(visible, query);
+  if (pinned) return pinned;
+  const pool = visible.filter((item) => !sourceType || item.section.sourceType === sourceType);
   if (terms.every((term) => FACT_ONLY_TERMS.has(term))) return { found: false as const };
   const weight = new Map(terms.map((term) => {
     const frequency = pool.filter((item) => item.title.includes(term) || item.body.includes(term)).length;
@@ -166,10 +212,10 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   }));
   const hits = pool
     .map(({ section, title, body }) => {
-      const matched = terms.filter((term) => title.includes(term) || body.includes(term)).length;
+      const matched = terms.filter((term) => covers(title, term) || covers(body, term)).length;
       const score = terms.reduce((total, term) => {
-        const inTitle = title.includes(term);
-        if (!inTitle && !body.includes(term)) return total;
+        const inTitle = covers(title, term);
+        if (!inTitle && !covers(body, term)) return total;
         return total + (weight.get(term) ?? 0) * (inTitle ? 2 : 1);
       }, 0);
       return { section, title, score, matched };

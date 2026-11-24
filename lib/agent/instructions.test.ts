@@ -25,7 +25,8 @@ describe("instructionPrefix", () => {
     expect(text).toContain("The current title is the job.");
     expect(text).toContain("The page title is the short label on the visitor page.");
     expect(text).toContain("Do not say that a sold or acquired product reached production.");
-    expect(text).toContain("do not invent a figure");
+    expect(text).toContain("Do not invent a live operating metric.");
+    expect(text).toContain("the write waits until a person approves it");
     expect(text).toContain("When the question names another employer, answer with that employer's role.");
   });
 });

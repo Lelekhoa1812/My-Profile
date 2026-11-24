@@ -117,10 +117,14 @@ function stripRecordLead(sentence: string): string {
 }
 
 function exposesGap(sentence: string): boolean {
-  return /the record does not include/i.test(sentence)
+  return /the record does not/i.test(sentence)
     || /the record could not be read/i.test(sentence)
     || /the record did not answer/i.test(sentence)
-    || /the record does not name/i.test(sentence);
+    || /there is no record/i.test(sentence)
+    || /i do not have/i.test(sentence)
+    || /not in the record/i.test(sentence)
+    || /\bunnamed\b/i.test(sentence)
+    || /does not specify/i.test(sentence);
 }
 
 export function dropGapSentences(text: string): string {
@@ -151,18 +155,27 @@ function collectStrings(value: unknown): string {
 
 export function certifySentences(text: string, evidence: string): string {
   const hay = evidence.toLowerCase();
-  return text.trim().split(/(?<=[.!])\s+/).filter((sentence) => sentence && sentenceIsSupported(sentence, hay)).join(" ").trim();
+  return text.trim().split(/(?<=[.!])\s+/).map((sentence) => keptSentenceForm(sentence, hay)).filter(Boolean).join(" ").trim();
 }
 
-function sentenceIsSupported(sentence: string, hay: string): boolean {
-  if (/liam will answer that/i.test(sentence)) return true;
-  if (/i am liam's portfolio assistant/i.test(sentence)) return true;
-  if (!quantitiesInEvidence(sentence, hay)) return false;
-  if (!namesInEvidence(sentence, hay)) return false;
-  const words = contentWords(sentence);
-  if (words.length === 0) return true;
+function keptSentenceForm(sentence: string, hay: string): string {
+  if (/liam will answer/i.test(sentence) || /i am liam's portfolio assistant/i.test(sentence)) return sentence;
+  if (!quantitiesInEvidence(sentence, hay)) return "";
+  const named = namesInEvidence(sentence, hay) ? sentence : sentenceWithoutUnknownNames(sentence, hay);
+  if (!named || !namesInEvidence(named, hay)) return "";
+  const words = contentWords(named);
+  if (words.length === 0) return named;
   const hits = words.filter((word) => hay.includes(word)).length;
-  return hits / words.length >= 0.5;
+  return hits / words.length >= 0.5 ? named : "";
+}
+
+function sentenceWithoutUnknownNames(sentence: string, hay: string): string {
+  return sentence.split(/\s+/).filter((word, index) => {
+    const raw = cleanToken(word);
+    if (!/^[A-Z][A-Za-z0-9.+&-]{2,}$/.test(raw)) return true;
+    if (index === 0 && LEAD_WORDS.has(raw.toLowerCase())) return true;
+    return hay.includes(raw.toLowerCase());
+  }).join(" ").replace(/\s+/g, " ").trim();
 }
 
 function quantitiesInEvidence(sentence: string, hay: string): boolean {
