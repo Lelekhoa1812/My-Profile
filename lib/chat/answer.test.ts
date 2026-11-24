@@ -1027,6 +1027,8 @@ describe("displayAnswer", () => {
     );
     expect(cvaProduct).toContain("career application agent");
     expect(cvaProduct).toContain("person approves");
+    expect(cvaProduct).toContain("profile memory");
+    expect(cvaProduct).toContain("cva-mauve.vercel.app");
     const skyledgeProduct = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is SkyLedge?") }],
       "",
@@ -2231,6 +2233,7 @@ describe("displayAnswer", () => {
     expect(triageIs).toContain("Qwen-VL");
     expect(triageIs).toContain("MIMIC-IV");
     expect(triageIs).toContain("medication-delivery");
+    expect(triageIs).toContain("FAISS");
     const labFunded = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Was the lab Swinburne-funded?") }],
       "",
@@ -2355,7 +2358,10 @@ describe("displayAnswer", () => {
       "What is MedSwin?",
     );
     expect(medswinRole).toContain("Swinburne-funded");
+    expect(medswinRole).toContain("five-person lab");
+    expect(medswinRole).toContain("LoRA");
     expect(medswinRole).toContain("86 percent");
+    expect(medswinRole).not.toContain("not re-counted");
     const harryIdentity = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Harry the Hirer?") }],
       "",

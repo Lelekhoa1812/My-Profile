@@ -219,8 +219,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\bpartner work\b/i.test(sentence)));
   }
   if (/\bwhat is\b/i.test(question) && /\bmedswin\b/i.test(question)) {
-    cap = 4;
+    cap = 6;
     push(blockSentences.find((sentence) => /\bswinburne-funded\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bfive-person lab\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\blora\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bmedmcqa\b/i.test(sentence)));
   }
   if (/\bwhat is\b/i.test(question) && /\bworkflow\b/i.test(question)) {
@@ -433,6 +435,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\b500[,.]?000\b/i.test(question) && !/\b5\s+million\b/i.test(question) && /\b(5 million|8-million)\b/i.test(item.sentence)) continue;
     if (/\b(url|link)\b/i.test(question) && /\blive\b/i.test(question) && /\bnamed live or sold\b/i.test(item.sentence)) continue;
     if (/\bwhat is\b/i.test(question) && /\bericsson\b/i.test(question) && /\bdeployment count\b/i.test(item.sentence)) continue;
+    if (/\bwhat is\b/i.test(question) && /\bmedswin\b/i.test(question) && /\bnot re-counted\b/i.test(item.sentence)) continue;
     if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && !/\b(draft recipe|emails founders|can draft)\b/i.test(item.sentence)) continue;
@@ -473,12 +476,21 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     }
   }
   if (/\bwhat is\b/i.test(question) && /\btriage\b/i.test(question)) {
-    cap = 5;
+    cap = 6;
     push(blockSentences.find((sentence) => /\bspeech uses whisper\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bclinical reasoning uses gemini\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bvision uses qwen\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bmimic-iv\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bportals use\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bmedication-delivery\b/i.test(sentence)));
+  }
+  if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question)) {
+    cap = 5;
+    push(blockSentences.find((sentence) => /\bcareer application agent\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bscores role fit\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bperson approves\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bprofile memory\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /cva-mauve\.vercel\.app/i.test(sentence)));
   }
   if (thinWork && /\b(do|did)\b/i.test(question) && !/\b(percent|measure|cut|pilot|efficiency|gain|accuracy|recall|precision)\b/i.test(question) && !chosen.some((sentence) => isDecision(question, sentence))) {
     const sold = blockSentences.find((sentence) => /\b(sold|acquired)\b/i.test(sentence) && sentence.split(/\s+/).length <= 8);
@@ -1126,6 +1138,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bstt-studio\b/i.test(question) && /\blocal speech-to-text\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bcodoptic\b/i.test(question) && /\bopen-source coding agent\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question) && /\bcareer application agent\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question) && /\bprofile memory\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question) && /cva-mauve\.vercel\.app/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bsurvee\b/i.test(question) && /\bhost-run interview\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bquotient\b/i.test(question) && /\brecorded meeting\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bwritingjourney\b/i.test(question) && /\bwriting coach\b/i.test(sentence)) return true;
