@@ -17,6 +17,7 @@ describe("withArchive", () => {
     expect(result.found).toBe(true);
     if (!result.found) return;
     expect(result.sections[0]?.text).toContain("Browser path puzzle");
+    expect(result.sections[0]?.text).toContain("Repository language: HTML");
     expect(result.sections[0]?.text).not.toMatch(/star/i);
     expect(result.sections.some((section) => section.heading === "Chess Game")).toBe(false);
   });

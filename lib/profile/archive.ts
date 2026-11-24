@@ -22,9 +22,14 @@ function sectionId(id: string): string {
   return `archive-${id.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
 }
 
+function clean(value: string | undefined): string {
+  return (value ?? "").trim().replace(/\.+$/, "");
+}
+
 export function archiveSection(item: ArchiveItem): ProfileSection {
   const kind = KIND[item.kind] ?? item.kind;
-  const parts = [item.title, kind, item.summary, item.detail, item.year ? String(item.year) : "", item.url].filter((part) => part && part.trim().length > 0);
+  const detail = item.kind === "repo" && item.detail ? `Repository language: ${clean(item.detail)}` : clean(item.detail);
+  const parts = [clean(item.title), kind, clean(item.summary), detail, item.year ? String(item.year) : "", clean(item.url)].filter((part) => part.length > 0);
   const note = item.kind === "space" ? " A public Space is not a released product." : "";
   return {
     sectionId: sectionId(item.id),
