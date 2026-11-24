@@ -2023,6 +2023,14 @@ describe("displayAnswer", () => {
     expect(pedigreeProduct).toContain("mate-selection");
     expect(pedigreeProduct).toContain("matrix factorization");
     expect(pedigreeProduct).toContain("64-dimensional");
+    const pedigreeTools = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project use?") }],
+      "",
+      "What did the pedigree project use?",
+    );
+    expect(pedigreeTools).toContain("matrix factorization");
+    expect(pedigreeTools).toContain("64-dimensional");
+    expect(pedigreeTools).not.toContain("40 percent");
     const triageModels = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
       "",
