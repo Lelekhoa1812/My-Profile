@@ -961,6 +961,20 @@ describe("displayAnswer", () => {
     );
     expect(rosterIs).toContain("MJ Industrial");
     expect(rosterIs).toContain("Kotlin");
+    const cvaProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is CVA?") }],
+      "",
+      "What is CVA?",
+    );
+    expect(cvaProduct).toContain("career application agent");
+    expect(cvaProduct).toContain("person approves");
+    const skyledgeProduct = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is SkyLedge?") }],
+      "",
+      "What is SkyLedge?",
+    );
+    expect(skyledgeProduct).toContain("OBD-II");
+    expect(skyledgeProduct).toContain("SkyLedge Kenya");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",

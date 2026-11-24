@@ -123,6 +123,17 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     cap = 3;
     push(blockSentences.find((sentence) => /\bkotlin\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\bcareer application agent\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bplanner agent\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bperson approves\b/i.test(sentence)));
+  }
+  if (/\bwhat is\b/i.test(question) && /\bskyledge\b/i.test(question)) {
+    cap = 3;
+    push(blockSentences.find((sentence) => /\bacquired\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bfault prediction\b/i.test(sentence)));
+  }
   if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question)) {
     push(blockSentences.find((sentence) => /\b(jetson|aws)\b/i.test(sentence) && /\b(deploy|deployment|used)\b/i.test(sentence)));
   }
@@ -834,6 +845,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bwhat is\b/i.test(question) && /\bsall-?e\b/i.test(question) && /\boceanic garbage\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bgolf\b/i.test(question) && /\bsold to vhandicap\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\broster\b/i.test(question) && /\bsold to mj industrial\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bskyledge\b/i.test(question) && /\bobd-ii\b/i.test(sentence)) return true;
+  if (/\bwhat is\b/i.test(question) && /\bcva\b/i.test(question) && /\bcareer application agent\b/i.test(sentence)) return true;
   if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\b(download|rank)\b/i.test(question) && /\bmost downloaded\b/i.test(sentence)) return true;
