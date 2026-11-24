@@ -1447,6 +1447,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
     }
   }
+  if (/\bharry\b/i.test(question) && /\bvalidat/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /\bvalidators check\b/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
   if (/\bvalidat/i.test(question) && !/\b(use|uses|used|for)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/Validators check|cross-validation|shows traces, confidence gates, and validation/i, 3);
   }

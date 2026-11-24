@@ -1579,6 +1579,14 @@ describe("displayAnswer", () => {
       "What does it validate?",
     );
     expect(validateIt).toContain("Validators check");
+    const harryValidates = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Harry validate?") }],
+      "",
+      "What does Harry validate?",
+    );
+    expect(harryValidates).toContain("Validators check");
+    expect(harryValidates).toContain("evidence");
+    expect(harryValidates).not.toContain("cross-validation");
     expect(validateIt).toContain("cross-validation");
     expect(validateIt).toContain("validation");
     expect(validateIt).not.toContain("December 2025");
