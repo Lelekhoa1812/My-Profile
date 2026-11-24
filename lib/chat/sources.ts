@@ -30,6 +30,12 @@ export function monthLabel(value: string | null): string {
   return `${MONTHS[month - 1]} ${year}`;
 }
 
+const GENERIC_TERMS = new Set(["public", "project", "projects", "engineer", "software", "senior", "github", "model", "models", "archive", "section", "record", "visitor", "page", "works"]);
+
+function sourceTerms(label: string, heading: string, roleTitle?: string): string[] {
+  const words = heading.split(/[\s,]+/).filter((word) => word.length > 4 && !GENERIC_TERMS.has(word.toLowerCase()));
+  return [...new Set([label, heading, ...(roleTitle ? [roleTitle] : []), ...words])];
+}
 function describe(sectionId: string, heading: string, sourceType: string): Source {
   const role = roles.find((item) => item.sectionId === sectionId);
   const study = cases.find((item) => item.sectionId === sectionId);
@@ -42,9 +48,8 @@ function describe(sectionId: string, heading: string, sourceType: string): Sourc
       : project
         ? project.label
         : sourceType;
-  const terms = [label, heading, ...(role ? [role.title] : []), ...heading.split(/[\s,]+/).filter((word) => word.length > 4)];
   const href = HREF[sectionId] ?? (study && !role ? `#case-${study.id}` : `#${sectionId}`);
-  return { sectionId, label, meta, href, terms: [...new Set(terms)] };
+  return { sectionId, label, meta, href, terms: sourceTerms(label, heading, role?.title) };
 }
 
 export function sourcesFromParts(parts: readonly ToolLikePart[], limit = 3): Source[] {
@@ -69,13 +74,27 @@ export function sourcesFromParts(parts: readonly ToolLikePart[], limit = 3): Sou
 
 export type Segment = { text: string; ref?: number };
 
+function findTerm(haystack: string, term: string): number {
+  const lower = haystack.toLowerCase();
+  const needle = term.toLowerCase();
+  let from = 0;
+  while (from < lower.length) {
+    const start = lower.indexOf(needle, from);
+    if (start < 0) return -1;
+    const before = start === 0 || !/[a-z0-9]/i.test(lower[start - 1]);
+    const after = start + needle.length >= lower.length || !/[a-z0-9]/i.test(lower[start + needle.length]);
+    if (before && after) return start;
+    from = start + 1;
+  }
+  return -1;
+}
+
 export function anchorSegments(answer: string, sources: readonly Source[]): Segment[] {
   const marks: { start: number; end: number; ref: number }[] = [];
-  const lower = answer.toLowerCase();
   sources.forEach((source, ref) => {
     for (const term of source.terms) {
       if (!term) continue;
-      const start = lower.indexOf(term.toLowerCase());
+      const start = findTerm(answer, term);
       if (start < 0) continue;
       const end = start + term.length;
       if (marks.some((mark) => start < mark.end && mark.start < end)) continue;

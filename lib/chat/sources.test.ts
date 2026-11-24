@@ -34,6 +34,14 @@ describe("anchorSegments", () => {
     const segments = anchorSegments("At Mizco he led RFQ work. Mizco again.", sources);
     expect(segments).toEqual([{ text: "At " }, { text: "Mizco", ref: 0 }, { text: " he led RFQ work. Mizco again." }]);
   });
+
+  it("does not mark the word public inside the archive sentence", () => {
+    const sources = sourcesFromParts([
+      { type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ sectionId: "project-public-code", heading: "Public repositories", sourceType: "project" }] } },
+    ]);
+    const segments = anchorSegments("The visitor page lists the full public archive.", sources);
+    expect(segments.some((segment) => segment.ref !== undefined)).toBe(false);
+  });
 });
 
 describe("monthLabel", () => {
