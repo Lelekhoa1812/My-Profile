@@ -939,6 +939,7 @@ describe("displayAnswer", () => {
     expect(estatefolioIs).toContain("price forecast");
     expect(estatefolioIs).toContain("Ho Chi Minh City");
     expect(estatefolioIs).toContain("transformer");
+    expect(estatefolioIs).toContain("ST-GNN");
     const salleIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Sall-e?") }],
       "",
@@ -946,6 +947,7 @@ describe("displayAnswer", () => {
     );
     expect(salleIs).toContain("oceanic garbage");
     expect(salleIs).toContain("computer vision");
+    expect(salleIs).toContain("Transformer");
     const golfIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the golf scorecard scanner?") }],
       "",
