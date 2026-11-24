@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = databaseAnswer(question, outputs);
+  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -92,6 +92,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(sentence, blockSentences) : "";
     if (!named || chosen.includes(named) || chosen.length >= 2) return;
+    if (/the resume also uses the phrase/i.test(named) && !/\bphrase\b/i.test(question)) return;
     const shortFact = named.split(/\s+/).length >= 3 && /\b(use|uses|run|runs|led|cut)\b/.test(named) && words.some((word) => word.length >= 5 && mentions(named, word));
     if (named.split(/\s+/).length < 4 && !isDecision(question, named) && !shortFact) return;
     chosen.push(named);
@@ -144,7 +145,20 @@ function employerNames(question: string, outputs: readonly Record<string, unknow
   return names.join(", ");
 }
 
+function vectorAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bvector\b/i.test(question) || !/\bdatabases?\b/i.test(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(pgvector|faiss)\b/i.test(sentence)));
+  return [...new Set(lines)].slice(0, 2).join(" ");
+}
+
+function llmAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bllms?\b/i.test(question) || namedEmployer(question) || /\b(pedigree|mate|explanation)\b/i.test(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(gemini|qwen|openai|vllm)\b/i.test(sentence)));
+  return [...new Set(lines)].slice(0, 2).join(" ");
+}
+
 function databaseAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (/\bvector\b/i.test(question)) return "";
   if (!/\bdatabases?\b/i.test(question) || !/\b(use|uses|used)\b/i.test(question) || namedEmployer(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(mongodb|mariadb|mysql|sqlite)\b/i.test(sentence) && !/\bdoes not\b/i.test(sentence)));
   return [...new Set(lines)].slice(0, 3).join(" ");

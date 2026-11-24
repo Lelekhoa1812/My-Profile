@@ -543,6 +543,26 @@ describe("displayAnswer", () => {
     expect(frameworks).not.toContain("capital-markets");
     expect(searchSections(profile.sections, "What papers has he written?").found).toBe(false);
     expect(searchSections(profile.sections, "What did he publish?").found).toBe(false);
+    const vector = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What vector database does he use?") }],
+      "",
+      "What vector database does he use?",
+    );
+    expect(vector).toMatch(/pgvector|FAISS/);
+    expect(vector).not.toContain("MariaDB");
+    const llm = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What LLM does he use?") }],
+      "",
+      "What LLM does he use?",
+    );
+    expect(llm).toMatch(/Gemini|Qwen/);
+    expect(llm).not.toContain("explanations");
+    const resume = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Can I see his resume?") }],
+      "",
+      "Can I see his resume?",
+    );
+    expect(resume).not.toContain("capital-markets");
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],
