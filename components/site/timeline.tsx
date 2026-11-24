@@ -28,14 +28,21 @@ function usePrefersReducedMotion() {
 }
 
 function measureLabelScroll(track: HTMLElement, text: HTMLElement) {
-  const overflow = text.scrollWidth - track.clientWidth;
+  const overflow = Math.ceil(text.offsetWidth - track.clientWidth);
   return overflow > 1 ? overflow : 0;
+}
+
+function scrollDuration(shift: number) {
+  const travelShare = 0.24;
+  const travelSeconds = Math.max(1.8, shift / 16);
+  return `${(travelSeconds / travelShare).toFixed(2)}s`;
 }
 
 function ScrollingBarLabel({ text, animate }: { text: string; animate: boolean }) {
   const trackRef = useRef<HTMLSpanElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
   const [shift, setShift] = useState(0);
+  const [onScreen, setOnScreen] = useState(false);
 
   useLayoutEffect(() => {
     const track = trackRef.current;
@@ -49,14 +56,30 @@ function ScrollingBarLabel({ text, animate }: { text: string; animate: boolean }
     return () => ro.disconnect();
   }, [text]);
 
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || !animate) return;
+    const observer = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting));
+    observer.observe(track);
+    return () => observer.disconnect();
+  }, [animate, text]);
+
   const scroll = animate && shift > 0;
 
   return (
     <span ref={trackRef} className="min-w-0 flex-1 overflow-hidden">
       <span
         ref={textRef}
-        className={`inline-block whitespace-nowrap ${scroll ? "bar-label-scroll" : ""}`}
-        style={scroll ? ({ ["--scroll-shift" as string]: `${shift}px` } as CSSProperties) : undefined}
+        className={`inline-block w-max whitespace-nowrap ${scroll ? "bar-label-scroll" : ""}`}
+        style={
+          scroll
+            ? ({
+                ["--scroll-shift" as string]: `${shift}px`,
+                animationDuration: scrollDuration(shift),
+                animationPlayState: onScreen ? "running" : "paused",
+              } as CSSProperties)
+            : undefined
+        }
       >
         {text}
       </span>
@@ -185,6 +208,7 @@ export function Timeline({ roles, lanes, now }: { roles: Role[]; lanes: { id: La
                               {monthLabel(role.start)} – {monthLabel(role.end)} · {lanes.find((entry) => entry.id === role.lane)?.label}
                             </span>
                             <span className="mt-2 block text-[13px] leading-snug text-white/80">{role.outcome}</span>
+                            {role.proof ? <span className="mt-1 block text-[13px] leading-snug text-white/60">{role.proof}</span> : null}
                           </TooltipContent>
                         </Tooltip>
                       );
@@ -234,6 +258,7 @@ function RoleList({ roles, lanes, lane, onLane, focus }: { roles: Role[]; lanes:
               </div>
               <div>
                 <p className="pretty leading-relaxed text-white/88">{role.outcome}</p>
+                {role.proof ? <p className="mt-1 text-[0.9375rem] leading-relaxed text-white/72">{role.proof}</p> : null}
                 <p className="data mt-2 text-[10px] text-white/50">{lanes.find((item) => item.id === role.lane)?.label}</p>
               </div>
               <button

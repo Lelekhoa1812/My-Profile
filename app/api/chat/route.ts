@@ -2,6 +2,7 @@ import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import type { UpdateFilter } from "mongodb";
 import { convertToModelMessages, isStepCount, ToolLoopAgent, type UIMessage } from "ai";
 import { turnToStore } from "../../../lib/chat/answer";
+import { streamHeaders } from "../../../lib/chat/headers";
 import { visitorCookie } from "../../../lib/session/cookie";
 import { instructionPrefix } from "../../../lib/agent/instructions";
 import { createProfileTools } from "../../../lib/agent/tools";
@@ -85,8 +86,9 @@ export async function POST(request: Request): Promise<Response> {
       });
     },
   });
+  const secure = new URL(request.url).protocol === "https:";
   return result.toUIMessageStreamResponse({
-    headers: visitor.setCookie ? { "set-cookie": visitorCookie(visitor.id, new URL(request.url).protocol === "https:") } : undefined,
+    headers: streamHeaders(record.source, visitor.setCookie ? visitorCookie(visitor.id, secure) : undefined),
   });
 }
 

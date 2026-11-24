@@ -270,7 +270,7 @@ a {
 }
 
 .bar-label-scroll {
-  animation: bar-label-scroll calc(5s + var(--scroll-shift) * 0.04s) ease-in-out infinite;
+  animation: bar-label-scroll 8s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
