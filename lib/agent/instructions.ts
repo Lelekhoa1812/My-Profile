@@ -20,7 +20,7 @@ Do not criticise a past employer. Do not estimate pay. If the record has no pay 
 
 Use a serious, respectful, matter-of-fact voice. No greeting filler, no praise of the question, and no closing sales line.
 
-Team results stay team results. Use "I" only for work the record assigns to Liam.`;
+Team results stay team results. Name Liam as the actor. Do not use "I" for his work. "I" is only the assistant.`;
 
 export function instructionPrefix(): string {
   return AGENT_INSTRUCTIONS;

@@ -2,7 +2,7 @@
 
 import { ArrowDownRight, CornerDownLeft, MessagesSquare, X } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type KeyboardEvent, type PointerEvent } from "react";
-import { snapToSide } from "@/lib/chat/place";
+import { panelFrame, snapToSide } from "@/lib/chat/place";
 import { toTurns, useRecordChat } from "./record-chat";
 
 const STORAGE_KEY = "profile.chat.place";
@@ -131,7 +131,7 @@ export function ChatDock({ questions }: { questions: string[] }) {
   }
 
   const panelWidth = Math.min(384, viewport.width - EDGE * 2);
-  const panelHeight = Math.min(544, viewport.height - place.y - BUTTON - PANEL_GAP - EDGE);
+  const frame = panelFrame(place, viewport.height, BUTTON, EDGE, PANEL_GAP);
   const buttonLeft = viewport.width - place.x - BUTTON;
   const panelLeft = Math.min(Math.max(EDGE, buttonLeft + BUTTON - panelWidth), viewport.width - panelWidth - EDGE);
   const anchoredLeft = buttonLeft + BUTTON / 2 < viewport.width / 2 ? Math.max(EDGE, Math.min(buttonLeft, viewport.width - panelWidth - EDGE)) : panelLeft;
@@ -144,7 +144,7 @@ export function ChatDock({ questions }: { questions: string[] }) {
           id="ask-the-record"
           aria-label="Ask the record"
           className="dock-open fixed z-40 flex flex-col overflow-hidden border border-white/30 bg-black/92 backdrop-blur-md"
-          style={{ left: anchoredLeft, bottom: place.y + BUTTON + PANEL_GAP, width: panelWidth, height: Math.max(panelHeight, 280) }}
+          style={{ left: anchoredLeft, bottom: frame.bottom, width: panelWidth, height: frame.height }}
         >
           <header className="flex items-center justify-between border-b border-white/15 py-2 pl-5 pr-2">
             <h2 className="text-[0.9375rem] tracking-[0.04em] text-ink">Ask the record</h2>
@@ -190,7 +190,7 @@ export function ChatDock({ questions }: { questions: string[] }) {
                     {turn.sources.map((source, n) => (
                       <li key={source.sectionId}>
                         <a href={source.href} className="data flex items-center gap-1.5 border border-white/25 px-2 py-1.5 text-[9px] text-white/72 transition-colors hover:bg-white hover:text-black">
-                          <span className="text-white/45">{n + 1}</span>
+                          <span className="text-white/55">{n + 1}</span>
                           {source.label}
                           <ArrowDownRight aria-hidden className="h-3 w-3" strokeWidth={1.5} />
                         </a>

@@ -132,7 +132,7 @@ export function Timeline({ roles, lanes, now }: { roles: Role[]; lanes: { id: La
   function select(id: string) {
     setFocus(id);
     setLane("all");
-    requestAnimationFrame(() => document.getElementById(`row-${id}`)?.scrollIntoView({ behavior: "smooth", block: "center" }));
+    requestAnimationFrame(() => document.getElementById(`row-${id}`)?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" }));
   }
 
   return (

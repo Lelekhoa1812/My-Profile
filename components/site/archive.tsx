@@ -77,7 +77,7 @@ export function Archive({ items, areas }: { items: ArchiveItem[]; areas: Record<
                 <span className="pretty text-[0.9375rem] leading-snug text-white/65">{item.summary || areas[item.area]}</span>
                 <span className="data truncate text-[10px] text-white/55">
                   {KIND_NAME[item.kind]}
-                  {item.detail ? <span className="text-white/40"> · {item.detail}</span> : null}
+                  {item.detail ? <span className="text-white/55"> · {item.detail}</span> : null}
                 </span>
                 <span className="data hidden text-[10px] text-white/55 md:block">{item.year}</span>
                 <span className="data hidden text-right text-[10px] text-white/55 md:block">{statLabel(item)}</span>

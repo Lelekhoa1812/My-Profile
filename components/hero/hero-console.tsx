@@ -70,7 +70,7 @@ function AskField({ questions, busy, onAsk }: { questions: string[]; busy: boole
         <button
           type="submit"
           disabled={busy || draft.trim().length === 0}
-          className="data flex shrink-0 items-center gap-2 py-2 pl-3 text-white/72 transition-colors hover:text-white disabled:text-white/40 disabled:hover:text-white/40"
+          className="data flex shrink-0 items-center gap-2 py-2 pl-3 text-white/72 transition-colors hover:text-white disabled:text-white/55 disabled:hover:text-white/55"
         >
           {busy ? "Reading" : "Ask"}
           <CornerDownLeft aria-hidden className="h-3.5 w-3.5" strokeWidth={1.5} />

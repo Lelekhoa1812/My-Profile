@@ -12,5 +12,6 @@ describe("instructionPrefix", () => {
     expect(text).not.toContain("capital-markets");
     expect(text).not.toContain("FoodFlow");
     expect(text).toContain("answer only from the Axion sections in the record");
+    expect(text).toContain('Do not use "I" for his work.');
   });
 });
