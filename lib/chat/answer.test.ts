@@ -2065,6 +2065,17 @@ describe("displayAnswer", () => {
     expect(caseCounts).toContain("400,000");
     expect(caseCounts).not.toContain("August 2025");
     expect(caseCounts).not.toContain("not the same count");
+    const peopleCount = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How many people?") }],
+      "",
+      "How many people?",
+    );
+    expect(peopleCount).toContain("five people");
+    expect(peopleCount).toContain("four-person team on an IoT");
+    expect(peopleCount).toContain("four-person capstone");
+    expect(peopleCount).toContain("software team of five");
+    expect(peopleCount).not.toContain("people list");
+    expect(peopleCount).not.toContain("August 2025");
     const labLanguages = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What languages does the lab cover?") }],
       "",
