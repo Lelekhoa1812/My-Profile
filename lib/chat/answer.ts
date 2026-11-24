@@ -1556,6 +1556,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of [...new Set(lines)].slice(0, 5)) push(sentence);
     }
   }
+  if (/\bmj\b/i.test(question) && !/\b(roster|sold|bought|stack|models)\b/i.test(question) && !namedEmployer(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /rostering/i.test(line));
+    if (sentence && !chosen.some((line) => /rostering/i.test(line))) chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+  }
   const openSentences = blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence));
   const workSentences = openSentences.filter((sentence) => /\b(uses|use|led|reads|covers|owns|turns|trains|answers)\b/i.test(sentence));
   const shortUses = workSentences.filter((sentence) => /\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 6);

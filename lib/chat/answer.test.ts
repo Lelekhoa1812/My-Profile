@@ -2388,6 +2388,15 @@ describe("displayAnswer", () => {
     );
     expect(haIs).toContain("HA Manager");
     expect(haIs).not.toContain("LangChain");
+    const mjIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is MJ?") }],
+      "",
+      "What is MJ?",
+    );
+    expect(mjIs).toContain("MJ Industrial");
+    expect(mjIs).toContain("rostering");
+    expect(mjIs).not.toContain("LangChain");
+    expect(mjIs).not.toContain("does not list");
     const routePlan = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e plan after detection?") }],
       "",
