@@ -919,6 +919,13 @@ describe("displayAnswer", () => {
     );
     expect(namCloud).toContain("Nam");
     expect(namCloud).not.toContain("Kubernetes");
+    const harryQueue = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What queue does Harry use?") }],
+      "",
+      "What queue does Harry use?",
+    );
+    expect(harryQueue).toContain("Azure");
+    expect(harryQueue).not.toContain("Kafka");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
