@@ -731,6 +731,14 @@ describe("displayAnswer", () => {
     );
     expect(automationIs).toContain("capital-markets automation");
     expect(automationIs).toContain("does not rename");
+    const workflowMap = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is a workflow map?") }],
+      "",
+      "What is a workflow map?",
+    );
+    expect(workflowMap).toContain("workflow maps");
+    expect(workflowMap).toContain("staged delivery");
+    expect(workflowMap).not.toContain("FoodFlow");
     const webCrawl = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is web crawling?") }],
       "",

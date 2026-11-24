@@ -766,6 +766,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(limit);
     }
   }
+  if (/\bworkflow maps?\b/i.test(question)) {
+    const maps = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bworkflow maps?\b/i.test(sentence));
+    if (maps) {
+      chosen.length = 0;
+      cap = 1;
+      push(maps);
+    }
+  }
   if (/\bautomation\b/i.test(question)) {
     const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const phrase = lines.find((sentence) => /\bcapital-markets automation\b/i.test(sentence));
