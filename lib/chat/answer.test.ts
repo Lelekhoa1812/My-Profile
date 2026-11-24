@@ -11,6 +11,7 @@ describe("displayAnswer", () => {
     const text = displayAnswer([], "**Axion Solutions** ships FoodFlow.\n- CVA has a live app.");
     expect(text).toBe("Axion Solutions ships FoodFlow. CVA has a live app.");
     expect(text).not.toContain("**");
+    expect(displayAnswer([], "Axis - a separate product.")).toBe("Axis - a separate product.");
   });
 
   it("hides a tool call that leaked into the sentence", () => {

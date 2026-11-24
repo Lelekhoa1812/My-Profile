@@ -36,8 +36,8 @@ export function stripMarkdown(text: string): string {
     .replace(/\*\*([^*]+)\*\*/g, "$1")
     .replace(/__([^_]+)__/g, "$1")
     .replace(/^#{1,6}\s+/gm, "")
-    .replace(/(?:^|\s)-\s+/g, " ")
-    .replace(/(?:^|\s)\*\s+/g, " ")
+    .replace(/^\s*-\s+/gm, "")
+    .replace(/^\s*\*\s+/gm, "")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -70,7 +70,6 @@ export function stripToolMarkup(text: string): string {
     .split("\n")
     .filter((line) => !/tool_call|function\s*=|parameter\s*=/i.test(line))
     .join("\n")
-    .replace(/\s+/g, " ")
     .trim();
 }
 
