@@ -1281,6 +1281,21 @@ describe("displayAnswer", () => {
       "What does he measure at PopTech?",
     );
     expect(poptechMeasure).toContain("drift");
+    const cloud = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What cloud platforms does he use?") }],
+      "",
+      "What cloud platforms does he use?",
+    );
+    expect(cloud).toContain("AWS");
+    expect(cloud).toContain("Azure");
+    expect(cloud).not.toContain("groups the stack");
+    const studyBuddy = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does StudyBuddy do?") }],
+      "",
+      "What does StudyBuddy do?",
+    );
+    expect(studyBuddy).toContain("study assistant");
+    expect(studyBuddy).not.toContain("Prophet");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",

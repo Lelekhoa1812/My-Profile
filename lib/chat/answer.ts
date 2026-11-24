@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = identityAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = identityAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -93,7 +93,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   let cap = 2;
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(focusClause(question, sentence), blockSentences) : "";
-    if (!named || chosen.includes(named) || chosen.length >= cap) return;
+    if (!named || chosen.includes(named) || chosen.length >= cap || otherRepo(question, named)) return;
     if (/the resume also uses the phrase/i.test(named) && !/\bphrase\b/i.test(question)) return;
     const shortFact = named.split(/\s+/).length >= 3 && /\b(use|uses|run|runs|led|cut)\b/.test(named) && words.some((word) => word.length >= 4 && mentions(named, word));
     const shortUse = /\b(do|did)\b/i.test(question) && named.split(/\s+/).length >= 3 && (/\buses\b/i.test(named) || /\b(sold|acquired)\b/i.test(named));
@@ -369,6 +369,22 @@ function withReleaseLimit(question: string, proof: string, outputs: readonly Rec
     ? sentences.find((sentence) => /\bonly named live app\b/i.test(sentence))
     : sentences.find((sentence) => /\bnot a production release\b/i.test(sentence)) ?? sentences.find((sentence) => /\bnot (?:a|for) a release\b/i.test(sentence));
   return wanted && !proof.includes(wanted) ? `${wanted} ${proof}`.trim() : proof;
+}
+
+const REPOS = ["medical-chatbot", "cooking-tutor", "studybuddy", "prompt-me", "free-router", "stt-studio", "agentdiagram", "undercut", "quotient", "prophet", "survee"];
+
+function otherRepo(question: string, sentence: string): boolean {
+  const asked = REPOS.filter((name) => question.toLowerCase().includes(name));
+  if (asked.length === 0) return false;
+  const body = sentence.toLowerCase();
+  const named = REPOS.filter((name) => body.includes(name));
+  return named.length > 0 && asked.every((name) => !body.includes(name));
+}
+
+function cloudAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bcloud\b/i.test(question) || namedEmployer(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => sentence.split(/\s+/).length <= 18 && /\b(aws|azure)\b/i.test(sentence)));
+  return [...new Set(lines)].slice(0, 2).join(" ");
 }
 
 function deploymentAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {

@@ -236,6 +236,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
   const sets = [
     { when: /\b(now|currently)\b/.test(text) && /\b(work|working|doing)\b/.test(text) && !namedEmployer(text), ids: ["role-axion"] },
     { when: /\bdeploy(?:ment|ing)?\b/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["project-meter", "role-alta"] },
+    { when: /\bcloud\b/.test(text) && /\b(platform|platforms|use|uses|used)\b/.test(text) && !namedEmployer(text), ids: ["role-alta", "skills"] },
     { when: Boolean(between?.length), ids: between ?? [] },
     { when: Boolean(overlapping?.length), ids: overlapping ?? [] },
     { when: cityRoles.length > 0, ids: cityRoles },
