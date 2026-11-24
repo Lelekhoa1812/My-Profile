@@ -1000,6 +1000,13 @@ describe("displayAnswer", () => {
       "Is Quotient live?",
     );
     expect(quotientLive).toContain("not a deployed product");
+    const axisStack = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does Axis use?") }],
+      "",
+      "What stack does Axis use?",
+    );
+    expect(axisStack).toContain("LangChain");
+    expect(axisStack).toContain("LangGraph");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],

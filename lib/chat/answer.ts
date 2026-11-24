@@ -672,6 +672,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(period);
     }
   }
+  if (/\bstack\b/i.test(question) && /\b(axion|axis)\b/i.test(question)) {
+    const engine = blockSentences.find((sentence) => /\blangchain\b/i.test(sentence));
+    if (engine) {
+      chosen.length = 0;
+      cap = 3;
+      push(engine);
+      push(blockSentences.find((sentence) => /\bopentelemetry\b/i.test(sentence)));
+    }
+  }
   if (/\blive\b/i.test(question) && !/\b(measure|cut|percent|pilot|ship)\b/i.test(question)) {
     const limit = blockSentences.find((sentence) => /not a deployed product|not a packaged production app|deployed clinical system|not a named live customer app/i.test(sentence));
     if (limit) {
