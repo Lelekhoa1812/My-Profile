@@ -821,6 +821,24 @@ describe("displayAnswer", () => {
       "What does the water meter production claim exclude?",
     );
     expect(meterClaim).toContain("named public app");
+    const safety = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What safety does MedSwin use?") }],
+      "",
+      "What safety does MedSwin use?",
+    );
+    expect(safety).toContain("guardrails");
+    const summary = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does iNet summarise?") }],
+      "",
+      "What does iNet summarise?",
+    );
+    expect(summary).toContain("sentiment");
+    const vertx = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the Nam A software role use besides REST?") }],
+      "",
+      "What does the Nam A software role use besides REST?",
+    );
+    expect(vertx).toContain("Vert.x");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the roster app use?") }],

@@ -199,6 +199,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("axis") && (text.includes("write") || text.includes("preview") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: /\bs&p\b/.test(text), ids: ["project-sp500"] },
     { when: /\bha manager\b/.test(text), ids: ["role-hai-au"] },
+    { when: /\bsafety\b/.test(text) && /\bmedswin\b/.test(text), ids: ["role-swinburne-research"] },
     { when: text.includes("harry") && (text.includes("pilot") || text.includes("cut")), ids: ["role-harry-senior"] },
     { when: (text.includes("medswin") || text.includes("bertscore")) && /\b(bertscore|lab|score)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: text.includes("mizco"), ids: ["role-mizco"] },

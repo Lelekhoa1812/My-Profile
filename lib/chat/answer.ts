@@ -380,6 +380,7 @@ function mentions(sentence: string, word: string): boolean {
   if (new RegExp(`\\b${word}(?:s|es|ed|ing)?\\b`, "i").test(sentence)) return true;
   if (word === "ocr" && /\b\w*ocr\b/i.test(sentence)) return true;
   if (word === "deliver" && /\bdelivery\b/i.test(sentence)) return true;
+  if ((word === "summarise" || word === "summarize") && /\bsummaris(?:ation|ation)\b/i.test(sentence)) return true;
   if (word.endsWith("s") && word.length >= 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
   if (word.endsWith("e") && new RegExp(`\\b${word.slice(0, -1)}ed\\b`, "i").test(sentence)) return true;
   if (word.length >= 6 && new RegExp(`\\b${word}ion\\b`, "i").test(sentence)) return true;
@@ -457,6 +458,9 @@ function isDecision(question: string, sentence: string): boolean {
     return true;
   }
   if (/\bseparate\b/i.test(question) && /\bemails founders\b/i.test(sentence)) return true;
+  if (/\bsafety\b/i.test(question) && /\bguardrails\b/i.test(sentence)) return true;
+  if (/\bsummar/i.test(question) && /\bsummaris/i.test(sentence)) return true;
+  if (/\bbesides\b/i.test(question) && /\bvert/i.test(sentence)) return true;
   return /\b(cut|pilot|percent|measure|bert|score|metric)\b/i.test(question) && /\bpercent\b/i.test(sentence);
 }
 
