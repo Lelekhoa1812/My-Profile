@@ -905,6 +905,20 @@ describe("displayAnswer", () => {
     );
     expect(meterLlm).toContain("meter photos");
     expect(meterLlm).not.toContain("Gemini");
+    const aitcVector = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What vector database does AITC use?") }],
+      "",
+      "What vector database does AITC use?",
+    );
+    expect(aitcVector).toContain("industrial assistant");
+    expect(aitcVector).not.toContain("FAISS");
+    const namCloud = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What cloud does Nam A use?") }],
+      "",
+      "What cloud does Nam A use?",
+    );
+    expect(namCloud).toContain("Nam");
+    expect(namCloud).not.toContain("Kubernetes");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],

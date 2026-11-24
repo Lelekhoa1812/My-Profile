@@ -317,6 +317,10 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
   const cityRoles = city && /\b(jobs|roles)\b/.test(text)
     ? pool.filter((item) => item.section.sourceType === "role" && (item.body.includes(city) || item.title.includes(city))).map((item) => item.section.sectionId)
     : [];
+  const askedEmployer = EMPLOYERS.find((item) => item.test.test(text));
+  const employerRoles = askedEmployer
+    ? pool.filter((item) => item.section.sourceType === "role" && askedEmployer.section(item.section.sectionId, item.title) && (text.includes("pedigree") || !item.section.sectionId.includes("pedigree"))).map((item) => item.section.sectionId)
+    : [];
   const sets = [
     { when: /\b(now|currently)\b/.test(text) && /\b(work|working|doing)\b/.test(text) && !namedEmployer(text), ids: ["role-axion"] },
     { when: /\bdeployed\b/.test(text) && !namedEmployer(text) && !/\b(medchat|foodflow|quotient)\b/.test(text), ids: ["project-meter", "role-alta"] },
@@ -324,6 +328,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bwater[\s-]?meter\b/.test(text) && (/\bllms?\b/.test(text) || /\bcloud\b/.test(text) || /\bvectors?\b/.test(text)), ids: ["project-meter", "role-vietdan-ml"] },
     { when: (/\bcloud\b/.test(text) || /\bllms?\b/.test(text) || /\b(cut|percent)\b/.test(text) || /\bvectors?\b/.test(text)) && Boolean(askedProductSectionIds(text)?.length), ids: askedProductSectionIds(text) ?? [] },
     { when: /\b(programming|coding)\b/.test(text) && /\blanguages?\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["skills"] },
+    { when: (/\bcloud\b/.test(text) || /\bvectors?\b/.test(text)) && employerRoles.length > 0 && !askedProductSectionIds(text), ids: employerRoles },
     { when: /\bcloud\b/.test(text) && /\b(platform|platforms|use|uses|used)\b/.test(text) && !namedEmployer(text) && !askedProductSectionIds(text), ids: ["role-alta", "skills"] },
     { when: Boolean(between?.length), ids: between ?? [] },
     { when: Boolean(overlapping?.length), ids: overlapping ?? [] },
@@ -403,7 +408,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: (/\bgood at\b/.test(text) || /\bstrengths\b/.test(text)) && !namedEmployer(text), ids: ["skills"] },
     { when: /\bmachine[-\s]learning\b/.test(text) && /\btools?\b/.test(text) && !namedEmployer(text) && !/\b(s&p|prophet|ericsson|poptech|skyledge|pedigree|triage)\b/.test(text), ids: ["skills"] },
     { when: /\bdocument ai\b/.test(text) && /\btools?\b/.test(text) && !namedEmployer(text), ids: ["skills"] },
-    { when: /\bvectors?\b/.test(text) && /\b(databases?|use|uses|used|for)\b/.test(text) && !askedProductSectionIds(text), ids: ["skills", "project-triage"] },
+    { when: /\bvectors?\b/.test(text) && /\b(databases?|use|uses|used|for)\b/.test(text) && !askedProductSectionIds(text) && !namedEmployer(text), ids: ["skills", "project-triage"] },
     { when: /\bvietnamese\b/.test(text) && /\b(llm|medviet)\b/.test(text), ids: ["project-medvietai"] },
     { when: /\bwhat\b/.test(text) && /\bllms?\b/.test(text) && !namedEmployer(text) && !/\b(pedigree|mate|explanation|triage|golf|axion|sql|vietnamese|medviet)\b/.test(text) && !askedProductSectionIds(text), ids: ["project-triage", "project-golf"] },
     { when: /\bmodels?\b/.test(text) && /\b(use|uses)\b/.test(text) && Boolean(askedProductSectionIds(text)?.length), ids: askedProductSectionIds(text) ?? [] },
