@@ -1901,6 +1901,28 @@ describe("displayAnswer", () => {
     );
     expect(estateError).toContain("Drift detection is part of the pipeline");
     expect(estateError).not.toContain("does not include an error rate");
+    const capitalPhrase = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does capital-markets automation mean?") }],
+      "",
+      "What does capital-markets automation mean?",
+    );
+    expect(capitalPhrase).toContain("capital-markets automation");
+    expect(capitalPhrase).toContain("does not rename FoodFlow");
+    const harryAgents = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What agents did he use at Harry?") }],
+      "",
+      "What agents did he use at Harry?",
+    );
+    expect(harryAgents).toContain("Planner");
+    expect(harryAgents).toContain("Tool-Executor");
+    const harryUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he use at Harry?") }],
+      "",
+      "What did he use at Harry?",
+    );
+    expect(harryUse).toContain("Azure AI Foundry");
+    expect(harryUse).not.toContain("Tool-Executor");
+    expect(harryUse).not.toContain("mate-selection");
     expect(cameFirst).toContain("April 2023");
     expect(cameFirst).toContain("December 2024");
     const pedigreeBefore = displayAnswer(

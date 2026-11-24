@@ -96,7 +96,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   const push = (sentence?: string) => {
     const named = sentence ? namedSubject(focusClause(question, sentence), blockSentences) : "";
     if (!named || chosen.includes(named) || chosen.length >= cap || otherRepo(question, named)) return;
-    if (/the resume also uses the phrase/i.test(named) && !/\bphrase\b/i.test(question)) return;
+    if (/the resume also uses the phrase/i.test(named) && !/\bphrase\b/i.test(question) && !/\bcapital-markets\b/i.test(question) && !/\bcapital markets\b/i.test(question)) return;
     const shortFact = named.split(/\s+/).length >= 3 && /\b(use|uses|run|runs|led|cut)\b/.test(named) && words.some((word) => word.length >= 4 && mentions(named, word));
     const shortUse = /\b(do|did)\b/i.test(question) && named.split(/\s+/).length >= 3 && (/\buses\b/i.test(named) || /\b(sold|acquired)\b/i.test(named));
     if (named.split(/\s+/).length < 4 && !isDecision(question, named) && !shortFact && !shortUse) return;
@@ -118,6 +118,20 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       chosen.length = 0;
       push(drift);
     }
+  }
+  if (/\bcapital-markets\b/i.test(question) || /\bcapital markets\b/i.test(question)) {
+    cap = 3;
+    const phrase = blockSentences.find((sentence) => /\bcapital-markets automation\b/i.test(sentence));
+    if (phrase) {
+      chosen.length = 0;
+      push(phrase);
+      push(blockSentences.find((sentence) => /\bdoes not rename\b/i.test(sentence)));
+    }
+  }
+  if (/\bharry\b/i.test(question) && /\bagents?\b/i.test(question)) {
+    cap = 3;
+    const layer = blockSentences.find((sentence) => /\bmulti-agent layer\b/i.test(sentence));
+    if (layer && !chosen.includes(layer)) chosen.unshift(layer);
   }
   if (/\b500[,.]?000\b/i.test(question) && /\b5\s+million\b/i.test(question)) {
     cap = 4;
@@ -376,7 +390,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (picked && /\bhow many\b/i.test(question) && /\b(synthetic|curated)\b/i.test(question) && /\b\d/.test(item.sentence)) continue;
     const answered = words.some((word) => !new RegExp(`\\b${word}\\b`, "i").test(item.sentence) && mentions(item.sentence, word) && chosen.some((sentence) => new RegExp(`\\b${word}\\b`, "i").test(sentence)));
     if (/\b(code|coding|programming)\b/i.test(question) && /\b(vietnamese|mandarin|fluent)\b/i.test(item.sentence)) continue;
-    if (/the resume also uses the phrase/i.test(item.sentence) && !/\bphrase\b/i.test(question)) continue;
+    if (/the resume also uses the phrase/i.test(item.sentence) && !/\bphrase\b/i.test(question) && !/\bcapital-markets\b/i.test(question) && !/\bcapital markets\b/i.test(question)) continue;
     if (orgLine && /\b(what is|tell me about)\b/i.test(question) && !/\borg\b/i.test(question) && /hugging face org is/i.test(item.sentence)) continue;
     if (/\b(good at|strengths)\b/i.test(question) && /\blanguages:/i.test(item.sentence)) continue;
     if (/\b8[-\s]?million\b/i.test(question) && /\b(5 million|500,000|not the same count)\b/i.test(item.sentence)) continue;
@@ -1065,6 +1079,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bteqar\b/i.test(question) && /\b(use|uses|used|scope)\b/i.test(question) && /\bscope includes\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bestatefolio\b/i.test(question) && /\bprice forecast\b/i.test(sentence)) return true;
   if (/\bestatefolio\b/i.test(question) && /\berror\b/i.test(question) && /\bdrift detection\b/i.test(sentence)) return true;
+  if ((/\bcapital-markets\b/i.test(question) || /\bcapital markets\b/i.test(question)) && /\bcapital-markets automation\b/i.test(sentence)) return true;
+  if (/\bharry\b/i.test(question) && /\bagents?\b/i.test(question) && /\bmulti-agent layer\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bsall-?e\b/i.test(question) && /\boceanic garbage\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\bgolf\b/i.test(question) && /\bsold to vhandicap\b/i.test(sentence)) return true;
   if (/\bwhat is\b/i.test(question) && /\broster\b/i.test(question) && /\bsold to mj industrial\b/i.test(sentence)) return true;
