@@ -188,4 +188,12 @@ describe("withMemory", () => {
     expect(groundedQuestion([mizco, answer, show], 2)).toContain("mizco");
     expect(groundedQuestion([cva, answer, draft], 2)).toContain("cva");
   });
+
+  it("keeps the previous employer on a cloud follow-up", () => {
+    const harry = { id: "u1", role: "user", parts: [{ type: "text", text: "What did he do at Harry the Hirer?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "Event inventory." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "What cloud does it use?" }] } as UIMessage;
+    expect(groundedQuestion([harry, answer, follow], 2)).toContain("harry");
+    expect(groundedQuestion([follow], 0)).toBe("What cloud does it use?");
+  });
 });
