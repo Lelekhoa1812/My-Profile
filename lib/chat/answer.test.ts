@@ -1406,6 +1406,21 @@ describe("displayAnswer", () => {
     expect(surveeIs).toContain("interview tool");
     expect(surveeIs).toContain("KQA");
     expect(surveeIs).toContain("MongoDB");
+    const triageIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the clinical triage response?") }],
+      "",
+      "What is the clinical triage response?",
+    );
+    expect(triageIs).toContain("Whisper");
+    expect(triageIs).toContain("Qwen-VL");
+    const triageModels = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What models does the clinical triage use?") }],
+      "",
+      "What models does the clinical triage use?",
+    );
+    expect(triageModels).toContain("Gemini");
+    expect(triageModels).toContain("Qwen-VL");
+    expect(triageModels).not.toContain("TimesFM");
     const labBuild = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
       "",

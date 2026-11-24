@@ -162,6 +162,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (chosen.length < 2) push(blockSentences.find((sentence) => /\bpercent\b/i.test(sentence)));
   }
   const thinWork = chosen.length > 0 && chosen.every((sentence) => (/\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 6) || /\bpercent\b/i.test(sentence));
+  if (thinWork && /\bwhat is\b/i.test(question) && !chosen.some((sentence) => isDecision(question, sentence))) {
+    const uses = blockSentences.filter((sentence) => /\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 6);
+    if (uses.length >= 3) {
+      chosen.length = 0;
+      chosen.push(...uses.slice(0, 3));
+      cap = 3;
+    }
+  }
   if (thinWork && /\b(do|did)\b/i.test(question) && !/\b(percent|measure|cut|pilot|efficiency)\b/i.test(question) && !chosen.some((sentence) => isDecision(question, sentence))) {
     const sold = blockSentences.find((sentence) => /\b(sold|acquired)\b/i.test(sentence) && sentence.split(/\s+/).length <= 8);
     const uses = blockSentences.filter((sentence) => /\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 10);
@@ -190,7 +198,8 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   const openSentences = blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence));
   const workSentences = openSentences.filter((sentence) => /\b(uses|use|led|reads|covers|owns|turns|trains|answers)\b/i.test(sentence));
-  const fallback = (workSentences.length > 0 ? workSentences : openSentences).slice(0, 2);
+  const shortUses = workSentences.filter((sentence) => /\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 6);
+  const fallback = (workSentences.length > 0 ? workSentences : openSentences).slice(0, /\bwhat is\b/i.test(question) && shortUses.length >= 3 ? 3 : 2);
   const definition = /\bwhat is\b/i.test(question)
     ? openSentences.find((sentence) => sentence.split(/\s+/).length <= 16 && /\b(tool|gateway|workspace|prototype|assistant)\b/i.test(sentence))
     : undefined;
@@ -369,7 +378,12 @@ function archiveAnswer(question: string, outputs: readonly Record<string, unknow
 function modelAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
   if (/\b(speech|whisper|vision|forecast)\b/i.test(question)) return "";
   if (!/\bwhat\b/i.test(question) || !/\bmodels?\b/i.test(question) || !/\b(use|uses)\b/i.test(question) || namedEmployer(question)) return "";
-  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\b(gemini|qwen|timesfm|yolo|tft)\b/i.test(sentence) && sentence.split(/\s+/).length <= 24));
+  const product = question.match(/\b(triage|golf|prophet|poptech|ericsson)\b/i)?.[1];
+  const lines = sectionBlocks(outputs).flatMap((block) => {
+    if (product && !new RegExp(`\\b${product}\\b`, "i").test(block)) return [];
+    const pattern = product === "triage" ? /\b(whisper|gemini|qwen)\b/i : /\b(gemini|qwen|timesfm|yolo|tft)\b/i;
+    return plainSentences(block).filter((sentence) => pattern.test(sentence) && sentence.split(/\s+/).length <= 24);
+  });
   return [...new Set(lines)].slice(0, 3).join(" ");
 }
 
