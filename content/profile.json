@@ -279,7 +279,7 @@
       "heading": "Water-meter scanner",
       "sourceType": "project",
       "aliases": ["water-meter scanner", "Jetson"],
-      "text": "Water-meter scanner. ML work for VietDan JSC, December 2024 to February 2025. It reads meter photos so staff enter fewer readings. The resume records about 35 percent less manual meter processing, on more than 10,000 samples. Deployment used Jetson and AWS. Repository: Lelekhoa1812/Water-Meter-Scanner."
+      "text": "Water-meter scanner. ML work for VietDan JSC, December 2024 to February 2025. It reads meter photos so staff enter fewer readings. The resume records about 35 percent less manual meter processing, on more than 10,000 samples. The resume says the scanner was productionized. Deployment used Jetson and AWS. The record does not name a public app or a site count. Repository: Lelekhoa1812/Water-Meter-Scanner."
     },
     {
       "sectionId": "project-passport",

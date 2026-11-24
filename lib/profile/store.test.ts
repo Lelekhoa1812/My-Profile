@@ -154,6 +154,16 @@ describe("profile store", () => {
     }
   });
 
+  it("keeps the water-meter deployment off the public app list", () => {
+    const result = searchSections(profile.sections, "water meter scanner productionized");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections[0]?.sectionId).toBe("project-meter");
+      expect(result.sections[0]?.text).toContain("productionized");
+      expect(result.sections[0]?.text).toContain("does not name a public app");
+    }
+  });
+
   it("finds the writing coach sold to Hai Au Group", () => {
     const result = searchSections(profile.sections, "IELTS writing coach sold to Hai Au");
     expect(result.found).toBe(true);
