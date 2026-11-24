@@ -100,6 +100,12 @@ export function readSection(sections: readonly ProfileSection[], sectionId: stri
   };
 }
 
+function namesAnotherRole(pool: readonly { section: ProfileSection; title: string; body: string }[], terms: readonly string[]): boolean {
+  return pool.some((item) => item.section.sourceType === "role"
+    && item.section.sectionId !== "role-axion"
+    && terms.some((term) => term !== "title" && term !== "current" && (item.title.includes(term) || item.body.includes(term))));
+}
+
 function uniqueHeading(sections: readonly ProfileSection[], wanted: string): ProfileSection | undefined {
   if (wanted.length < 4) return undefined;
   const hits = sections.filter((item) => item.heading.toLowerCase().includes(wanted));
@@ -141,7 +147,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
     })
     .filter((hit) => hit.matched / terms.length >= 0.5)
     .sort((left, right) => right.score - left.score);
-  if (terms.includes("title")) {
+  if (terms.includes("title") && !namesAnotherRole(pool, terms)) {
     const current = pool.find((item) => item.section.sourceType === "role" && item.body.includes("senior ai software engineer"));
     if (current && !hits.some((hit) => hit.section.sectionId === current.section.sectionId)) {
       hits.unshift({ section: current.section, score: Number.POSITIVE_INFINITY, matched: terms.length });

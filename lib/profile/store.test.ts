@@ -24,6 +24,15 @@ describe("profile store", () => {
     }
   });
 
+  it("does not replace a named past role with the current title", () => {
+    const result = searchSections(profile.sections, "What was his title at Harry the Hirer?");
+    expect(result.found).toBe(true);
+    if (result.found) {
+      expect(result.sections[0]?.sectionId).not.toBe("role-axion");
+      expect(result.sections.some((section) => section.sectionId === "role-harry-senior")).toBe(true);
+    }
+  });
+
   it("finds the current role when the question asks for the title", () => {
     const result = searchSections(profile.sections, "current title", "role");
     expect(result.found).toBe(true);
