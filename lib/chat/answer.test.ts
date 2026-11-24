@@ -2281,6 +2281,15 @@ describe("displayAnswer", () => {
     expect(estatefolioIs).toContain("Ho Chi Minh City");
     expect(estatefolioIs).toContain("transformer");
     expect(estatefolioIs).toContain("ST-GNN");
+    const estatefolioDoes = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does EstateFolio do?") }],
+      "",
+      "What does EstateFolio do?",
+    );
+    expect(estatefolioDoes).toContain("price forecast");
+    expect(estatefolioDoes).toContain("ST-GNN");
+    expect(estatefolioDoes).toContain("transformer");
+    expect(estatefolioDoes).not.toContain("error rate");
     const estateRead = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the forecast read for estatefolio?") }],
       "",
