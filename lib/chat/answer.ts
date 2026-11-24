@@ -9,6 +9,10 @@ export function turnToStore(aborted: boolean, outputs: readonly unknown[], model
   return keptSentence(outputs, modelText);
 }
 
+export function shownAnswer(draft: string, done: boolean, hasReply: boolean): string {
+  return done && hasReply && !draft.trim() ? MISSED : draft;
+}
+
 export function keptSentence(outputs: readonly unknown[], modelText: string): string {
   const text = displayAnswer(
     outputs.map((output) => ({ type: "tool-output", state: "output-available", output })),

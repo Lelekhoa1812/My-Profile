@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { displayAnswer, dropSourceTail, keptSentence, MISSED, SILENCE, turnToStore, UNREAD } from "./answer";
+import { displayAnswer, dropSourceTail, keptSentence, MISSED, shownAnswer, SILENCE, turnToStore, UNREAD } from "./answer";
 
 describe("displayAnswer", () => {
   it("replaces a boast when every tool missed", () => {
@@ -20,6 +20,14 @@ describe("displayAnswer", () => {
 
   it("stores nothing when the visitor stops the answer", () => {
     expect(turnToStore(true, [{ found: true }], "Liam works at Axion Solutions.")).toBeNull();
+  });
+
+  it("waits while the answer is still streaming", () => {
+    expect(shownAnswer("", false, true)).toBe("");
+  });
+
+  it("shows a sentence when the finished answer has no words", () => {
+    expect(shownAnswer("   ", true, true)).toBe(MISSED);
   });
 
   it("stores a plain sentence when the model finishes with no words", () => {

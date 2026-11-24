@@ -3,7 +3,7 @@
 import { Chat, useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { displayAnswer, MISSED } from "@/lib/chat/answer";
+import { displayAnswer, shownAnswer } from "@/lib/chat/answer";
 import { sourcesFromParts, type Source } from "@/lib/chat/sources";
 
 export type Turn = { id: string; question: string; answer: string; sources: Source[]; steps: string[]; done: boolean; reading: boolean };
@@ -84,7 +84,7 @@ export function toTurns(messages: readonly UIMessage[], streaming: boolean): Tur
     const draft = reply ? displayAnswer(reply.parts, raw) : "";
     const last = index >= messages.length - 2;
     const done = !(last && streaming);
-    const answer = done && reply && !draft.trim() ? MISSED : draft;
+    const answer = shownAnswer(draft, done, Boolean(reply));
     turns.push({
       id: message.id,
       question,
