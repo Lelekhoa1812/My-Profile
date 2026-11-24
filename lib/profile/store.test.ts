@@ -206,6 +206,8 @@ describe("profile store", () => {
     expect(hai.found && hai.sections[0]?.sectionId).toBe("role-hai-au");
     expect(hai.found && hai.sections.some((section) => section.sectionId === "role-harry-senior")).toBe(false);
     expect(hai.found && hai.sections.some((section) => section.sectionId === "role-axion")).toBe(false);
+    const water = searchSections(profile.sections, "What did the water meter cut?");
+    expect(water.found && water.sections.map((section) => section.sectionId)).toEqual(["project-meter", "role-vietdan-ml"]);
   });
 
   it("opens the degree when the question asks where he studied", () => {
