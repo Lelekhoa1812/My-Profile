@@ -190,7 +190,11 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   }
   const openSentences = blockSentences.filter((sentence) => !isLabel(sentence) && !dateOnly(sentence) && !exposesGap(sentence));
   const workSentences = openSentences.filter((sentence) => /\b(uses|use|led|reads|covers|owns|turns|trains|answers)\b/i.test(sentence));
-  const body = chosen.length > 0 ? chosen : (workSentences.length > 0 ? workSentences : openSentences).slice(0, 2);
+  const fallback = (workSentences.length > 0 ? workSentences : openSentences).slice(0, 2);
+  const definition = /\bwhat is\b/i.test(question)
+    ? openSentences.find((sentence) => sentence.split(/\s+/).length <= 16 && /\b(tool|gateway|workspace|prototype|assistant)\b/i.test(sentence))
+    : undefined;
+  const body = chosen.length > 0 ? chosen : definition && !fallback.includes(definition) ? [definition, ...fallback].slice(0, 2) : fallback;
   const extra = siblingWork(outputs, blockSentences, question);
   const withExtra = extra && !body.includes(extra) ? [...body, extra] : body;
   const timed = withIdentity(question, withPeriod(withExtra, blockSentences, outputs, question), blockSentences);

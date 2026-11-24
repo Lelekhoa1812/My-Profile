@@ -1398,6 +1398,14 @@ describe("displayAnswer", () => {
       "What is a confidence gate?",
     );
     expect(confidence).toContain("confidence");
+    const surveeIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Survee?") }],
+      "",
+      "What is Survee?",
+    );
+    expect(surveeIs).toContain("interview tool");
+    expect(surveeIs).toContain("KQA");
+    expect(surveeIs).toContain("MongoDB");
     const labBuild = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he build at the Swinburne lab?") }],
       "",
