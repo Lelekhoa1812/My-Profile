@@ -160,6 +160,9 @@ describe("profile store", () => {
       expect(ids[0]).toBe("project-shipped");
       expect(ids).toContain("project-skyledge");
     }
+    const golf = searchSections(profile.sections, "What did the golf app sell to?");
+    expect(golf.found && golf.sections[0]?.sectionId).toBe("project-golf");
+    expect(golf.found && golf.sections[0]?.text).toContain("VHandicap");
     const skyledge = searchSections(profile.sections, "Who acquired the SkyLedge project?");
     expect(skyledge.found && skyledge.sections[0]?.sectionId).toBe("project-skyledge");
     expect(skyledge.found && skyledge.sections[0]?.text).toContain("Kenya");

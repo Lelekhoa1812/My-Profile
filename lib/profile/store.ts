@@ -128,7 +128,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },
     { when: text.includes("work") && text.includes("now"), ids: ["role-axion", "project-cva"] },
     { when: /\b(study|university|bachelor|degree)\b/.test(text) && !/\bresearch\b/.test(text), ids: ["education-swinburne"] },
-    { when: /\b(acquir\w*|sold)\b/.test(text), ids: saleIds(text) },
+    { when: /\b(acquir\w*|sold|sell|sale)\b/.test(text), ids: saleIds(text) },
   ];
   const match = sets.find((item) => item.when);
   if (!match) return undefined;
