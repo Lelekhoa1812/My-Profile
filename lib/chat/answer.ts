@@ -953,6 +953,28 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(title);
     }
   }
+  if (/\bopen-source coding\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const label = sentences.find((sentence) => /\bopen-source coding agent\b/i.test(sentence));
+    if (label) {
+      chosen.length = 0;
+      cap = 2;
+      chosen.push(label.endsWith(".") ? label : `${label}.`);
+      const work = sentences.find((sentence) => /\breads a repository\b/i.test(sentence));
+      if (work) push(work);
+    }
+  }
+  if (/\bmulti-agent clinical\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const label = sentences.find((sentence) => /\bmulti-agent clinical\b/i.test(sentence));
+    if (label) {
+      chosen.length = 0;
+      cap = 2;
+      chosen.push(label.endsWith(".") ? label : `${label}.`);
+      const lab = sentences.find((sentence) => /\bfive-person lab\b/i.test(sentence));
+      if (lab) push(lab);
+    }
+  }
   if (/\barchitecture\b/i.test(question) && /\bmedswin\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const extension = sentences.find((sentence) => /\bextends the medswin architecture\b/i.test(sentence));

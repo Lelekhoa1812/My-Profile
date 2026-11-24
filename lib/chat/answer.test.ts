@@ -1007,6 +1007,20 @@ describe("displayAnswer", () => {
     expect(architecture).toContain("MedViet");
     expect(architecture).toContain("extends the MedSwin architecture");
     expect(architecture.split(/(?<=[.!])\s+/)[0]).not.toContain("BERTScore");
+    const openSource = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is open-source coding?") }],
+      "",
+      "What is open-source coding?",
+    );
+    expect(openSource).toContain("Open-source coding agent");
+    expect(openSource).toContain("reads a repository");
+    const clinicalAgents = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is multi-agent clinical AI?") }],
+      "",
+      "What is multi-agent clinical AI?",
+    );
+    expect(clinicalAgents).toContain("multi-agent clinical");
+    expect(clinicalAgents).toContain("five-person lab");
     const ensemble = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the pedigree engine include?") }],
       "",
