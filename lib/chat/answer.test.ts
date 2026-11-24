@@ -772,6 +772,18 @@ describe("displayAnswer", () => {
       "What hardware runs the water meter?",
     );
     expect(meterHardware).toContain("Jetson");
+    const queue = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What queue does the S&P work use?") }],
+      "",
+      "What queue does the S&P work use?",
+    );
+    expect(queue).toContain("Kafka");
+    const classify = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e classify?") }],
+      "",
+      "What does Sall-e classify?",
+    );
+    expect(classify).toContain("localise");
     const rosterStack = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the roster app use?") }],
       "",
