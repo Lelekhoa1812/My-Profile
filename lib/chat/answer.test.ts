@@ -961,6 +961,18 @@ describe("displayAnswer", () => {
     );
     expect(harryTeam).toContain("event inventory");
     expect(harryTeam).toContain("December 2025");
+    const teqarLead = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who leads the Teqar work?") }],
+      "",
+      "Who leads the Teqar work?",
+    );
+    expect(teqarLead).toContain("Advises B2B clients");
+    const altaLead = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Who leads the Alta work?") }],
+      "",
+      "Who leads the Alta work?",
+    );
+    expect(altaLead).toContain("Kubernetes");
     expect(golfGainLead.startsWith("Sold to")).toBe(false);
     const claraAccuracy = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
