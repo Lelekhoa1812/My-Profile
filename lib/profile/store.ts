@@ -282,6 +282,8 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\b(train|trained|training)\b/.test(text) && /\b(he|him|his|lab)\b/.test(text) && !namedEmployer(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: /\b(founder|founded)\b/.test(text), ids: ["project-medvietai"] },
     { when: /\bpartners?\b/.test(text), ids: ["role-aitc"] },
+    { when: /\bdrafted\b/.test(text), ids: ["project-cva", "project-axion-workflows"] },
+    { when: /\breviewed\b/.test(text), ids: ["role-mizco", "project-cva"] },
     { when: /\b(scored|scoring)\b/.test(text) && !/\b(bertscore|writingjourney|cva)\b/.test(text), ids: ["project-cva", "project-writing"] },
     { when: /\bwater[\s-]?meter\b/.test(text) && /\b(production|exclude|claim|hardware|run|runs)\b/.test(text), ids: ["project-meter"] },
     { when: text.includes("person") && (text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-cva", "project-writing"] },

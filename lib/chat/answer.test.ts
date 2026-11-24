@@ -1136,6 +1136,26 @@ describe("displayAnswer", () => {
     );
     expect(scoredWork).toContain("role fit");
     expect(scoredWork).toContain("submission");
+    const draftRecipeDo = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the draft recipe do?") }],
+      "",
+      "What does the draft recipe do?",
+    );
+    expect(draftRecipeDo).toContain("does not send email");
+    expect(draftRecipeDo).not.toContain("Apollo");
+    const draftedWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he drafted?") }],
+      "",
+      "What has he drafted?",
+    );
+    expect(draftedWork).toContain("cover letter");
+    expect(draftedWork).toContain("same host");
+    const reviewedWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What has he reviewed?") }],
+      "",
+      "What has he reviewed?",
+    );
+    expect(reviewedWork).toContain("uncertain");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",

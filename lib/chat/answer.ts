@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || scoreAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
+  const stores = identityAnswer(question, outputs) || codeLanguageAnswer(question, outputs) || cloudAnswer(question, outputs) || deploymentAnswer(question, outputs) || databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || cityJobsAnswer(question, outputs) || firstRoleAnswer(question, outputs) || beforePeriodsAnswer(question, outputs) || percentFigureAnswer(question, outputs) || scoreAnswer(question, outputs) || draftedAnswer(question, outputs) || reviewedAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs) || toolUseAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -113,11 +113,12 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   if (/\b(do|did|build|built|role|experience)\b/i.test(question) || /\b(his|her) work\b/i.test(question)) {
     push(blockSentences.find((sentence) => isToolList(sentence)));
-    if (!chosen.some((sentence) => /\b(led|built|uses|used|owned|owns|covers|percent|python|ocr)\b/i.test(sentence))) {
+    if (!/\bdraft recipe\b/i.test(question) && !chosen.some((sentence) => /\b(led|built|uses|used|owned|owns|covers|percent|python|ocr)\b/i.test(sentence))) {
       push(workSentence(blockSentences));
     }
     const action = blockSentences.find((sentence) => /\b(scores|drafts|detect|reads|localise|localize)\b/i.test(sentence));
-    if (action && !chosen.some((sentence) => /\b(scores|drafts|detect|reads|localise|localize)\b/i.test(sentence))) push(action);
+    if (!/\bdraft recipe\b/i.test(question) && action && !chosen.some((sentence) => /\b(scores|drafts|detect|reads|localise|localize)\b/i.test(sentence))) push(action);
+    if (/\bdraft recipe\b/i.test(question)) push(blockSentences.find((sentence) => /\bemails founders\b/i.test(sentence)));
     if (/\bbuild\b/i.test(question)) {
       const stack = blockSentences.find((sentence) => (/\b(uses|used)\b/i.test(sentence) || /\bmodels include\b/i.test(sentence)) && sentence.split(/\s+/).length <= 28 && !/named tools include/i.test(sentence) && !chosen.includes(sentence));
       if (stack) {
@@ -141,6 +142,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\b500[,.]?000\b/i.test(question) && /\b(5 million|8-million)\b/i.test(item.sentence)) continue;
     if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
+    if (/\bdraft recipe\b/i.test(question) && !/\b(draft recipe|emails founders|can draft)\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\b(send|refuse)\b/i.test(question) && !/\b(send|email)\b/i.test(item.sentence) && !/\bdraft recipe\b/i.test(item.sentence)) continue;
     if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && !/\b(send|refuse)\b/i.test(question) && /\bdoes not send\b/i.test(item.sentence)) continue;
     if ((/\bdraft on\b/i.test(question) || (/\bwhere\b/i.test(question) && /\bdraft\b/i.test(question))) && !/\b(own|database)\b/i.test(question) && /\bdoes not own\b/i.test(item.sentence)) continue;
@@ -371,6 +373,18 @@ function percentFigureAnswer(question: string, outputs: readonly Record<string, 
   if (!percent || !/\bfigure\b/i.test(question)) return "";
   const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => sentence.includes(percent) && /\bpercent\b/i.test(sentence) && sentence.split(/\s+/).length <= 28));
   return [...new Set(lines)].slice(0, 3).join(" ");
+}
+
+function draftedAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bdrafted\b/i.test(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bdrafts\b|\bcan draft\b/i.test(sentence) && !/\bdoes not\b/i.test(sentence) && sentence.split(/\s+/).length <= 22));
+  return [...new Set(lines)].slice(0, 2).join(" ");
+}
+
+function reviewedAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\breviewed\b/i.test(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\breviews\b|\breviewer agent\b/i.test(sentence) && sentence.split(/\s+/).length <= 20));
+  return [...new Set(lines)].slice(0, 2).join(" ");
 }
 
 function scoreAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
@@ -718,6 +732,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bdeployed\b/i.test(question) && /\bjetson\b/i.test(sentence)) return true;
   if (/\b(founder|founded)\b/i.test(question) && /\bfounder\b/i.test(sentence)) return true;
   if (/\bpartners?\b/i.test(question) && /\bpartner work\b/i.test(sentence)) return true;
+  if (/\bdraft recipe\b/i.test(question) && /\bdraft recipe does not send email\b/i.test(sentence)) return true;
   if (/\bmeasure\b/i.test(question) && /\b(drift|impute|quality)\b/i.test(sentence)) return true;
   if (/\befficiency\b/i.test(question) && /\befficiency\b/i.test(sentence)) return true;
   if (/\b(good at|strengths)\b/i.test(question) && /\bgroups the stack\b/i.test(sentence)) return true;
