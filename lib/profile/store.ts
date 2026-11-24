@@ -119,6 +119,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("person") && (text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-cva", "project-writing"] },
     { when: text.includes("current") && (text.includes("role") || text.includes("title") || text.includes("job")), ids: ["role-axion"] },
     { when: text.includes("work") && text.includes("now"), ids: ["role-axion", "project-cva"] },
+    { when: /\b(study|university|bachelor|degree)\b/.test(text), ids: ["education-swinburne"] },
   ];
   const match = sets.find((item) => item.when);
   if (!match) return undefined;
@@ -175,6 +176,12 @@ function uniqueAlias(sections: readonly ProfileSection[], wanted: string): Profi
   return hits.length === 1 ? hits[0] : undefined;
 }
 
+function asksForPlace(query: string): boolean {
+  const text = query.toLowerCase();
+  if (/\b(model|app|production|ship|deploy)\b/.test(text)) return false;
+  return /\bwhere\b/.test(text) && /\b(live|lives|living|based|located)\b/.test(text);
+}
+
 function covers(text: string, term: string): boolean {
   if (text.includes(term)) return true;
   return term.startsWith("approv") && text.includes("approv");
@@ -202,6 +209,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       body: section.text.toLowerCase(),
     }));
   if (terms.length === 0) return broadSections(visible.filter((item) => !sourceType || item.section.sourceType === sourceType));
+  if (asksForPlace(query)) return { found: false as const };
   const pinned = pinnedSections(visible, query);
   if (pinned) return pinned;
   const pool = visible.filter((item) => !sourceType || item.section.sourceType === sourceType);

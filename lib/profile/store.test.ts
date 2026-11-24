@@ -100,6 +100,57 @@ describe("profile store", () => {
     }
   });
 
+  it("finds the section an employer names", () => {
+    const questions: Array<[string, string]> = [
+      ["What did he do at Mizco?", "role-mizco"],
+      ["What is Teqar?", "role-teqar"],
+      ["What is MedSwin?", "project-medswin"],
+      ["What is CVA?", "project-cva"],
+      ["Was SkyLedge acquired?", "project-skyledge"],
+      ["What is the Ericsson project?", "project-ericsson"],
+      ["What is free-router?", "project-router"],
+      ["What is the ADHD assistant?", "project-adhd"],
+      ["What did he do at Pythera?", "role-pythera"],
+      ["What is Codoptic?", "project-codoptic"],
+      ["What is Sall-e?", "project-salle"],
+      ["What is the golf scorecard scanner?", "project-golf"],
+      ["What is the roster app?", "project-roster"],
+      ["What is Quotient?", "project-quotient"],
+      ["What is Survee?", "project-survee"],
+      ["What is Prophet?", "project-prophet"],
+      ["What is stt-studio?", "project-stt"],
+      ["What is Acnt-MCP?", "project-acnt"],
+      ["What is MedVietAI?", "project-medvietai"],
+      ["What is the clinical triage project?", "project-triage"],
+      ["What is MedChat?", "project-medchat"],
+      ["What is EstateFolio?", "project-estatefolio"],
+      ["What is the S&P 500 forecast?", "project-sp500"],
+      ["What is the passport OCR project?", "project-passport"],
+      ["What did he do at Alta Media?", "role-alta"],
+      ["What did he do at PopTech?", "role-poptech"],
+      ["What did he do at iNet?", "role-inet"],
+      ["What did he do at AITC?", "role-aitc"],
+      ["What did he do at Hai Au Academy?", "role-hai-au"],
+      ["What did he do at Tien Thanh?", "role-tien-thanh"],
+    ];
+    const misses = questions.flatMap(([query, sectionId]) => {
+      const result = searchSections(profile.sections, query);
+      const hit = result.found && result.sections.some((section) => section.sectionId === sectionId);
+      return hit ? [] : [`${query} -> ${result.found ? result.sections.map((section) => section.sectionId).join(",") : "miss"}`];
+    });
+    expect(misses, misses.join(" | ")).toEqual([]);
+  });
+
+  it("opens the degree when the question asks where he studied", () => {
+    const result = searchSections(profile.sections, "Where did he study?");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections[0]?.sectionId).toBe("education-swinburne");
+  });
+
+  it("leaves a home-city question for the location fact", () => {
+    expect(searchSections(profile.sections, "Where does he live?").found).toBe(false);
+  });
+
   it("opens the current job when the question asks where he works now", () => {
     const result = searchSections(profile.sections, "Where does he work now, and what does a person approve?");
     expect(result.found).toBe(true);
