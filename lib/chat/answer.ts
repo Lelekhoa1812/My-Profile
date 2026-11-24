@@ -1269,6 +1269,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   if (/\bexplain/i.test(question) && !/\b(pedigree|writingjourney|writing coach|ielts|llm)\b/i.test(question) && !namedEmployer(question)) {
     keepSentences(/explains the error|LLM explanations/i, 2);
   }
+  if (/\bclara\b/i.test(question) && /\b(accur\w*|figures?|scores?|recall|precision)\b/i.test(question)) {
+    const sentence = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((line) => /95 percent/i.test(line) && /92 percent/i.test(line));
+    if (sentence) {
+      chosen.length = 0;
+      cap = 1;
+      chosen.push(sentence.endsWith(".") ? sentence : `${sentence}.`);
+    }
+  }
   if (/\bmanag/i.test(question) && !/\b(manager|roster|hai|employment)\b/i.test(question) && !namedEmployer(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [

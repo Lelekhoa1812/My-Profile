@@ -2046,6 +2046,15 @@ describe("displayAnswer", () => {
     expect(managed).toContain("rostering");
     expect(managed).not.toContain("does not list");
     expect(managed).not.toContain("August 2025");
+    const claraAccurate = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How accurate is Clara?") }],
+      "",
+      "How accurate is Clara?",
+    );
+    expect(claraAccurate).toContain("95 percent");
+    expect(claraAccurate).toContain("92 percent");
+    expect(claraAccurate).toContain("400,000");
+    expect(claraAccurate).not.toContain("sole author");
     const labLanguages = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What languages does the lab cover?") }],
       "",
