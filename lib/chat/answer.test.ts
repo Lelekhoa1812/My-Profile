@@ -912,6 +912,13 @@ describe("displayAnswer", () => {
     );
     expect(industrial).toContain("MJ Industrial");
     expect(industrial).not.toContain("PDFs");
+    const whisper = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Whisper used for?") }],
+      "",
+      "What is Whisper used for?",
+    );
+    expect(whisper.toLowerCase()).toContain("whisper");
+    expect(whisper).toContain("Speech uses Whisper");
     expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(

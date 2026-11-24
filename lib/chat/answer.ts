@@ -53,7 +53,7 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string, q
   ));
   const cleaned = text;
   if (primary.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(primary), evidenceBlocks(primary));
-  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || measureAnswer(question, outputs);
+  const stores = databaseAnswer(question, outputs) || vectorAnswer(question, outputs) || llmAnswer(question, outputs) || modelAnswer(question, outputs) || archiveAnswer(question, outputs) || sameTimeAnswer(question, outputs) || bothWorkAnswer(question, outputs) || placeAnswer(question, outputs) || measureAnswer(question, outputs) || whisperAnswer(question, outputs);
   if (stores) return stores;
   const employers = employerNames(question, outputs);
   if (employers) return employers;
@@ -196,6 +196,12 @@ function sameTimeAnswer(question: string, outputs: readonly Record<string, unkno
     }
   }
   return lines.slice(0, 3).join(" ");
+}
+
+function whisperAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (!/\bwhisper\b/i.test(question) || /\b(triage|speech|stt|studio)\b/i.test(question)) return "";
+  const lines = sectionBlocks(outputs).flatMap((block) => plainSentences(block).filter((sentence) => /\bwhisper\b/i.test(sentence) && sentence.split(/\s+/).length <= 24));
+  return [...new Set(lines)].slice(0, 2).join(" ");
 }
 
 function measureAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
