@@ -4229,6 +4229,14 @@ describe("displayAnswer", () => {
       "What is ADHD Assistant?",
     );
     expect(adhdProduct).toContain("Nvidia NIM");
+    const adhdUse = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the ADHD assistant use?") }],
+      "",
+      "What does the ADHD assistant use?",
+    );
+    expect(adhdUse).toContain("Nvidia NIM");
+    expect(adhdUse).toContain("voice or text");
+    expect(adhdUse).not.toContain("user count");
     expect(adhdProduct).toContain("voice or text");
     expect(adhdProduct).not.toContain("user count");
     const twinProduct = displayAnswer(

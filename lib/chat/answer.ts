@@ -2095,6 +2095,9 @@ function cloudAnswer(question: string, outputs: readonly Record<string, unknown>
 }
 
 function productStackAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
+  if (/\badhd\b/i.test(question) && /\b(use|uses|used|stack)\b/i.test(question)) {
+    return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).filter((sentence) => /\b(nvidia nim|voice or text)\b/i.test(sentence)).slice(0, 2).join(" ");
+  }
   if (!/\bstack\b/i.test(question)) return "";
   if (/\broster\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bkotlin\b/i.test(sentence)) ?? "";
   if (/\btriage\b/i.test(question)) return sectionBlocks(outputs).flatMap((block) => plainSentences(block)).find((sentence) => /\bportals use\b/i.test(sentence)) ?? "";
