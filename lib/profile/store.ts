@@ -369,6 +369,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bhai[\s-]?au\b/.test(text) && !/\b(sold|sell|writing|coach|ielts)\b/.test(text), ids: ["role-hai-au"] },
     { when: /\bha manager\b/.test(text), ids: ["role-hai-au"] },
     { when: /\b5g\b/.test(text), ids: ["project-ericsson"] },
+    { when: /\bericsson\b/.test(text) && /\bgraph\b/.test(text), ids: ["project-ericsson"] },
     { when: /\baccounting\b/.test(text), ids: ["project-acnt"] },
     { when: /\b(download|rank)\b/.test(text) && text.includes("medswin"), ids: ["project-medswin"] },
     { when: /\bagents?\b/.test(text) && /\b(lab|clinical|medswin)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },

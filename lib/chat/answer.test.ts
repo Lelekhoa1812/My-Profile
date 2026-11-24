@@ -801,6 +801,14 @@ describe("displayAnswer", () => {
     );
     expect(horizon).toContain("multi-horizon");
     expect(horizon).toContain("temporal fusion");
+    const ericssonGraph = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "At Ericsson, what graph model links the districts?") }],
+      "",
+      "At Ericsson, what graph model links the districts?",
+    );
+    expect(ericssonGraph).toContain("spatio-temporal graph model");
+    expect(ericssonGraph).not.toContain("districts");
+    expect(ericssonGraph).not.toContain("EstateFolio");
     const webCrawl = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is web crawling?") }],
       "",
