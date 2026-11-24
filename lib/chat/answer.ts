@@ -151,7 +151,7 @@ function withIdentity(question: string, proof: string, blockSentences: readonly 
 function withPeriod(sentences: readonly string[], blockSentences: readonly string[]): string {
   const joined = sentences.join(" ");
   if (/\b20\d{2}\b/.test(joined) || sentences.length >= 3) return joined;
-  const period = blockSentences.find((sentence) => /\b20\d{2}\b/.test(sentence) && sentence.split(/\s+/).length <= 18);
+  const period = blockSentences.find((sentence) => /\b20\d{2}\b.*\b(20\d{2}|present)\b/i.test(sentence) && sentence.split(/\s+/).length <= 18);
   return period ? `${joined} ${period}` : joined;
 }
 

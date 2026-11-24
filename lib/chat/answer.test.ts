@@ -418,6 +418,8 @@ describe("displayAnswer", () => {
     expect(medswinText.indexOf("Agentic retrieval") === -1 || medswinText.indexOf("BERTScore") < medswinText.indexOf("Agentic retrieval")).toBe(true);
     expect(medswinText).toContain("MedMCQA");
     expect(medswinText).not.toContain("5 million");
+    expect(medswinText).not.toContain("most downloaded");
+    expect(medswinText).toContain("July 2026");
     expect(medswinText.split(/\s+/).length).toBeLessThan(80);
     const pedigree = profile.sections.find((item) => item.sectionId === "role-harry-pedigree");
     const pedigreeText = displayAnswer(
