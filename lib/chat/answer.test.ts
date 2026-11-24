@@ -946,6 +946,21 @@ describe("displayAnswer", () => {
     );
     expect(salleIs).toContain("oceanic garbage");
     expect(salleIs).toContain("computer vision");
+    const golfIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the golf scorecard scanner?") }],
+      "",
+      "What is the golf scorecard scanner?",
+    );
+    expect(golfIs).toContain("VHandicap");
+    expect(golfIs).toContain("YOLOv8");
+    expect(golfIs).toContain("15 percent");
+    const rosterIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Roster management?") }],
+      "",
+      "What is Roster management?",
+    );
+    expect(rosterIs).toContain("MJ Industrial");
+    expect(rosterIs).toContain("Kotlin");
     const pedigreeMeasure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the pedigree project measure?") }],
       "",
