@@ -217,6 +217,23 @@ describe("displayAnswer", () => {
     expect(text).not.toContain("Bachelor");
   });
 
+  it("keeps Axis separate from the employer and adds the meter deployment", () => {
+    const write = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Axion Solutions. Axis is a separate AI product. It shows a preview, and waits for a person to approve a write." }] } }],
+      "In the Axion system called Axis, a model shows a preview of the proposed write and waits for a person to approve it before the write lands.",
+    );
+    expect(write).toContain("Axis");
+    expect(write).toContain("preview");
+    expect(write).not.toContain("Axion system");
+    const meter = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Water-meter scanner. ML work for VietDan JSC, December 2024 to February 2025. The resume records about 35 percent less manual meter processing, on more than 10,000 samples. Deployment used Jetson and AWS." }] } }],
+      "The resume records about 35 percent less manual meter processing on more than 10,000 samples.",
+    );
+    expect(meter).toContain("35 percent");
+    expect(meter).toContain("VietDan");
+    expect(meter).toContain("Jetson");
+  });
+
   it("drops a modifier that only exists inside a longer record word", () => {
     const text = displayAnswer(
       [{ type: "tool-read_section", state: "output-available", output: { found: true, text: "The resume records about 35 percent less manual meter processing, on more than 10,000 samples. The resume says the scanner was productionized." } }],

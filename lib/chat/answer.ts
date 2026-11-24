@@ -45,9 +45,34 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
     sourceHeadings(outputs),
   ));
   const cleaned = text;
-  if (outputs.length > 0 && cleaned.trim()) text = certifySentences(cleaned, evidenceCorpus(outputs));
+  if (outputs.length > 0 && cleaned.trim()) text = certifySentences(separateAxis(cleaned), evidenceCorpus(outputs));
   if (!text.trim() && outputs.length > 0) return recordedOutcome(outputs) || (cleaned.trim() ? holdAnswer() : "");
+  if (text.trim() && outputs.length > 0 && text.split(/\s+/).length < 22) text = withSectionProof(text, outputs);
   return text;
+}
+
+function separateAxis(text: string): string {
+  return text.replace(/\bthe Axion system called Axis\b/gi, "Axis").replace(/\bAxion system\b/gi, "Axis");
+}
+
+function withSectionProof(answer: string, outputs: readonly Record<string, unknown>[]): string {
+  const block = sectionBlocks(outputs)[0];
+  if (!block) return answer;
+  const extras = block.split(/(?<=[.!])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter((sentence) => sentence && !exposesGap(sentence))
+    .map(plainSentence)
+    .filter((sentence) => sentence.split(/\s+/).length > 3 && newProof(answer, sentence))
+    .slice(0, 2);
+  return [answer, ...extras].filter(Boolean).join(" ");
+}
+
+function newProof(answer: string, sentence: string): boolean {
+  const hay = answer.toLowerCase().replace(/,/g, "");
+  const numbers = sentence.match(/\d[\d,]*/g) ?? [];
+  if (numbers.some((value) => !hay.includes(value.replace(/,/g, "")))) return true;
+  const names = sentence.match(/\b[A-Z][A-Za-z0-9.+&-]{2,}\b/g) ?? [];
+  return names.some((name) => !LEAD_WORDS.has(name.toLowerCase()) && !hay.includes(name.toLowerCase()));
 }
 
 function recordedOutcome(outputs: readonly Record<string, unknown>[]): string {
