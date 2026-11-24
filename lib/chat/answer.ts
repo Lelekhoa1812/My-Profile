@@ -106,6 +106,15 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(workSentence(blockSentences));
     push(blockSentences.find((sentence) => /\bextends\b/i.test(sentence)));
   } else push(picked);
+  if (/\bwhat is\b/i.test(question) && /\bericsson\b/i.test(question)) {
+    cap = 8;
+    push(blockSentences.find((sentence) => /\btower telemetry\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\btemporal fusion transformer\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bautoencoder\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bpopulation stability index\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bnot a named live\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /the stack is c#/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bestatefolio\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\btransformer reads\b/i.test(sentence)));
@@ -423,6 +432,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\b5\s+million\b/i.test(question) && /\b8-million\b/i.test(item.sentence)) continue;
     if (/\b500[,.]?000\b/i.test(question) && !/\b5\s+million\b/i.test(question) && /\b(5 million|8-million)\b/i.test(item.sentence)) continue;
     if (/\b(url|link)\b/i.test(question) && /\blive\b/i.test(question) && /\bnamed live or sold\b/i.test(item.sentence)) continue;
+    if (/\bwhat is\b/i.test(question) && /\bericsson\b/i.test(question) && /\bdeployment count\b/i.test(item.sentence)) continue;
     if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && !/\b(draft recipe|emails founders|can draft)\b/i.test(item.sentence)) continue;

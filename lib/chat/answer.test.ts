@@ -1963,6 +1963,21 @@ describe("displayAnswer", () => {
       "What did he do at VietDan?",
     );
     expect(vietdanJetson).toContain("Jetson");
+    const ericssonIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the Ericsson 5G digital twin?") }],
+      "",
+      "What is the Ericsson 5G digital twin?",
+    );
+    expect(ericssonIs).toContain("temporal fusion transformer");
+    expect(ericssonIs).toContain("autoencoder");
+    expect(ericssonIs).toContain("population stability index");
+    expect(ericssonIs).not.toContain("deployment count");
+    const ericssonAnomaly = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Ericsson use for anomaly detection?") }],
+      "",
+      "What does Ericsson use for anomaly detection?",
+    );
+    expect(ericssonAnomaly.startsWith("Anomaly detection uses an autoencoder.")).toBe(true);
     expect(cameFirst).toContain("April 2023");
     expect(cameFirst).toContain("December 2024");
     const pedigreeBefore = displayAnswer(
