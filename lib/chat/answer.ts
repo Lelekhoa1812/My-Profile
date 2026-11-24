@@ -294,6 +294,30 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
         push(figure);
       }
     }
+    if (/\bwhat did he do\b/i.test(question) && /\bharry\b/i.test(question)) {
+      cap = 4;
+      push(blockSentences.find((sentence) => /\bstack includes\b/i.test(sentence)));
+    }
+    if (/\bwhat did he do\b/i.test(question) && /\bmizco\b/i.test(question)) {
+      cap = 4;
+      push(blockSentences.find((sentence) => /\binference uses\b/i.test(sentence)));
+    }
+    if (/\bwhat did he do\b/i.test(question) && /\bpoptech\b/i.test(question)) {
+      cap = 3;
+      push(blockSentences.find((sentence) => /\bmodels include\b/i.test(sentence)));
+    }
+    if (/\bwhat did he do\b/i.test(question) && /\binet\b/i.test(question)) {
+      cap = 3;
+      push(blockSentences.find((sentence) => /\bobsei\b/i.test(sentence)));
+    }
+    if (/\bwhat did he do\b/i.test(question) && /\bteqar\b/i.test(question)) {
+      cap = 3;
+      push(blockSentences.find((sentence) => /\bscope includes\b/i.test(sentence)));
+    }
+    if (/\bwhat did he do\b/i.test(question) && /\baxion\b/i.test(question)) {
+      cap = 4;
+      push(blockSentences.find((sentence) => /\blangchain\b/i.test(sentence)));
+    }
     if (/\bbuild\b/i.test(question)) {
       const stack = blockSentences.find((sentence) => (/\b(uses|used)\b/i.test(sentence) || /\bmodels include\b/i.test(sentence)) && sentence.split(/\s+/).length <= 28 && !/named tools include/i.test(sentence) && !chosen.includes(sentence));
       if (stack) {

@@ -925,12 +925,14 @@ describe("displayAnswer", () => {
       "What did he do at Harry?",
     );
     expect(harryRoleFigure).toContain("40 percent");
+    expect(harryRoleFigure).toContain("Azure");
     const mizcoRoleFigure = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Mizco?") }],
       "",
       "What did he do at Mizco?",
     );
     expect(mizcoRoleFigure).toContain("50 percent");
+    expect(mizcoRoleFigure).toContain("vLLM");
     const axionRoleWork = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Axion?") }],
       "",
@@ -938,6 +940,25 @@ describe("displayAnswer", () => {
     );
     expect(axionRoleWork).toContain("preview");
     expect(axionRoleWork).toContain("approve");
+    expect(axionRoleWork).toContain("LangChain");
+    const poptechWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at PopTech?") }],
+      "",
+      "What did he do at PopTech?",
+    );
+    expect(poptechWork).toContain("TFT");
+    const inetWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at iNet?") }],
+      "",
+      "What did he do at iNet?",
+    );
+    expect(inetWork).toContain("Obsei");
+    const teqarWork = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Teqar?") }],
+      "",
+      "What did he do at Teqar?",
+    );
+    expect(teqarWork).toContain("analytics");
     const estatefolioIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is EstateFolio?") }],
       "",
