@@ -2262,6 +2262,20 @@ describe("displayAnswer", () => {
     );
     expect(harryDocuments).toContain("document extraction");
     expect(harryDocuments).toContain("Pydantic");
+    const harryAuth = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What authentication does Harry use?") }],
+      "",
+      "What authentication does Harry use?",
+    );
+    expect(harryAuth).toContain("MSAL");
+    expect(harryAuth.startsWith("The stack includes")).toBe(false);
+    const medswinGuard = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What guardrails does MedSwin use?") }],
+      "",
+      "What guardrails does MedSwin use?",
+    );
+    expect(medswinGuard).toContain("safety guardrails");
+    expect(medswinGuard.startsWith("Fine-tuning")).toBe(false);
     expect(claraContribution).toContain("400,000");
     const claraIs = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Clara?") }],
