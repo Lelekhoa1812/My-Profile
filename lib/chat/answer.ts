@@ -1454,6 +1454,20 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question) && !namedEmployer(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\b35 percent\b/i.test(sentence) && /\bmeter\b/i.test(sentence)),
+      sentences.find((sentence) => /\bjetson\b/i.test(sentence) && /\baws\b/i.test(sentence)),
+      sentences.find((sentence) => /only named live app/i.test(sentence)),
+      sentences.find((sentence) => /person approves/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 4;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bbuild/i.test(question) && !/\bagents?\b/i.test(question) && !namedEmployer(question) && !/\b(lab|5g|axion|mizco|poptech)\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
@@ -1988,6 +2002,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\bextract/i.test(question) && !namedEmployer(question)) return joined;
   if (/\bcover/i.test(question) && !namedEmployer(question) && !/\b(lab|clinical|foodflow|traces)\b/i.test(question)) return joined;
   if (/\binclud/i.test(question) && !namedEmployer(question) && !/\b(stack|scope|models|tools)\b/i.test(question)) return joined;
+  if (/\bmeasure\b/i.test(question) && /\blive\b/i.test(question) && !namedEmployer(question)) return joined;
   if (/\b20\d{2}\b/.test(joined)) return joined;
   const period = employmentPeriod(blockSentences) || siblingPeriod(outputs, blockSentences);
   return period ? `${joined} ${period}` : joined;
