@@ -47,6 +47,7 @@ export async function postNimChat(options: {
   pool: NimPool;
   models: readonly string[];
   body: ChatBody;
+  url?: string;
   fetchImpl?: typeof fetch;
   signal?: AbortSignal;
 }): Promise<NimCall> {
@@ -61,7 +62,7 @@ export async function postNimChat(options: {
       if (!acquired.ok) break;
       calls += 1;
       try {
-        const response = await fetchImpl(NIM_CHAT_URL, {
+        const response = await fetchImpl(options.url ?? NIM_CHAT_URL, {
           method: "POST",
           signal: options.signal,
           headers: {

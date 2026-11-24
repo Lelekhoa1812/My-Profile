@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { loadNimKeys } from "./keys";
 import { NIM_MODELS } from "./models";
-import { NIM_MAX_UPSTREAM_CALLS, wireBody, type ChatBody } from "./fetch";
+import { postNimChat, type ChatBody } from "./fetch";
 import { NimPool } from "./pool";
 
 const globalForPool = globalThis as unknown as { nimPool?: NimPool; nimStamp?: string };
@@ -27,40 +27,18 @@ export function createPoolFetch(pool: NimPool, models: readonly string[] = NIM_M
     const original: ChatBody = init?.body ? JSON.parse(String(init.body)) as ChatBody : {};
     const preferred = typeof original.model === "string" ? original.model : models[0];
     const order = [preferred, ...models.filter((model) => model !== preferred)];
-    let lastStatus = 503;
-    let calls = 0;
-    for (const [index, model] of order.entries()) {
-      if (calls >= NIM_MAX_UPSTREAM_CALLS || pool.isModelDemoted(model)) continue;
-      const keyCap = index === 0 ? 2 : 1;
-      for (let attempt = 0; attempt < keyCap && calls < NIM_MAX_UPSTREAM_CALLS; attempt += 1) {
-        const acquired = pool.acquire(model);
-        if (!acquired.ok) break;
-        calls += 1;
-        const headers = new Headers(init?.headers);
-        headers.set("authorization", `Bearer ${pool.secretFor(acquired.slot)}`);
-        try {
-          const response = await fetch(input, {
-            ...init,
-            headers,
-            body: JSON.stringify(wireBody(original, model)),
-          });
-          if (response.ok) return releaseWhenDone(response, () => pool.release(acquired.slot));
-          lastStatus = response.status;
-          const decision = pool.noteFailure(acquired.slot, model, response.status, response.headers.get("retry-after"));
-          await response.body?.cancel().catch(() => undefined);
-          pool.release(acquired.slot);
-          if (decision.kind === "demote" || decision.kind === "reject") break;
-        } catch (error) {
-          pool.release(acquired.slot);
-          if (init?.signal?.aborted || (error instanceof Error && error.name === "AbortError")) throw error;
-          pool.noteFailure(acquired.slot, model, 408, null);
-        }
-      }
+    const call = await postNimChat({
+      pool,
+      models: order,
+      body: original,
+      url: input instanceof URL ? input.toString() : typeof input === "string" ? input : input.url,
+      signal: init?.signal ?? undefined,
+    });
+    if (!call.response.ok) {
+      call.release();
+      return call.response;
     }
-    return Response.json(
-      { error: { message: "No NVIDIA NIM key could complete the request", code: "upstream_unavailable" } },
-      { status: lastStatus },
-    );
+    return releaseWhenDone(call.response, call.release);
   };
 }
 
