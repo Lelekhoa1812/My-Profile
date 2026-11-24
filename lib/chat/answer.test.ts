@@ -1017,6 +1017,20 @@ describe("displayAnswer", () => {
     );
     expect(vietnameseLlm).toContain("MedSwin");
     expect(vietnameseLlm).not.toContain("Gemini");
+    const eightMillion = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the 8 million figure?") }],
+      "",
+      "What is the 8 million figure?",
+    );
+    expect(eightMillion).toContain("8-million-document");
+    expect(eightMillion).not.toContain("5 million");
+    const fiveMillion = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the 5 million figure?") }],
+      "",
+      "What is the 5 million figure?",
+    );
+    expect(fiveMillion).toContain("5 million synthetic cases");
+    expect(fiveMillion).not.toContain("8-million");
     const yoloUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is YOLO used for?") }],
       "",

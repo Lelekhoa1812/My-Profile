@@ -136,6 +136,9 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/the resume also uses the phrase/i.test(item.sentence) && !/\bphrase\b/i.test(question)) continue;
     if (orgLine && /\b(what is|tell me about)\b/i.test(question) && !/\borg\b/i.test(question) && /hugging face org is/i.test(item.sentence)) continue;
     if (/\b(good at|strengths)\b/i.test(question) && /\blanguages:/i.test(item.sentence)) continue;
+    if (/\b8[-\s]?million\b/i.test(question) && /\b(5 million|500,000|not the same count)\b/i.test(item.sentence)) continue;
+    if (/\b5\s+million\b/i.test(question) && /\b8-million\b/i.test(item.sentence)) continue;
+    if (/\b500[,.]?000\b/i.test(question) && /\b(5 million|8-million)\b/i.test(item.sentence)) continue;
     if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\b(send|refuse)\b/i.test(question) && !/\b(send|email)\b/i.test(item.sentence) && !/\bdraft recipe\b/i.test(item.sentence)) continue;
@@ -686,6 +689,9 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bcva\b/i.test(question) && /\blive\b/i.test(question) && !/\bonly named\b/i.test(question) && /cva-mauve/i.test(sentence)) return true;
   if (/\b5g\b/i.test(question) && /\btower telemetry\b/i.test(sentence)) return true;
   if (/\b(vietnamese|medviet)\b/i.test(question) && /\bextends the medswin\b/i.test(sentence)) return true;
+  if (/\b8[-\s]?million\b/i.test(question) && /\b8-million\b/i.test(sentence)) return true;
+  if (/\b5\s+million\b/i.test(question) && /\b5 million\b/i.test(sentence)) return true;
+  if (/\b500[,.]?000\b/i.test(question) && /\b500,000\b/i.test(sentence)) return true;
   if (/\bhandwriting\b/i.test(question) && /\bvision\b/i.test(question) && /qwen/i.test(sentence)) return true;
   if (/\bhandwriting\b/i.test(question) && !/\bvision\b/i.test(question) && /\bhandwriting uses\b/i.test(sentence)) return true;
   if (/\baccounting\b/i.test(question) && /\baccounting assistant\b/i.test(sentence)) return true;
