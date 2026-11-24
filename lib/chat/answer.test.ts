@@ -784,6 +784,26 @@ describe("displayAnswer", () => {
       "What does Sall-e classify?",
     );
     expect(classify).toContain("localise");
+    const managerCut = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does HA Manager reduce for the school?") }],
+      "",
+      "What does HA Manager reduce for the school?",
+    );
+    expect(managerCut).toContain("35");
+    const managerLanguage = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What language does HA Manager use?") }],
+      "",
+      "What language does HA Manager use?",
+    );
+    expect(managerLanguage).toContain("bilingual");
+    expect(managerLanguage).not.toContain("CVA");
+    const golfMeasure = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the golf scanner measure?") }],
+      "",
+      "What does the golf scanner measure?",
+    );
+    expect(golfMeasure).toContain("15");
+    expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the roster app use?") }],
       "",

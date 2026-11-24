@@ -198,6 +198,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: text.includes("axion") && (text.includes("axis") || text.includes("write") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: text.includes("axis") && (text.includes("write") || text.includes("preview") || text.includes("approve")), ids: ["role-axion", "project-axion-workflows"] },
     { when: /\bs&p\b/.test(text), ids: ["project-sp500"] },
+    { when: /\bha manager\b/.test(text), ids: ["role-hai-au"] },
     { when: text.includes("harry") && (text.includes("pilot") || text.includes("cut")), ids: ["role-harry-senior"] },
     { when: (text.includes("medswin") || text.includes("bertscore")) && /\b(bertscore|lab|score)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: text.includes("mizco"), ids: ["role-mizco"] },
@@ -375,7 +376,7 @@ const GENERIC_TERMS = new Set([
   "answer", "answers", "build", "built", "code", "data", "hold", "holds", "keep", "keeps",
   "make", "makes", "model", "models", "platform", "read", "reads", "run", "runs", "show",
   "shows", "store", "stored", "stores", "system", "tool", "tools", "used", "user", "users",
-  "using", "work", "works", "write", "writes", "between", "difference", "before", "after",
+  "using", "work", "works", "write", "writes", "between", "difference", "before", "after", "measure",
 ]);
 
 function narrowToDistinctiveLead<T extends { title: string; body: string }>(hits: readonly T[], terms: readonly string[]): T[] {
