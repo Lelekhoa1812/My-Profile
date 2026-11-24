@@ -97,6 +97,12 @@ describe("profile store", () => {
     }
   });
 
+  it("answers a Free Router share question from the gateway", () => {
+    const result = searchSections(profile.sections, "What does Free Router share?");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections[0]?.sectionId).toBe("project-router");
+  });
+
   it("answers a founder-email question from the workflow recipe", () => {
     const result = searchSections(profile.sections, "Who receives the founder email?");
     expect(result.found).toBe(true);

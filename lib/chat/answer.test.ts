@@ -4237,6 +4237,14 @@ describe("displayAnswer", () => {
     expect(adhdUse).toContain("Nvidia NIM");
     expect(adhdUse).toContain("voice or text");
     expect(adhdUse).not.toContain("user count");
+    const routerShare = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Free Router share?") }],
+      "",
+      "What does Free Router share?",
+    );
+    expect(routerShare).toContain("OpenAI-compatible");
+    expect(routerShare).not.toContain("Shared Ancestor");
+    expect(routerShare).not.toContain("matrix factorization");
     expect(adhdProduct).toContain("voice or text");
     expect(adhdProduct).not.toContain("user count");
     const twinProduct = displayAnswer(
