@@ -824,6 +824,19 @@ describe("displayAnswer", () => {
     );
     expect(mcpDuty).toContain("MCP-style");
     expect(mcpDuty).not.toContain("OpenCollective");
+    const golfGain = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did the golf scanner gain?") }],
+      "",
+      "What did the golf scanner gain?",
+    );
+    expect(golfGain).toContain("15 percent");
+    const claraAccuracy = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What accuracy did Clara record?") }],
+      "",
+      "What accuracy did Clara record?",
+    );
+    expect(claraAccuracy).toContain("95");
+    expect(claraAccuracy).toContain("92");
     const namVision = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did Nam A use for vision?") }],
       "",

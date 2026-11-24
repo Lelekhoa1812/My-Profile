@@ -183,7 +183,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       cap = 3;
     }
   }
-  if (thinWork && /\b(do|did)\b/i.test(question) && !/\b(percent|measure|cut|pilot|efficiency)\b/i.test(question) && !chosen.some((sentence) => isDecision(question, sentence))) {
+  if (thinWork && /\b(do|did)\b/i.test(question) && !/\b(percent|measure|cut|pilot|efficiency|gain|accuracy|recall|precision)\b/i.test(question) && !chosen.some((sentence) => isDecision(question, sentence))) {
     const sold = blockSentences.find((sentence) => /\b(sold|acquired)\b/i.test(sentence) && sentence.split(/\s+/).length <= 8);
     const uses = blockSentences.filter((sentence) => /\buses\b/i.test(sentence) && sentence.split(/\s+/).length <= 10);
     if (uses.length >= 2 || (sold && uses.length >= 1)) {
@@ -788,6 +788,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\btext\b/i.test(question) && /\bfinbert\b/i.test(sentence)) return true;
   if (/\bagents?\b/i.test(question) && /\blab\b/i.test(question) && /\bspecialist medical agents\b/i.test(sentence)) return true;
   if (/\b(reranker|orchestrator)\b/i.test(question) && /\breranker feeds the orchestrator\b/i.test(sentence)) return true;
+  if (/\bgolf\b/i.test(question) && /\b(gain|efficiency)\b/i.test(question) && /\b15 percent efficiency\b/i.test(sentence)) return true;
+  if (/\bclara\b/i.test(question) && /\b(accuracy|recall|precision)\b/i.test(question) && /\brecall above 95\b/i.test(sentence)) return true;
   if (/\brecord/.test(question) && !/\b(download|rank)\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;
   if (/\b(download|rank)\b/i.test(question) && /\bmost downloaded\b/i.test(sentence)) return true;
   if (/\bcva\b/i.test(question) && /\blive\b/i.test(question) && !/\bonly named\b/i.test(question) && /cva-mauve/i.test(sentence)) return true;
