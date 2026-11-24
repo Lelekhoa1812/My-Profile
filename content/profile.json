@@ -33,7 +33,7 @@
       "heading": "Shipped work",
       "sourceType": "project",
       "aliases": ["ship", "production", "live app", "deployed"],
-      "text": "Shipped work. FoodFlow uses the word production for a business module, not for a release. The record does not say FoodFlow is in a customer production environment. Named live or sold work: CVA has a live app, HA Manager was sold, WritingJourney was sold, the roster app was sold, the golf scanner was sold, and SkyLedge was acquired."
+      "text": "Shipped work. FoodFlow uses the word production for a business module, not for a release. The record does not say FoodFlow is in a customer production environment. Named live or sold work: CVA has a live app, HA Manager was sold, WritingJourney was sold, the roster app was sold, the golf scanner was sold, and SkyLedge was acquired. A sale or an acquisition is not a production release. CVA is the only named live app."
     },
     {
       "sectionId": "role-harry-senior",

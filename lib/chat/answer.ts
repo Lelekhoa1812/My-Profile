@@ -75,10 +75,18 @@ export function stripToolMarkup(text: string): string {
 }
 
 export function dropRecordTalk(text: string): string {
-  const sentences = text.trim().split(/(?<=[.!])\s+/);
+  const sentences = text.trim().split(/(?<=[.!])\s+/).map(stripRecordLead).filter(Boolean);
   const kept = sentences.filter((sentence) => !narratesRecord(sentence));
   const next = kept.join(" ").trim();
   return next || text.trim();
+}
+
+function stripRecordLead(sentence: string): string {
+  const stripped = sentence
+    .replace(/^(according to|based on) the record,\s*/i, "")
+    .replace(/^the record notes that\s*/i, "")
+    .trim();
+  return stripped ? stripped[0].toUpperCase() + stripped.slice(1) : "";
 }
 
 function narratesRecord(sentence: string): boolean {

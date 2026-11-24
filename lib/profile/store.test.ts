@@ -18,7 +18,10 @@ describe("profile store", () => {
   it("answers a ship-to-production question from the shipped-work section", () => {
     const result = searchSections(profile.sections, "What does he ship to production?");
     expect(result.found).toBe(true);
-    if (result.found) expect(result.sections[0]?.sectionId).toBe("project-shipped");
+    if (result.found) {
+      expect(result.sections[0]?.sectionId).toBe("project-shipped");
+      expect(result.sections[0]?.text).toContain("not a production release");
+    }
   });
 
   it("finds the current role when the question asks for the title", () => {

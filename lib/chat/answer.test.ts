@@ -91,6 +91,11 @@ describe("displayAnswer", () => {
     expect(text).toBe("Axis waits for approval.");
   });
 
+  it("removes a record lead-in and keeps the fact", () => {
+    const raw = '{"sentence": "According to the record, CVA has a live app. The record notes that a sale is not a production release."}';
+    expect(displayAnswer([], raw)).toBe("CVA has a live app. A sale is not a production release.");
+  });
+
   it("drops a sentence that narrates the record and keeps the answer", () => {
     const text = dropRecordTalk(
       "Liam's job title is Senior AI Software Engineer. The record lists the current title as Senior AI Software Engineer. The page title field reads AI Software Engineer.",
