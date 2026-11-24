@@ -205,6 +205,18 @@ describe("displayAnswer", () => {
     expect(detailed).not.toContain("person approves");
   });
 
+  it("replaces a denied research answer with the research role", () => {
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Swinburne research. Researcher at Swinburne University of Technology, Melbourne, August 2025 to July 2026. Clinical AI lab of five people. The resume records more than 500,000 curated cases and 86 percent BERTScore on MedMCQA, PubMedQA, and MedQuAD." }] } }],
+      "The record shows a Bachelor of Software Engineering at Swinburne University of Technology from 2022 to 2025, but it does not list any research projects. Let me know if you want me to check his Capstone Project at RMIT or his AI capstone at Axon instead.",
+    );
+    expect(text).toContain("500,000");
+    expect(text).toContain("BERTScore");
+    expect(text).not.toContain("RMIT");
+    expect(text).not.toContain("does not list");
+    expect(text).not.toContain("Bachelor");
+  });
+
   it("drops a modifier that only exists inside a longer record word", () => {
     const text = displayAnswer(
       [{ type: "tool-read_section", state: "output-available", output: { found: true, text: "The resume records about 35 percent less manual meter processing, on more than 10,000 samples. The resume says the scanner was productionized." } }],
