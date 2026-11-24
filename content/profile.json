@@ -1,0 +1,220 @@
+{
+  "facts": [
+    {"key": "full_name", "kind": "identity", "value": "Dang Khoa Le", "visibility": "public"},
+    {"key": "also_known_as", "kind": "identity", "value": "Liam", "visibility": "public"},
+    {"key": "email", "kind": "identity", "value": "liamkl.work@gmail.com", "visibility": "public"},
+    {"key": "phone", "kind": "identity", "value": "0450445373", "visibility": "public"},
+    {"key": "location", "kind": "identity", "value": "Melbourne, Australia", "visibility": "public"},
+    {"key": "linkedin", "kind": "link", "value": "https://www.linkedin.com/in/dang-khoa-le-96a6332a8", "visibility": "public"},
+    {"key": "github", "kind": "link", "value": "https://github.com/Lelekhoa1812", "visibility": "public"},
+    {"key": "huggingface", "kind": "link", "value": "https://huggingface.co/khoaliamle", "visibility": "public"},
+    {"key": "public_title", "kind": "identity", "value": "AI and Software Engineer", "visibility": "public"},
+    {"key": "degree", "kind": "education", "value": "Bachelor of Software Engineering, Swinburne University of Technology, 2022–2025", "visibility": "public"},
+    {"key": "languages", "kind": "skill", "value": "Vietnamese (native), English (fluent), Mandarin (intermediate)", "visibility": "public"}
+  ],
+  "sections": [
+    {
+      "sectionId": "role-axion",
+      "heading": "Axion Solutions",
+      "sourceType": "role",
+      "aliases": ["Axion", "Axis", "FoodFlow"],
+      "text": "Axion Solutions. Senior AI Software Engineer, July 2026 to present. The resume names the role on the Axis platform. The product record separates two systems. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. The codebase classes FoodFlow as AI-enabled, with a path toward governed agent actions. Axis is a separate AI product for Studio copilot, data insight, and message drafting. For FoodFlow, Axis is designed to call typed MCP tools, with preview and human approval before a write. Axis does not own FoodFlow's database."
+    },
+    {
+      "sectionId": "project-axion-workflows",
+      "heading": "Axion workflow engine",
+      "sourceType": "project",
+      "aliases": ["startup outreach", "investor scouting", "portfolio reporting"],
+      "text": "Axion workflow engine. A governed graph platform in the Engine monorepo. Published workflows cover startup outreach, investor scouting and persona search, and portfolio reporting. Outreach moves from a list to people search, review, and drafted email. Investor flows label personas and build lists. Portfolio reporting uses research nodes and founder email sequences. Named workers include workflow, connector, ai, axis, crawler, parser, report, and sync. Axis assists drafting on the same host. It does not own workflow run state."
+    },
+    {
+      "sectionId": "role-harry-senior",
+      "heading": "Harry the Hirer, Senior AI Engineer",
+      "sourceType": "role",
+      "aliases": ["Harry the Hirer"],
+      "text": "Harry the Hirer, Senior AI Engineer. Melbourne, December 2025 to July 2026. Enterprise multi-agent retrieval for event inventory, logistics, and planning. The resume records a pilot effort reduction of about 40 percent and an uptime claim of 99.9 percent. The work includes OCR and document pipelines, and MCP-style access to stock and planning data."
+    },
+    {
+      "sectionId": "role-harry-pedigree",
+      "heading": "Harry the Hirer, pedigree AI",
+      "sourceType": "role",
+      "aliases": ["Black Caviar"],
+      "text": "Harry the Hirer, pedigree AI. March 2026 to May 2026. Thoroughbred pedigree AI for the Black Caviar lineage platform, in an ML and data science role."
+    },
+    {
+      "sectionId": "role-mizco",
+      "heading": "Mizco",
+      "sourceType": "role",
+      "aliases": ["Trust-First", "RFQ"],
+      "text": "Mizco, AI Team Lead. Perth, November 2025 to June 2026. Trust-first platform that turns RFQ text into governed industrial artefacts. The resume records about 50 percent less manual review in the targeted workflows. The build uses constrained JSON, confidence gates, and human review."
+    },
+    {
+      "sectionId": "role-teqar",
+      "heading": "Teqar",
+      "sourceType": "role",
+      "aliases": ["consulting"],
+      "text": "Teqar, AI Development Consultant. Perth, May 2025 to present. Advises B2B clients on AI transformation, from workflow maps to staged delivery plans. The scope includes analytics, vision quality checks, chat, and data pipelines."
+    },
+    {
+      "sectionId": "role-swinburne-research",
+      "heading": "Swinburne research",
+      "sourceType": "role",
+      "aliases": ["MedSwin", "Swinburne"],
+      "text": "Swinburne research. Researcher at Swinburne University of Technology, Melbourne, August 2025 to July 2026. Clinical AI lab of five people. The resume records more than 500,000 curated cases and 86 percent BERTScore on MedMCQA, PubMedQA, and MedQuAD. A project line also cites 5 million synthetic cases. Both figures are resume wording, and they are not the same count."
+    },
+    {
+      "sectionId": "role-aitc",
+      "heading": "AITC",
+      "sourceType": "role",
+      "aliases": ["industrial assistant"],
+      "text": "AITC, Senior AI Engineer. June 2025 to November 2025. Industrial LLM, NLP, and OCR assistant. The resume names partner work with Nvidia, HPA, IBM, Juniper, and Cisco Vietnam."
+    },
+    {
+      "sectionId": "role-hai-au",
+      "heading": "Hai Au Academy",
+      "sourceType": "role",
+      "aliases": ["Hai Au", "student management"],
+      "text": "Hai Au Academy, AI Software Engineer. Binh Duong, August 2025 to October 2025. Bilingual student-management system. The resume records about 35 percent less admin effort."
+    },
+    {
+      "sectionId": "role-pythera",
+      "heading": "Pythera",
+      "sourceType": "role",
+      "aliases": ["Clara"],
+      "text": "Pythera, AI LLM Engineer. January 2025 to September 2025. Clara is a Vietnamese medical language and vision model. The resume records more than 400,000 cases, more than 210,000 imaging studies, recall above 95 percent, and precision above 92 percent on labelled sets. Clara was adopted by 175 Hospital in Ho Chi Minh City. Liam is a contributor, not the sole author."
+    },
+    {
+      "sectionId": "role-poptech",
+      "heading": "PopTech",
+      "sourceType": "role",
+      "aliases": ["electricity forecasting"],
+      "text": "PopTech, ML Engineer. Melbourne, May 2025 to July 2025. IoT electricity forecasting. Liam led a four-person team."
+    },
+    {
+      "sectionId": "role-nam-a-ai",
+      "heading": "Nam A Bank, AI and data",
+      "sourceType": "role",
+      "aliases": ["Nam Á Bank", "passport OCR"],
+      "text": "Nam A Bank, AI and data. Nam Á Bank, AI and Data Engineer, Ho Chi Minh City, December 2024 to May 2025. OCR, computer vision, and language-model research for passport and remittance documents."
+    },
+    {
+      "sectionId": "role-nam-a-software",
+      "heading": "Nam A Bank, software",
+      "sourceType": "role",
+      "aliases": ["Vert.x"],
+      "text": "Nam A Bank, software. Nam Á Bank, Software Engineer, April 2023 to June 2024. Banking modules in Java, including Vert.x and Android work."
+    },
+    {
+      "sectionId": "role-inet",
+      "heading": "iNet Solution",
+      "sourceType": "role",
+      "aliases": ["Obsei", "sentiment"],
+      "text": "iNet Solution, Software and Data Scientist. Ho Chi Minh City, April 2024 to March 2025. Sentiment pipeline over news text with Obsei and Transformers."
+    },
+    {
+      "sectionId": "role-vietdan-ml",
+      "heading": "VietDan, water meters",
+      "sourceType": "role",
+      "aliases": ["water meter", "VietDan"],
+      "text": "VietDan, water meters. ML Engineer at VietDan JSC, December 2024 to February 2025. Water-meter OCR on more than 10,000 samples. The resume records about 35 percent less manual work. Deployment used Jetson and AWS."
+    },
+    {
+      "sectionId": "role-vietdan-cloud",
+      "heading": "VietDan, cloud",
+      "sourceType": "role",
+      "aliases": ["AWS IoT"],
+      "text": "VietDan, cloud. Cloud Software Engineer at VietDan JSC, June 2022 to March 2023. AWS IoT and machine-learning services."
+    },
+    {
+      "sectionId": "role-alta",
+      "heading": "Alta Media",
+      "sourceType": "role",
+      "aliases": ["DevOps"],
+      "text": "Alta Media, DevOps Cloud Engineer. May 2022 to January 2023. AWS, Azure, Docker, Kubernetes, and CI/CD."
+    },
+    {
+      "sectionId": "role-tien-thanh",
+      "heading": "Tien Thanh Co",
+      "sourceType": "role",
+      "aliases": ["IoT"],
+      "text": "Tien Thanh Co, IoT and Software Engineer. Ho Chi Minh City, January 2020 to August 2020."
+    },
+    {
+      "sectionId": "education-swinburne",
+      "heading": "Swinburne University of Technology",
+      "sourceType": "education",
+      "aliases": ["Bachelor of Software Engineering"],
+      "text": "Swinburne University of Technology. Bachelor of Software Engineering, Melbourne, 2022 to 2025."
+    },
+    {
+      "sectionId": "project-medswin",
+      "heading": "MedSwin",
+      "sourceType": "project",
+      "aliases": ["clinical AI"],
+      "text": "MedSwin. Swinburne-funded multi-agent clinical AI. Liam led a five-person lab. Hugging Face org MedSwin hosts the models. The resume says the models were among Australia's most downloaded AI models in November and December 2025. That download rank is resume wording and was not re-counted here."
+    },
+    {
+      "sectionId": "project-medvietai",
+      "heading": "MedVietAI",
+      "sourceType": "project",
+      "aliases": ["Vietnamese medical LLM"],
+      "text": "MedVietAI. Liam is the founder of this non-profit effort toward a sovereign Vietnamese medical language model. The Hugging Face org is MedVietAI."
+    },
+    {
+      "sectionId": "project-codoptic",
+      "heading": "Codoptic",
+      "sourceType": "project",
+      "aliases": ["coding agent"],
+      "text": "Codoptic. Open-source coding agent and DSL for repository diagrams. Public repository: github.com/Codoptic/Codoptic."
+    },
+    {
+      "sectionId": "project-triage",
+      "heading": "Clinical triage response",
+      "sourceType": "project",
+      "aliases": ["drone", "MIMIC"],
+      "text": "Clinical triage response. Speech, vision, and language models over MIMIC-IV, with a drone medication-delivery path. Repository: Lelekhoa1812/Triage-LLM-Based. Space: huggingface.co/spaces/khoaliamle/Triage_LLM."
+    },
+    {
+      "sectionId": "project-skylege",
+      "heading": "SkyLedge fleet maintenance",
+      "sourceType": "project",
+      "aliases": ["OBD", "capstone"],
+      "text": "SkyLedge fleet maintenance. OBD-II capstone. The resume says SkyLedge Kenya acquired it and records about 15 percent lower servicing cost."
+    },
+    {
+      "sectionId": "project-salle",
+      "heading": "Sall-e",
+      "sourceType": "project",
+      "aliases": ["ocean garbage"],
+      "text": "Sall-e. Autonomous robot for oceanic garbage collection. The resume says Liam led a software team of five. Repository: Lelekhoa1812/Sall-e."
+    },
+    {
+      "sectionId": "project-golf",
+      "heading": "Golf scorecard scanner",
+      "sourceType": "project",
+      "aliases": ["VHandicap"],
+      "text": "Golf scorecard scanner. Sold to VHandicap. The resume records about 15 percent efficiency gain. The stack includes YOLO, VietOCR, and Qwen2.5-VL."
+    },
+    {
+      "sectionId": "project-cva",
+      "heading": "CVA",
+      "sourceType": "project",
+      "aliases": ["career agent"],
+      "text": "CVA. Career application agent. Repository: Lelekhoa1812/CVA. Live app: cva-mauve.vercel.app."
+    },
+    {
+      "sectionId": "project-roster",
+      "heading": "Roster management",
+      "sourceType": "project",
+      "aliases": ["MJ Industrial"],
+      "text": "Roster management. The resume says this product was sold to MJ Industrial Australia. Repository: Lelekhoa1812/RosterManagement. The resume does not list a separate Android employment at MJ Industrial."
+    },
+    {
+      "sectionId": "skills",
+      "heading": "Skills",
+      "sourceType": "skills",
+      "aliases": ["Python", "NIM", "LangGraph"],
+      "text": "Skills. Languages: Vietnamese native, English fluent, Mandarin intermediate. Delivery stack on the resume includes Python, Java, TypeScript, SQL, C#, React, Next.js, FastAPI, LangChain, LangGraph, LangSmith, MCP, Azure AI Foundry, AWS Bedrock, vLLM, Nvidia NIM, LoRA, and OCR pipelines."
+    }
+  ]
+}

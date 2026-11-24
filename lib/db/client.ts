@@ -17,6 +17,7 @@ export function getMongoClient(): MongoClient {
 }
 
 export function getDb(): Db {
-  const name = process.env.MONGODB_DB?.trim() || "profile";
-  return getMongoClient().db(name);
+  const name = process.env.MONGODB_DB?.trim();
+  const client = getMongoClient();
+  return name ? client.db(name) : client.db();
 }
