@@ -2581,6 +2581,13 @@ describe("displayAnswer", () => {
       "What dataset does triage use?",
     );
     expect(triageDataset.startsWith("The triage data is MIMIC-IV")).toBe(true);
+    const triageDataIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the triage data?") }],
+      "",
+      "What is the triage data?",
+    );
+    expect(triageDataIs.startsWith("The triage data is MIMIC-IV")).toBe(true);
+    expect(triageDataIs).not.toContain("Whisper");
     const labCorpus = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What corpus does the lab use?") }],
       "",

@@ -750,6 +750,14 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(limit);
     }
   }
+  if (/\bdata\b/i.test(question) && /\btriage\b/i.test(question)) {
+    const data = blockSentences.find((sentence) => /\btriage data is\b/i.test(sentence));
+    if (data) {
+      chosen.length = 0;
+      cap = 1;
+      push(data);
+    }
+  }
   if (/\btitle\b/i.test(question) && namedEmployer(question)) {
     cap = 2;
     const title = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\b(engineer|lead|researcher|founder)\b/i.test(sentence) && sentence.split(/\s+/).length <= 16);
