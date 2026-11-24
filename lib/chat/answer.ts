@@ -86,13 +86,13 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
   };
   push(decision);
   if (!decision) push(unique);
+  push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   if (/\b(do|did|build|built|work|role)\b/i.test(question)) {
     push(blockSentences.find((sentence) => isToolList(sentence)));
-    if (!chosen.some((sentence) => /\b(led|built|uses|owned|owns|covers|percent|python)\b/i.test(sentence))) {
-      push(blockSentences.find((sentence) => /\b(led|built|owned|owns|covers|trains)\b/i.test(sentence)));
+    if (!chosen.some((sentence) => /\b(led|built|uses|used|owned|owns|covers|percent|python|ocr)\b/i.test(sentence))) {
+      push(workSentence(blockSentences));
     }
   }
-  push(blockSentences.find((sentence) => /black caviar/i.test(sentence) && /\b(mate|pedigree|engine)\b/i.test(question)));
   for (const item of ranked) {
     const exact = words.some((word) => new RegExp(`\\b${word}\\b`, "i").test(item.sentence));
     if (decision && /\bhow many\b/i.test(question) && /\b\d/.test(item.sentence)) continue;
@@ -184,6 +184,13 @@ function employmentPeriod(sentences: readonly string[]): string {
   return sentences.find((sentence) => /\b20\d{2}\b.*\b(20\d{2}|present)\b/i.test(sentence) && sentence.split(/\s+/).length <= 18) ?? "";
 }
 
+function workSentence(sentences: readonly string[]): string | undefined {
+  const content = sentences.filter((sentence) => !isLabel(sentence) && !employmentPeriod([sentence]) && sentence.split(/\s+/).length >= 4);
+  return content.find((sentence) => /\b(led|trains|built|covers)\b/i.test(sentence))
+    ?? content.find((sentence) => /\b(uses|use|used|percent|ocr)\b/i.test(sentence))
+    ?? content[0];
+}
+
 function secondPeriod(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string, timed: string): string {
   if (!/\b(do|did|work|role)\b/i.test(question) || /\b(bertscore|percent|preview|score|cut|pilot|ocr|stack|many)\b/i.test(question)) return "";
   const employer = namedEmployer(question);
@@ -206,7 +213,7 @@ function siblingWork(outputs: readonly Record<string, unknown>[], blockSentences
   for (const block of sectionBlocks(outputs)) {
     const sentences = plainSentences(block);
     if (sentences.join(" ") === current || !employerMentioned(employer, block)) continue;
-    const work = sentences.find((sentence) => /\b(led|uses|use|trains|covers|built)\b/i.test(sentence) && !isLabel(sentence));
+    const work = workSentence(sentences);
     if (work && !current.includes(work)) return work;
   }
   return "";

@@ -676,6 +676,13 @@ describe("displayAnswer", () => {
     expect(nam).toContain("REST");
     expect(nam).toContain("2024");
     expect(nam).toContain("2023");
+    const vietdan = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at VietDan?") }],
+      "",
+      "What did he do at VietDan?",
+    );
+    expect(vietdan).toContain("10,000");
+    expect(vietdan).toContain("AWS IoT");
     const aitc = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did AITC build?") }],
       "",
