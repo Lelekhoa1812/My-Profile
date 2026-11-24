@@ -381,6 +381,7 @@ function mentions(sentence: string, word: string): boolean {
   if (word === "ocr" && /\b\w*ocr\b/i.test(sentence)) return true;
   if (word === "deliver" && /\bdelivery\b/i.test(sentence)) return true;
   if ((word === "summarise" || word === "summarize") && /\bsummaris(?:ation|ation)\b/i.test(sentence)) return true;
+  if (word === "plan" && /\bplanning\b/i.test(sentence)) return true;
   if (word.endsWith("s") && word.length >= 5 && new RegExp(`\\b${word.slice(0, -1)}\\b`, "i").test(sentence)) return true;
   if (word.endsWith("e") && new RegExp(`\\b${word.slice(0, -1)}ed\\b`, "i").test(sentence)) return true;
   if (word.length >= 6 && new RegExp(`\\b${word}ion\\b`, "i").test(sentence)) return true;
@@ -418,7 +419,7 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\b(sell|sold|buyer|purchas|acquir|bought)\b/i.test(question) && /\b(sold|acquired)\b/i.test(sentence)) return true;
   if (/\b(store|stored|stores|stay|stays|keep|keeps|database)\b/i.test(question) && /\bmongodb\b/i.test(sentence)) return true;
   if (/\b(stack|code|coding|programming)\b/i.test(question) && /\bpython\b/i.test(sentence)) return true;
-  if (/\bplan\b/i.test(question) && /\bplans?\b/i.test(sentence)) return true;
+  if (/\bplan\b/i.test(question) && /\b(?:plans?|planning)\b/i.test(sentence)) return true;
   if (/\b(coach|writingjourney)\b/i.test(question) && /\b(send|score|scores)\b/i.test(question) && /\bscores a submission\b/i.test(sentence)) return true;
   if (/\bcontrol\b/i.test(question) && /\bstays in control\b/i.test(sentence)) return true;
   if (/\bproduction\b/i.test(question) && !/\bship\b/i.test(question) && /\bnot (?:a|for) a release\b/i.test(sentence)) return true;
@@ -447,6 +448,7 @@ function isDecision(question: string, sentence: string): boolean {
   }
   if (/\b(poptech|electricity)\b/i.test(question) && /\btft\b/i.test(sentence)) return true;
   if (/\bstack\b/i.test(question) && isToolList(sentence)) return true;
+  if (/\bci\b/i.test(question) && /\bci\/cd\b/i.test(sentence)) return true;
   if (/\b(use|used|operate|operates)\b/i.test(question) && (/\bthe stack is\b/i.test(sentence) || isToolList(sentence))) return true;
   if (/\brepositor(?:y|ies)\b/i.test(question) && /\brepositor(?:y|ies)\b/i.test(sentence)) return true;
   if (/\btraces?\b/i.test(question) && /\btraces?\b/i.test(sentence)) return true;

@@ -200,6 +200,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bs&p\b/.test(text), ids: ["project-sp500"] },
     { when: /\bha manager\b/.test(text), ids: ["role-hai-au"] },
     { when: /\bsafety\b/.test(text) && /\bmedswin\b/.test(text), ids: ["role-swinburne-research"] },
+    { when: /\bsall-?e\b/.test(text) && /\b(plan|detect|robot|waste|classif)/.test(text), ids: ["project-salle"] },
     { when: text.includes("harry") && (text.includes("pilot") || text.includes("cut")), ids: ["role-harry-senior"] },
     { when: (text.includes("medswin") || text.includes("bertscore")) && /\b(bertscore|lab|score)\b/.test(text), ids: ["role-swinburne-research", "project-medswin"] },
     { when: text.includes("mizco"), ids: ["role-mizco"] },

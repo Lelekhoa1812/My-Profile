@@ -839,6 +839,19 @@ describe("displayAnswer", () => {
       "What does the Nam A software role use besides REST?",
     );
     expect(vertx).toContain("Vert.x");
+    const altaCi = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Alta ship through CI?") }],
+      "",
+      "What does Alta ship through CI?",
+    );
+    expect(altaCi).toContain("CI/CD");
+    const routePlan = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does Sall-e plan after detection?") }],
+      "",
+      "What does Sall-e plan after detection?",
+    );
+    expect(routePlan).toContain("route planning");
+    expect(routePlan).not.toContain("Mandarin");
     expect(golfMeasure).not.toContain("Mandarin");
     const rosterStack = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What stack does the roster app use?") }],
