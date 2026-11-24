@@ -111,6 +111,12 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\btransformer reads\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bst-gnn\b/i.test(sentence)));
   }
+  if (/\b500[,.]?000\b/i.test(question) && /\b5\s+million\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\b500,000 curated cases\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\b5 million synthetic\b/i.test(sentence)));
+    push(blockSentences.find((sentence) => /\bnot the same count\b/i.test(sentence)));
+  }
   if (/\bforecast\b/i.test(question) && /\bread\b/i.test(question) && /\bestatefolio\b/i.test(question)) {
     cap = 3;
     push(blockSentences.find((sentence) => /\btransformer reads\b/i.test(sentence)));
@@ -348,7 +354,7 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     if (/\b(good at|strengths)\b/i.test(question) && /\blanguages:/i.test(item.sentence)) continue;
     if (/\b8[-\s]?million\b/i.test(question) && /\b(5 million|500,000|not the same count)\b/i.test(item.sentence)) continue;
     if (/\b5\s+million\b/i.test(question) && /\b8-million\b/i.test(item.sentence)) continue;
-    if (/\b500[,.]?000\b/i.test(question) && /\b(5 million|8-million)\b/i.test(item.sentence)) continue;
+    if (/\b500[,.]?000\b/i.test(question) && !/\b5\s+million\b/i.test(question) && /\b(5 million|8-million)\b/i.test(item.sentence)) continue;
     if (/\bcritic\b/i.test(question) && !/\b(verif|validator)\b/i.test(question) && /\bvalidators check\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && /\bexport does not send\b/i.test(item.sentence)) continue;
     if (/\bdraft recipe\b/i.test(question) && !/\b(draft recipe|emails founders|can draft)\b/i.test(item.sentence)) continue;

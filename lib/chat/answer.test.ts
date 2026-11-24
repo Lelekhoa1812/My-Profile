@@ -1352,6 +1352,21 @@ describe("displayAnswer", () => {
     );
     expect(fiveMillion).toContain("5 million synthetic cases");
     expect(fiveMillion).not.toContain("8-million");
+    const countDifference = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the difference between the 500,000 and the 5 million?") }],
+      "",
+      "What is the difference between the 500,000 and the 5 million?",
+    );
+    expect(countDifference).toContain("500,000");
+    expect(countDifference).toContain("5 million synthetic");
+    expect(countDifference).toContain("not the same count");
+    const labPlace = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What city is the lab in?") }],
+      "",
+      "What city is the lab in?",
+    );
+    expect(labPlace).toContain("Melbourne");
+    expect(labPlace).not.toContain("Ho Chi Minh");
     const harryPercent = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is the 40 percent figure?") }],
       "",
