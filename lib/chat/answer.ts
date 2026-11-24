@@ -542,7 +542,8 @@ function isDecision(question: string, sentence: string): boolean {
   if (/\bhardware\b/i.test(question) && /\bjetson\b/i.test(sentence)) return true;
   if (/\bqueue\b/i.test(question) && /\bkafka\b/i.test(sentence)) return true;
   if (/\bclassif/i.test(question) && /\b(detect|localise|localize)\b/i.test(sentence)) return true;
-  if (/\blanguage\b/i.test(question) && !/\b(speak|code|coding|programming)\b/i.test(question) && /\bbilingual\b/i.test(sentence)) return true;
+  if (/\bbesides\b/i.test(question) && /\bcover/i.test(question) && /\bcovers\b/i.test(sentence)) return true;
+  if (/\blanguage\b/i.test(question) && !/\b(speak|code|coding|programming|besides)\b/i.test(question) && /\bbilingual\b/i.test(sentence)) return true;
   if (/\bdetect\b/i.test(question) && !/\bdrift\b/i.test(question) && /\bdetects?\b/i.test(sentence)) return true;
   if (/\barchive\b/i.test(question) && /\bprompt-me\b/i.test(sentence)) return true;
   if (/\bbertscore\b/i.test(question) && /\bbertscore\b/i.test(sentence)) return true;

@@ -1173,6 +1173,18 @@ describe("displayAnswer", () => {
       "Is CVA the only named live app?",
     );
     expect(liveApp).toContain("only named live app");
+    const besidesLanguage = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the HA Manager cover besides language?") }],
+      "",
+      "What does the HA Manager cover besides language?",
+    );
+    expect(besidesLanguage).toContain("enrollment");
+    const haLanguage = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What language does HA Manager use?") }],
+      "",
+      "What language does HA Manager use?",
+    );
+    expect(haLanguage).toContain("bilingual");
     const exportSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the export send?") }],
       "",
