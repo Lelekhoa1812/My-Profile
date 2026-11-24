@@ -1942,6 +1942,26 @@ describe("displayAnswer", () => {
     expect(medvietIs).toContain("MedSwin");
     expect(medvietIs).toContain("National Data Association");
     expect(medvietIs).toContain("EMR-based monitoring");
+    const compareRoles = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Compare Harry and Mizco") }],
+      "",
+      "Compare Harry and Mizco",
+    );
+    expect(compareRoles).toContain("Harry");
+    expect(compareRoles).toContain("Mizco");
+    const managerIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is HA Manager?") }],
+      "",
+      "What is HA Manager?",
+    );
+    expect(managerIs).toContain("enrollment");
+    const mlTools = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What machine-learning tools does he use?") }],
+      "",
+      "What machine-learning tools does he use?",
+    );
+    expect(mlTools).toContain("machine learning");
+    expect(mlTools).not.toContain("FinBERT");
     const namJava = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do in the Nam A software role?") }],
       "",

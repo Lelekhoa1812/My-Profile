@@ -216,6 +216,21 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
       };
     }
   }
+  if (namedRoles.length >= 2 && /\b(compare|versus|vs)\b/.test(text)) {
+    const roles = pool.filter((item) => item.section.sourceType === "role" && !item.section.sectionId.includes("pedigree") && namedRoles.some((employer) => employer.section(item.section.sectionId, item.title)));
+    if (roles.length >= 2) {
+      return {
+        found: true as const,
+        sections: roles.map((hit) => ({
+          sectionId: hit.section.sectionId,
+          heading: hit.section.heading,
+          sourceType: hit.section.sourceType,
+          text: hit.section.text,
+          match: "keyword" as const,
+        })),
+      };
+    }
+  }
   if (namedRoles.length >= 2 && /\b(same time|overlaps?|both)\b/.test(text)) {
     const roles = pool.filter((item) => item.section.sourceType === "role" && namedRoles.some((employer) => employer.section(item.section.sectionId, item.title)));
     if (roles.length >= 2) {
@@ -325,6 +340,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bcareer\b/.test(text) && !/\b(cva|application|agent)\b/.test(text), ids: ["role-axion"] },
     { when: (/\bknow about\b/.test(text) || /\bhire\b/.test(text) || (/\b(summarise|summarize)\b/.test(text) && /\bwork\b/.test(text))) && !namedEmployer(text), ids: ["role-axion"] },
     { when: (/\bgood at\b/.test(text) || /\bstrengths\b/.test(text)) && !namedEmployer(text), ids: ["skills"] },
+    { when: /\bmachine[-\s]learning\b/.test(text) && /\btools?\b/.test(text) && !namedEmployer(text) && !/\b(s&p|prophet|ericsson|poptech|skyledge|pedigree|triage)\b/.test(text), ids: ["skills"] },
     { when: /\bvectors?\b/.test(text) && /\b(databases?|use|uses|used|for)\b/.test(text), ids: ["skills", "project-triage"] },
     { when: /\bvietnamese\b/.test(text) && /\b(llm|medviet)\b/.test(text), ids: ["project-medvietai"] },
     { when: /\bwhat\b/.test(text) && /\bllms?\b/.test(text) && !namedEmployer(text) && !/\b(pedigree|mate|explanation|triage|golf|axion|sql|vietnamese|medviet)\b/.test(text), ids: ["project-triage", "project-golf"] },

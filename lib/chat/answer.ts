@@ -168,6 +168,10 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
     push(blockSentences.find((sentence) => /\bcomputer vision\b/i.test(sentence)));
     push(blockSentences.find((sentence) => /\bperception uses\b/i.test(sentence)));
   }
+  if (/\bwhat is\b/i.test(question) && /\bha manager\b/i.test(question)) {
+    cap = 4;
+    push(blockSentences.find((sentence) => /\benrollment\b/i.test(sentence)));
+  }
   if (/\bwhat is\b/i.test(question) && /\bmedviet\b/i.test(question)) {
     cap = 4;
     push(blockSentences.find((sentence) => /\bnational data association\b/i.test(sentence)));
@@ -636,7 +640,7 @@ function cityJobsAnswer(question: string, outputs: readonly Record<string, unkno
 }
 
 function bothWorkAnswer(question: string, outputs: readonly Record<string, unknown>[]): string {
-  if (!/\bboth\b/i.test(question) && !(/\btwo\b/i.test(question) && /\broles?\b/i.test(question))) return "";
+  if (!/\bboth\b/i.test(question) && !/\b(compare|versus|vs)\b/i.test(question) && !(/\btwo\b/i.test(question) && /\broles?\b/i.test(question))) return "";
   const lines: string[] = [];
   for (const output of outputs) {
     if (!Array.isArray(output.sections)) continue;
