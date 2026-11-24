@@ -206,6 +206,14 @@ describe("displayAnswer", () => {
     expect(detailed).not.toContain("person approves");
   });
 
+  it("keeps a normal sentence start when the offer names a recorded detail", () => {
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: "Water-meter scanner. Deployment used Jetson and AWS. The resume records about 35 percent less manual meter processing." }] } }],
+      "The scanner cut manual work by 35 percent. Would you like the Jetson deployment?",
+    );
+    expect(text).toContain("Would you like");
+  });
+
   it("replaces a denial of the pilot figure with the recorded cut", () => {
     const harry = profile.sections.find((item) => item.sectionId === "role-harry-senior");
     const text = displayAnswer(

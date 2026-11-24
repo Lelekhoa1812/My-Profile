@@ -260,6 +260,7 @@ export function dropGapSentences(text: string): string {
 }
 
 const LEAD_WORDS = new Set(["the", "a", "an", "he", "his", "her", "this", "that", "ask", "liam", "dang"]);
+const SENTENCE_STARTS = new Set(["about", "after", "also", "because", "before", "both", "could", "during", "each", "if", "let", "once", "only", "please", "should", "since", "some", "then", "there", "these", "those", "when", "while", "would"]);
 const CONTENT_STOP = new Set(["that", "this", "with", "from", "have", "what", "when", "where", "which", "about", "their", "there"]);
 
 export function evidenceCorpus(outputs: readonly Record<string, unknown>[]): string {
@@ -314,7 +315,7 @@ function sentenceWithoutUnknownNames(sentence: string, hay: string): string {
   return sentence.split(/\s+/).filter((word, index) => {
     const raw = cleanToken(word);
     if (!/^[A-Z][A-Za-z0-9.+&-]{2,}$/.test(raw)) return true;
-    if (index === 0 && LEAD_WORDS.has(raw.toLowerCase())) return true;
+    if (index === 0 && (LEAD_WORDS.has(raw.toLowerCase()) || SENTENCE_STARTS.has(raw.toLowerCase()))) return true;
     return hay.includes(raw.toLowerCase());
   }).join(" ").replace(/\s+/g, " ").trim();
 }
@@ -352,7 +353,7 @@ function namesInEvidence(sentence: string, hay: string): boolean {
   for (let index = 0; index < words.length; index += 1) {
     const raw = cleanToken(words[index]);
     if (!/^[A-Z][A-Za-z0-9.+&-]{2,}$/.test(raw)) continue;
-    if (index === 0 && LEAD_WORDS.has(raw.toLowerCase())) continue;
+    if (index === 0 && (LEAD_WORDS.has(raw.toLowerCase()) || SENTENCE_STARTS.has(raw.toLowerCase()))) continue;
     if (phrases.some((name) => name.includes(raw))) continue;
     if (!hay.includes(raw.toLowerCase())) return false;
   }
