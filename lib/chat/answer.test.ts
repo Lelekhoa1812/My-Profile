@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { displayAnswer, keptSentence, SILENCE, turnToStore, UNREAD } from "./answer";
+import { displayAnswer, dropSourceTail, keptSentence, SILENCE, turnToStore, UNREAD } from "./answer";
 
 describe("displayAnswer", () => {
   it("replaces a boast when every tool missed", () => {
@@ -24,6 +24,24 @@ describe("displayAnswer", () => {
 
   it("keeps the silence sentence for the session when every tool missed", () => {
     expect(keptSentence([{ found: false }], "He led a team of 20.")).toBe(SILENCE);
+  });
+
+  it("drops a trailing list of section headings the page already shows", () => {
+    const headings = new Set(["axion solutions", "axion workflow engine"]);
+    const text = "Axis does not own FoodFlow's database. (Axion Solutions; Axion workflow engine)";
+    expect(dropSourceTail(text, headings)).toBe("Axis does not own FoodFlow's database.");
+  });
+
+  it("keeps a real parenthesis that is not a section heading", () => {
+    expect(dropSourceTail("He speaks English (fluent).", new Set(["skills"]))).toBe("He speaks English (fluent).");
+  });
+
+  it("uses the tool headings when it drops the source tail", () => {
+    const text = displayAnswer(
+      [{ type: "tool-read_section", state: "output-available", output: { found: true, heading: "Axion Solutions" } }],
+      "Axis waits for approval. (Axion Solutions)",
+    );
+    expect(text).toBe("Axis waits for approval.");
   });
 
   it("keeps the model sentence when a tool found a section", () => {

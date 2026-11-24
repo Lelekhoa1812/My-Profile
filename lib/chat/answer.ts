@@ -22,5 +22,28 @@ export function displayAnswer(parts: readonly AnswerPart[], modelText: string): 
     .filter((output): output is Record<string, unknown> => typeof output === "object" && output !== null);
   if (outputs.some((output) => output.reason === "unavailable")) return UNREAD;
   if (outputs.length > 0 && outputs.every((output) => output.found === false)) return SILENCE;
-  return modelText.trim();
+  return dropSourceTail(modelText, sourceHeadings(outputs));
+}
+
+function sourceHeadings(outputs: readonly Record<string, unknown>[]): Set<string> {
+  const names = new Set<string>();
+  for (const output of outputs) {
+    if (typeof output.heading === "string") names.add(output.heading.trim().toLowerCase());
+    if (!Array.isArray(output.sections)) continue;
+    for (const section of output.sections) {
+      if (typeof section === "object" && section !== null && "heading" in section && typeof section.heading === "string") {
+        names.add(section.heading.trim().toLowerCase());
+      }
+    }
+  }
+  return names;
+}
+
+export function dropSourceTail(text: string, headings: ReadonlySet<string>): string {
+  const trimmed = text.trim();
+  const match = trimmed.match(/\s+\(([^)]+)\)\s*$/);
+  if (!match || match.index === undefined || headings.size === 0) return trimmed;
+  const parts = match[1].split(";").map((part) => part.trim().toLowerCase()).filter(Boolean);
+  if (parts.length === 0 || !parts.every((part) => headings.has(part))) return trimmed;
+  return trimmed.slice(0, match.index).trim();
 }
