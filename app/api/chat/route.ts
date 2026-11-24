@@ -1,11 +1,15 @@
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
+import type { UpdateFilter } from "mongodb";
 import { convertToModelMessages, isStepCount, ToolLoopAgent, type UIMessage } from "ai";
 import { instructionPrefix } from "../../../lib/agent/instructions";
 import { createProfileTools } from "../../../lib/agent/tools";
 import { loadNimKeys } from "../../../lib/nim/keys";
 import { NIM_MODELS } from "../../../lib/nim/models";
 import { createPoolFetch, getNimPool } from "../../../lib/nim/provider";
+import { recordCard } from "../../../lib/profile/card";
+import { loadProfile } from "../../../lib/profile/load";
 import { tailForModel } from "../../../lib/session/tail";
+import { appendTurns } from "../../../lib/session/turns";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -15,7 +19,7 @@ const nim = () => createOpenAICompatible({
   baseURL: "https://integrate.api.nvidia.com/v1",
   apiKey: "pool",
   includeUsage: true,
-  supportsStructuredOutputs: true,
+  supportsStructuredOutputs: false,
   fetch: createPoolFetch(getNimPool()),
 });
 
@@ -36,26 +40,36 @@ export async function POST(request: Request): Promise<Response> {
 
   const visitor = readVisitor(request);
   const threadId = cleanId(payload.threadId) ?? visitor.id;
+  const record = await loadProfile();
+  const question = lastUserText(messages);
   const agent = new ToolLoopAgent({
     model: nim().chatModel(NIM_MODELS[0]),
-    instructions: instructionPrefix(),
-    tools: createProfileTools(),
+    instructions: `${instructionPrefix()}\n\n<record>\n${recordCard(record.facts, record.sections)}\n</record>`,
+    tools: createProfileTools(record),
     stopWhen: isStepCount(5),
     maxRetries: 0,
+    maxOutputTokens: 1024,
     toolOrder: ["lookup_fact", "list_sections", "read_section", "search_sections"],
+    prepareStep: ({ stepNumber }) => {
+      if (stepNumber === 0) return { toolChoice: "required" as const };
+      if (stepNumber >= 4) return { toolChoice: "none" as const };
+      return {};
+    },
   });
   const result = await agent.stream({
     messages: tailForModel(await convertToModelMessages(messages)),
     abortSignal: request.signal,
+    timeout: { firstChunkMs: 20_000, chunkMs: 30_000, toolMs: 8_000, stepMs: 45_000, totalMs: 55_000 },
+    onEnd: (event) => {
+      void saveTurn(threadId, visitor.id, question, event.text ?? "").catch((error: unknown) => {
+        const name = error instanceof Error ? error.name : "Error";
+        console.error(`Session save failed: ${name}`);
+      });
+    },
   });
-  const response = result.toUIMessageStreamResponse({
+  return result.toUIMessageStreamResponse({
     headers: visitor.setCookie ? { "set-cookie": visitorCookie(visitor.id) } : undefined,
   });
-  void remember(threadId, visitor.id, messages).catch((error: unknown) => {
-    const name = error instanceof Error ? error.name : "Error";
-    console.error(`Session save failed: ${name}`);
-  });
-  return response;
 }
 
 function readVisitor(request: Request): { id: string; setCookie: boolean } {
@@ -74,21 +88,41 @@ function cleanId(value: string | undefined): string | undefined {
   return value;
 }
 
-async function remember(threadId: string, visitorId: string, messages: UIMessage[]): Promise<void> {
+function lastUserText(messages: readonly UIMessage[]): string {
+  const user = [...messages].reverse().find((message) => message.role === "user");
+  if (!user) return "";
+  return user.parts.map((part) => (part.type === "text" ? part.text : "")).join("");
+}
+
+async function saveTurn(threadId: string, visitorId: string, userText: string, assistantText: string): Promise<void> {
   if (!process.env.MONGODB_URI) return;
   const { getDb, markMongoDown, mongoIsQuiet } = await import("../../../lib/db/client");
   if (mongoIsQuiet()) return;
-  const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000);
+  const turns = appendTurns(userText, assistantText, new Date().toISOString());
+  if (turns.length === 0) return;
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + 48 * 60 * 60 * 1000);
   try {
-    await getDb().collection("sessions").updateOne(
-      { threadId },
-      {
-        $set: { visitorId, messages: tailForModel(messages, 40), updatedAt: new Date(), expiresAt },
-        $setOnInsert: { createdAt: new Date() },
-      },
-      { upsert: true },
-    );
+    type SessionDoc = {
+      threadId: string;
+      visitorId: string;
+      turns: typeof turns;
+      createdAt: Date;
+      updatedAt: Date;
+      expiresAt: Date;
+    };
+    const collection = getDb().collection<SessionDoc>("sessions");
+    const update: UpdateFilter<SessionDoc> = {
+      $set: { updatedAt: now, expiresAt },
+      $push: { turns: { $each: turns, $slice: -16 } },
+      $unset: { messages: "" },
+    };
+    const owned = await collection.updateOne({ threadId, visitorId }, update);
+    if (owned.matchedCount > 0) return;
+    await collection.insertOne({ threadId, visitorId, turns, createdAt: now, updatedAt: now, expiresAt });
   } catch (error) {
+    const code = typeof error === "object" && error !== null && "code" in error ? error.code : undefined;
+    if (code === 11000) return;
     markMongoDown();
     throw error;
   }

@@ -70,13 +70,18 @@ function releaseWhenDone(response: Response, release: () => void): Response {
   };
   const stream = new ReadableStream<Uint8Array>({
     async pull(controller) {
-      const step = await reader.read();
-      if (step.done) {
+      try {
+        const step = await reader.read();
+        if (step.done) {
+          finish();
+          controller.close();
+          return;
+        }
+        controller.enqueue(step.value);
+      } catch (error) {
         finish();
-        controller.close();
-        return;
+        controller.error(error);
       }
-      controller.enqueue(step.value);
     },
     cancel() {
       finish();

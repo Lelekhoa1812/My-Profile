@@ -30,6 +30,11 @@ describe("wireBody", () => {
     );
     expect(body.response_format).toBeUndefined();
   });
+
+  it("turns model thinking off unless the caller sets it", () => {
+    expect(wireBody({}, "nvidia/nemotron-3-ultra-550b-a55b").chat_template_kwargs).toEqual({ enable_thinking: false });
+    expect(wireBody({ chat_template_kwargs: { enable_thinking: true } }, "nvidia/nemotron-3-ultra-550b-a55b").chat_template_kwargs).toEqual({ enable_thinking: true });
+  });
 });
 
 describe("postNimChat", () => {

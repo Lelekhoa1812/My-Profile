@@ -14,6 +14,7 @@ export function wireBody(body: ChatBody, model: string): ChatBody {
     model,
     stream: true,
     stream_options: { include_usage: true },
+    chat_template_kwargs: { enable_thinking: false, ...(body.chat_template_kwargs as object | undefined) },
   };
   delete next.prompt_cache_key;
   delete next.prompt_cache_options;

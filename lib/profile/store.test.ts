@@ -18,4 +18,14 @@ describe("profile store", () => {
     expect(result.found).toBe(true);
     if (result.found) expect(result.sections[0]?.sectionId).toBe("role-axion");
   });
+
+  it("does not treat one shared word as a hit", () => {
+    expect(searchSections(profile.sections, "leadership philosophy at the bank")).toEqual({ found: false });
+  });
+
+  it("finds the skills section from a language question", () => {
+    const result = searchSections(profile.sections, "which languages does he speak");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections.some((section) => section.sectionId === "skills")).toBe(true);
+  });
 });

@@ -51,18 +51,40 @@ export function readSection(sections: readonly ProfileSection[], sectionId: stri
   };
 }
 
+const STOP_WORDS = new Set([
+  "the", "and", "for", "with", "what", "which", "who", "where", "when", "why", "how", "does", "did", "can",
+  "has", "have", "had", "was", "were", "are", "his", "him", "liam", "about", "tell", "that", "this", "from",
+  "into", "must", "should", "would", "could", "any", "all", "you", "your", "there", "their", "first",
+  "work", "worked", "working", "role", "project", "please", "describe",
+]);
+
 export function searchSections(sections: readonly ProfileSection[], query: string, sourceType?: string) {
-  const terms = query.toLowerCase().split(/[^a-z0-9]+/).filter((term) => term.length > 2);
+  const terms = [...new Set(query.toLowerCase().split(/[^a-z0-9]+/))]
+    .filter((term) => term.length > 2 && !STOP_WORDS.has(term));
   if (terms.length === 0) return { found: false as const };
-  const hits = sections
+  const pool = sections
     .filter((section) => (section.visibility ?? "public") === "public")
     .filter((section) => !sourceType || section.sourceType === sourceType)
-    .map((section) => {
-      const haystack = `${section.heading} ${(section.aliases ?? []).join(" ")} ${section.text}`.toLowerCase();
-      const score = terms.reduce((total, term) => total + (haystack.includes(term) ? 1 : 0), 0);
-      return { section, score };
+    .map((section) => ({
+      section,
+      title: `${section.heading} ${(section.aliases ?? []).join(" ")}`.toLowerCase(),
+      body: section.text.toLowerCase(),
+    }));
+  const weight = new Map(terms.map((term) => {
+    const frequency = pool.filter((item) => item.title.includes(term) || item.body.includes(term)).length;
+    return [term, Math.log(1 + pool.length / Math.max(1, frequency))];
+  }));
+  const hits = pool
+    .map(({ section, title, body }) => {
+      const matched = terms.filter((term) => title.includes(term) || body.includes(term)).length;
+      const score = terms.reduce((total, term) => {
+        const inTitle = title.includes(term);
+        if (!inTitle && !body.includes(term)) return total;
+        return total + (weight.get(term) ?? 0) * (inTitle ? 2 : 1);
+      }, 0);
+      return { section, score, matched };
     })
-    .filter((hit) => hit.score > 0)
+    .filter((hit) => hit.matched / terms.length >= 0.5)
     .sort((left, right) => right.score - left.score)
     .slice(0, 3);
   if (hits.length === 0) return { found: false as const };

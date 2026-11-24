@@ -8,9 +8,6 @@ export function mongoIsQuiet(): boolean {
 
 export function markMongoDown(): void {
   globalForMongo.mongoQuietUntil = Date.now() + 60_000;
-  const client = globalForMongo.profileMongo;
-  globalForMongo.profileMongo = undefined;
-  void client?.close().catch(() => undefined);
 }
 
 export function getMongoClient(): MongoClient {

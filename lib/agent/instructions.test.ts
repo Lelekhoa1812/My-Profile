@@ -6,6 +6,8 @@ describe("instructionPrefix", () => {
     const text = instructionPrefix();
     expect(text).toBe(instructionPrefix());
     expect(text).toContain("The record does not include that.");
+    expect(text).toContain("The record could not be read.");
+    expect(text).toContain("I am Liam's portfolio assistant.");
     expect(text).not.toContain("Great question");
     expect(text).not.toContain("capital-markets");
   });
