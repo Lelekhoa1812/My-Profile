@@ -58,4 +58,14 @@ describe("profile tools", () => {
     expect(spoken.sections?.[0]?.text).toContain("Vietnamese");
     expect(spoken.sections?.[0]?.text).not.toContain("Python");
   });
+
+  it("returns the Harry pilot when a project-only search misses the role", async () => {
+    const tools = createProfileTools({ facts: profile.facts, sections: profile.sections, source: "file" });
+    const search = tools.search_sections as unknown as {
+      execute: (input: { query: string; sourceType?: string }) => Promise<{ found: boolean; sections?: { sectionId: string; text: string }[] }>;
+    };
+    const result = await search.execute({ query: "pilot cut", sourceType: "project" });
+    expect(result.sections?.[0]?.sectionId).toBe("role-harry-senior");
+    expect(result.sections?.[0]?.text).toContain("40 percent");
+  });
 });

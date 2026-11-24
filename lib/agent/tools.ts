@@ -48,7 +48,9 @@ export function createProfileTools(record: ProfileRecord): ToolSet {
             };
           }
         }
-        return searchSections(sections, input.query, input.sourceType);
+        const filtered = searchSections(sections, input.query, input.sourceType);
+        if (input.sourceType && !filtered.found) return searchSections(sections, input.query);
+        return filtered;
       },
     }),
   };
