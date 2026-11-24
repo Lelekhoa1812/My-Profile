@@ -206,6 +206,16 @@ describe("displayAnswer", () => {
     expect(detailed).not.toContain("person approves");
   });
 
+  it("adds the pilot figure when a short Harry answer omits it", () => {
+    const harry = profile.sections.find((item) => item.sectionId === "role-harry-senior");
+    const text = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: { found: true, sections: [{ text: harry?.text ?? "" }] } }],
+      "He led the event inventory work.",
+    );
+    expect(text).toContain("40 percent");
+    expect(text).toContain("Planner");
+  });
+
   it("keeps a later measured figure when the model answer is dropped", () => {
     const harry = profile.sections.find((item) => item.sectionId === "role-harry-senior");
     const harryText = displayAnswer(
