@@ -2245,6 +2245,19 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       for (const sentence of lines) chosen.push(sentence);
     }
   }
+  if (/\bwhat does\b/i.test(question) && /\bengine\b/i.test(question) && /\bdo\b/i.test(question) && !/\b(export|recipe|investor|portfolio|draft|email)\b/i.test(question)) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const lines = [
+      sentences.find((sentence) => /\bgoverned graph platform\b/i.test(sentence)),
+      sentences.find((sentence) => /\bthe recipes are startup scouting\b/i.test(sentence)),
+      sentences.find((sentence) => /\bexport does not send a message\b/i.test(sentence)),
+    ].flatMap((sentence) => (sentence ? [sentence.endsWith(".") ? sentence : `${sentence}.`] : []));
+    if (lines.length > 1) {
+      chosen.length = 0;
+      cap = 3;
+      for (const sentence of lines) chosen.push(sentence);
+    }
+  }
   if (/\bfoodflow\b/i.test(question) && /\b(design|architecture|ai-native|native)\b/i.test(question)) {
     const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
     const lines = [
@@ -2763,6 +2776,7 @@ function withPeriod(sentences: readonly string[], blockSentences: readonly strin
   if (/\brelease\b/i.test(question) && !/pre-release/i.test(question) && !namedEmployer(question) && !/\b(cva|foodflow|skyledge|golf|roster|writingjourney|axis|meter|scanner)\b/i.test(question)) return joined;
   if (/\bnot a named live\b/i.test(question)) return joined;
   if (/\bfounder\b/i.test(question) && /\bemail/i.test(question)) return joined;
+  if (/\bworkflow engine\b/i.test(question) || (/\bthe engine\b/i.test(question) && !/\bpedigree\b/i.test(question))) return joined;
   if (/\b(cite|explain|train|guard|embed|validat\w*|recogni|recommend|graph|score|trace|control|fund|detect|plan|navigat|govern|compl|publish|degrad|speak|speech|transform|maint|review|read|filter|approv\w*|rank|track|own|rout|turn|check|gate|version|call|remember|memory)\b/i.test(question) && !namedEmployer(question) && !/\b(use|uses|used|for|he|him|his)\b/i.test(question)) return joined;
   if (/\bagents?\b/i.test(question) && /\b(build|built)\b/i.test(question)) return joined;
   if (/\b(lead|led|leads)\b/i.test(question) && !/\bteams?\b/i.test(question) && !namedEmployer(question)) return joined;
@@ -2815,7 +2829,7 @@ function askedOnlyHere(question: string, current: string, other: string): boolea
 }
 
 function siblingWork(outputs: readonly Record<string, unknown>[], blockSentences: readonly string[], question: string): string {
-  if (/\bavailable\b/i.test(question)) return "";
+  if (/\bavailable\b/i.test(question) || /\bworkflow engine\b/i.test(question) || (/\bthe engine\b/i.test(question) && !/\bpedigree\b/i.test(question))) return "";
   if (!/\b(do|did|work|role)\b/i.test(question) || /\b(bertscore|percent|preview|score|cut|pilot|ocr|stack|many|vision|hardware)\b/i.test(question)) return "";
   const employer = namedEmployer(question);
   if (!employer) return "";

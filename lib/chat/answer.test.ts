@@ -3497,6 +3497,16 @@ describe("displayAnswer", () => {
     expect(workflow).toContain("startup scouting");
     expect(workflow).toContain("separate from FoodFlow");
     expect(workflow).not.toContain("AI Software Engineer");
+    const engineDuty = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the Axion workflow engine do?") }],
+      "",
+      "What does the Axion workflow engine do?",
+    );
+    expect(engineDuty).toContain("governed graph");
+    expect(engineDuty).toContain("investor scouting");
+    expect(engineDuty).toContain("portfolio reporting");
+    expect(engineDuty).toContain("does not send a message");
+    expect(engineDuty).not.toContain("AI vision");
     const draftSend = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does the draft recipe send?") }],
       "",
