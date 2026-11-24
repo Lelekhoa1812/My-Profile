@@ -377,6 +377,7 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     { when: /\bwater[-\s]?meter\b/.test(text) && /\b(sample|measur\w*|productionized|result|model|cut|percent)\b/.test(text), ids: ["project-meter", "role-vietdan-ml"] },
     { when: text.includes("harry") && (text.includes("pedigree") || text.includes("earlier") || (text.includes("before") && !/\bbefore (?:harry|the hirer)\b/.test(text))), ids: ["role-harry-pedigree", "role-harry-senior"] },
     { when: /\bpedigree\b/.test(text) && /\b(based|located)\b/.test(text), ids: ["role-harry-senior", "role-harry-pedigree"] },
+    { when: /\blive\b/.test(text) && Boolean(askedProductSectionIds(text)?.length) && !/\b(cva|skyledge|roster|golf|writingjourney|writing coach)\b/.test(text), ids: askedProductSectionIds(text) ?? [] },
     { when: text.includes("live") && (text.includes("sale") || text.includes("sales") || text.includes("customer")) && !namedEmployer(text), ids: ["project-shipped", "project-cva"] },
     { when: /\bship\b/.test(text) && /\bbesides\b/.test(text), ids: ["project-shipped"] },
     { when: text.includes("ship") && text.includes("production"), ids: ["project-shipped", "project-cva"] },
