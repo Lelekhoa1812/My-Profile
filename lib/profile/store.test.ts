@@ -19,6 +19,18 @@ describe("profile store", () => {
     if (result.found) expect(result.facts[0]?.value).toBe("liamkl.work@gmail.com");
   });
 
+  it("keeps contact, place, degree, and languages on fact lookup", () => {
+    for (const key of ["phone", "location", "degree", "languages"]) {
+      const result = lookupFacts(profile.facts, { key });
+      expect(result.found, key).toBe(true);
+    }
+    expect(searchSections(profile.sections, "what is his email")).toEqual({ found: false });
+    expect(searchSections(profile.sections, "what is his phone number")).toEqual({ found: false });
+    const workflow = searchSections(profile.sections, "does the workflow send email");
+    expect(workflow.found).toBe(true);
+    if (workflow.found) expect(workflow.sections.some((section) => section.sectionId === "project-axion-workflows")).toBe(true);
+  });
+
   it("does not return every fact when the kind is absent", () => {
     const result = lookupFacts(profile.facts, { kind: "role" });
     expect(result.found).toBe(false);

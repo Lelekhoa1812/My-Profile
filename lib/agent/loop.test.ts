@@ -9,14 +9,14 @@ describe("stepTools", () => {
   it("asks for section text when the first lookup misses", () => {
     const choice = stepTools(1, [{ toolResults: [{ output: { found: false } }] }]);
     expect(choice.toolChoice).toBe("required");
-    expect(choice.activeTools).toEqual(["search_sections", "read_section"]);
+    expect(choice.activeTools).toEqual(["lookup_fact", "search_sections", "read_section"]);
   });
 
   it("asks for section text when the first lookup returns headings only", () => {
     const choice = stepTools(1, [{
       toolResults: [{ output: { found: true, sections: [{ heading: "Axion Solutions" }] } }],
     }]);
-    expect(choice).toEqual({ toolChoice: "required", activeTools: ["search_sections", "read_section"] });
+    expect(choice).toEqual({ toolChoice: "required", activeTools: ["read_section", "search_sections", "lookup_fact"] });
   });
 
   it("stops tool calls after a lookup that returns text", () => {

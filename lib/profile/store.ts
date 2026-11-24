@@ -136,6 +136,10 @@ function uniqueHeading(sections: readonly ProfileSection[], wanted: string): Pro
   return hits.length === 1 ? hits[0] : undefined;
 }
 
+const FACT_ONLY_TERMS = new Set([
+  "email", "phone", "number", "mobile", "location", "address", "degree", "linkedin", "github", "huggingface",
+]);
+
 const STOP_WORDS = new Set([
   "the", "and", "for", "with", "what", "which", "who", "where", "when", "why", "how", "does", "did", "can",
   "has", "have", "had", "was", "were", "are", "his", "him", "liam", "about", "tell", "that", "this", "from",
@@ -155,6 +159,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       body: section.text.toLowerCase(),
     }));
   if (terms.length === 0) return broadSections(pool);
+  if (terms.every((term) => FACT_ONLY_TERMS.has(term))) return { found: false as const };
   const weight = new Map(terms.map((term) => {
     const frequency = pool.filter((item) => item.title.includes(term) || item.body.includes(term)).length;
     return [term, Math.log(1 + pool.length / Math.max(1, frequency))];

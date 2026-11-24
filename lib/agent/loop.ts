@@ -1,4 +1,5 @@
-const RETRIEVAL_TOOLS = ["search_sections", "read_section"] as const;
+const SECTION_TOOLS = ["read_section", "search_sections", "lookup_fact"] as const;
+const MISS_TOOLS = ["lookup_fact", "search_sections", "read_section"] as const;
 
 export type ToolStep = {
   toolResults?: readonly { output?: unknown }[];
@@ -11,8 +12,12 @@ export type StepToolChoice = {
 
 export function stepTools(stepNumber: number, steps: readonly ToolStep[]): StepToolChoice {
   if (stepNumber === 0) return { toolChoice: "required" };
-  if (stepNumber === 1 && needsAnotherLookup(lastOutputs(steps))) {
-    return { toolChoice: "required", activeTools: [...RETRIEVAL_TOOLS] };
+  const outputs = lastOutputs(steps);
+  if (stepNumber === 1 && outputs.length > 0 && outputs.every((output) => output.found === false)) {
+    return { toolChoice: "required", activeTools: [...MISS_TOOLS] };
+  }
+  if (stepNumber === 1 && needsSectionText(outputs)) {
+    return { toolChoice: "required", activeTools: [...SECTION_TOOLS] };
   }
   return { toolChoice: "none", activeTools: [] };
 }
@@ -22,9 +27,8 @@ function lastOutputs(steps: readonly ToolStep[]): readonly Record<string, unknow
   return (last?.toolResults ?? []).map((result) => result.output).filter(isRecord);
 }
 
-function needsAnotherLookup(outputs: readonly Record<string, unknown>[]): boolean {
+function needsSectionText(outputs: readonly Record<string, unknown>[]): boolean {
   if (outputs.length === 0) return false;
-  if (outputs.every((output) => output.found === false)) return true;
   return outputs.every((output) => Array.isArray(output.sections) && output.sections.length > 0 && output.sections.every(hasNoText));
 }
 
