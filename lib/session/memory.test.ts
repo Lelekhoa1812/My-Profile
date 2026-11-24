@@ -196,4 +196,12 @@ describe("withMemory", () => {
     expect(groundedQuestion([harry, answer, follow], 2)).toContain("harry");
     expect(groundedQuestion([follow], 0)).toBe("What cloud does it use?");
   });
+
+  it("keeps the previous subject on a deploy follow-up", () => {
+    const ericsson = { id: "u1", role: "user", parts: [{ type: "text", text: "What is Ericsson?" }] } as UIMessage;
+    const answer = { id: "a1", role: "assistant", parts: [{ type: "text", text: "A 5G twin." }] } as UIMessage;
+    const follow = { id: "u2", role: "user", parts: [{ type: "text", text: "Where was it deployed?" }] } as UIMessage;
+    expect(groundedQuestion([ericsson, answer, follow], 2)).toContain("ericsson");
+    expect(groundedQuestion([follow], 0)).toBe("Where was it deployed?");
+  });
 });
