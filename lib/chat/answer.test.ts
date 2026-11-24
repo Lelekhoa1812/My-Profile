@@ -1662,6 +1662,13 @@ describe("displayAnswer", () => {
     expect(reactDuty).toContain("React Native");
     expect(reactDuty).toContain("React page");
     expect(reactDuty).not.toContain("ReAct");
+    const reactTool = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does ReAct do?") }],
+      "",
+      "What does ReAct do?",
+    );
+    expect(reactTool).toContain("ReAct tool calling");
+    expect(reactTool).not.toContain("React Native");
     const qwenUse = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Qwen used for?") }],
       "",

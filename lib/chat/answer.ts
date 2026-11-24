@@ -1009,9 +1009,11 @@ function toolDutyAnswer(question: string, outputs: readonly Record<string, unkno
   const name = raw?.toLowerCase();
   if (!raw || !name || ["the", "his", "her", "its", "this", "that"].includes(name)) return "";
   const token = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const named = name === "react"
-    ? /(?<![\w-])React(?![a-zA-Z])/
-    : new RegExp(`(?<![\\w-])${token}(?![a-z])`, "i");
+  const named = raw === "ReAct"
+    ? /(?<![\w-])ReAct(?![a-zA-Z])/
+    : name === "react"
+      ? /(?<![\w-])React(?![a-zA-Z])/
+      : new RegExp(`(?<![\\w-])${token}(?![a-z])`, "i");
   const keep = (sentence: string) => {
     const length = sentence.split(/\s+/).length;
     const shortDuty = length === 3 && /\b(use|uses|used|checks)\b/i.test(sentence);
