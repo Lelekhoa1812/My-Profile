@@ -953,6 +953,19 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(title);
     }
   }
+  if (/\bfleet maintenance\b/i.test(question) || (/\bskyledge\b/i.test(question) && !/\bstack\b/i.test(question))) {
+    const sentences = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const label = sentences.find((sentence) => /\bfleet maintenance\b/i.test(sentence));
+    if (label && !chosen.some((sentence) => /\bfleet maintenance\b/i.test(sentence))) {
+      chosen.unshift(label.endsWith(".") ? label : `${label}.`);
+      if (chosen.length === 1) {
+        const platform = sentences.find((sentence) => /\bOBD-II\b/.test(sentence));
+        const fault = sentences.find((sentence) => /\bfault prediction\b/i.test(sentence));
+        if (platform) chosen.push(platform);
+        if (fault) chosen.push(fault);
+      }
+    }
+  }
   const askedTool = question.match(/^what is (?:an?\s+|the\s+)?([a-z0-9.+#-]{2,}(?:\s+[a-z0-9.+#-]{2,}){0,2})\??$/i)?.[1];
   if (askedTool) {
     const pattern = askedTool.split(/\s+/).map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("\\s+");

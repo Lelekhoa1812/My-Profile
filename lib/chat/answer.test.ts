@@ -773,6 +773,20 @@ describe("displayAnswer", () => {
       "What reviews uncertain output?",
     );
     expect(uncertain).toContain("person reviews uncertain output");
+    const fleet = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is fleet maintenance?") }],
+      "",
+      "What is fleet maintenance?",
+    );
+    expect(fleet.split(/(?<=[.!])\s+/)[0]).toContain("SkyLedge fleet maintenance");
+    expect(fleet).toContain("OBD-II");
+    const skyledgeName = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is SkyLedge?") }],
+      "",
+      "What is SkyLedge?",
+    );
+    expect(skyledgeName).toContain("fleet maintenance");
+    expect(skyledgeName).toContain("SkyLedge Kenya");
     const webCrawl = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is web crawling?") }],
       "",
