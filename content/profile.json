@@ -217,6 +217,27 @@
       "text": "Roster management. The resume says this product was sold to MJ Industrial Australia. Repository: Lelekhoa1812/RosterManagement. The resume does not list a separate Android employment at MJ Industrial."
     },
     {
+      "sectionId": "project-ericsson",
+      "heading": "Ericsson 5G digital twin",
+      "sourceType": "project",
+      "aliases": ["Ericsson", "5G", "Swinburne"],
+      "text": "Ericsson 5G digital twin. The resume says Ericsson Vietnam and Swinburne funded this predictive-maintenance platform. It reads tower telemetry, forecasts bandwidth pressure, and detects degradation. The record does not include a deployment count."
+    },
+    {
+      "sectionId": "project-adhd",
+      "heading": "ADHD Assistant",
+      "sourceType": "project",
+      "aliases": ["Nvidia NIM", "daily planning"],
+      "text": "ADHD Assistant. The resume describes a Nvidia NIM helper for daily routines and planning. It uses voice or text, breaks a task down, and checks progress. The record does not include a user count or a clinical outcome."
+    },
+    {
+      "sectionId": "project-medchat",
+      "heading": "MedChat",
+      "sourceType": "project",
+      "aliases": ["medical conversation", "multilingual"],
+      "text": "MedChat. The resume calls this a prototype. It is a multilingual medical conversation agent with a planner, specialist routing, and citation checks. The resume does not describe it as a deployed clinical system."
+    },
+    {
       "sectionId": "project-public-code",
       "heading": "Public repositories",
       "sourceType": "project",

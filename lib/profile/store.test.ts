@@ -33,6 +33,12 @@ describe("profile store", () => {
     expect(searchSections(profile.sections, "leadership philosophy at the bank")).toEqual({ found: false });
   });
 
+  it("finds the Ericsson digital twin from the resume", () => {
+    const result = searchSections(profile.sections, "Ericsson 5G digital twin");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections.some((section) => section.sectionId === "project-ericsson")).toBe(true);
+  });
+
   it("finds the writing coach sold to Hai Au Group", () => {
     const result = searchSections(profile.sections, "IELTS writing coach sold to Hai Au");
     expect(result.found).toBe(true);

@@ -209,7 +209,7 @@ export const projects: Project[] = [
   { id: "roster", sectionId: "project-roster", title: "Roster management", label: "Sold to MJ Industrial Australia", line: "Android roster and payroll app.", image: "roster.jpg", alt: "Roster management Android screens", links: [{ label: "GitHub", href: "https://github.com/Lelekhoa1812/RosterManagement" }] },
   { id: "salle", sectionId: "project-salle", title: "Sall-e", label: "Robotics", line: "Ocean-cleanup robot. Led the software team of five.", image: "salle.png", alt: "Sall-e marine debris detection", links: [{ label: "GitHub", href: "https://github.com/Lelekhoa1812/Sall-e" }, { label: "Space", href: "https://huggingface.co/spaces/khoaliamle/Sall-eGarbageDetection" }] },
   { id: "writing", sectionId: "project-writing", title: "WritingJourney", label: "Sold to Hai Au Group", line: "IELTS, PTE, and TOEIC writing coach, version 1.5.0.", image: "ielts.png", alt: "WritingJourney essay feedback screen", links: [{ label: "Live", href: "https://ielts-writing-boost.vercel.app" }, { label: "GitHub", href: "https://github.com/Lelekhoa1812/Writing-Journey" }] },
-  { id: "ericsson", title: "Ericsson 5G digital twin", label: "Ericsson Vietnam and Swinburne", line: "Predictive maintenance for 5G towers.", image: "5g.jpg", alt: "5G tower digital twin", links: [] },
+  { id: "ericsson", sectionId: "project-ericsson", title: "Ericsson 5G digital twin", label: "Ericsson Vietnam and Swinburne", line: "Predictive maintenance for 5G towers.", image: "5g.jpg", alt: "5G tower digital twin", links: [] },
 ];
 
 export const research = {

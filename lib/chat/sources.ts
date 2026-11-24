@@ -13,6 +13,8 @@ type ToolLikePart = { type: string; state?: string; output?: unknown };
 const HREF: Record<string, string> = {
   "project-axion-workflows": "#case-axis",
   "project-medvietai": "#research",
+  "project-adhd": "#projects",
+  "project-medchat": "#projects",
   "project-public-code": "#archive",
   "project-hf-models": "#archive",
   skills: "#skills",
