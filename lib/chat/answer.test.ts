@@ -5282,6 +5282,31 @@ describe("displayAnswer", () => {
     expect(medswin).not.toContain("synthetic passport set");
   });
 
+  it("answers what a role does with the recorded work", () => {
+    const questions = [
+      ["What does Mizco do?", "trust-first", "50 percent"],
+      ["What does Teqar do?", "AI transformation", "analytics"],
+      ["What does AITC do?", "unstructured PDFs", "mentored data engineers"],
+      ["What does Pythera do?", "Clara", "175 Hospital"],
+      ["What does MedVietAI do?", "founder", "National Data Association"],
+    ];
+    for (const [question, work, proof] of questions) {
+      const answer = displayAnswer(
+        [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, question) }],
+        "",
+        question,
+      );
+      expect(answer, question).toContain(work);
+      expect(answer, question).toContain(proof);
+    }
+    const mizcoRole = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Mizco?") }],
+      "",
+      "What did he do at Mizco?",
+    );
+    expect(mizcoRole).toContain("vLLM");
+  });
+
   it("answers the FoodFlow design question and the Mizco outcome question", () => {
     const design = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How Liam design AI-native software for FoodFlow ERP?") }],
