@@ -766,6 +766,33 @@ function focusOnQuestion(text: string, outputs: readonly Record<string, unknown>
       push(limit);
     }
   }
+  if (/\bopenrouter\b/i.test(question) && !/\bfree-router\b/i.test(question)) {
+    const providers = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bopenrouter\b/i.test(sentence) && /\bproviders\b/i.test(sentence));
+    if (providers) {
+      chosen.length = 0;
+      cap = 1;
+      push(providers);
+    }
+  }
+  if (/\bnim\b/i.test(question)) {
+    const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).filter((sentence) => /\bnim\b/i.test(sentence) && !exposesGap(sentence) && sentence.split(/\s+/).length <= 24);
+    if (lines.length > 0) {
+      chosen.length = 0;
+      cap = 2;
+      for (const sentence of lines.slice(0, 2)) push(sentence);
+    }
+  }
+  if (/\blive\b/i.test(question) && /\b(golf|roster)\b/i.test(question)) {
+    const lines = sectionBlocks(outputs).flatMap((item) => plainSentences(item));
+    const sold = lines.find((sentence) => /\bsold to\b/i.test(sentence));
+    const only = lines.find((sentence) => /\bonly named live app\b/i.test(sentence));
+    if (sold || only) {
+      chosen.length = 0;
+      cap = 2;
+      if (only) chosen.push(only);
+      if (sold) chosen.push(sold);
+    }
+  }
   if (/\bguardrails?\b/i.test(question)) {
     const guard = sectionBlocks(outputs).flatMap((item) => plainSentences(item)).find((sentence) => /\bguardrails?\b/i.test(sentence));
     if (guard) {

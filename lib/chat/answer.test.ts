@@ -632,6 +632,30 @@ describe("displayAnswer", () => {
       "Is the roster app live?",
     );
     expect(rosterLive).toContain("only named live app");
+    expect(rosterLive).toContain("MJ Industrial");
+    const golfLive = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Is the golf scanner live?") }],
+      "",
+      "Is the golf scanner live?",
+    );
+    expect(golfLive).toContain("only named live app");
+    expect(golfLive).toContain("VHandicap");
+    expect(golfLive).not.toContain("YOLOv8");
+    const openRouterIs = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is OpenRouter?") }],
+      "",
+      "What is OpenRouter?",
+    );
+    expect(openRouterIs).toContain("OpenRouter");
+    expect(openRouterIs).toContain("providers");
+    expect(openRouterIs).not.toContain("Next.js");
+    const nimUsed = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What is Nvidia NIM used for?") }],
+      "",
+      "What is Nvidia NIM used for?",
+    );
+    expect(nimUsed).toContain("NIM helper");
+    expect(nimUsed).toContain("OpenRouter");
     const faults = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "How does SkyLedge predict faults?") }],
       "",
