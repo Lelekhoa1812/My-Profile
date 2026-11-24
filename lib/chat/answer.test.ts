@@ -1150,6 +1150,16 @@ describe("displayAnswer", () => {
     expect(beforeMeter).toContain("June 2022");
     expect(beforeMeter).not.toContain("Jetson");
     expect(beforeMeter).not.toContain("35 percent");
+    const beforeAi = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What did he do at Nam A before the AI role?") }],
+      "",
+      "What did he do at Nam A before the AI role?",
+    );
+    expect(beforeAi).toContain("Software Engineer");
+    expect(beforeAi).toContain("April 2023");
+    expect(beforeAi).toContain("authentication");
+    expect(beforeAi).not.toContain("VietOCR");
+    expect(beforeAi).not.toContain("December 2024");
     const medswinStart = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "When did MedSwin start?") }],
       "",
