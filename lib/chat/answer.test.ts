@@ -582,6 +582,13 @@ describe("displayAnswer", () => {
       "Who stays in control of the writing coach?",
     );
     expect(control).toContain("stays in control");
+    const production = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Is FoodFlow in production?") }],
+      "",
+      "Is FoodFlow in production?",
+    );
+    expect(production).toContain("business module");
+    expect(production).toContain("not for a release");
     expect(ocr).not.toContain("Pydantic");
     const sold = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What products has he sold?") }],
