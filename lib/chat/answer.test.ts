@@ -1601,6 +1601,12 @@ describe("displayAnswer", () => {
     );
     expect(signalUse).toContain("10-signal");
     expect(signalUse).not.toContain("LangChain");
+    const cvaWhere = displayAnswer(
+      [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "Where is CVA live?") }],
+      "",
+      "Where is CVA live?",
+    );
+    expect(cvaWhere).toContain("cva-mauve.vercel.app");
     const fastapiDuty = displayAnswer(
       [{ type: "tool-search_sections", state: "output-available", output: searchSections(profile.sections, "What does FastAPI do?") }],
       "",

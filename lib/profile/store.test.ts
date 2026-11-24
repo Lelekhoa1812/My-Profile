@@ -284,6 +284,12 @@ describe("profile store", () => {
     expect(searchSections(profile.sections, "Where does he live?").found).toBe(false);
   });
 
+  it("finds the live app when the question asks where CVA is live", () => {
+    const result = searchSections(profile.sections, "Where is CVA live?");
+    expect(result.found).toBe(true);
+    if (result.found) expect(result.sections.some((section) => section.sectionId === "project-cva" || section.sectionId === "project-shipped")).toBe(true);
+  });
+
   it("opens the current job when the question asks where he works now", () => {
     const result = searchSections(profile.sections, "Where does he work now, and what does a person approve?");
     expect(result.found).toBe(true);
