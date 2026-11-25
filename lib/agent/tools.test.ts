@@ -142,4 +142,24 @@ describe("profile tools", () => {
     const full = await read.execute({ sectionIds: ["role-harry-senior"] });
     expect(full.sections?.[0]?.text).toContain("40 percent");
   });
+
+  it("keeps a catalogue section that used to sit past the third lead", async () => {
+    const tools = createProfileTools({ facts: profile.facts, sections: profile.sections, source: "file" });
+    const search = tools.search_sections as unknown as {
+      execute: (input: { query: string }) => Promise<{ sections?: { sectionId: string }[] }>;
+    };
+    const read = tools.read_sections as unknown as {
+      execute: (input: { sectionIds: string[] }) => Promise<{ sections?: { text?: string }[] }>;
+    };
+    const ocr = await search.execute({ query: "What OCR does he use?" });
+    expect(ocr.sections?.map((section) => section.sectionId)).toContain("role-vietdan-ml");
+    const readMeter = await read.execute({ sectionIds: ["role-vietdan-ml"] });
+    expect(readMeter.sections?.[0]?.text).toContain("10,000");
+    const api = await search.execute({ query: "What does he use FastAPI for?" });
+    expect(api.sections?.map((section) => section.sectionId)).toContain("project-skyledge");
+    const lead = await search.execute({ query: "What did he lead?" });
+    expect(lead.sections?.map((section) => section.sectionId)).toContain("role-harry-senior");
+    const companies = await search.execute({ query: "What companies has he worked for?" });
+    expect(companies.sections?.map((section) => section.sectionId)).toContain("role-tien-thanh");
+  });
 });

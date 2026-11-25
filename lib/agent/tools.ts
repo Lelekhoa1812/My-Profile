@@ -10,6 +10,8 @@ type TurnRead = {
   read: Map<string, string>;
 };
 
+const SECTION_LIMIT = 20;
+
 function leadOf(text: string): string {
   const sentence = text.split(/(?<=[.!])\s+/)[0]?.trim() ?? "";
   return sentence.length <= 180 ? sentence : `${sentence.slice(0, 177).trim()}...`;
@@ -49,7 +51,7 @@ export function createProfileTools(record: ProfileRecord, question = ""): ToolSe
       execute: async (input) => readSection(sections, input.sectionId),
     }),
     search_sections: tool({
-      description: "Find up to three profile sections by words in the question. If this returns found false, do not treat a weak overlap as a hit.",
+      description: "Find the profile sections that match the question. If this returns found false, do not treat a weak overlap as a hit.",
       inputSchema: z.object({
         query: z.string(),
         sourceType: z.enum(["role", "project", "education", "skills", "writing"]).optional(),
@@ -86,7 +88,7 @@ export function createProfileTools(record: ProfileRecord, question = ""): ToolSe
         const filtered = searchSections(sections, input.query, input.sourceType);
         const found = input.sourceType && !filtered.found ? searchSections(sections, input.query) : filtered;
         if (!found.found || !("sections" in found)) return found;
-        const leads = found.sections.slice(0, 3).map((section) => {
+        const leads = found.sections.slice(0, SECTION_LIMIT).map((section) => {
           turn.searched.add(section.sectionId);
           return { sectionId: section.sectionId, heading: section.heading, sourceType: section.sourceType, lead: leadOf(section.text) };
         });
@@ -96,15 +98,15 @@ export function createProfileTools(record: ProfileRecord, question = ""): ToolSe
           if (head && !leads.some((lead) => lead.sectionId === head.sectionId)) {
             turn.searched.add(head.sectionId);
             leads.unshift({ sectionId: head.sectionId, heading: head.heading, sourceType: head.sourceType, lead: leadOf(head.text) });
-            leads.splice(3);
+            leads.splice(SECTION_LIMIT);
           }
         }
         return { found: leads.length > 0, sections: leads };
       },
     }),
     read_sections: tool({
-      description: "Read the full text of up to three sections returned by search_sections in this turn. Do not pass an id that search did not return.",
-      inputSchema: z.object({ sectionIds: z.array(z.string()).min(1).max(3) }),
+      description: "Read the full text of the sections returned by search_sections in this turn. Do not pass an id that search did not return.",
+      inputSchema: z.object({ sectionIds: z.array(z.string()).min(1).max(SECTION_LIMIT) }),
       execute: async (input) => {
         const read = input.sectionIds.map((sectionId) => {
           if (!turn.searched.has(sectionId)) return { sectionId, found: false as const };
@@ -119,7 +121,7 @@ export function createProfileTools(record: ProfileRecord, question = ""): ToolSe
     }),
     review_evidence: tool({
       description: "Return the text already read in this turn. Pass section ids only. A quote in the arguments is ignored.",
-      inputSchema: z.object({ sectionIds: z.array(z.string()).max(3) }),
+      inputSchema: z.object({ sectionIds: z.array(z.string()).max(SECTION_LIMIT) }),
       execute: async (input) => {
         const text = input.sectionIds.flatMap((sectionId) => {
           const read = turn.read.get(sectionId);
