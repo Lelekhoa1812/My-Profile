@@ -339,6 +339,11 @@ describe("profile store", () => {
     const earlier = searchSections(profile.sections, "What did he build for Harry the Hirer before the senior role?");
     expect(live.found && live.sections[0]?.sectionId).toBe("role-axion");
     expect(live.found && live.sections[0]?.text).toContain("shows a preview");
+    const psi = searchSections(profile.sections, "What does PSI measure?");
+    expect(psi.found && psi.sections[0]?.sectionId).toBe("project-ericsson");
+    expect(psi.found && psi.sections[0]?.text).toContain("population stability index");
+    const measured = searchSections(profile.sections, "What did he measure?");
+    expect(measured.found && measured.sections[0]?.sectionId).toBe("role-harry-senior");
     expect(meter.found && meter.sections[0]?.sectionId).toBe("role-harry-senior");
     expect(meter.found && meter.sections[0]?.text).toContain("40 percent");
     expect(write.found && write.sections[0]?.sectionId).toBe("role-swinburne-research");
