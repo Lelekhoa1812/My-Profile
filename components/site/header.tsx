@@ -2,6 +2,7 @@
 
 import { ArrowDownToLine, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { ThemeSwitch } from "./theme-switch";
 
 const NAV = [
   { href: "#work", label: "Work" },
@@ -65,18 +66,24 @@ export function Header({ name, title, cv }: { name: string; title: string; cv: s
         first.focus();
       }
     };
+    const onResize = () => {
+      if (window.matchMedia("(min-width: 64rem)").matches) setOpen(false);
+    };
     document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
     document.body.style.overflow = "hidden";
     return () => {
       if (main) main.inert = false;
       if (dock) dock.inert = false;
       document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
       document.body.style.overflow = "";
     };
   }, [open]);
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-30 transition-[background-color,border-color] duration-500 ${scrolled ? "border-b border-white/12 bg-black/80 backdrop-blur-md" : "border-b border-transparent"}`}>
+    <header className={`fixed inset-x-0 top-0 ${open ? "z-50" : "z-30"}`}>
+      <div className={`relative z-40 transition-[background-color,border-color] duration-500 ${scrolled || open ? "border-b border-white/12 bg-black/80 backdrop-blur-md" : "border-b border-transparent"}`}>
       <div className="mx-auto flex h-[4.5rem] max-w-[90rem] items-center justify-between gap-6 px-5 md:h-20 md:px-10">
         <a href="#top" className="flex items-center gap-3" aria-label={`${name}, back to the top`}>
           <Mark />
@@ -85,7 +92,9 @@ export function Header({ name, title, cv }: { name: string; title: string; cv: s
             <span className="data mt-1.5 hidden text-[10px] tracking-[0.2em] text-white/55 sm:block">{title}</span>
           </span>
         </a>
-        <nav aria-label="Sections" className="hidden items-center gap-8 lg:flex">
+        <div className="flex items-center gap-2 lg:gap-8">
+          <ThemeSwitch />
+          <nav aria-label="Sections" className="hidden items-center gap-8 lg:flex">
           {NAV.map((item) => (
             <a
               key={item.href}
@@ -111,9 +120,13 @@ export function Header({ name, title, cv }: { name: string; title: string; cv: s
             {open ? <X aria-hidden className="h-4 w-4" strokeWidth={1.5} /> : <Menu aria-hidden className="h-4 w-4" strokeWidth={1.5} />}
           </button>
         </div>
+        </div>
+      </div>
       </div>
       {open ? (
-        <nav id="menu" aria-label="Sections" className="dock-open fixed inset-x-0 bottom-0 top-[4.5rem] z-30 border-t border-white/12 bg-black px-5 py-8 lg:hidden">
+        <>
+          <div className="menu-scrim fixed inset-0 z-20 lg:hidden" onClick={() => setOpen(false)} />
+          <nav id="menu" aria-label="Sections" className="menu-panel dock-open fixed inset-x-0 bottom-0 top-[4.5rem] z-30 overflow-y-auto border-t border-white/12 px-5 py-8 md:top-20 lg:hidden">
           <ul className="space-y-1">
             {NAV.map((item) => (
               <li key={item.href}>
@@ -124,6 +137,7 @@ export function Header({ name, title, cv }: { name: string; title: string; cv: s
             ))}
           </ul>
         </nav>
+        </>
       ) : null}
     </header>
   );

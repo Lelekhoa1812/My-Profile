@@ -6,7 +6,7 @@ import { panelFrame, snapToSide } from "@/lib/chat/place";
 import { toTurns, useRecordChat } from "./record-chat";
 
 const STORAGE_KEY = "profile.chat.place";
-const BUTTON = 56;
+const BUTTON = 40;
 const EDGE = 16;
 const PANEL_GAP = 12;
 
@@ -247,8 +247,8 @@ export function ChatDock({ questions }: { questions: string[] }) {
         className={`fixed z-40 grid cursor-grab touch-none place-items-center border text-ink transition-colors active:cursor-grabbing ${open ? "border-white bg-white text-black [&_svg]:text-black" : "border-white/45 bg-black/85 backdrop-blur hover:border-white"}`}
         style={{ right: place.x, bottom: place.y, width: BUTTON, height: BUTTON }}
       >
-        {open ? <X aria-hidden className="h-5 w-5" strokeWidth={1.5} /> : <MessagesSquare aria-hidden className="h-5 w-5" strokeWidth={1.5} />}
-        {busy && !open ? <span aria-hidden className="blink absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-white" /> : null}
+        {open ? <X aria-hidden className="h-3.5 w-3.5" strokeWidth={1.5} /> : <MessagesSquare aria-hidden className="h-3.5 w-3.5" strokeWidth={1.5} />}
+        {busy && !open ? <span aria-hidden className="blink absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-white" /> : null}
       </button>
     </>
   );
