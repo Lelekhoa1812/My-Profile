@@ -20,7 +20,7 @@
       "heading": "Axion Solutions",
       "sourceType": "role",
       "aliases": ["Axion", "Workflow Engine", "Axis", "FoodFlow"],
-      "text": "Axion Solutions. AI Software Engineer, July 2026 to present. He owns the AI vision, the product strategy, and the operating model for Axis. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. Axis is a separate product for Studio copilot, data insight, and message drafting. It calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write. Axis does not own FoodFlow's database. The engine uses LangChain and LangGraph. Modular actions, connectors, scoring, review gates, and version-controlled pipelines assemble the work. LangSmith and OpenTelemetry cover the traces. Human approval gates and audit trails govern execution. The resume also uses the phrase capital-markets automation for investment and growth workflows. That phrase does not rename FoodFlow. The word production in that list is a business module, not a release."
+      "text": "Axion Solutions. AI Software Engineer, July 2026 to present. He owns the AI vision, the product strategy, and the operating model for Axis. FoodFlow is the multi-tenant food-distribution ERP and the system of record, covering sales, purchasing, inventory, production, finance, and delivery scheduling. Axis is a separate product for Studio copilot, data insight, and message drafting. It calls typed tools on FoodFlow, shows a preview, and waits for a person to approve a write. Axis does not own FoodFlow's database. The engine uses LangChain and LangGraph. Modular actions, connectors, scoring, review gates, and version-controlled pipelines assemble the work. LangSmith and OpenTelemetry cover the traces. Human approval gates and audit trails govern execution. The resume also uses the phrase capital-markets automation for investment and growth workflows. That phrase does not rename FoodFlow. The word production in that list is a business module, not a release. Own the AI vision, product strategy and operating model for Axis, a capital-markets automation platform that converts complex investment and growth workflows into governed, reusable AI automation."
     },
     {
       "sectionId": "project-axion-workflows",
@@ -41,49 +41,49 @@
       "heading": "Harry the Hirer, Senior AI Engineer",
       "sourceType": "role",
       "aliases": ["Harry the Hirer"],
-      "text": "Harry the Hirer, Senior AI Engineer. Melbourne, December 2025 to July 2026. He led the AI work for event inventory, logistics, planning, and documents. The resume calls the company Australia's largest event enterprise. The stack includes Azure AI Foundry, Azure OpenAI, LangChain, LangGraph, and FastAPI. A multi-agent layer uses Planner, Retriever, Verifier, Critic, and Tool-Executor agents. Answers are citation-grounded, and a person stays in the loop. Retrieval uses agentic chunking, query decomposition, BM25 and HNSW hybrid search, metadata filters, and cross-encoder reranking. Validators check that an answer stays on the evidence. The resume records about 40 percent less repetitive lookup and drafting in targeted pilot workflows, and 99.9 percent operational uptime. OCR and document extraction use Pydantic contracts, constrained JSON, and MCP-style access to stock and planning data. Services run in Docker with MSAL authentication."
+      "text": "Harry the Hirer, Senior AI Engineer. Melbourne, December 2025 to July 2026. He led the AI work for event inventory, logistics, planning, and documents. The resume calls the company Australia's largest event enterprise. The stack includes Azure AI Foundry, Azure OpenAI, LangChain, LangGraph, and FastAPI. A multi-agent layer uses Planner, Retriever, Verifier, Critic, and Tool-Executor agents. Answers are citation-grounded, and a person stays in the loop. Retrieval uses agentic chunking, query decomposition, BM25 and HNSW hybrid search, metadata filters, and cross-encoder reranking. Validators check that an answer stays on the evidence. The resume records about 40 percent less repetitive lookup and drafting in targeted pilot workflows, and 99.9 percent operational uptime. OCR and document extraction use Pydantic contracts, constrained JSON, and MCP-style access to stock and planning data. Services run in Docker with MSAL authentication. Spearheaded AI transformation for Australia's largest event enterprise, converting inventory, logistics, planning and document-heavy workflows into production AI systems using Azure AI Foundry, Azure OpenAI, LangChain, LangGraph, FastAPI and governed human-in-the-loop operations. Architected a multi-agent RAG orchestration layer with Planner, Retriever, Verifier, Critic and Tool-Executor agents, combining graph-state workflows, function/tool routing, citation-grounded generation, HITL approvals, LangSmith-style traces/evals and OpenTelemetry-style observability for audit-ready planning decisions. Optimized latency, token spend and throughput through dynamic multi-LLM routing, context pruning, sliding-window memory, KV-cache-aware prompting, async batching, regex patternization, structured output repair and automated replanning, reducing repetitive lookup/drafting effort by ~40% in targeted pilot workflows."
     },
     {
       "sectionId": "role-harry-pedigree",
       "heading": "Harry the Hirer, pedigree AI",
       "sourceType": "role",
       "aliases": ["Black Caviar"],
-      "text": "Harry the Hirer, pedigree AI. March 2026 to May 2026. Thoroughbred pedigree AI for the Black Caviar lineage platform, in an ML and data science role. It is a mate-selection engine for genetic merit, compatibility, and inbreeding risk. The resume describes a 10-signal ensemble: matrix factorization, GBM temporal ranking, VAE genetic fingerprints, Bayesian nicking, Dosage Theory, and a Shared Ancestor Compatibility Kernel. It uses 64-dimensional pedigree embeddings, graph expansion, temporal splits against leakage, and LLM explanations."
+      "text": "Harry the Hirer, pedigree AI. March 2026 to May 2026. Thoroughbred pedigree AI for the Black Caviar lineage platform, in an ML and data science role. It is a mate-selection engine for genetic merit, compatibility, and inbreeding risk. The resume describes a 10-signal ensemble: matrix factorization, GBM temporal ranking, VAE genetic fingerprints, Bayesian nicking, Dosage Theory, and a Shared Ancestor Compatibility Kernel. It uses 64-dimensional pedigree embeddings, graph expansion, temporal splits against leakage, and LLM explanations. Built on the legacy pedigree platform behind world-champion Black Caviar, reimagining thoroughbred pedigree intelligence as an AI-first mate-selection engine that balances genetic merit, compatibility and inbreeding risk. Engineered a 10-signal hybrid ensemble for bipartite ranking across matrix factorization, GBM temporal ranking, VAE genetic fingerprints, Bayesian nicking, modernized Dosage Theory and a Shared Ancestor Compatibility Kernel."
     },
     {
       "sectionId": "role-mizco",
       "heading": "Mizco",
       "sourceType": "role",
       "aliases": ["Trust-First", "RFQ"],
-      "text": "Mizco, AI Team Lead. Perth, November 2025 to June 2026. He led a trust-first platform that turns RFQ text into governed industrial artefacts for compliance-sensitive work. The resume records about 50 percent less manual review and artefact preparation in the targeted workflows. Inference uses vLLM, agent routing, constrained JSON, and ReAct tool calling behind FastAPI. A Next.js cockpit shows traces, confidence gates, and validation. The pipelines read PDF, DOCX, and XLSX. A person reviews uncertain output."
+      "text": "Mizco, AI Team Lead. Perth, November 2025 to June 2026. He led a trust-first platform that turns RFQ text into governed industrial artefacts for compliance-sensitive work. The resume records about 50 percent less manual review and artefact preparation in the targeted workflows. Inference uses vLLM, agent routing, constrained JSON, and ReAct tool calling behind FastAPI. A Next.js cockpit shows traces, confidence gates, and validation. The pipelines read PDF, DOCX, and XLSX. A person reviews uncertain output. Engineered local-LLM inference with vLLM serving, agent routing, dynamic model selection, constrained JSON, ReAct/tool calling, batch execution, caching and FastAPI orchestration, balancing latency, cost and reasoning depth across RFQ analysis tasks. Built a Next.js operations cockpit with OpenTelemetry-style traces, structured logs, confidence gates, semantic sanitization, validation suites and concurrency-aware tool execution to make agent behavior observable, testable and executive-reviewable. Implemented IDP/ETL standardization, long-context RAG memory, self-correction, backfill/recovery loops and HITL escalation to prevent false completeness, surface uncertainty and maintain deterministic output consistency across PDF/DOCX/XLSX corpora."
     },
     {
       "sectionId": "role-teqar",
       "heading": "Teqar",
       "sourceType": "role",
       "aliases": ["consulting"],
-      "text": "Teqar, AI Development Consultant. Perth, May 2025 to present. Advises B2B clients on AI transformation, from workflow maps to staged delivery plans. The scope includes analytics, vision quality checks, chat, and data pipelines."
+      "text": "Teqar, AI Development Consultant. Perth, May 2025 to present. Advises B2B clients on AI transformation, from workflow maps to staged delivery plans. The scope includes analytics, vision quality checks, chat, and data pipelines. Scope predictive analytics, computer vision quality assurance, automation architectures and data-pipeline modernization initiatives that turn operational metrics into measurable productivity gains and defensible competitive advantages."
     },
     {
       "sectionId": "role-swinburne-research",
       "heading": "Swinburne research",
       "sourceType": "role",
       "aliases": ["MedSwin", "Swinburne"],
-      "text": "Swinburne research. Researcher at Swinburne University of Technology, Melbourne, August 2025 to July 2026. Liam led a clinical AI lab of five people. The lab is MedSwin. It built specialist medical agents and a reasoning orchestrator. Fine-tuning used distillation, LoRA, and QLoRA on more than 500,000 curated cases. A project line also cites 5 million synthetic cases. Both figures are resume wording, and they are not the same count. Agentic retrieval covers clinical records and PubMed, with safety guardrails. An 8-million-document biomedical reranker feeds the orchestrator. The resume records 86 percent BERTScore on MedMCQA, PubMedQA, and MedQuAD."
+      "text": "Swinburne research. Researcher at Swinburne University of Technology, Melbourne, August 2025 to July 2026. Liam led a clinical AI lab of five people. The lab is MedSwin. It built specialist medical agents and a reasoning orchestrator. Fine-tuning used distillation, LoRA, and QLoRA on more than 500,000 curated cases. A project line also cites 5 million synthetic cases. Both figures are resume wording, and they are not the same count. Agentic retrieval covers clinical records and PubMed, with safety guardrails. An 8-million-document biomedical reranker feeds the orchestrator. The resume records 86 percent BERTScore on MedMCQA, PubMedQA, and MedQuAD. Built agentic RAG over EMR/EHR and PubMed with safety guardrails; trained an 8M-document biomedical reranker integrated into MAC, achieving 86% BERTScore across MedMCQA, PubMedQA and MedQuAD."
     },
     {
       "sectionId": "role-aitc",
       "heading": "AITC",
       "sourceType": "role",
       "aliases": ["industrial assistant"],
-      "text": "AITC, Senior AI Engineer. June 2025 to November 2025. He led an industrial assistant that uses LLMs, NLP, and OCR to turn unstructured PDFs into operational guidance. He owned ingestion, preprocessing, deployment, and optimisation, and he mentored data engineers. The resume names partner work with Nvidia, HPA, IBM, Juniper, and Cisco Vietnam."
+      "text": "AITC, Senior AI Engineer. June 2025 to November 2025. He led an industrial assistant that uses LLMs, NLP, and OCR to turn unstructured PDFs into operational guidance. He owned ingestion, preprocessing, deployment, and optimisation, and he mentored data engineers. The resume names partner work with Nvidia, HPA, IBM, Juniper, and Cisco Vietnam. Architected and led an industrial AI assistant combining LLMs, NLP and OCR/IDP to transform unstructured PDFs into actionable operational guidance, document intelligence and business-ready knowledge workflows. Owned ingestion, preprocessing, deployment and optimization while mentoring data engineers and scaling production AI capabilities for strategic partners including Nvidia, HPA, IBM, Juniper and Cisco Vietnam."
     },
     {
       "sectionId": "role-hai-au",
       "heading": "Hai Au Academy",
       "sourceType": "role",
       "aliases": ["Hai Au", "HA Manager", "student management"],
-      "text": "Hai Au Academy. AI Software Engineer, August 2025 to October 2025, Binh Duong. HA Manager is the bilingual student-management platform, sold to Hai Au Group. It covers enrollment, placement testing, scheduling, and attendance. The resume records about 35 percent less admin effort."
+      "text": "Hai Au Academy. AI Software Engineer, August 2025 to October 2025, Binh Duong. HA Manager is the bilingual student-management platform, sold to Hai Au Group. It covers enrollment, placement testing, scheduling, and attendance. The resume records about 35 percent less admin effort. Delivered a bilingual student-management platform across enrollment, class scheduling, placement testing, attendance, reporting dashboards and RBAC using a modern web stack with API-driven modules for multi-campus school operations. Delivered a bilingual school-operations platform consolidating enrollment, placement testing, class scheduling, attendance, reporting and administration into a role-based system for students, staff and multi-campus operators. Integrated MCP-enabled chatbot workflows with human approval plus Vietnamese/English NLP helpers for translation, homework support and routine administration, reducing manual work while preserving operational control and data integrity."
     },
     {
       "sectionId": "role-pythera",
@@ -97,28 +97,28 @@
       "heading": "PopTech",
       "sourceType": "role",
       "aliases": ["electricity forecasting"],
-      "text": "PopTech, ML Engineer. Melbourne, May 2025 to July 2025. Liam led a four-person team on an IoT electricity forecasting and control platform. The pipelines check sensor quality, impute gaps, and watch for drift. The models include TFT, XGBoost, and DQN, with an LLM advisory path and speech input for billing and energy recommendations."
+      "text": "PopTech, ML Engineer. Melbourne, May 2025 to July 2025. Liam led a four-person team on an IoT electricity forecasting and control platform. The pipelines check sensor quality, impute gaps, and watch for drift. The models include TFT, XGBoost, and DQN, with an LLM advisory path and speech input for billing and energy recommendations. Integrated TFT, XGBoost, DQN and LLM advisory interfaces with multimodal ASR/TTS support to power predictive billing, automated energy recommendations and control-loop decision support for IoT devices."
     },
     {
       "sectionId": "role-nam-a-ai",
       "heading": "Nam A Bank, AI and data",
       "sourceType": "role",
       "aliases": ["Nam Á Bank", "passport OCR"],
-      "text": "Nam A Bank, AI and data. Nam Á Bank, AI and Data Engineer, Ho Chi Minh City, December 2024 to May 2025. OCR, computer vision, and language-model research for passport and remittance documents. The public work trains VietOCR on synthetic passports. The pipelines use OpenCV and structured extraction for foreign-customer onboarding."
+      "text": "Nam A Bank, AI and data. Nam Á Bank, AI and Data Engineer, Ho Chi Minh City, December 2024 to May 2025. OCR, computer vision, and language-model research for passport and remittance documents. The public work trains VietOCR on synthetic passports. The pipelines use OpenCV and structured extraction for foreign-customer onboarding. Built fintech AI/data capabilities across OCR, computer vision, LLM/chatbot workflows and product analytics, including passport OCR, synthetic data generation and document-intelligence pipelines for faster foreign-customer onboarding and remittance expansion analysis."
     },
     {
       "sectionId": "role-nam-a-software",
       "heading": "Nam A Bank, software",
       "sourceType": "role",
       "aliases": ["Vert.x"],
-      "text": "Nam A Bank, software. Nam Á Bank, Software Engineer, April 2023 to June 2024. Banking modules in Java, including Vert.x services and Android screens. The services use REST and asynchronous requests, with authentication on the customer data path."
+      "text": "Nam A Bank, software. Nam Á Bank, Software Engineer, April 2023 to June 2024. Banking modules in Java, including Vert.x services and Android screens. The services use REST and asynchronous requests, with authentication on the customer data path. Engineered banking software components across Vert.x backend services and Java Android modules, improving secure API integration, mobile service access, customer onboarding flows and reliability of digital banking feature delivery. Supported production-grade software delivery through RESTful service design, asynchronous request handling, authentication-aware data flows, mobile UI improvements, web-service performance tuning and cross-team debugging across high-compliance fintech workflows."
     },
     {
       "sectionId": "role-inet",
       "heading": "iNet Solution",
       "sourceType": "role",
       "aliases": ["Obsei", "sentiment"],
-      "text": "iNet Solution, Software and Data Scientist. Ho Chi Minh City, April 2024 to March 2025. An LLM pipeline over news text for sentiment, fact-checking, and summarisation. The stack is Obsei and Transformers."
+      "text": "iNet Solution, Software and Data Scientist. Ho Chi Minh City, April 2024 to March 2025. An LLM pipeline over news text for sentiment, fact-checking, and summarisation. The stack is Obsei and Transformers. Led an LLM-powered analytics pipeline for sentiment analysis, fact-checking and summarization using Obsei, Transformers and cloud architecture to generate business insights from large document/article collections."
     },
     {
       "sectionId": "role-vietdan-ml",
@@ -146,7 +146,7 @@
       "heading": "Tien Thanh Co",
       "sourceType": "role",
       "aliases": ["IoT"],
-      "text": "Tien Thanh Co, IoT and Software Engineer. Ho Chi Minh City, January 2020 to August 2020."
+      "text": "Tien Thanh Co, IoT and Software Engineer. Ho Chi Minh City, January 2020 to August 2020. Engineered cloud-ready IoT and software services across AWS and Azure, containerizing APIs and device-data workloads with Docker/Kubernetes while supporting deployment automation, monitoring and scalable service delivery for production operations."
     },
     {
       "sectionId": "education-swinburne",
@@ -167,14 +167,14 @@
       "heading": "MedVietAI",
       "sourceType": "project",
       "aliases": ["Vietnamese medical LLM"],
-      "text": "MedVietAI. Liam is the founder of this non-profit effort toward a sovereign Vietnamese medical language model. It extends the MedSwin architecture for Vietnamese language and healthcare context. The resume says Vietnam's National Data Association sponsored the initiative. The resume also defines a vision for EMR-based monitoring. The Hugging Face org is MedVietAI."
+      "text": "MedVietAI. Liam is the founder of this non-profit effort toward a sovereign Vietnamese medical language model. It extends the MedSwin architecture for Vietnamese language and healthcare context. The resume says Vietnam's National Data Association sponsored the initiative. The resume also defines a vision for EMR-based monitoring. The Hugging Face org is MedVietAI. Defines the vision for secure national-scale medical data acquisition, EMR-driven proactive health monitoring, personalized clinical insights and rural/peak-hour decision support, positioning Vietnam to build sovereign AI capability for healthcare and public-good innovation."
     },
     {
       "sectionId": "project-codoptic",
       "heading": "Codoptic",
       "sourceType": "project",
       "aliases": ["coding agent"],
-      "text": "Codoptic. Open-source coding agent. It reads a repository, plans an implementation, and can generate or review code. It also turns a repository into interactive DSL diagrams so a developer can navigate the architecture. Public repository: github.com/Codoptic/Codoptic."
+      "text": "Codoptic. Open-source coding agent. It reads a repository, plans an implementation, and can generate or review code. It also turns a repository into interactive DSL diagrams so a developer can navigate the architecture. Public repository: github.com/Codoptic/Codoptic. Built a customizable community coding agent for repository understanding, workflow automation, skill/tool orchestration, code generation, review and implementation planning across user-defined engineering workflows. Added repo-to-interactive-DSL diagram generation so complex codebases can be converted into navigable architecture maps, accelerating onboarding, documentation and system reasoning for developers."
     },
     {
       "sectionId": "project-triage",
@@ -195,7 +195,7 @@
       "heading": "Sall-e",
       "sourceType": "project",
       "aliases": ["ocean garbage"],
-      "text": "Sall-e. Autonomous robot for oceanic garbage collection. The resume says Liam led a software team of five. The robot uses computer vision, sensor fusion, and navigation to detect and localise waste. Perception uses CNN and Transformer models, with object tracking and route planning. Repository: Lelekhoa1812/Sall-e. The record does not include a download count for the garbage-classification dataset."
+      "text": "Sall-e. Autonomous robot for oceanic garbage collection. The resume says Liam led a software team of five. The robot uses computer vision, sensor fusion, and navigation to detect and localise waste. Perception uses CNN and Transformer models, with object tracking and route planning. Repository: Lelekhoa1812/Sall-e. The record does not include a download count for the garbage-classification dataset. Directed data mining, self-training CNN/Transformer perception, object tracking, sensor-stream processing and AI-assisted route planning to improve detection reliability, adaptive movement and autonomous collection decisions in dynamic water environments."
     },
     {
       "sectionId": "project-golf",
@@ -209,49 +209,49 @@
       "heading": "CVA",
       "sourceType": "project",
       "aliases": ["career agent"],
-      "text": "CVA. A career application agent. A planner agent scores role fit and drafts a CV and a cover letter. A reviewer agent critiques the draft, and a person approves it. The run keeps profile memory and document versions. Repository: Lelekhoa1812/CVA. Live app: cva-mauve.vercel.app."
+      "text": "CVA. A career application agent. A planner agent scores role fit and drafts a CV and a cover letter. A reviewer agent critiques the draft, and a person approves it. The run keeps profile memory and document versions. Repository: Lelekhoa1812/CVA. Live app: cva-mauve.vercel.app. Built a multi-agent job-application assistant that captures strengths, preferences and achievements, plans application strategy, generates tailored CVs/resumes/cover letters and preserves checkpoint memory for role-specific personalization. The app is built with Next.js 15, React 19, TypeScript, Tailwind CSS, MongoDB and NVIDIA NIM."
     },
     {
       "sectionId": "project-writing",
       "heading": "WritingJourney",
       "sourceType": "project",
       "aliases": ["Hai Au Group", "IELTS", "PTE", "TOEIC"],
-      "text": "WritingJourney. The resume says version 1.5.0 was sold to Hai Au Group. It is an IELTS, PTE, and TOEIC writing coach. It scores a submission, explains the error, and plans the rewrite. A person stays in control of the result."
+      "text": "WritingJourney. The resume says version 1.5.0 was sold to Hai Au Group. It is an IELTS, PTE, and TOEIC writing coach. It scores a submission, explains the error, and plans the rewrite. A person stays in control of the result. Implemented rubric-aware evaluation, error clustering, revision planning and feedback generation to help learners understand why writing fails, how to improve coherence and how to practice toward measurable band-score gains."
     },
     {
       "sectionId": "project-roster",
       "heading": "Roster management",
       "sourceType": "project",
       "aliases": ["MJ Industrial"],
-      "text": "Roster management. The resume says this product was sold to MJ Industrial Australia. It is a Kotlin Android app with a Node.js backend and a MariaDB database for rostering, payroll, shift tracking, and payment processing at a Melbourne warehouse. Repository: Lelekhoa1812/RosterManagement. The resume does not list a separate Android employment at MJ Industrial."
+      "text": "Roster management. The resume says this product was sold to MJ Industrial Australia. It is a Kotlin Android app with a Node.js backend and a MariaDB database for rostering, payroll, shift tracking, and payment processing at a Melbourne warehouse. Repository: Lelekhoa1812/RosterManagement. The resume does not list a separate Android employment at MJ Industrial. Built role-based workflows, attendance capture, roster validation and payroll-ready reporting so warehouse managers could reduce scheduling errors, accelerate payment reconciliation and improve operational visibility."
     },
     {
       "sectionId": "project-ericsson",
       "heading": "Ericsson 5G digital twin",
       "sourceType": "project",
       "aliases": ["Ericsson", "5G", "Swinburne"],
-      "text": "Ericsson 5G digital twin. The resume says Ericsson Vietnam and Swinburne funded this predictive-maintenance platform. The resume calls the build production-grade, and it is not a named live customer app. It reads tower telemetry, forecasts bandwidth pressure, and detects degradation. The stack is C# .NET, MySQL, and ONNX Runtime. Forecasting uses a spatio-temporal graph model and a temporal fusion transformer. Anomaly detection uses an autoencoder. Drift monitoring uses the population stability index. The record does not include a deployment count."
+      "text": "Ericsson 5G digital twin. The resume says Ericsson Vietnam and Swinburne funded this predictive-maintenance platform. The resume calls the build production-grade, and it is not a named live customer app. It reads tower telemetry, forecasts bandwidth pressure, and detects degradation. The stack is C# .NET, MySQL, and ONNX Runtime. Forecasting uses a spatio-temporal graph model and a temporal fusion transformer. Anomaly detection uses an autoencoder. Drift monitoring uses the population stability index. The record does not include a deployment count. Built multithreaded ETL, indexed time-series schemas, ST-GCN/TFT forecasting, deep autoencoder anomaly detection, Weibull survival modeling and PSI-based drift monitoring to support proactive maintenance and low-latency model serving inside .NET services."
     },
     {
       "sectionId": "project-adhd",
       "heading": "ADHD Assistant",
       "sourceType": "project",
       "aliases": ["Nvidia NIM", "daily planning"],
-      "text": "ADHD Assistant. The resume describes a Nvidia NIM helper for daily routines and planning. It uses voice or text, breaks a task down, and checks progress. The record does not include a user count or a clinical outcome."
+      "text": "ADHD Assistant. The resume describes a Nvidia NIM helper for daily routines and planning. It uses voice or text, breaks a task down, and checks progress. The record does not include a user count or a clinical outcome. Built voice/text helper agents for daily routines, activity planning and reflective check-ins, using Nvidia NIM-aligned architecture to adapt communication style, task breakdown and follow-up support. Designed context-aware reminders, conversational planning flows, adaptive task decomposition and progress checkpoints to help users translate intentions into manageable daily actions without overwhelming cognitive load."
     },
     {
       "sectionId": "project-medchat",
       "heading": "MedChat",
       "sourceType": "project",
       "aliases": ["medical conversation", "multilingual"],
-      "text": "MedChat. The resume calls this a prototype. It is a multilingual medical conversation agent with a planner, specialist routing, source ranking, safety filters, and citation checks. The resume does not describe it as a deployed clinical system."
+      "text": "MedChat. The resume calls this a prototype. It is a multilingual medical conversation agent with a planner, specialist routing, source ranking, safety filters, and citation checks. The resume does not describe it as a deployed clinical system. Built a medical conversation prototype using multilingual web-crawled sources, a multi-agent planner, diagnostics-specialist routing, retrieval validation, clinical guardrails and citation-aware generation. Combined source ranking, safety filters, evidence checking and specialist answer synthesis to support multilingual health Q&A with clearer provenance, reduced hallucination risk and more transparent clinical-response boundaries."
     },
     {
       "sectionId": "project-sp500",
       "heading": "S&P 500 forecast",
       "sourceType": "project",
       "aliases": ["FinBERT", "portfolio", "Kafka"],
-      "text": "S&P 500 forecast. The resume describes a multi-horizon system. It uses temporal fusion transformers, graph networks, FinBERT on news and SEC filings, and a reinforcement-learning agent for portfolio execution. Training uses combinatorial purged cross-validation, and drift detection can trigger a retrain. The data path uses Apache Kafka. Public repository: Lelekhoa1812/S-P500_Prediction_Model. The record does not include a return figure."
+      "text": "S&P 500 forecast. The resume describes a multi-horizon system. It uses temporal fusion transformers, graph networks, FinBERT on news and SEC filings, and a reinforcement-learning agent for portfolio execution. Training uses combinatorial purged cross-validation, and drift detection can trigger a retrain. The data path uses Apache Kafka. Public repository: Lelekhoa1812/S-P500_Prediction_Model. The record does not include a return figure. Developed a multi-horizon quantitative system using Temporal Fusion Transformers, Graph Neural Networks, FinBERT news/SEC-filing sentiment and Deep Reinforcement Learning agents for dynamic portfolio execution and alpha generation. Built leakage-resistant infrastructure with fractional differentiation, Combinatorial Purged and Embargoed CV, Apache Kafka streaming and concept-drift detection to preserve market memory and trigger retraining during regime shifts."
     },
     {
       "sectionId": "project-estatefolio",
@@ -286,7 +286,7 @@
       "heading": "Passport OCR",
       "sourceType": "project",
       "aliases": ["synthetic passport", "VietOCR"],
-      "text": "Passport OCR. Nam A Bank work, December 2024 to May 2025, for passport and remittance documents. The public repository trains VietOCR on synthetic passports. The record does not include a download count for the synthetic passport dataset. Repository: Lelekhoa1812/Vietnamese-Passport-OCR-Project-with-VietOCR."
+      "text": "Passport OCR. Nam A Bank work, December 2024 to May 2025, for passport and remittance documents. The public repository trains VietOCR on synthetic passports. The record does not include a download count for the synthetic passport dataset. Repository: Lelekhoa1812/Vietnamese-Passport-OCR-Project-with-VietOCR. Built fintech AI/data capabilities across OCR, computer vision, LLM/chatbot workflows and product analytics, including passport OCR, synthetic data generation and document-intelligence pipelines for faster foreign-customer onboarding and remittance expansion analysis."
     },
     {
       "sectionId": "project-router",
@@ -307,7 +307,7 @@
       "heading": "Prophet",
       "sourceType": "project",
       "aliases": ["time-series agent"],
-      "text": "Prophet. A research prototype that answers a spreadsheet question in plain language and keeps the steps behind each number. Forecasts use TimesFM. The store is SQLite. Repository: Lelekhoa1812/prophet. The record does not include an accuracy figure or a user count."
+      "text": "Prophet. A research prototype that answers a spreadsheet question in plain language and keeps the steps behind each number. Forecasts use TimesFM. The store is SQLite. Repository: Lelekhoa1812/prophet. The record does not include an accuracy figure or a user count. Each forecast is backtested against simple baselines on your own history, so you can see whether the model beats a naive guess. The server listens on loopback only, and your uploaded files stay local."
     },
     {
       "sectionId": "project-survee",

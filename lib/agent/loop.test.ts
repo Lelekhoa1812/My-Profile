@@ -2,73 +2,69 @@ import { describe, expect, it } from "vitest";
 import { stepTools } from "./loop";
 
 describe("stepTools", () => {
-  it("requires a tool on the first step", () => {
-    expect(stepTools(0, [])).toEqual({ toolChoice: "required", activeTools: ["search_sections"] });
+  it("plans on the first step", () => {
+    expect(stepTools(0, [])).toEqual({ toolChoice: { type: "tool", toolName: "plan_question" }, activeTools: ["plan_question"] });
   });
 
-  it("asks for section text when the first lookup misses", () => {
-    const choice = stepTools(1, [{ toolResults: [{ output: { found: false } }] }]);
-    expect(choice.toolChoice).toBe("required");
-    expect(choice.activeTools).toEqual(["lookup_fact", "search_sections", "read_section"]);
+  it("searches even when the plan names a closed fact", () => {
+    const choice = stepTools(1, [{ toolResults: [{ output: { ok: true, queries: ["email"], factKey: "email" } }] }]);
+    expect(choice).toEqual({ toolChoice: { type: "tool", toolName: "search_sections" }, activeTools: ["search_sections"] });
   });
 
-  it("asks for section text when the first lookup returns headings only", () => {
-    const choice = stepTools(1, [{
-      toolResults: [{ output: { found: true, sections: [{ heading: "Axion Solutions" }] } }],
-    }]);
-    expect(choice).toEqual({ toolChoice: "required", activeTools: ["search_sections"] });
+  it("searches when the plan names no closed fact", () => {
+    const choice = stepTools(1, [{ toolResults: [{ output: { ok: true, queries: ["planner agent"] } }] }]);
+    expect(choice).toEqual({ toolChoice: { type: "tool", toolName: "search_sections" }, activeTools: ["search_sections"] });
   });
 
-  it("stops when the lookup returns the title", () => {
-    const choice = stepTools(1, [{
-      toolResults: [
-        { output: { found: true, facts: [{ label: "Current title", value: "AI Software Engineer" }, { label: "Page title", value: "AI Software Engineer" }] } },
-        { output: { found: false } },
-      ],
-    }]);
+  it("stops when the fact lookup returns a value", () => {
+    const choice = stepTools(2, [{ toolResults: [{ output: { found: true, facts: [{ label: "Email", value: "liam@example.com" }] } }] }]);
     expect(choice).toEqual({ toolChoice: "none", activeTools: [] });
   });
 
-  it("searches the record when a skill fact is not the job", () => {
-    const choice = stepTools(1, [{
-      toolResults: [{ output: { found: true, facts: [{ label: "Languages", value: "English" }] } }],
+  it("reads when the search returns ids and no text", () => {
+    const choice = stepTools(2, [{
+      toolResults: [{ output: { found: true, sections: [{ sectionId: "project-cva", heading: "CVA", lead: "A career application agent." }] } }],
     }]);
-    expect(choice).toEqual({ toolChoice: "required", activeTools: ["search_sections"] });
+    expect(choice).toEqual({ toolChoice: { type: "tool", toolName: "read_sections" }, activeTools: ["read_sections"] });
   });
 
-  it("stops when the lookup returns the email", () => {
-    const choice = stepTools(1, [{
-      toolResults: [{ output: { found: true, facts: [{ label: "Email", value: "liam@example.com" }] } }],
-    }]);
-    expect(choice).toEqual({ toolChoice: "none", activeTools: [] });
-  });
-
-  it("stops tool calls after a lookup that returns text", () => {
-    const choice = stepTools(1, [{
-      toolResults: [{ output: { found: true, sections: [{ text: "Axion Solutions. AI Software Engineer." }] } }],
-    }]);
-    expect(choice).toEqual({ toolChoice: "none", activeTools: [] });
-  });
-
-  it("searches again when the section names a different employer", () => {
-    const choice = stepTools(1, [{
-      toolResults: [{ output: { found: true, sections: [{ sectionId: "role-axion", text: "Axion Solutions. Axis shows a preview." }] } }],
-    }], "At Harry the Hirer, what did the pilot cut?");
-    expect(choice).toEqual({ toolChoice: "required", activeTools: ["search_sections", "read_section"] });
-  });
-
-  it("stops when the section names the employer in the question", () => {
-    const choice = stepTools(1, [{
-      toolResults: [{ output: { found: true, sections: [{ sectionId: "role-harry-senior", text: "Harry the Hirer. About 40 percent less repetitive lookup." }] } }],
-    }], "At Harry the Hirer, what did the pilot cut?");
-    expect(choice).toEqual({ toolChoice: "none", activeTools: [] });
-  });
-
-  it("stops tool calls on the write step", () => {
+  it("retries the search when the previous step called no tool", () => {
     const choice = stepTools(2, [
-      { toolResults: [{ output: { found: false } }] },
-      { toolResults: [{ output: { found: true, text: "CVA has a live app." } }] },
+      { toolResults: [{ output: { ok: true, queries: ["meter"] } }] },
+      { toolResults: [] },
     ]);
+    expect(choice).toEqual({ toolChoice: { type: "tool", toolName: "search_sections" }, activeTools: ["search_sections"] });
+  });
+
+  it("retries the search when a closed fact produced no tool result", () => {
+    const choice = stepTools(2, [
+      { toolResults: [{ output: { ok: true, factKey: "email", queries: ["email"] } }] },
+      { toolResults: [] },
+    ]);
+    expect(choice).toEqual({ toolChoice: { type: "tool", toolName: "search_sections" }, activeTools: ["search_sections"] });
+  });
+
+  it("reads on the next step when the search has not been read", () => {
+    const choice = stepTools(3, [{
+      toolResults: [{ output: { found: true, sections: [{ sectionId: "project-meter", lead: "The meter cut manual reads." }] } }],
+    }]);
+    expect(choice).toEqual({ toolChoice: { type: "tool", toolName: "read_sections" }, activeTools: ["read_sections"] });
+  });
+
+  it("stops when the search misses", () => {
+    const choice = stepTools(2, [{ toolResults: [{ output: { found: false } }] }]);
+    expect(choice).toEqual({ toolChoice: "none", activeTools: [] });
+  });
+
+  it("reviews after a section is read", () => {
+    const choice = stepTools(3, [{
+      toolResults: [{ output: { found: true, sections: [{ sectionId: "project-cva", text: "A planner agent scores role fit." }] } }],
+    }]);
+    expect(choice).toEqual({ toolChoice: { type: "tool", toolName: "review_evidence" }, activeTools: ["review_evidence"] });
+  });
+
+  it("stops tool calls after the review", () => {
+    const choice = stepTools(4, [{ toolResults: [{ output: { found: true, text: "A planner agent scores role fit." } }] }]);
     expect(choice).toEqual({ toolChoice: "none", activeTools: [] });
   });
 });

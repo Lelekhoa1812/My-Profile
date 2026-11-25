@@ -91,26 +91,55 @@ describe("profile tools", () => {
   it("returns the spoken languages and leaves a code question on the skills section", async () => {
     const tools = createProfileTools({ facts: profile.facts, sections: profile.sections, source: "file" });
     const search = tools.search_sections as unknown as {
-      execute: (input: { query: string }) => Promise<{ found: boolean; sections?: { text: string; sectionId: string }[] }>;
+      execute: (input: { query: string }) => Promise<{ found: boolean; sections?: { lead?: string; text?: string; sectionId: string }[] }>;
     };
     const spoken = await search.execute({ query: "What languages does he speak?" });
-    expect(spoken.sections?.[0]?.text).toContain("Mandarin");
-    expect(spoken.sections?.[0]?.text).toContain("Vietnamese");
-    expect(spoken.sections?.[0]?.text).not.toContain("Python");
+    expect(spoken.sections?.[0]?.lead).toContain("Mandarin");
+    expect(spoken.sections?.[0]?.lead).toContain("Vietnamese");
+    expect(spoken.sections?.[0]?.lead).not.toContain("Python");
     const triageSpeech = await search.execute({ query: "What language does the triage model speak?" });
     expect(triageSpeech.sections?.some((section) => section.sectionId === "project-triage")).toBe(true);
-    expect(triageSpeech.sections?.[0]?.text ?? "").not.toContain("Mandarin");
+    expect(triageSpeech.sections?.[0]?.lead ?? "").not.toContain("Mandarin");
     const founder = await search.execute({ query: "Who is known as the founder?" });
     expect(founder.sections?.some((section) => section.sectionId === "project-medvietai")).toBe(true);
+  });
+
+  it("resolves the visitor email even when the model query is not a fact key", async () => {
+    const tools = createProfileTools(
+      { facts: profile.facts, sections: profile.sections, source: "file" },
+      "What is his email?",
+    );
+    const search = tools.search_sections as unknown as {
+      execute: (input: { query: string }) => Promise<{ facts?: { value: string }[] }>;
+    };
+    const result = await search.execute({ query: "contact channel for employers" });
+    expect(result.facts?.[0]?.value).toMatch(/liamkl\.work@gmail\.com/i);
+  });
+
+  it("keeps the visitor question's first section when the model query misses it", async () => {
+    const tools = createProfileTools(
+      { facts: profile.facts, sections: profile.sections, source: "file" },
+      "What does he measure after a model is live?",
+    );
+    const search = tools.search_sections as unknown as {
+      execute: (input: { query: string }) => Promise<{ sections?: { sectionId: string }[] }>;
+    };
+    const result = await search.execute({ query: "post-deployment monitoring practices" });
+    expect(result.sections?.[0]?.sectionId).toBe("project-meter");
   });
 
   it("returns the Harry pilot when a project-only search misses the role", async () => {
     const tools = createProfileTools({ facts: profile.facts, sections: profile.sections, source: "file" });
     const search = tools.search_sections as unknown as {
-      execute: (input: { query: string; sourceType?: string }) => Promise<{ found: boolean; sections?: { sectionId: string; text: string }[] }>;
+      execute: (input: { query: string; sourceType?: string }) => Promise<{ found: boolean; sections?: { sectionId: string; lead: string }[] }>;
+    };
+    const read = tools.read_sections as unknown as {
+      execute: (input: { sectionIds: string[] }) => Promise<{ sections?: { sectionId: string; text?: string }[] }>;
     };
     const result = await search.execute({ query: "pilot cut", sourceType: "project" });
     expect(result.sections?.[0]?.sectionId).toBe("role-harry-senior");
-    expect(result.sections?.[0]?.text).toContain("40 percent");
+    expect(result.sections?.[0]?.lead.length ?? 0).toBeLessThanOrEqual(180);
+    const full = await read.execute({ sectionIds: ["role-harry-senior"] });
+    expect(full.sections?.[0]?.text).toContain("40 percent");
   });
 });

@@ -189,7 +189,7 @@ export function ChatDock({ questions }: { questions: string[] }) {
               <article key={turn.id} className="depth-in">
                 <p className="text-sm leading-snug text-white/55">{turn.question}</p>
                 {turn.reading ? (
-                  <p className="data mt-3 text-[10px] text-white/55">
+                  <p className="mt-3 text-sm text-white/55">
                     {turn.steps.at(-1) ?? "Reading the record"}
                     <span aria-hidden className="blink ml-1 inline-block h-[0.9em] w-[0.4em] translate-y-[0.1em] bg-white" />
                   </p>

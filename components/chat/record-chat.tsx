@@ -3,26 +3,28 @@
 import { Chat, useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { displayAnswer, shownAnswer } from "@/lib/chat/answer";
+import { shownAnswer } from "@/lib/chat/answer";
+import { keepToolSentences } from "@/lib/chat/evidence";
 import { sourcesFromParts, type Source } from "@/lib/chat/sources";
-import { groundedQuestion, withMemory } from "@/lib/session/memory";
+import { withMemory } from "@/lib/session/memory";
 
 export type Turn = { id: string; question: string; answer: string; sources: Source[]; steps: string[]; done: boolean; reading: boolean };
 
-const STEP_VERBS: Record<string, string> = {
-  lookup_fact: "Fact",
-  list_sections: "Index",
-  read_section: "Read",
-  search_sections: "Search",
+const STEP_LINES: Record<string, string> = {
+  plan_question: "Planning through this question...",
+  lookup_fact: "Looking up a recorded fact...",
+  list_sections: "Listing the sections...",
+  search_sections: "Searching the record...",
+  read_section: "Reading one section...",
+  read_sections: "Reading the matching sections...",
+  review_evidence: "Checking the evidence...",
 };
 
 function stepsOf(parts: UIMessage["parts"]): string[] {
   return parts.flatMap((part) => {
     if (!part.type.startsWith("tool-")) return [];
     const name = part.type.slice(5);
-    const input = ("input" in part ? part.input : undefined) as Record<string, unknown> | undefined;
-    const subject = input?.sectionId ?? input?.query ?? input?.key ?? input?.kind ?? input?.sourceType ?? "";
-    return [`${STEP_VERBS[name] ?? name} ${String(subject)}`.trim()];
+    return [STEP_LINES[name] ?? "Working through this step..."];
   });
 }
 
@@ -100,7 +102,7 @@ export function toTurns(messages: readonly UIMessage[], streaming: boolean): Tur
     const question = message.parts.map((part) => (part.type === "text" ? part.text : "")).join("");
     const reply = messages[index + 1]?.role === "assistant" ? messages[index + 1] : undefined;
     const raw = reply ? reply.parts.map((part) => (part.type === "text" ? part.text : "")).join("") : "";
-    const draft = reply ? displayAnswer(reply.parts, raw, groundedQuestion(messages, index)) : "";
+    const draft = reply && raw.trim() ? keepToolSentences(reply.parts, raw) : "";
     const last = index >= messages.length - 2;
     const done = !(last && streaming);
     const answer = shownAnswer(draft, done, Boolean(reply));

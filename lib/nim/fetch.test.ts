@@ -23,10 +23,10 @@ describe("wireBody", () => {
     expect(body.stream).toBe(true);
   });
 
-  it("adds a sentence schema and a stable cache key when the caller sends neither", () => {
+  it("leaves the response format unset and sets a stable cache key when the caller sends neither", () => {
     const body = wireBody({ messages: [] }, "nvidia/nemotron-3-ultra-550b-a55b");
     expect(body.prompt_cache_key).toBe("profile-record");
-    expect(body.response_format).toMatchObject({ type: "json_schema" });
+    expect(body.response_format).toBeUndefined();
   });
 
   it("drops response_format when tools are present", () => {

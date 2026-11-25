@@ -639,6 +639,14 @@ describe("profile store", () => {
     if (result.found) expect(result.sections.some((section) => section.sectionId === "skills")).toBe(true);
   });
 
+  it("finds the planner agent in the CVA section", () => {
+    const result = searchSections(profile.sections, "What does the planner agent score?");
+    expect(result.found).toBe(true);
+    if (!result.found) return;
+    expect(result.sections.slice(0, 3).some((section) => section.sectionId === "project-cva")).toBe(true);
+    expect(result.sections.find((section) => section.sectionId === "project-cva")?.text).toContain("planner agent");
+  });
+
   it("finds the skills section from a language question", () => {
     const result = searchSections(profile.sections, "which languages does he speak");
     expect(result.found).toBe(true);

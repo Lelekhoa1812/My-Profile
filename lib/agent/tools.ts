@@ -5,10 +5,30 @@ import { asksForExperienceSpan, asksForGraduation, asksForName, asksForPlace, as
 
 const kind = z.enum(["identity", "role", "link", "date", "skill", "education"]).optional();
 
-export function createProfileTools(record: ProfileRecord): ToolSet {
+type TurnRead = {
+  searched: Set<string>;
+  read: Map<string, string>;
+};
+
+function leadOf(text: string): string {
+  const sentence = text.split(/(?<=[.!])\s+/)[0]?.trim() ?? "";
+  return sentence.length <= 180 ? sentence : `${sentence.slice(0, 177).trim()}...`;
+}
+
+export function createProfileTools(record: ProfileRecord, question = ""): ToolSet {
   const facts = record.facts;
   const sections = record.sections;
+  const turn: TurnRead = { searched: new Set(), read: new Map() };
   return {
+    plan_question: tool({
+      description: "State the intent and up to three search queries before any biography is read. Set factKey only for a closed fact: name, email, phone, location, degree, title, languages, or experience.",
+      inputSchema: z.object({
+        intent: z.string(),
+        queries: z.array(z.string()).min(1).max(3),
+        factKey: z.enum(["name", "email", "phone", "location", "degree", "title", "languages", "experience"]).optional(),
+      }),
+      execute: async (input) => ({ ok: true as const, intent: input.intent, queries: input.queries, factKey: input.factKey }),
+    }),
     lookup_fact: tool({
       description: "Read one exact public fact such as a name, email, phone, link, date, or skill. Use this before stating a contact detail or a date. For a title at a named past employer, use search_sections instead.",
       inputSchema: z.object({ key: z.string().optional(), kind }).refine((input) => Boolean(input.key || input.kind), {
@@ -35,11 +55,11 @@ export function createProfileTools(record: ProfileRecord): ToolSet {
         sourceType: z.enum(["role", "project", "education", "skills", "writing"]).optional(),
       }),
       execute: async (input) => {
-        const key = contactLookupKey(input.query);
+        const key = contactLookupKey(input.query) ?? contactLookupKey(question);
         if (key) return lookupFacts(facts, { key });
         const name = asksForName(input.query);
         if (name) return lookupFacts(facts, { key: name });
-        if (asksForPlace(input.query)) return lookupFacts(facts, { key: "location" });
+        if (asksForPlace(input.query) || asksForPlace(question)) return lookupFacts(facts, { key: "location" });
         if (/\bcity\b/i.test(input.query) && /\b(it|that)\b/i.test(input.query) && !namedEmployer(input.query)) return lookupFacts(facts, { key: "location" });
         if (asksForExperienceSpan(input.query)) return lookupFacts(facts, { key: "experience" });
         if (/\bpage title\b/i.test(input.query)) return lookupFacts(facts, { key: "page_title" });
@@ -55,15 +75,57 @@ export function createProfileTools(record: ProfileRecord): ToolSet {
         if (asksForSpokenLanguages(input.query)) {
           const spoken = lookupFacts(facts, { key: "languages" });
           if (spoken.found) {
+            const text = spoken.facts.map((fact) => fact.value).join(" ");
+            turn.searched.add("skills");
             return {
               found: true as const,
-              sections: [{ sectionId: "skills", heading: "Languages", sourceType: "skills", text: spoken.facts.map((fact) => fact.value).join(" "), match: "keyword" as const }],
+              sections: [{ sectionId: "skills", heading: "Languages", sourceType: "skills", lead: leadOf(text) }],
             };
           }
         }
         const filtered = searchSections(sections, input.query, input.sourceType);
-        if (input.sourceType && !filtered.found) return searchSections(sections, input.query);
-        return filtered;
+        const found = input.sourceType && !filtered.found ? searchSections(sections, input.query) : filtered;
+        if (!found.found || !("sections" in found)) return found;
+        const leads = found.sections.slice(0, 3).map((section) => {
+          turn.searched.add(section.sectionId);
+          return { sectionId: section.sectionId, heading: section.heading, sourceType: section.sourceType, lead: leadOf(section.text) };
+        });
+        if (question && question !== input.query) {
+          const visitor = searchSections(sections, question);
+          const head = visitor.found && "sections" in visitor ? visitor.sections[0] : undefined;
+          if (head && !leads.some((lead) => lead.sectionId === head.sectionId)) {
+            turn.searched.add(head.sectionId);
+            leads.unshift({ sectionId: head.sectionId, heading: head.heading, sourceType: head.sourceType, lead: leadOf(head.text) });
+            leads.splice(3);
+          }
+        }
+        return { found: leads.length > 0, sections: leads };
+      },
+    }),
+    read_sections: tool({
+      description: "Read the full text of up to three sections returned by search_sections in this turn. Do not pass an id that search did not return.",
+      inputSchema: z.object({ sectionIds: z.array(z.string()).min(1).max(3) }),
+      execute: async (input) => {
+        const read = input.sectionIds.map((sectionId) => {
+          if (!turn.searched.has(sectionId)) return { sectionId, found: false as const };
+          const section = readSection(sections, sectionId);
+          if (!section.found) return { sectionId, found: false as const };
+          const text = section.text.slice(0, 2400);
+          turn.read.set(section.sectionId, text);
+          return { sectionId: section.sectionId, heading: section.heading, sourceType: section.sourceType, text, found: true as const };
+        });
+        return { found: read.some((section) => section.found), sections: read };
+      },
+    }),
+    review_evidence: tool({
+      description: "Return the text already read in this turn. Pass section ids only. A quote in the arguments is ignored.",
+      inputSchema: z.object({ sectionIds: z.array(z.string()).max(3) }),
+      execute: async (input) => {
+        const text = input.sectionIds.flatMap((sectionId) => {
+          const read = turn.read.get(sectionId);
+          return read ? [read] : [];
+        }).join("\n");
+        return text ? { found: true as const, text } : { found: false as const };
       },
     }),
   };

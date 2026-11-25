@@ -9,6 +9,7 @@ type ArchiveItem = {
   detail?: string;
   year?: number;
   url?: string;
+  readme?: string;
 };
 
 const KIND: Record<string, string> = {
@@ -29,7 +30,7 @@ function clean(value: string | undefined): string {
 export function archiveSection(item: ArchiveItem): ProfileSection {
   const kind = KIND[item.kind] ?? item.kind;
   const detail = item.kind === "repo" && item.detail ? `Repository language: ${clean(item.detail)}` : clean(item.detail);
-  const parts = [clean(item.title), kind, clean(item.summary), detail, item.year ? String(item.year) : "", clean(item.url)].filter((part) => part.length > 0);
+  const parts = [clean(item.title), kind, clean(item.summary), detail, clean(item.readme), item.year ? String(item.year) : "", clean(item.url)].filter((part) => part.length > 0);
   const note = item.kind === "space" ? " A public Space is not a released product." : "";
   return {
     sectionId: sectionId(item.id),

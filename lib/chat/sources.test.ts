@@ -11,7 +11,7 @@ describe("sourcesFromParts", () => {
     ]);
     expect(sources.map((source) => source.sectionId)).toEqual(["role-axion", "role-mizco"]);
     expect(sources[0]).toMatchObject({ label: "Axion Solutions", href: "#role-axion" });
-    expect(sources[0].meta).toBe("Senior AI Software Engineer · Jul 2026 – now");
+    expect(sources[0].meta).toBe("AI Software Engineer · Jul 2026 – now");
   });
 
   it("points a public repository chip at the archive", () => {

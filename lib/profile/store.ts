@@ -803,7 +803,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
     };
   }
   const pinned = pinnedSections(visible, query);
-  if (pinned) return pinned;
+  if (pinned) return liftAskedPhrase(pinned, visible, asked);
   if (terms.length === 0) return broadSections(visible.filter((item) => !sourceType || item.section.sourceType === sourceType));
   const pool = visible.filter((item) => !sourceType || item.section.sourceType === sourceType);
   if (terms.every((term) => FACT_ONLY_TERMS.has(term))) return { found: false as const };
@@ -923,7 +923,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
   }) ?? [];
   const matched = products ? kept.filter((hit) => products.includes(hit.section.sectionId)) : kept;
   const finalHits = products && productHits.length > 0 ? (matched.length > 0 ? matched : productHits) : kept;
-  return {
+  return liftAskedPhrase({
     found: true as const,
     sections: finalHits.map((hit) => ({
       sectionId: hit.section.sectionId,
@@ -932,5 +932,43 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       text: hit.section.text,
       match: "keyword" as const,
     })),
-  };
+  }, pool, asked);
+}
+
+function askedPhrases(asked: string): string[] {
+  const words = asked.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 5 && !STOP_WORDS.has(word));
+  const phrases: string[] = [];
+  for (let index = 0; index < words.length - 1; index += 1) {
+    phrases.push(`${words[index]} ${words[index + 1]}`);
+  }
+  return phrases;
+}
+
+function liftAskedPhrase<T extends { found: true; sections: { sectionId: string; heading: string; sourceType: string; text: string; match: "keyword" | "broad" }[] }>(
+  result: T,
+  pool: readonly { section: ProfileSection; title: string; body: string }[],
+  asked: string,
+): T {
+  const phrases = askedPhrases(asked).filter((phrase) => {
+    const count = pool.filter((hit) => hit.body.includes(phrase) || hit.title.includes(phrase)).length;
+    return count > 0 && count <= 2;
+  });
+  if (phrases.length === 0) return result;
+  const hits = pool.filter((hit) => phrases.some((phrase) => hit.body.includes(phrase) || hit.title.includes(phrase)));
+  const outside = hits.filter((hit) => {
+    const index = result.sections.findIndex((section) => section.sectionId === hit.section.sectionId);
+    return index < 0 || index >= 3;
+  });
+  if (outside.length === 0) return result;
+  const front = outside.map((hit) => ({
+    sectionId: hit.section.sectionId,
+    heading: hit.section.heading,
+    sourceType: hit.section.sourceType,
+    text: hit.section.text,
+    match: "keyword" as const,
+  }));
+  const frontIds = new Set(front.map((section) => section.sectionId));
+  const rest = result.sections.filter((section) => !frontIds.has(section.sectionId));
+  const insertAt = Math.min(2, rest.length);
+  return { ...result, sections: [...rest.slice(0, insertAt), ...front, ...rest.slice(insertAt)] };
 }

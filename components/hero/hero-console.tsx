@@ -80,7 +80,7 @@ function AskField({ questions, busy, onAsk }: { questions: string[]; busy: boole
         </button>
       </form>
       <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5" aria-label="Questions to start with">
-        {questions.slice(0, 3).map((question) => (
+        {questions.map((question) => (
           <li key={question}>
             <button
               type="button"
@@ -189,7 +189,7 @@ function Answer({ turn, error, email, onClear, onContinue }: { turn: Turn; error
       <div className="relative">
         <p className="balance max-w-[44rem] text-[clamp(1.35rem,2.2vw,1.75rem)] font-light leading-snug text-white/60">{turn.question}</p>
         {turn.steps.length > 0 && !turn.done ? (
-          <ol className="data mt-5 space-y-1 text-white/55" aria-label="What the assistant is reading">
+          <ol className="mt-5 space-y-1 text-sm text-white/55" aria-label="What the assistant is reading">
             {turn.steps.map((step, index) => (
               <li key={`${step}-${index}`} className="depth-in">
                 {step}

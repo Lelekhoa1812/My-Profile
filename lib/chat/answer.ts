@@ -1,5 +1,6 @@
 import profile from "../../content/profile.json";
 import { asksForExperienceSpan, asksForTitle, employerMentioned, namedEmployer } from "../profile/store";
+import { keepToolSentences } from "./evidence";
 
 type AnswerPart = { type: string; state?: string; output?: unknown };
 
@@ -18,14 +19,15 @@ function factValue(key: string): string {
   return typeof fact?.value === "string" ? fact.value.trim() : "";
 }
 
-export function turnToStore(aborted: boolean, outputs: readonly unknown[], modelText: string, question = ""): string | null {
+export function turnToStore(aborted: boolean, results: readonly { toolName?: string; output?: unknown }[], modelText: string): string | null {
   if (aborted) return null;
-  const text = displayAnswer(
-    outputs.map((output) => ({ type: "tool-output", state: "output-available", output })),
-    modelText,
-    question,
-  );
-  return text.trim() ? text : holdAnswer();
+  const text = keepToolSentences(results.map((result) => ({
+    type: `tool-${result.toolName ?? "output"}`,
+    state: "output-available" as const,
+    output: result.output,
+    toolName: result.toolName,
+  })), modelText);
+  return text.trim() ? text : "I am Liam's portfolio assistant.";
 }
 
 export function shownAnswer(draft: string, done: boolean, hasReply: boolean): string {
@@ -3375,6 +3377,7 @@ function exposesGap(sentence: string): boolean {
     || /\bunnamed\b/i.test(sentence)
     || /does not specify/i.test(sentence)
     || /does not list/i.test(sentence)
+    || /does not say/i.test(sentence)
     || /was not re-counted/i.test(sentence);
 }
 
