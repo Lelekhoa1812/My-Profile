@@ -18,7 +18,8 @@
    "detail": "Python",
    "year": 2026,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Acnt-MCP"
+   "url": "https://github.com/Lelekhoa1812/Acnt-MCP",
+   "readme": "Minimal MCP server exposing two tool families for a personal-accountant workflow:"
   },
   {
    "id": "gh:AgentDiagram",
@@ -29,7 +30,8 @@
    "detail": "TypeScript",
    "year": 2026,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/AgentDiagram"
+   "url": "https://github.com/Lelekhoa1812/AgentDiagram",
+   "readme": "AgentDiagram is an open-source, locally runnable diagram-as-code editor with an agentic repo explorer and agentic coding workspace."
   },
   {
    "id": "gh:free-router",
@@ -40,7 +42,8 @@
    "detail": "TypeScript",
    "year": 2026,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/free-router"
+   "url": "https://github.com/Lelekhoa1812/free-router",
+   "readme": "FreeRouter is a self-hosted, OpenAI-compatible gateway for Google AI Studio, NVIDIA NIM, OpenRouter, Mistral AI, Matilda (Maincode), ZenMux, OrcaRouter, and TokenHarbor models. Provider access and included usage depend on each account. It also exposes TypeSafe Jev as a separate Decisions API and native System One endpoint. The dashboard uses a rotating six-digit shared password delivered over SMTP; registered email addresses receive password mail, and the first address is required at login only"
   },
   {
    "id": "hf:dataset:MedSwin/HealthBench-Curated",
@@ -123,7 +126,8 @@
    "detail": "HTML",
    "year": 2026,
    "stat": 2,
-   "url": "https://github.com/Lelekhoa1812/path-game"
+   "url": "https://github.com/Lelekhoa1812/path-game",
+   "readme": "idk, this game kinda fun though, read the instruction first :))"
   },
   {
    "id": "gh:prompt-me",
@@ -134,7 +138,8 @@
    "detail": "Python",
    "year": 2026,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/prompt-me"
+   "url": "https://github.com/Lelekhoa1812/prompt-me",
+   "readme": "Turn an imperfect engineering request into an evidence-grounded prompt, an execution-ready plan, and a loss-resistant agent-to-agent handoff."
   },
   {
    "id": "gh:prophet",
@@ -145,7 +150,8 @@
    "detail": "Python",
    "year": 2026,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/prophet"
+   "url": "https://github.com/Lelekhoa1812/prophet",
+   "readme": "Answers show their working. Every answer keeps the steps, the code that ran and what it printed. Nothing is a bare number. Forecasts earn their place. Each forecast is backtested against simple baselines on your own history, so you can see whether the model beats a naive guess. Runs on your machine. The server listens on loopback only, and your uploaded files stay local. Outbound calls go to the model provider you configure (NVIDIA NIM by default), to the web when the agent runs a search or"
   },
   {
    "id": "gh:Quotient",
@@ -156,7 +162,8 @@
    "detail": "HTML",
    "year": 2026,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Quotient"
+   "url": "https://github.com/Lelekhoa1812/Quotient",
+   "readme": "Quotient turns a recorded meeting or call into a written brief, a set of evidence-linked findings and follow-up actions. Every statement it publishes points to the moment in the recording where it was said. Statements it cannot confirm are held back for review rather than presented as fact."
   },
   {
    "id": "gh:stt-studio",
@@ -167,7 +174,8 @@
    "detail": "Python",
    "year": 2026,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/stt-studio"
+   "url": "https://github.com/Lelekhoa1812/stt-studio",
+   "readme": "STT Studio is an early-stage local speech-to-text workspace for Mac. It combines a FastAPI service running faster-whisper (and optionally mlx-audio on Apple Silicon) with a Vite/React interface. Select an audio file, choose a model and transcription settings, run a local job, then review, edit, search, copy, or export the transcript. It is a development project, not a packaged or production-ready application."
   },
   {
    "id": "gh:survee",
@@ -178,7 +186,8 @@
    "detail": "TypeScript",
    "year": 2026,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/survee"
+   "url": "https://github.com/Lelekhoa1812/survee",
+   "readme": "survee was previously known as KQA. Existing KQA format markers, integration identifiers and configuration names continue to work."
   },
   {
    "id": "gh:undercut",
@@ -189,7 +198,8 @@
    "detail": "Python",
    "year": 2026,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/undercut"
+   "url": "https://github.com/Lelekhoa1812/undercut",
+   "readme": "The junior developer who asks first, writes less, and tests what changed."
   },
   {
    "id": "gh:ADHD-Assistant",
@@ -200,7 +210,8 @@
    "detail": "TypeScript",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/ADHD-Assistant"
+   "url": "https://github.com/Lelekhoa1812/ADHD-Assistant",
+   "readme": "A serverless Next.js application for ADHD screening and personalized coaching, built with Gemini 2.5 and NVIDIA NIM."
   },
   {
    "id": "hf:space:MedSwin/AgenticDiagnosis",
@@ -223,7 +234,8 @@
    "detail": "TypeScript",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/AI-Tutor"
+   "url": "https://github.com/Lelekhoa1812/AI-Tutor",
+   "readme": "Overview"
   },
   {
    "id": "gh:AITC-Localbot",
@@ -234,7 +246,8 @@
    "detail": "Jupyter Notebook",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/AITC-Localbot"
+   "url": "https://github.com/Lelekhoa1812/AITC-Localbot",
+   "readme": "The system is designed as a Retrieval-Augmented Generation (RAG) pipeline that ingests hardware catalog PDFs and answers compliance queries by combining semantic search with LLM reasoning. The high-level workflow is as follows:"
   },
   {
    "id": "hf:space:MedSwin/Augmentation",
@@ -269,7 +282,8 @@
    "detail": "Jupyter Notebook",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Capstone-Project"
+   "url": "https://github.com/Lelekhoa1812/Capstone-Project",
+   "readme": "Main team GitHub repo. Functional Backend. Web Demo. Driver Behaviour model. Fuel Efficiency model."
   },
   {
    "id": "gh:Cooking-Tutor",
@@ -280,7 +294,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Cooking-Tutor"
+   "url": "https://github.com/Lelekhoa1812/Cooking-Tutor",
+   "readme": "Welcome to the AI-powered Cooking Tutor project! This platform leverages cutting-edge technologies such as Retrieval-Augmented Generation (RAG), Gemini Flash 2.5, and comprehensive web search to deliver an intelligent cooking assistant. It provides step-by-step cooking guidance, recipe suggestions, and culinary expertise with proper source citations."
   },
   {
    "id": "hf:space:khoaliamle/Cooking_Tutor",
@@ -315,7 +330,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/COS30018-Intelligent-Systems"
+   "url": "https://github.com/Lelekhoa1812/COS30018-Intelligent-Systems",
+   "readme": "Semester 2, 2023, by Khoa Le"
   },
   {
    "id": "gh:COS30082-Applied-Machine-Learning",
@@ -326,7 +342,8 @@
    "detail": "Jupyter Notebook",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/COS30082-Applied-Machine-Learning"
+   "url": "https://github.com/Lelekhoa1812/COS30082-Applied-Machine-Learning",
+   "readme": "Semester 2, 2025, by Khoa Le"
   },
   {
    "id": "gh:COS40003-Concurrent-Programming",
@@ -348,7 +365,8 @@
    "detail": "TypeScript",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/CVA"
+   "url": "https://github.com/Lelekhoa1812/CVA",
+   "readme": "CV Assistant is an AI-assisted career workspace. It keeps one source of truth for your profile, then uses it to build tailored resumes, cover letters, job searches and assisted applications. The app is built with Next.js 15, React 19, TypeScript, Tailwind CSS, MongoDB and NVIDIA NIM."
   },
   {
    "id": "gh:Deepseek-OCR",
@@ -359,7 +377,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Deepseek-OCR"
+   "url": "https://github.com/Lelekhoa1812/Deepseek-OCR",
+   "readme": "title: OCR-VLs emoji: 📝 colorFrom: green colorTo: yellow sdk: gradio sdk_version: 5.49.1 app_file: app.py python_version: \"3.11.3\" pinned: true short_description: 'DeepSeek Paddle olm dots Gemini | OCR to MD'"
   },
   {
    "id": "hf:space:khoaliamle/DeepseekOCR",
@@ -406,7 +425,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Eletrical-Automation"
+   "url": "https://github.com/Lelekhoa1812/Eletrical-Automation",
+   "readme": "title: PopTech Cleaner emoji: 🔌 colorFrom: yellow colorTo: blue sdk: docker sdk_version: latest pinned: false license: apache-2.0 short_description: Electrical Cleaning Services from Device Socket"
   },
   {
    "id": "hf:space:khoaliamle/Embedding",
@@ -441,7 +461,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Facial-Recognition-Web-app"
+   "url": "https://github.com/Lelekhoa1812/Facial-Recognition-Web-app",
+   "readme": "title: Facial Recognition emoji: 🕵 colorFrom: indigo colorTo: purple sdk: docker pinned: false license: mit short_description: FR backend with similarity-search and anti-spoofing"
   },
   {
    "id": "hf:model:khoaliamle/Fuel_Efficiency_OBD",
@@ -548,7 +569,8 @@
    "detail": "",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/INF10024-Business-Digitalisation"
+   "url": "https://github.com/Lelekhoa1812/INF10024-Business-Digitalisation",
+   "readme": "Swinburne Semester 2, 2023, by Khoa Le."
   },
   {
    "id": "hf:space:khoaliamle/Interview_AI",
@@ -631,7 +653,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Medical-Chatbot-RAG"
+   "url": "https://github.com/Lelekhoa1812/Medical-Chatbot-RAG",
+   "readme": "> Enterprise-grade, multilingual medical assistant infrastructure for retrieval-grounded answers, source transparency, search augmentation, image-enabled workflows, and resilient browser-to-backend operations."
   },
   {
    "id": "gh:Medical-Messenger",
@@ -642,7 +665,8 @@
    "detail": "TypeScript",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Medical-Messenger"
+   "url": "https://github.com/Lelekhoa1812/Medical-Messenger",
+   "readme": "A modest, privacy-aware medical messenger that allows patients to discover and subscribe to doctors (by role/specialty) and view a basic doctor directory. This MVP implements the frontend UI, a typed backend API serving mock data, strict repo quality gates, and CI scaffolding—providing a disciplined runway for the next 70% (auth, subscriptions persistence, real-time chat, privacy workflows, and Azure deployment)."
   },
   {
    "id": "hf:space:khoaliamle/Medical_Profile",
@@ -665,7 +689,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/MedLLM-Agent"
+   "url": "https://github.com/Lelekhoa1812/MedLLM-Agent",
+   "readme": "title: MedLLM Agent emoji: 🩺 colorFrom: pink colorTo: red sdk: gradio sdk_version: 5.49.1 app_file: app.py pinned: false license: mit short_description: 'Medical MCP agentic RAG & Search with MedSwin' tags: mcp-in-action-track-enterprise mcp-in-action-track-creative building-mcp-track-enterprise building-mcp-track-creative"
   },
   {
    "id": "hf:dataset:MedSwin/MedQuAD_Benchmark",
@@ -688,7 +713,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/MedSwin"
+   "url": "https://github.com/Lelekhoa1812/MedSwin",
+   "readme": "title: MedSwin emoji: 💬 colorFrom: yellow colorTo: purple sdk: gradio sdk_version: 5.42.0 app_file: app.py pinned: false hf_oauth: true hf_oauth_scopes: inference-api license: apache-2.0 short_description: MedAlpaca-7B SFT & MedGemma-27b KD with RAG"
   },
   {
    "id": "hf:model:MedSwin/MedSwin-7B-KD",
@@ -1011,7 +1037,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Sall-e"
+   "url": "https://github.com/Lelekhoa1812/Sall-e",
+   "readme": "Plastic pollution has shifted from an open-ocean problem to a river-borne crisis. The Citarum River (West Java, Indonesia) is now cited as *“one of the most polluted rivers on Earth”*—an estimated 20 000 t of solid waste and 340 000 t of untreated wastewater are discharged every day from ~2 000 industrial facilities and dense urban settlements :contentReference[oaicite:0]{index=0}. Down-river, this material becomes a primary source of marine debris."
   },
   {
    "id": "hf:space:khoaliamle/Sall-eGarbageDetection",
@@ -1034,7 +1061,8 @@
    "detail": "JavaScript",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Seat_Allocator"
+   "url": "https://github.com/Lelekhoa1812/Seat_Allocator",
+   "readme": "A simple classroom seat allocation tool for teachers. Manage students and friend groups, define tables, and generate fair seat placements in one click."
   },
   {
    "id": "gh:Sentiment-Analysis-with-Obsei",
@@ -1045,7 +1073,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Sentiment-Analysis-with-Obsei"
+   "url": "https://github.com/Lelekhoa1812/Sentiment-Analysis-with-Obsei",
+   "readme": "This project leverages the Obsei framework alongside Hugging Face Transformers to analyze text data by performing sentiment analysis (by model twitter-xlm-roberta-base-sentiment and distilbert-base-multilingual-cased), named entity recognition (NER model bert-base-NER), fact-checking (Google Fact Check API), and summarization (facebook model bart-large-cnn). It combines cutting-edge Natural Language Processing (NLP) techniques with customizable pipelines, delivering actionable insights for"
   },
   {
    "id": "hf:space:khoaliamle/SimilarityChecker",
@@ -1080,7 +1109,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/SQL-LLM-CoT"
+   "url": "https://github.com/Lelekhoa1812/SQL-LLM-CoT",
+   "readme": "title: CPG Chatbot emoji: 🛒 colorFrom: blue colorTo: green sdk: docker sdk_version: latest pinned: false license: apache-2.0 short_description: GemVan customized reranker, reasoned SQL, db mockup and info"
   },
   {
    "id": "gh:Student-Management",
@@ -1091,7 +1121,8 @@
    "detail": "TypeScript",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Student-Management"
+   "url": "https://github.com/Lelekhoa1812/Student-Management",
+   "readme": "Hệ thống Quản lý Học viên là một ứng dụng web được thiết kế để quản lý toàn bộ quy trình đào tạo và theo dõi học viên tại trung tâm. Hệ thống hỗ trợ ba vai trò chính:"
   },
   {
    "id": "gh:StudyBuddy",
@@ -1102,7 +1133,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/StudyBuddy"
+   "url": "https://github.com/Lelekhoa1812/StudyBuddy",
+   "readme": "title: EdSummariser emoji: 📚 colorFrom: red colorTo: indigo sdk: docker sdk_version: latest pinned: false license: apache-2.0 short_description: Ed-Assistant summary your learning journey with Agentic RAG"
   },
   {
    "id": "gh:SWE40006-Software-Deployment-and-Evolution",
@@ -1113,7 +1145,8 @@
    "detail": "C#",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/SWE40006-Software-Deployment-and-Evolution"
+   "url": "https://github.com/Lelekhoa1812/SWE40006-Software-Deployment-and-Evolution",
+   "readme": "Semester 2, 2025, by Khoa Le."
   },
   {
    "id": "hf:dataset:khoaliamle/Synthetic-Passport-Dataset",
@@ -1148,7 +1181,8 @@
    "detail": "JavaScript",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Triage-LLM-Based"
+   "url": "https://github.com/Lelekhoa1812/Triage-LLM-Based",
+   "readme": "TriageLLM is a cross-platform (Android/iOS) mobile application that supports emergency medical triage, AI-based decision-making, and autonomous drone dispatch. It is part of the broader system integrating: Large Language Models (LLMs) for triage, Vector-embedded user medical profiles (RAG), Real-time API communication, Biometric and QR-based multi-layer authentication."
   },
   {
    "id": "hf:space:khoaliamle/Tutorbot",
@@ -1207,7 +1241,8 @@
    "detail": "JavaScript",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Water-Meter-Scanner"
+   "url": "https://github.com/Lelekhoa1812/Water-Meter-Scanner",
+   "readme": "This project is an advanced OCR (Optical Character Recognition) application designed to extract water meter values from images. It combines the power of YOLOv5 for field detection and VietOCR for character recognition, with a Next.js front end and a Flask back end."
   },
   {
    "id": "hf:model:khoaliamle/Water-Meter-Segmentation-Detection",
@@ -1230,7 +1265,8 @@
    "detail": "Python",
    "year": 2025,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Whisper"
+   "url": "https://github.com/Lelekhoa1812/Whisper",
+   "readme": "title: Whisper Large V3 Turbo emoji: 🎤 colorFrom: blue colorTo: purple sdk: gradio sdk_version: 5.46.0 pinned: false license: mit short_description: Whisper LV3Turbo for ASR -API"
   },
   {
    "id": "hf:space:khoaliamle/WhisperAPI",
@@ -1253,7 +1289,8 @@
    "detail": "JavaScript",
    "year": 2025,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Writing-Journey"
+   "url": "https://github.com/Lelekhoa1812/Writing-Journey",
+   "readme": "Unlock your full potential in IELTS Writing!"
   },
   {
    "id": "gh:Archiver-Game",
@@ -1264,7 +1301,8 @@
    "detail": "",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Archiver-Game"
+   "url": "https://github.com/Lelekhoa1812/Archiver-Game",
+   "readme": "Third player - perspective game, using GDevelop 5 to construct the game, logics and design."
   },
   {
    "id": "gh:Chess-Game",
@@ -1275,7 +1313,8 @@
    "detail": "Python",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Chess-Game"
+   "url": "https://github.com/Lelekhoa1812/Chess-Game",
+   "readme": "A Python Chess Game, modificated by Khoa Le."
   },
   {
    "id": "gh:COS10009-Introduction-to-Programming",
@@ -1286,7 +1325,8 @@
    "detail": "PHP",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/COS10009-Introduction-to-Programming"
+   "url": "https://github.com/Lelekhoa1812/COS10009-Introduction-to-Programming",
+   "readme": "Semester 2, 2022, by Khoa Le"
   },
   {
    "id": "gh:COS20007-Object-Oriented-Programming",
@@ -1297,7 +1337,8 @@
    "detail": "C#",
    "year": 2024,
    "stat": 3,
-   "url": "https://github.com/Lelekhoa1812/COS20007-Object-Oriented-Programming"
+   "url": "https://github.com/Lelekhoa1812/COS20007-Object-Oriented-Programming",
+   "readme": "Swinburne Semester 2, 2023, by Khoa Le. All works of COS20007 unit."
   },
   {
    "id": "gh:COS20019-Cloud-Computing",
@@ -1308,7 +1349,8 @@
    "detail": "Python",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/COS20019-Cloud-Computing"
+   "url": "https://github.com/Lelekhoa1812/COS20019-Cloud-Computing",
+   "readme": "Swinburne Semester 2, 2023, by Khoa Le"
   },
   {
    "id": "gh:COS30008-Data-Structures-and-Patterns",
@@ -1319,7 +1361,8 @@
    "detail": "C++",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/COS30008-Data-Structures-and-Patterns"
+   "url": "https://github.com/Lelekhoa1812/COS30008-Data-Structures-and-Patterns",
+   "readme": "Semester 1, 2024, by Khoa Le Include weekly laboratories and Assignment."
   },
   {
    "id": "gh:COS30017-Software-Development-for-Mobile-Devices",
@@ -1330,7 +1373,8 @@
    "detail": "Kotlin",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/COS30017-Software-Development-for-Mobile-Devices"
+   "url": "https://github.com/Lelekhoa1812/COS30017-Software-Development-for-Mobile-Devices",
+   "readme": "Semester 2, 2024 by Khoa Le"
   },
   {
    "id": "gh:COS30019-Introduction-to-Artificial-Intelligence",
@@ -1341,7 +1385,8 @@
    "detail": "Python",
    "year": 2024,
    "stat": 2,
-   "url": "https://github.com/Lelekhoa1812/COS30019-Introduction-to-Artificial-Intelligence"
+   "url": "https://github.com/Lelekhoa1812/COS30019-Introduction-to-Artificial-Intelligence",
+   "readme": "Semester 1, 2024, by Khoa Le"
   },
   {
    "id": "gh:COS30043-Interface-Design-and-Development",
@@ -1352,7 +1397,8 @@
    "detail": "JavaScript",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/COS30043-Interface-Design-and-Development"
+   "url": "https://github.com/Lelekhoa1812/COS30043-Interface-Design-and-Development",
+   "readme": "Semester 1, 2024, by Khoa Le"
   },
   {
    "id": "gh:COS40007-Artificial-Intelligence-for-Engineering",
@@ -1363,7 +1409,8 @@
    "detail": "Python",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/COS40007-Artificial-Intelligence-for-Engineering"
+   "url": "https://github.com/Lelekhoa1812/COS40007-Artificial-Intelligence-for-Engineering",
+   "readme": "Semester 2, 2024, by Khoa Le"
   },
   {
    "id": "gh:ENG20009-Engineering-Inquiry-Project",
@@ -1374,7 +1421,8 @@
    "detail": "C++",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/ENG20009-Engineering-Inquiry-Project"
+   "url": "https://github.com/Lelekhoa1812/ENG20009-Engineering-Inquiry-Project",
+   "readme": "Swinburne Semester 2, 2023, by Khoa Le."
   },
   {
    "id": "gh:ENG20010-Engineering-Technology-Design",
@@ -1385,7 +1433,8 @@
    "detail": "",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/ENG20010-Engineering-Technology-Design"
+   "url": "https://github.com/Lelekhoa1812/ENG20010-Engineering-Technology-Design",
+   "readme": "Swinburne Semester 2, 2023, by Khoa Le."
   },
   {
    "id": "gh:Face-Recognition-Website",
@@ -1396,7 +1445,8 @@
    "detail": "Python",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Face-Recognition-Website"
+   "url": "https://github.com/Lelekhoa1812/Face-Recognition-Website",
+   "readme": "Need improvement and method implementations."
   },
   {
    "id": "gh:FIN10002-Financial-Statistics",
@@ -1407,7 +1457,8 @@
    "detail": "Jupyter Notebook",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/FIN10002-Financial-Statistics"
+   "url": "https://github.com/Lelekhoa1812/FIN10002-Financial-Statistics",
+   "readme": "Semester 2, 2022, by Khoa Le Finance unit, include Jupyter Notebook files, access via Annaconda Navigator."
   },
   {
    "id": "gh:Fretboard",
@@ -1418,7 +1469,8 @@
    "detail": "JavaScript",
    "year": 2024,
    "stat": 2,
-   "url": "https://github.com/Lelekhoa1812/Fretboard"
+   "url": "https://github.com/Lelekhoa1812/Fretboard",
+   "readme": "Enterprise-Grade AI-Powered Guitar Learning Platform"
   },
   {
    "id": "gh:Golf-Scorecard-Scanner",
@@ -1429,7 +1481,8 @@
    "detail": "Jupyter Notebook",
    "year": 2024,
    "stat": 3,
-   "url": "https://github.com/Lelekhoa1812/Golf-Scorecard-Scanner"
+   "url": "https://github.com/Lelekhoa1812/Golf-Scorecard-Scanner",
+   "readme": "This solution uses YOLOv8 and YOLOv11 for field detection, VietOCR for text recognition, and LabelMe for annotation. It processes complex golf scorecard layouts and structures them into a JSON file for further analysis. Optionally, it incorporate Flash Vision API for direct parsing of data reading in case data cannot be accurate or sustainable."
   },
   {
    "id": "gh:Knowledge-Test",
@@ -1440,7 +1493,8 @@
    "detail": "JavaScript",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Knowledge-Test"
+   "url": "https://github.com/Lelekhoa1812/Knowledge-Test",
+   "readme": "Educational Website"
   },
   {
    "id": "gh:Linguaphile",
@@ -1451,7 +1505,8 @@
    "detail": "Kotlin",
    "year": 2024,
    "stat": 3,
-   "url": "https://github.com/Lelekhoa1812/Linguaphile"
+   "url": "https://github.com/Lelekhoa1812/Linguaphile",
+   "readme": "APK Download Current version of the app Linguaphile(2.0).apk can be downloaded from the following Google Drive URL in APK package:"
   },
   {
    "id": "gh:Message-Encryption",
@@ -1462,7 +1517,8 @@
    "detail": "HTML",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Message-Encryption"
+   "url": "https://github.com/Lelekhoa1812/Message-Encryption",
+   "readme": "Feel free to email me if you need to ask about the logics ^^."
   },
   {
    "id": "gh:Monopoly-Game",
@@ -1473,7 +1529,8 @@
    "detail": "C#",
    "year": 2024,
    "stat": 2,
-   "url": "https://github.com/Lelekhoa1812/Monopoly-Game"
+   "url": "https://github.com/Lelekhoa1812/Monopoly-Game",
+   "readme": "(Vietnamese version runs on English command lines) This is the Monopoly game. Made by Khoa Le, inspired by the famous 'Co Ty Phu' board game. The game is especially made for 3 to 4 players, suitable to play with friends and family."
   },
   {
    "id": "gh:Multiplayer-Penalty-Shootout-Game",
@@ -1484,7 +1541,8 @@
    "detail": "HTML",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Multiplayer-Penalty-Shootout-Game"
+   "url": "https://github.com/Lelekhoa1812/Multiplayer-Penalty-Shootout-Game",
+   "readme": "Penalty shootout game for 2 players online, need updates"
   },
   {
    "id": "gh:My-Music-Player",
@@ -1495,7 +1553,8 @@
    "detail": "JavaScript",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/My-Music-Player"
+   "url": "https://github.com/Lelekhoa1812/My-Music-Player",
+   "readme": "Instruction:"
   },
   {
    "id": "gh:Python-Calculator",
@@ -1506,7 +1565,8 @@
    "detail": "Python",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Python-Calculator"
+   "url": "https://github.com/Lelekhoa1812/Python-Calculator",
+   "readme": "Classic Calculator, using Python, assisted by BlackBox AI tool."
   },
   {
    "id": "gh:QR-Code-Generator",
@@ -1517,7 +1577,8 @@
    "detail": "TypeScript",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/QR-Code-Generator"
+   "url": "https://github.com/Lelekhoa1812/QR-Code-Generator",
+   "readme": "Web Application for QR Code generator using JS and TS"
   },
   {
    "id": "gh:Robot-Navigation-Agent",
@@ -1528,7 +1589,8 @@
    "detail": "Python",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Robot-Navigation-Agent"
+   "url": "https://github.com/Lelekhoa1812/Robot-Navigation-Agent",
+   "readme": "Python algorithms for robot mapping navigation."
   },
   {
    "id": "gh:Rock-Paper-Scissor-AI-Game",
@@ -1539,7 +1601,8 @@
    "detail": "HTML",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Rock-Paper-Scissor-AI-Game"
+   "url": "https://github.com/Lelekhoa1812/Rock-Paper-Scissor-AI-Game",
+   "readme": "AI Game predicting user's choice for Rock Paper Scissor game"
   },
   {
    "id": "gh:Rock-Paper-Scissor-AI-Game-Ver2",
@@ -1550,7 +1613,8 @@
    "detail": "JavaScript",
    "year": 2024,
    "stat": 2,
-   "url": "https://github.com/Lelekhoa1812/Rock-Paper-Scissor-AI-Game-Ver2"
+   "url": "https://github.com/Lelekhoa1812/Rock-Paper-Scissor-AI-Game-Ver2",
+   "readme": "AI learning model game for Rock Paper Scissor game."
   },
   {
    "id": "gh:RosterManagement",
@@ -1561,7 +1625,8 @@
    "detail": "JavaScript",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/RosterManagement"
+   "url": "https://github.com/Lelekhoa1812/RosterManagement",
+   "readme": "The Roster Management Android System is a robust mobile application designed to manage business operations efficiently, including shift management, user authentication, and account creation. It supports multiple businesses by allowing unique database setups for each business, identified by a unique business code. This application communicates with a server-side API to manage databases and performs localized database queries directly on the app."
   },
   {
    "id": "gh:S-P500_Prediction_Model",
@@ -1572,7 +1637,8 @@
    "detail": "Python",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/S-P500_Prediction_Model"
+   "url": "https://github.com/Lelekhoa1812/S-P500_Prediction_Model",
+   "readme": "`` npm start ``"
   },
   {
    "id": "gh:Shop-Application",
@@ -1583,7 +1649,8 @@
    "detail": "Java",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Shop-Application"
+   "url": "https://github.com/Lelekhoa1812/Shop-Application",
+   "readme": "Sale Application using Java Springboot/API and Angular"
   },
   {
    "id": "gh:SWE30003-A3",
@@ -1594,7 +1661,8 @@
    "detail": "C#",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/SWE30003-A3"
+   "url": "https://github.com/Lelekhoa1812/SWE30003-A3",
+   "readme": "Group Project, Assignment 3 SWE30003"
   },
   {
    "id": "gh:SWE30003-Software-Architectures-and-Design",
@@ -1605,7 +1673,8 @@
    "detail": "C#",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/SWE30003-Software-Architectures-and-Design"
+   "url": "https://github.com/Lelekhoa1812/SWE30003-Software-Architectures-and-Design",
+   "readme": "Semester 1, 2024, by Khoa Le"
   },
   {
    "id": "gh:SWE30009-Software-Testing-and-Reliability",
@@ -1616,7 +1685,8 @@
    "detail": "Python",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/SWE30009-Software-Testing-and-Reliability"
+   "url": "https://github.com/Lelekhoa1812/SWE30009-Software-Testing-and-Reliability",
+   "readme": "Semester 2, 2024, by Khoa Le"
   },
   {
    "id": "gh:Text-to-Speech-Website",
@@ -1627,7 +1697,8 @@
    "detail": "HTML",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Text-to-Speech-Website"
+   "url": "https://github.com/Lelekhoa1812/Text-to-Speech-Website",
+   "readme": "Text entry or file upload converted to voice"
   },
   {
    "id": "gh:The-Auburn-Coffee",
@@ -1638,7 +1709,8 @@
    "detail": "JavaScript",
    "year": 2024,
    "stat": 2,
-   "url": "https://github.com/Lelekhoa1812/The-Auburn-Coffee"
+   "url": "https://github.com/Lelekhoa1812/The-Auburn-Coffee",
+   "readme": "*A seamless ordering experience for commuters and coffee lovers!*"
   },
   {
    "id": "gh:TicTacToe-Game-by-C-Sharp",
@@ -1649,7 +1721,8 @@
    "detail": "C#",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/TicTacToe-Game-by-C-Sharp"
+   "url": "https://github.com/Lelekhoa1812/TicTacToe-Game-by-C-Sharp",
+   "readme": "A product from COS20007 unit. Including intelligent Player vs Machine gaming."
   },
   {
    "id": "gh:TicTacToe-Game-by-Python-Intelligent-Agent",
@@ -1660,7 +1733,8 @@
    "detail": "Jupyter Notebook",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/TicTacToe-Game-by-Python-Intelligent-Agent"
+   "url": "https://github.com/Lelekhoa1812/TicTacToe-Game-by-Python-Intelligent-Agent",
+   "readme": "Require Aima-python referencee, run the codework within its main respiratory (folder)."
   },
   {
    "id": "gh:TLS-Communication-Website",
@@ -1671,7 +1745,8 @@
    "detail": "HTML",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/TLS-Communication-Website"
+   "url": "https://github.com/Lelekhoa1812/TLS-Communication-Website",
+   "readme": "Intro This web-server framework simulate how certificate chaining can be deployed when communicating handshakes across 2 web-browsers."
   },
   {
    "id": "gh:TNE20003-Internet-and-Cybersecurity",
@@ -1682,7 +1757,8 @@
    "detail": "HTML",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/TNE20003-Internet-and-Cybersecurity"
+   "url": "https://github.com/Lelekhoa1812/TNE20003-Internet-and-Cybersecurity",
+   "readme": "Swinburne, Semester 2, 2023, by Khoa Le."
   },
   {
    "id": "gh:Truth-Table",
@@ -1693,7 +1769,8 @@
    "detail": "JavaScript",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Truth-Table"
+   "url": "https://github.com/Lelekhoa1812/Truth-Table",
+   "readme": "Truth Table Generator."
   },
   {
    "id": "gh:Vietnamese-Passport-OCR-Project-with-VietOCR",
@@ -1704,7 +1781,8 @@
    "detail": "Jupyter Notebook",
    "year": 2024,
    "stat": 2,
-   "url": "https://github.com/Lelekhoa1812/Vietnamese-Passport-OCR-Project-with-VietOCR"
+   "url": "https://github.com/Lelekhoa1812/Vietnamese-Passport-OCR-Project-with-VietOCR",
+   "readme": "This project implements an OCR (Optical Character Recognition) scanner for extracting key fields from passport images, such as fullname, dob (date of birth), country, pob (place of birth), gender, cmnd (Vietnamese ID number), nameid (VNM>YOUR>FULL>NAME) and passportid (passport number). The system leverages the power of VietOCR for training and testing on a custom dataset formatted in COCO-style annotations."
   },
   {
    "id": "gh:Virtual-Instrument-Keyboard",
@@ -1715,7 +1793,8 @@
    "detail": "CSS",
    "year": 2024,
    "stat": 1,
-   "url": "https://github.com/Lelekhoa1812/Virtual-Instrument-Keyboard"
+   "url": "https://github.com/Lelekhoa1812/Virtual-Instrument-Keyboard",
+   "readme": "Virtual Keyboard to play Music Instruments. Need updates and resources for Violin and other instruments."
   },
   {
    "id": "gh:Weather-Forecast-Website",
@@ -1726,7 +1805,8 @@
    "detail": "JavaScript",
    "year": 2024,
    "stat": 2,
-   "url": "https://github.com/Lelekhoa1812/Weather-Forecast-Website"
+   "url": "https://github.com/Lelekhoa1812/Weather-Forecast-Website",
+   "readme": "Using OpenWeatherMap API, creating simple UI for weather forecasting feature."
   },
   {
    "id": "gh:Whac_A_Khang",
@@ -1737,7 +1817,8 @@
    "detail": "JavaScript",
    "year": 2024,
    "stat": 0,
-   "url": "https://github.com/Lelekhoa1812/Whac_A_Khang"
+   "url": "https://github.com/Lelekhoa1812/Whac_A_Khang",
+   "readme": "J4F"
   }
  ]
 }
