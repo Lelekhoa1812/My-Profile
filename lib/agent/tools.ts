@@ -108,8 +108,10 @@ export function createProfileTools(record: ProfileRecord, question = ""): ToolSe
       description: "Read the full text of the sections returned by search_sections in this turn. Do not pass an id that search did not return.",
       inputSchema: z.object({ sectionIds: z.array(z.string()).min(1).max(SECTION_LIMIT) }),
       execute: async (input) => {
-        const read = input.sectionIds.map((sectionId) => {
-          if (!turn.searched.has(sectionId)) return { sectionId, found: false as const };
+        const requested = input.sectionIds.filter((sectionId) => turn.searched.has(sectionId));
+        const rest = [...turn.searched].filter((sectionId) => !requested.includes(sectionId));
+        const wanted = [...requested, ...rest].slice(0, SECTION_LIMIT);
+        const read = wanted.map((sectionId) => {
           const section = readSection(sections, sectionId);
           if (!section.found) return { sectionId, found: false as const };
           const text = section.text.slice(0, 2400);
@@ -123,7 +125,9 @@ export function createProfileTools(record: ProfileRecord, question = ""): ToolSe
       description: "Return the text already read in this turn. Pass section ids only. A quote in the arguments is ignored.",
       inputSchema: z.object({ sectionIds: z.array(z.string()).max(SECTION_LIMIT) }),
       execute: async (input) => {
-        const text = input.sectionIds.flatMap((sectionId) => {
+        const requested = input.sectionIds.filter((sectionId) => turn.read.has(sectionId));
+        const rest = [...turn.read.keys()].filter((sectionId) => !requested.includes(sectionId));
+        const text = [...requested, ...rest].slice(0, SECTION_LIMIT).flatMap((sectionId) => {
           const read = turn.read.get(sectionId);
           return read ? [read] : [];
         }).join("\n");

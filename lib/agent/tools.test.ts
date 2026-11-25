@@ -149,12 +149,18 @@ describe("profile tools", () => {
       execute: (input: { query: string }) => Promise<{ sections?: { sectionId: string }[] }>;
     };
     const read = tools.read_sections as unknown as {
-      execute: (input: { sectionIds: string[] }) => Promise<{ sections?: { text?: string }[] }>;
+      execute: (input: { sectionIds: string[] }) => Promise<{ sections?: { sectionId?: string; text?: string }[] }>;
+    };
+    const review = tools.review_evidence as unknown as {
+      execute: (input: { sectionIds: string[] }) => Promise<{ text?: string }>;
     };
     const ocr = await search.execute({ query: "What OCR does he use?" });
     expect(ocr.sections?.map((section) => section.sectionId)).toContain("role-vietdan-ml");
     const readMeter = await read.execute({ sectionIds: ["role-vietdan-ml"] });
-    expect(readMeter.sections?.[0]?.text).toContain("10,000");
+    expect(readMeter.sections?.map((section) => section.sectionId)).toEqual(expect.arrayContaining(["role-vietdan-ml", "project-passport"]));
+    expect(readMeter.sections?.find((section) => section.sectionId === "role-vietdan-ml")?.text).toContain("10,000");
+    const reviewed = await review.execute({ sectionIds: ["project-passport"] });
+    expect(reviewed.text).toContain("10,000");
     const api = await search.execute({ query: "What does he use FastAPI for?" });
     expect(api.sections?.map((section) => section.sectionId)).toContain("project-skyledge");
     const lead = await search.execute({ query: "What did he lead?" });
