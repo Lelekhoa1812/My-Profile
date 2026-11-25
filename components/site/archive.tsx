@@ -12,6 +12,7 @@ export type ArchiveItem = {
   summary: string;
   detail: string;
   year: number;
+  committed: string;
   stat: number | null;
   owner?: string;
   url: string;
@@ -69,22 +70,33 @@ export function Archive({ items, areas }: { items: ArchiveItem[]; areas: Record<
           Nothing in the archive matches “{query}”. Try a tool name such as LangGraph, YOLO, or Whisper.
         </p>
       ) : (
-        <ul className="mt-3 border-t border-white/12">
-          {shown.map((item) => (
-            <li key={item.id} className="border-b border-white/10">
-              <a href={item.url} target="_blank" rel="noreferrer" className="group grid gap-x-6 gap-y-1 py-4 transition-colors hover:bg-white/[0.04] md:grid-cols-[minmax(0,1.2fr)_minmax(0,2fr)_12rem_3.5rem_8rem_1rem] md:items-baseline md:px-2">
-                <span className="text-[1.0625rem] leading-snug text-ink">{item.title}</span>
-                <span className="pretty text-[0.9375rem] leading-snug text-white/65">{item.summary || areas[item.area]}</span>
-                <span className="data truncate text-[10px] text-white/55">
-                  {KIND_NAME[item.kind]}
-                  {item.detail ? <span className="text-white/55"> · {item.detail}</span> : null}
-                </span>
-                <span className="data hidden text-[10px] text-white/55 md:block">{item.year}</span>
-                <span className="data hidden text-right text-[10px] text-white/55 md:block">{statLabel(item)}</span>
-                <ArrowUpRight aria-hidden className="hidden h-3.5 w-3.5 text-white/40 transition-colors group-hover:text-ink md:block" strokeWidth={1.5} />
-              </a>
-            </li>
-          ))}
+        <ul className="mt-3 border-t border-white/12 lg:grid lg:grid-cols-[minmax(12rem,1.35fr)_minmax(0,1.55fr)_minmax(0,13.25rem)_max-content_max-content_1rem] lg:gap-x-6">
+          {shown.map((item) => {
+            const committed = committedLabel(item.committed);
+            const stat = statLabel(item);
+            return (
+              <li key={item.id} className="border-b border-white/10 lg:col-span-full lg:grid lg:min-w-0 lg:grid-cols-subgrid">
+                <a href={item.url} target="_blank" rel="noreferrer" className="group grid min-w-0 gap-y-1 py-4 transition-colors hover:bg-white/[0.04] lg:col-span-full lg:grid-cols-subgrid lg:items-baseline lg:gap-y-0 lg:px-2">
+                  <span className="min-w-0 break-words text-[1.0625rem] leading-snug text-ink">{item.title}</span>
+                  <span className="pretty min-w-0 break-words text-[0.9375rem] leading-snug text-white/65">{item.summary || areas[item.area]}</span>
+                  <span className="data min-w-0 text-[10px] text-white/55 lg:truncate">
+                    {KIND_NAME[item.kind]}
+                    {item.detail ? <span className="text-white/55"> · {item.detail}</span> : null}
+                    <span className="lg:hidden">
+                      {committed ? ` · ${committed}` : ""}
+                      {stat ? ` · ${stat}` : ""}
+                    </span>
+                  </span>
+                  <span className="data hidden whitespace-nowrap text-[10px] text-white/55 lg:block">
+                    <span className="sr-only">Last commit </span>
+                    {committed}
+                  </span>
+                  <span className="data hidden whitespace-nowrap text-right text-[10px] text-white/55 lg:block">{stat}</span>
+                  <ArrowUpRight aria-hidden className="hidden h-3.5 w-3.5 justify-self-end text-white/40 transition-colors group-hover:text-ink lg:block" strokeWidth={1.5} />
+                </a>
+              </li>
+            );
+          })}
         </ul>
       )}
       {!all && !deferred && matches.length > PAGE ? (
@@ -94,6 +106,17 @@ export function Archive({ items, areas }: { items: ArchiveItem[]; areas: Record<
       ) : null}
     </div>
   );
+}
+
+function committedLabel(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-AU", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "Australia/Melbourne",
+  }).format(date);
 }
 
 function statLabel(item: ArchiveItem): string {

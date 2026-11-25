@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ["latin", "vietnamese"], weight: ["300", "400", "
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400"], variable: "--font-jetbrains", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Dang Khoa Le · AI Software Engineer",
-  description: "I build and own AI software, from retrieval to the write a person approves.",
+  title: "Liam Le · AI Software Engineer",
+  description: "I build and own the AI stack. A technical advance counts only when the business can measure it.",
   icons: { icon: "/icon.svg" },
 };
 

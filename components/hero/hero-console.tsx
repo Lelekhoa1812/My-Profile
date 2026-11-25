@@ -57,7 +57,7 @@ function AskField({ questions, busy, onAsk }: { questions: string[]; busy: boole
       <form onSubmit={submit} className="group relative flex items-center gap-4 border border-white/30 bg-black/70 px-5 py-4 backdrop-blur-[2px] transition-colors focus-within:border-white/70 md:px-7 md:py-5">
         <span aria-hidden className={`h-1.5 w-1.5 shrink-0 rounded-full bg-white ${busy ? "blink" : "opacity-60"}`} />
         <label htmlFor="ask-record" className="sr-only">
-          Ask the record a question about Dang Khoa Le
+          Ask the record a question about Liam Le
         </label>
         <input
           id="ask-record"

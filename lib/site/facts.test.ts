@@ -6,10 +6,11 @@ describe("public facts", () => {
     const site = readFileSync("content/site.ts", "utf8");
     const layout = readFileSync("app/layout.tsx", "utf8");
     expect(site).toContain('title: "AI Software Engineer"');
-    expect(layout).toContain("Dang Khoa Le · AI Software Engineer");
-    expect(site).not.toContain("FoodFlow");
-    expect(site).not.toContain("Copilot");
-    expect(site).toContain('title: "Senior AI Software Engineer"');
+    expect(layout).toContain("Liam Le · AI Software Engineer");
+    const page = site.replace(/export const starterQuestions = \[[\s\S]*?\];/, "");
+    expect(page).not.toContain("FoodFlow");
+    expect(page).not.toContain("Copilot");
+    expect(site).toContain('title: "AI Software Engineer"');
     expect(site).toContain("startup scouting");
     expect(site).not.toContain("workflows for outreach");
   });

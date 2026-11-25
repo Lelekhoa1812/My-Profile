@@ -62,7 +62,7 @@ export default function Home() {
           </div>
         </section>
 
-        <Section id="work" title="Selected work">
+        <Section id="work" title="Highlighted Works">
           <Cases items={cases} />
         </Section>
 
