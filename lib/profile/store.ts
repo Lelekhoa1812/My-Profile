@@ -745,6 +745,11 @@ function narrowToDistinctiveLead<T extends { title: string; body: string }>(hits
   return onlyLead ? [lead] : [...hits];
 }
 
+function coinedTokens(text: string): Set<string> {
+  const tokens = text.match(/\b[A-Za-z][A-Za-z0-9]{4,}\b/g) ?? [];
+  return new Set(tokens.filter((token) => /[A-Z]/.test(token.slice(1)) || /\d/.test(token)).map((token) => token.toLowerCase()));
+}
+
 function covers(text: string, term: string): boolean {
   const word = new RegExp(`\\b${term}(?:s|es|ed|d|ing)?\\b`);
   if (word.test(text)) return true;
@@ -844,7 +849,7 @@ export function searchSections(sections: readonly ProfileSection[], query: strin
       const basis = contentTerms.length > 0 ? contentTerms : terms;
       return hit.matched / basis.length >= 0.5 || basis.some((term) => (term.length >= 5 || EMPLOYERS.some((item) => item.test.test(term))) && (covers(hit.title, term) || covers(hit.body, term)) && pool.filter((item) => covers(item.title, term) || covers(item.body, term)).length === 1);
     })
-    .filter((hit) => !hit.section.sectionId.startsWith("archive-") || terms.some((term) => hit.title.includes(term)))
+    .filter((hit) => !hit.section.sectionId.startsWith("archive-") || terms.some((term) => hit.title.includes(term) || coinedTokens(hit.section.text).has(term)))
     .sort((left, right) => right.score - left.score);
   if (terms.includes("title") && !namesAnotherRole(pool, terms)) {
     const current = pool.find((item) => item.section.sourceType === "role" && item.body.includes("ai software engineer"));

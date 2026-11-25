@@ -20,6 +20,16 @@ describe("withArchive", () => {
     expect(result.sections.some((section) => section.sectionId.startsWith("archive-"))).toBe(false);
   });
 
+  it("finds a coined name that appears only in a repository readme", () => {
+    const result = searchSections(withArchive(profile.sections), "What is FreeRouter?");
+    expect(result.found).toBe(true);
+    if (!result.found) return;
+    expect(result.sections[0]?.sectionId).toBe("archive-gh-free-router");
+    expect(result.sections[0]?.text).toContain("OpenAI-compatible");
+    const plain = searchSections(withArchive(profile.sections), "What is existing?");
+    expect(plain.found && plain.sections[0]?.sectionId).not.toBe("archive-gh-survee");
+  });
+
   it("finds a repository the resume summary does not name", () => {
     const result = searchSections(withArchive(profile.sections), "path game");
     expect(result.found).toBe(true);
