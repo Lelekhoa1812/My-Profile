@@ -339,6 +339,14 @@ describe("profile store", () => {
     const earlier = searchSections(profile.sections, "What did he build for Harry the Hirer before the senior role?");
     expect(live.found && live.sections[0]?.sectionId).toBe("role-axion");
     expect(live.found && live.sections[0]?.text).toContain("shows a preview");
+    const multiLlm = searchSections(profile.sections, "What does he use multi-LLM routing for?");
+    expect(multiLlm.found && multiLlm.sections[0]?.sectionId).toBe("role-harry-senior");
+    expect(multiLlm.found && multiLlm.sections[0]?.text).toContain("multi-LLM routing");
+    const localLlm = searchSections(profile.sections, "What does he use local-LLM inference for?");
+    expect(localLlm.found && localLlm.sections[0]?.sectionId).toBe("role-mizco");
+    expect(localLlm.found && localLlm.sections[0]?.text).toContain("local-LLM");
+    const llmFor = searchSections(profile.sections, "What does he use an LLM for?");
+    expect(llmFor.found && llmFor.sections.map((section) => section.sectionId)).toEqual(expect.arrayContaining(["role-harry-pedigree", "role-poptech", "role-inet"]));
     const psi = searchSections(profile.sections, "What does PSI measure?");
     expect(psi.found && psi.sections[0]?.sectionId).toBe("project-ericsson");
     expect(psi.found && psi.sections[0]?.text).toContain("population stability index");
