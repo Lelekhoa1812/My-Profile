@@ -339,6 +339,23 @@ describe("profile store", () => {
     const earlier = searchSections(profile.sections, "What did he build for Harry the Hirer before the senior role?");
     expect(live.found && live.sections[0]?.sectionId).toBe("role-axion");
     expect(live.found && live.sections[0]?.text).toContain("shows a preview");
+    const compounds: Array<[string, string, string]> = [
+      ["What is speech-to-text?", "project-stt", "speech-to-text"],
+      ["What is self-training?", "project-salle", "self-training"],
+      ["What is the LLM-powered pipeline?", "role-inet", "LLM-powered"],
+      ["What is graph-state?", "role-harry-senior", "graph-state"],
+      ["What is the AI-first engine?", "role-harry-pedigree", "AI-first"],
+      ["What is executive-reviewable?", "role-mizco", "executive-reviewable"],
+      ["What is cloud-ready?", "role-tien-thanh", "cloud-ready"],
+      ["What is high-compliance?", "role-nam-a-software", "high-compliance"],
+      ["What is the clinical-response boundary?", "project-medchat", "clinical-response"],
+      ["What is Swinburne-funded?", "project-medswin", "Swinburne-funded"],
+    ];
+    for (const [question, sectionId, phrase] of compounds) {
+      const result = searchSections(profile.sections, question);
+      expect(result.found && result.sections[0]?.sectionId, question).toBe(sectionId);
+      expect(result.found && result.sections[0]?.text, question).toContain(phrase);
+    }
     const multiLlm = searchSections(profile.sections, "What does he use multi-LLM routing for?");
     expect(multiLlm.found && multiLlm.sections[0]?.sectionId).toBe("role-harry-senior");
     expect(multiLlm.found && multiLlm.sections[0]?.text).toContain("multi-LLM routing");

@@ -341,6 +341,16 @@ function pinnedSections(pool: readonly { section: ProfileSection; title: string;
     ? pool.filter((item) => item.section.sourceType === "role" && askedEmployer.section(item.section.sectionId, item.title) && (text.includes("pedigree") || !item.section.sectionId.includes("pedigree"))).map((item) => item.section.sectionId)
     : [];
   const sets = [
+    { when: /\bspeech-to-text\b/.test(text), ids: ["project-stt"] },
+    { when: /\bself-training\b/.test(text), ids: ["project-salle"] },
+    { when: /\bllm-powered\b/.test(text), ids: ["role-inet"] },
+    { when: /\bgraph-state\b/.test(text), ids: ["role-harry-senior"] },
+    { when: /\bai-first\b/.test(text), ids: ["role-harry-pedigree"] },
+    { when: /\bexecutive-reviewable\b/.test(text), ids: ["role-mizco"] },
+    { when: /\bcloud-ready\b/.test(text), ids: ["role-tien-thanh"] },
+    { when: /\bhigh-compliance\b/.test(text), ids: ["role-nam-a-software"] },
+    { when: /\bclinical-response\b/.test(text), ids: ["project-medchat"] },
+    { when: /\bswinburne-funded\b/.test(text), ids: ["project-medswin"] },
     { when: /\b(now|currently)\b/.test(text) && /\b(work|working|doing)\b/.test(text) && !namedEmployer(text), ids: ["role-axion"] },
     { when: /\bdeployed\b/.test(text) && !namedEmployer(text) && !/\b(medchat|foodflow|quotient)\b/.test(text), ids: ["project-meter", "role-alta"] },
     { when: /\bdeploy(?:ment|ing)?\b/.test(text) && /\b(use|uses|used|for)\b/.test(text) && !namedEmployer(text), ids: ["project-meter", "role-alta"] },
